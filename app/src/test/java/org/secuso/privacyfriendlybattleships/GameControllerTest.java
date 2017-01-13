@@ -77,8 +77,6 @@ public class GameControllerTest {
     public void placeShipsRandomlyTest() {
         controller.getGridSecondPlayer().getShipSet().placeShipsRandomly();
         assertEquals(controller.getGridSecondPlayer().getShipSet().placementLegit(), true);
-
-        assertEquals(controllerSmall.getGridFirstPlayer().getShipSet().placementLegit(), true);
     }
 
     @Test

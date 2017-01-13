@@ -35,7 +35,7 @@ public class GameController {
 
 
         if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
-            this.opponentAI = new GameAI(this.gridSize, this.mode);
+            this.opponentAI = new GameAI(this.gridSize, this.mode, this);
         } else if (this.mode == GameMode.VS_PLAYER) {
             this.opponentAI = null;
         }
@@ -49,13 +49,20 @@ public class GameController {
         return gridSecondPlayer;
     }
 
+    /**
+     * Performs the move for the current player.
+     * @param player Current player. False for player one, true for player two.
+     * @param col Column that shall be attacked.
+     * @param row Row that shall be attacked.
+     * @return True if move was a hit, false if not.
+     */
     public boolean makeMove(boolean player, int col, int row) {
         if (this.currentPlayer != player) {
             throw new IllegalArgumentException("It is the other players turn.");
         }
 
         GameCell cellUnderAttack = this.gridUnderAttack().getCell(col, row);
-        if (cellUnderAttack.isHit() ) {
+        if ( cellUnderAttack.isHit() ) {
             throw new IllegalArgumentException("This cell has already been attacked");
         }
 
@@ -71,6 +78,7 @@ public class GameController {
         //prepare for next turn
         this.currentPlayer = !this.currentPlayer;
 
+        //return if move was a hit
         if( cellUnderAttack.isShip() ) return true;
         return false;
     }
