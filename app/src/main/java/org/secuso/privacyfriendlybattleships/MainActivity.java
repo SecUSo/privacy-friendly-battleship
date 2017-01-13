@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends BaseActivity {
 
@@ -41,7 +42,10 @@ public class MainActivity extends BaseActivity {
     }
 
     public void setupViewPager(){
-        //TODO: Implement this method
+        final ImageView arrowLeft = (ImageView) findViewById(R.id.arrow_left);
+        final ImageView arrowRight = (ImageView) findViewById(R.id.arrow_right);
+        arrowLeft.setVisibility(View.INVISIBLE);
+        arrowRight.setVisibility(View.VISIBLE);
     }
 
     private void showWelcomeDialog() {
