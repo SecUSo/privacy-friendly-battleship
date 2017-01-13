@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
         //TODO: Implement this method
     }
 
+    //called at first app start
     private void showWelcomeDialog() {
         new WelcomeDialog().show(getFragmentManager(), WelcomeDialog.class.getSimpleName());
     }
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity {
     private void setupPreferences() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
-
+    
     private void setAppStarted() {
         preferences.edit().putBoolean(Constants.FIRST_APP_START, false).commit();
     }
@@ -91,12 +92,11 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-}
-
 
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.arrowLeft
+            case R.arrowLeft:
+
             default:
         }
     }
