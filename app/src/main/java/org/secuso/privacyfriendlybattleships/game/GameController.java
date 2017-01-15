@@ -1,12 +1,13 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
 
-public class GameController {
+public class GameController implements Parcelable {
 
     private GameGrid gridFirstPlayer;
     private GameGrid gridSecondPlayer;
@@ -104,4 +105,37 @@ public class GameController {
         return mode;
     }
 
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(this.gridSize);
+        out.writeString(this.mode.name());
+        out.writeBooleanArray( new boolean[] {this.currentPlayer} );
+        out.writeTypedArray( new GameGrid[] {this.gridFirstPlayer, this.gridSecondPlayer}, 0 );
+        out.writeTypedArray(new GameAI[] { this.opponentAI }, 0 );
+    }
+
+    public static final Parcelable.Creator<GameController> CREATOR = new Parcelable.Creator<GameController>() {
+        public GameController createFromParcel(Parcel in) {
+            return new GameController(in);
+        }
+
+        public GameController[] newArray(int size) {
+            return new GameController[size];
+        }
+    };
+
+    private GameController(Parcel in) {
+        this.gridSize = in.readInt();
+        this.mode = GameMode.valueOf( in.readString() );
+        this.currentPlayer = in.createBooleanArray()[0];
+        GameGrid[] grids = in.createTypedArray(GameGrid.CREATOR);
+        this.gridFirstPlayer = grids[0];
+        this.gridSecondPlayer = grids[1];
+
+        this.opponentAI = in.createTypedArray(GameAI.CREATOR)[0];
+        this.opponentAI.setController(this);
+    }
 }

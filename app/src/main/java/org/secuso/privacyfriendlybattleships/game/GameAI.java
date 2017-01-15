@@ -1,12 +1,15 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Random;
 
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
 
-public class GameAI {
+public class GameAI implements Parcelable{
 
     private byte[][] gridUnderAttack;//represents the opponents grid; 0: unknown, 1: ship, 2: water
     private int gridSize;
@@ -57,5 +60,41 @@ public class GameAI {
         } else {
             this.gridUnderAttack[row][col] = 2;
         }
+    }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(this.gridSize);
+        out.writeString(this.mode.name());
+        for( int i = 0; i < this.gridSize; i++) {
+            out.writeByteArray(this.gridUnderAttack[i]);
+        }
+    }
+
+    public static final Parcelable.Creator<GameAI> CREATOR = new Parcelable.Creator<GameAI>() {
+        public GameAI createFromParcel(Parcel in) {
+            return new GameAI(in);
+        }
+
+        public GameAI[] newArray(int size) {
+            return new GameAI[size];
+        }
+    };
+
+    private GameAI(Parcel in) {
+        this.gridSize = in.readInt();
+        this.mode = GameMode.valueOf( in.readString() );
+        for ( int i = 0; i < this.gridSize; i++) {
+            this.gridUnderAttack[i] = in.createByteArray();
+        }
+
+        this.ranGen = new Random();
+    }
+
+    public void setController(GameController controller) {
+        this.controller = controller;
     }
 }
