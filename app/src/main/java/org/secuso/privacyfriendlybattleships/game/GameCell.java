@@ -1,12 +1,15 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import static java.lang.Math.max;
 
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
 
-public class GameCell {
+public class GameCell implements Parcelable{
 
     private int col;//Column of the Cell
     private int row;//Row of the Cell
@@ -62,4 +65,39 @@ public class GameCell {
             return false;
         return true;
     }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(this.col);
+        out.writeInt(this.row);
+        out.writeBooleanArray( new boolean[] {this.isShip, this.isHit} );
+    }
+
+    public static final Parcelable.Creator<GameCell> CREATOR = new Parcelable.Creator<GameCell>() {
+        public GameCell createFromParcel(Parcel in) {
+            return new GameCell(in);
+        }
+
+        public GameCell[] newArray(int size) {
+            return new GameCell[size];
+        }
+    };
+
+    private GameCell(Parcel in) {
+        this.col = in.readInt();
+        this.row = in.readInt();
+        boolean[] shipHit = new boolean[2];
+        in.readBooleanArray(shipHit);
+        this.isShip = shipHit[0];
+        this.isHit = shipHit[1];
+        this.grid = null;
+    }
+
+    void setGrid(GameGrid grid) {
+        this.grid = grid;
+    }
+
 }

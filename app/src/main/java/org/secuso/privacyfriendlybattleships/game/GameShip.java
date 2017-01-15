@@ -1,15 +1,21 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
 
-public class GameShip {
+public class GameShip implements Parcelable{
     private int size;
     private GameCell[] shipsCells;
     private Direction orientation;
     private GameGrid grid;
     private GameShipSet shipSet;
+
+    private int startCellCol;
+    private int startCellRow;
 
     public GameShip(GameGrid grid, GameShipSet shipSet, GameCell shipStart, int shipSize, Direction shipOrientation) {
         if (    (this.orientation == Direction.NORTH) && ( (shipStart.getRow() + (shipSize - 1) ) >= grid.getSize() ) ||
@@ -21,27 +27,33 @@ public class GameShip {
 
         this.size = shipSize;
         this.orientation = shipOrientation;
-        this.shipsCells = new GameCell[this.size];
         this.grid = grid;
         this.shipSet = shipSet;
-
+        this.startCellCol = shipStart.getCol();
+        this.startCellRow = shipStart.getRow();
 
         //initialize shipsCells with cells of the ship
+       initializeShipsCells();
+    }
+
+    private void initializeShipsCells() {
+        this.shipsCells = new GameCell[this.size];
+
         if (this.orientation == Direction.NORTH) {
             for (int i = 0; i < this.size; i++) {
-                this.shipsCells[i] = this.grid.getCell(shipStart.getCol(), shipStart.getRow() + i);
+                this.shipsCells[i] = this.grid.getCell(this.startCellCol, this.startCellRow + i);
             }
         } else if (this.orientation == Direction.SOUTH) {
             for (int i = 0; i < this.size; i++) {
-                this.shipsCells[i] = this.grid.getCell(shipStart.getCol(), shipStart.getRow() - i);
+                this.shipsCells[i] = this.grid.getCell(this.startCellCol, this.startCellRow - i);
             }
         } else if (this.orientation == Direction.EAST) {
             for (int i = 0; i < this.size; i++) {
-                this.shipsCells[i] = this.grid.getCell(shipStart.getCol() - i, shipStart.getRow());
+                this.shipsCells[i] = this.grid.getCell(this.startCellCol - i, this.startCellRow);
             }
         } else if (this.orientation == Direction.WEST) {
             for (int i = 0; i < this.size; i++) {
-                this.shipsCells[i] = this.grid.getCell(shipStart.getCol() + i, shipStart.getRow());
+                this.shipsCells[i] = this.grid.getCell(this.startCellCol + i, this.startCellRow);
             }
         }
 
@@ -99,5 +111,43 @@ public class GameShip {
         for (int i = 0; i < this.size; i++) {
             if ( this.shipSet.shipsOnCell(this.shipsCells[i]) == 1) this.shipsCells[i].setShip(false);
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(this.size);
+        out.writeString(this.orientation.name());
+        out.writeInt(this.shipsCells[0].getCol());
+        out.writeInt(this.shipsCells[0].getRow());
+    }
+
+    public static final Parcelable.Creator<GameShip> CREATOR = new Parcelable.Creator<GameShip>() {
+        public GameShip createFromParcel(Parcel in) {
+            return new GameShip(in);
+        }
+
+        public GameShip[] newArray(int size) {
+            return new GameShip[size];
+        }
+    };
+
+    private GameShip(Parcel in) {
+        this.size = in.readInt();
+        this.orientation = Direction.valueOf(in.readString());
+        this.startCellCol = in.readInt();
+        this.startCellRow = in.readInt();
+        //recreateShip has to be called for the ship to be fully recovered.
+    }
+
+    void recreateShip(GameGrid grid, GameShipSet set) {
+        this.grid = grid;
+        this.shipSet = set;
+
+        initializeShipsCells();
     }
 }

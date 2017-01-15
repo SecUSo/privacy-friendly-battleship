@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcelable;
+
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
@@ -101,4 +103,5 @@ public class GameController {
     public GameMode getMode() {
         return mode;
     }
+
 }
