@@ -1,12 +1,33 @@
 package org.secuso.privacyfriendlybattleships.game;
 
 import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
+import android.support.annotation.StringRes;
+import org.secuso.privacyfriendlybattleships.R;
 
 /**
- * Created by Alexander Müller on 16.12.2016.
+ * Created by Alexander Müller on 16.12.2016. Edited by Ali Kalsen on 16.01.2017
  */
 
 public class GameGrid {
+
+    // Initialize the amount of ships for the game grids
+    private final static int[] SHIPCOUNTFIVE = {1,2,1,0};
+    private final static int[] SHIPCOUNTTEN = {1,2,1,1};
+
+    // GameGrids needed for the main activity and quick start
+    private final static GameGrid SIZE_5x5 = new GameGrid(5, SHIPCOUNTFIVE);
+    private final static GameGrid SIZE_10x10 = new GameGrid(10, SHIPCOUNTTEN);
+
+
+    //private final int resIDString;
+    private static List<GameGrid> validSizes = new LinkedList<>();
+
+    static{
+        validSizes.add(SIZE_5x5);
+        validSizes.add(SIZE_10x10);
+    }
 
     private GameCell[][] cellGrid;
     private int size;
@@ -23,6 +44,14 @@ public class GameGrid {
             }
         }
     }
+
+    /*public GameGrid(@StringRes int resIDString, int size){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.cellGrid[i][j] = new GameCell(i, j, this);
+            }
+        }
+    }*/
 
     /*
     public GameGrid() {
@@ -57,6 +86,10 @@ public class GameGrid {
 
     public int getSize() {
         return size;
+    }
+
+    public static List<GameGrid> getValidSizes(){
+        return validSizes;
     }
 
     public GameCell getRandomCell() {
