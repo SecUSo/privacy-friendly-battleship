@@ -12,7 +12,7 @@ public final class Constants {
     public final static String FIRST_APP_START          = "FIRST_APP_START";
 
     // Intent Extra Constants
-    public final static String GAME_DIFFICULTY          = "GAME_DIFFICULTY";
+    public final static String GRID_SIZE                = "GAME_SIZE";
     public final static String GAME_MODE                = "GAME_MODE";
 
 
