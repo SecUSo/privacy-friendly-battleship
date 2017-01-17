@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,8 +17,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.secuso.privacyfriendlybattleships.game.GameCell;
+import org.secuso.privacyfriendlybattleships.game.GameController;
+import org.secuso.privacyfriendlybattleships.game.GameMode;
 
 public class MainActivity extends BaseActivity {
 
@@ -46,9 +54,9 @@ public class MainActivity extends BaseActivity {
         return R.id.nav_example;
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapterMode extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public SectionsPagerAdapterMode(FragmentManager fm) {
             super(fm);
         }
 
@@ -57,17 +65,114 @@ public class MainActivity extends BaseActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
-            return GameActivity.PageFragment.newInstance(position);
+            return MainActivity.PageFragmentMode.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
     }
 
+    public static class PageFragmentMode extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
 
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PageFragmentMode newInstance(int sectionNumber) {
+            PageFragmentMode fragment = new PageFragmentMode();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public PageFragmentMode() {
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            int id = 0;
+            if(getArguments() != null) {
+                id = getArguments().getInt(ARG_SECTION_NUMBER);
+            }
+
+            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText("Mode: "+String.valueOf(id));
+            return rootView;
+        }
+    }
+
+    public class SectionsPagerAdapterSize extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapterSize(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PageFragment (defined as a static inner class below).
+            return MainActivity.PageFragmentSize.newInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            // Show 2 total pages.
+            return 2;
+        }
+    }
+
+    public static class PageFragmentSize extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PageFragmentSize newInstance(int sectionNumber) {
+            PageFragmentSize fragment = new PageFragmentSize();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public PageFragmentSize() {
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            int id = 0;
+            if(getArguments() != null) {
+                id = getArguments().getInt(ARG_SECTION_NUMBER);
+            }
+
+            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText("Mode: "+String.valueOf(id));
+            return rootView;
+        }
+    }
 
     public void setupViewPagerMode(){
         final ImageView arrowLeft = (ImageView) findViewById(R.id.mode_arrow_left);
@@ -75,7 +180,7 @@ public class MainActivity extends BaseActivity {
         arrowLeft.setVisibility(View.INVISIBLE);
         arrowRight.setVisibility(View.VISIBLE);
 
-        final SectionsPagerAdapter sectionPagerAdapter = new SectionsPagerAdapter (getSupportFragmentManager());
+        final SectionsPagerAdapterMode sectionPagerAdapter = new SectionsPagerAdapterMode (getSupportFragmentManager());
         viewPagerMode = (ViewPager) findViewById(R.id.modeScroller);
         viewPagerMode.setAdapter(sectionPagerAdapter);
         viewPagerMode.setCurrentItem(0);
@@ -103,7 +208,7 @@ public class MainActivity extends BaseActivity {
         arrowLeft.setVisibility(View.INVISIBLE);
         arrowRight.setVisibility(View.VISIBLE);
 
-        final SectionsPagerAdapter sectionPagerAdapter = new SectionsPagerAdapter (getSupportFragmentManager());
+        final SectionsPagerAdapterSize sectionPagerAdapter = new SectionsPagerAdapterSize (getSupportFragmentManager());
         viewPagerMode = (ViewPager) findViewById(R.id.sizeScroller);
         viewPagerMode.setAdapter(sectionPagerAdapter);
         viewPagerMode.setCurrentItem(0);
@@ -175,7 +280,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.mode_arrow_left:
@@ -190,7 +294,14 @@ public class MainActivity extends BaseActivity {
             case R.id.size_arrow_right:
                 viewPagerSize.arrowScroll(View.FOCUS_RIGHT);
                 break;
-
+            case R.id.quick_start_button:
+                //TODO: get correct game mode and grid size
+                // pass information to game activity
+                Intent intent = new Intent(this, GameActivity.class);
+                GameController gameLogic = new GameController(10, GameMode.VS_AI_EASY);
+                intent.putExtra("controller", (Parcelable) gameLogic);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

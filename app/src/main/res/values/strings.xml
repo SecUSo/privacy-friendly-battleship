@@ -13,7 +13,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- ###MAIN### -->
-    <string name="main_button_text">Full Width Button</string>
+    <string name="main_button_text">Quick start</string>
     <string name="main_button_disabled_text">Inactive Button</string>
     <string name="main_button_1">1</string>
     <string name="main_button_2">2</string>
