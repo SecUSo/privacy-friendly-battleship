@@ -193,7 +193,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 arrowLeft.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
-                arrowRight.setVisibility(position == 2 ? View.INVISIBLE : View.VISIBLE);
+                arrowRight.setVisibility(position == 3 ? View.INVISIBLE : View.VISIBLE);
             }
             @Override
             public void onPageScrollStateChanged(int state) {

@@ -87,6 +87,7 @@ public class GameAI implements Parcelable{
     private GameAI(Parcel in) {
         this.gridSize = in.readInt();
         this.mode = GameMode.valueOf( in.readString() );
+        this.gridUnderAttack = new byte[this.gridSize][this.gridSize];
         for ( int i = 0; i < this.gridSize; i++) {
             this.gridUnderAttack[i] = in.createByteArray();
         }
