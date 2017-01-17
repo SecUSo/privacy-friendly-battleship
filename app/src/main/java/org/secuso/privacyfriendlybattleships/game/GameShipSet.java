@@ -1,10 +1,13 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
 
-public class GameShipSet {
+public class GameShipSet implements Parcelable{
     private GameShip[][] ships;
     private GameShip[] size2Ships;
     private GameShip[] size3Ships;
@@ -21,7 +24,7 @@ public class GameShipSet {
         this.size4Ships = new GameShip[1];
         this.size5Ships = new GameShip[1];
         this.ships = new GameShip[][] {this.size2Ships, this.size3Ships, this.size4Ships, this.size5Ships};
-        this.totalShipCount = 10;
+        this.totalShipCount = 5;
     }
     */
 
@@ -155,5 +158,47 @@ public class GameShipSet {
             }
         }
         return count;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        for (int i = 0; i < this.ships.length; i++) {
+            out.writeTypedArray(this.ships[i], 0);
+        }
+    }
+
+    public static final Parcelable.Creator<GameShipSet> CREATOR = new Parcelable.Creator<GameShipSet>() {
+        public GameShipSet createFromParcel(Parcel in) {
+            return new GameShipSet(in);
+        }
+
+        public GameShipSet[] newArray(int size) {
+            return new GameShipSet[size];
+        }
+    };
+
+    public GameShipSet(Parcel in) {
+        this.size2Ships = in.createTypedArray(GameShip.CREATOR);
+        this.size3Ships = in.createTypedArray(GameShip.CREATOR);
+        this.size4Ships = in.createTypedArray(GameShip.CREATOR);
+        this.size5Ships = in.createTypedArray(GameShip.CREATOR);
+        this.ships = new GameShip[][] { size2Ships, size3Ships, size4Ships, size5Ships };
+        this.totalShipCount = size2Ships.length + size3Ships.length + size4Ships.length + size5Ships.length;
+        //recreateShipSet has to be called for this.grid and ships to be recovered.
+    }
+
+    void recreateShipSet(GameGrid grid) {
+        this.grid = grid;
+
+        for (GameShip[] shipsSizeN : this.ships) {
+            for (GameShip ship : shipsSizeN) {
+                ship.recreateShip(this.grid, this);
+            }
+        }
     }
 }
