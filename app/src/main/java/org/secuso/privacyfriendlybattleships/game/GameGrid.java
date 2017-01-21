@@ -3,8 +3,6 @@ package org.secuso.privacyfriendlybattleships.game;
 import java.util.Random;
 import java.util.LinkedList;
 import java.util.List;
-import android.support.annotation.StringRes;
-import org.secuso.privacyfriendlybattleships.R;
 
 /**
  * Created by Alexander Müller on 16.12.2016. Edited by Ali Kalsen on 16.01.2017
@@ -12,17 +10,13 @@ import org.secuso.privacyfriendlybattleships.R;
 
 public class GameGrid {
 
-    // Initialize the amount of ships for the game grids
-    private final static int[] SHIPCOUNTFIVE = {1,2,1,0};
-    private final static int[] SHIPCOUNTTEN = {1,2,1,1};
-
     // GameGrids needed for the main activity and quick start
-    private final static GameGrid SIZE_5x5 = new GameGrid(5, SHIPCOUNTFIVE);
-    private final static GameGrid SIZE_10x10 = new GameGrid(10, SHIPCOUNTTEN);
+    private final static int SIZE_5x5 = 5;
+    private final static int SIZE_10x10 = 10;
 
 
     //private final int resIDString;
-    private static List<GameGrid> validSizes = new LinkedList<>();
+    private static List<Integer> validSizes = new LinkedList<>();
 
     static{
         validSizes.add(SIZE_5x5);
@@ -88,7 +82,7 @@ public class GameGrid {
         return size;
     }
 
-    public static List<GameGrid> getValidSizes(){
+    public static List<Integer> getValidSizes(){
         return validSizes;
     }
 

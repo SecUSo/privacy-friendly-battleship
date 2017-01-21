@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlybattleships;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlybattleships.game.GameController;
+import org.secuso.privacyfriendlybattleships.game.GameMode;
+
 public class GameActivity extends BaseActivity {
 
     private ViewPager mViewPager;
     private ImageView mArrowLeft;
     private ImageView mArrowRight;
+
+    private GameMode gameMode;
 
 
     @Override
@@ -66,6 +70,9 @@ public class GameActivity extends BaseActivity {
             }
         });
 
+        initGame();
+        setupGridView();
+
     }
 
     @Override
@@ -106,6 +113,31 @@ public class GameActivity extends BaseActivity {
         }
     }
 
+    /*
+    Initialize the game settings
+     */
+    protected void initGame() {
+
+        // Initialize the game settings
+        Bundle intentGame = getIntent().getExtras();
+        GameMode gameMode = (GameMode) intentGame.get(Constants.GAME_MODE);
+        int gridSize = (int) intentGame.get(Constants.GRID_SIZE);
+        boolean quickStart = (boolean) intentGame.get(Constants.QUICK_START);
+        if(quickStart){
+            GameController game = new GameController(gridSize, gameMode);
+            //TODO: Place Ships appropiately or randomly
+        }
+        else{
+
+        }
+    }
+
+    protected void setupGridView() {
+        //TODO: Implement this method
+    }
+
+
+
     public static class PageFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -138,7 +170,7 @@ public class GameActivity extends BaseActivity {
                 id = getArguments().getInt(ARG_SECTION_NUMBER);
             }
 
-            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_mode_main, container, false);
 
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText("Mode: "+String.valueOf(id));
