@@ -1,10 +1,13 @@
 package org.secuso.privacyfriendlybattleships.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Alexander Müller on 16.12.2016.
  */
 
-public class GameController {
+public class GameController implements Parcelable {
 
     private GameGrid gridFirstPlayer;
     private GameGrid gridSecondPlayer;
@@ -39,7 +42,7 @@ public class GameController {
 
 
         if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
-            this.opponentAI = new GameAI(this.gridSize, this.mode);
+            this.opponentAI = new GameAI(this.gridSize, this.mode, this);
         } else if (this.mode == GameMode.VS_PLAYER) {
             this.opponentAI = null;
         }
@@ -53,13 +56,20 @@ public class GameController {
         return gridSecondPlayer;
     }
 
+    /**
+     * Performs the move for the current player.
+     * @param player Current player. False for player one, true for player two.
+     * @param col Column that shall be attacked.
+     * @param row Row that shall be attacked.
+     * @return True if move was a hit, false if not.
+     */
     public boolean makeMove(boolean player, int col, int row) {
         if (this.currentPlayer != player) {
             throw new IllegalArgumentException("It is the other players turn.");
         }
 
         GameCell cellUnderAttack = this.gridUnderAttack().getCell(col, row);
-        if (cellUnderAttack.isHit() ) {
+        if ( cellUnderAttack.isHit() ) {
             throw new IllegalArgumentException("This cell has already been attacked");
         }
 
@@ -75,6 +85,7 @@ public class GameController {
         //prepare for next turn
         this.currentPlayer = !this.currentPlayer;
 
+        //return if move was a hit
         if( cellUnderAttack.isShip() ) return true;
         return false;
     }
@@ -96,5 +107,39 @@ public class GameController {
 
     public GameMode getMode() {
         return mode;
+    }
+
+    @Override
+    public int describeContents() { return 0; }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(this.gridSize);
+        out.writeString(this.mode.name());
+        out.writeBooleanArray( new boolean[] {this.currentPlayer} );
+        out.writeTypedArray( new GameGrid[] {this.gridFirstPlayer, this.gridSecondPlayer}, 0 );
+        out.writeTypedArray(new GameAI[] { this.opponentAI }, 0 );
+    }
+
+    public static final Parcelable.Creator<GameController> CREATOR = new Parcelable.Creator<GameController>() {
+        public GameController createFromParcel(Parcel in) {
+            return new GameController(in);
+        }
+
+        public GameController[] newArray(int size) {
+            return new GameController[size];
+        }
+    };
+
+    private GameController(Parcel in) {
+        this.gridSize = in.readInt();
+        this.mode = GameMode.valueOf( in.readString() );
+        this.currentPlayer = in.createBooleanArray()[0];
+        GameGrid[] grids = in.createTypedArray(GameGrid.CREATOR);
+        this.gridFirstPlayer = grids[0];
+        this.gridSecondPlayer = grids[1];
+
+        this.opponentAI = in.createTypedArray(GameAI.CREATOR)[0];
+        this.opponentAI.setController(this);
     }
 }
