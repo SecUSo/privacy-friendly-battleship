@@ -200,11 +200,11 @@ public class MainActivity extends BaseActivity {
         arrowRight.setVisibility(View.VISIBLE);
 
         final SectionsPagerSizeAdapter sectionPagerSizeAdapter = new SectionsPagerSizeAdapter (getSupportFragmentManager());
-        viewPagerMode = (ViewPager) findViewById(R.id.sizeScroller);
-        viewPagerMode.setAdapter(sectionPagerSizeAdapter);
-        viewPagerMode.setCurrentItem(0);
+        viewPagerSize = (ViewPager) findViewById(R.id.sizeScroller);
+        viewPagerSize.setAdapter(sectionPagerSizeAdapter);
+        viewPagerSize.setCurrentItem(0);
 
-        viewPagerMode.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+        viewPagerSize.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // not used
