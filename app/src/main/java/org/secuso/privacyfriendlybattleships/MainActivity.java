@@ -60,12 +60,13 @@ public class MainActivity extends BaseActivity {
             super(fm);
         }
 
-
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
-            return MainActivity.PageFragmentMode.newInstance(position);
+            Fragment fragment = MainActivity.PageFragmentMode.newInstance(position);
+
+            return fragment;
         }
 
         @Override
@@ -107,9 +108,23 @@ public class MainActivity extends BaseActivity {
             }
 
             View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
-
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText("Mode: "+String.valueOf(id));
+
+
+            switch(id) {
+                case 0:
+                    textView.setText("PvP");
+                    break;
+                case 1:
+                    textView.setText("vsAI-easy");
+                    break;
+                case 2:
+                    textView.setText("vsAI-hard");
+                    break;
+                case 3:
+                    textView.setText("Custom");
+            }
+
             return rootView;
         }
     }
@@ -167,9 +182,16 @@ public class MainActivity extends BaseActivity {
             }
 
             View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
-
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText("Mode: "+String.valueOf(id));
+
+            switch(id) {
+                case 0:
+                    textView.setText("5x5");
+                    break;
+                case 1:
+                    textView.setText("10x10");
+            }
+
             return rootView;
         }
     }
@@ -211,7 +233,7 @@ public class MainActivity extends BaseActivity {
         final SectionsPagerAdapterSize sectionPagerAdapter = new SectionsPagerAdapterSize (getSupportFragmentManager());
         viewPagerMode = (ViewPager) findViewById(R.id.sizeScroller);
         viewPagerMode.setAdapter(sectionPagerAdapter);
-        viewPagerMode.setCurrentItem(0);
+        viewPagerMode.setCurrentItem(1);
 
         viewPagerMode.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
@@ -295,14 +317,31 @@ public class MainActivity extends BaseActivity {
                 viewPagerSize.arrowScroll(View.FOCUS_RIGHT);
                 break;
             case R.id.quick_start_button:
-                //TODO: get correct game mode and grid size
                 // pass information to game activity
                 Intent intent = new Intent(this, GameActivity.class);
-                GameController gameLogic = new GameController(10, GameMode.VS_AI_EASY);
-                intent.putExtra("controller", (Parcelable) gameLogic);
+
+                /*
+                int selectedSize;
+                switch (viewPagerSize.getCurrentItem()){
+                    case 0:
+                        selectedSize = 5;
+                        break;
+                    default:
+                        selectedSize = 10;
+                        break;
+                }
+
+                GameMode selectedMode = GameMode.fromInteger(viewPagerMode.getCurrentItem());
+                */
+
+                GameController game = new GameController(10, GameMode.VS_AI_EASY);
+
+                //place ships for both players
+                game.getGridFirstPlayer().getShipSet().placeShipsRandomly();
+                game.getGridSecondPlayer().getShipSet().placeShipsRandomly();
+
+                intent.putExtra("controller", game);
                 startActivity(intent);
-                break;
-            default:
                 break;
         }
     }
