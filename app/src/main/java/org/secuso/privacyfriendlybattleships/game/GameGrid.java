@@ -4,12 +4,27 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Created by Alexander Müller on 16.12.2016.
+ * Created by Alexander Müller on 16.12.2016. Edited by Ali Kalsen on 16.01.2017
  */
 
 public class GameGrid implements Parcelable{
+
+    // GameGrids needed for the main activity and quick start
+    private final static int SIZE_5x5 = 5;
+    private final static int SIZE_10x10 = 10;
+
+
+    //private final int resIDString;
+    private static List<Integer> validSizes = new LinkedList<>();
+
+    static{
+        validSizes.add(SIZE_5x5);
+        validSizes.add(SIZE_10x10);
+    }
 
     private GameCell[][] cellGrid;
     private int size;
@@ -26,6 +41,14 @@ public class GameGrid implements Parcelable{
             }
         }
     }
+
+    /*public GameGrid(@StringRes int resIDString, int size){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.cellGrid[i][j] = new GameCell(i, j, this);
+            }
+        }
+    }*/
 
     /*
     public GameGrid() {
@@ -60,6 +83,10 @@ public class GameGrid implements Parcelable{
 
     public int getSize() {
         return size;
+    }
+
+    public static List<Integer> getValidSizes(){
+        return validSizes;
     }
 
     public GameCell getRandomCell() {

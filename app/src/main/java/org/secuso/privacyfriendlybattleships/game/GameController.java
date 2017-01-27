@@ -16,6 +16,10 @@ public class GameController implements Parcelable {
     private boolean currentPlayer;//false if first players turn, true if second players turn
     private GameAI opponentAI;
 
+    // Initialize the amount of ships for the game grids
+    private final static int[] SHIPCOUNTFIVE = {2,1,0,0};
+    private final static int[] SHIPCOUNTTEN = {1,2,1,1};
+
     public GameController(int gridSize, int[] shipCount) {
         this.gridSize = gridSize;
         this.mode = GameMode.CUSTOM;
@@ -28,14 +32,20 @@ public class GameController implements Parcelable {
     public GameController(int gridSize, GameMode mode) {
         if (mode == GameMode.CUSTOM)
             throw new IllegalArgumentException("Provide ship-count for custom game-mode.");
-        if (gridSize != 10)
+        if (gridSize != 5 && gridSize != 10)
             throw new IllegalArgumentException("Provide ship-count for custom game-size.");
         this.gridSize = gridSize;
         this.currentPlayer = false;
         this.mode = mode;
-        this.gridFirstPlayer = new GameGrid(gridSize, new int[] {1, 2, 1, 1});
-        this.gridSecondPlayer = new GameGrid(gridSize, new int[] {1, 2, 1, 1});
 
+        switch (gridSize) {
+            case 5:
+                this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
+                this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
+            default:
+                this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
+                this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
+        }
 
         if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
             this.opponentAI = new GameAI(this.gridSize, this.mode, this);
@@ -50,6 +60,14 @@ public class GameController implements Parcelable {
 
     public GameGrid getGridSecondPlayer() {
         return gridSecondPlayer;
+    }
+
+    /**
+     * Places all ships for both players randomly, resulting in a legit placement to start the game.
+     */
+    public void placeAllShips() {
+        this.getGridFirstPlayer().getShipSet().placeShipsRandomly();
+        this.getGridSecondPlayer().getShipSet().placeShipsRandomly();
     }
 
     /**
@@ -91,6 +109,24 @@ public class GameController implements Parcelable {
             return gridFirstPlayer;
         }
         return gridSecondPlayer;
+    }
+
+    public boolean isShipCountLegit(int[] shipCount){
+        // TODO: Think about the bound for the cells covered by the ships. The current bound is set
+        // to the half of the total amount of grid cells, such that the probability of randomly
+        // hitting a ship is at most 1/2.
+        int bound =  (int) Math.floor(getGridSize() * getGridSize() / 2);
+        System.out.println("Bound:");
+        System.out.println(bound);
+        int coveredGridCells = 2 * shipCount[0] + 3 * shipCount[1] + 4 * shipCount[2] + 5 * shipCount[3];
+        System.out.println("Covered grid cells:");
+        System.out.println(coveredGridCells);
+        if (coveredGridCells > bound){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public int getGridSize() {
