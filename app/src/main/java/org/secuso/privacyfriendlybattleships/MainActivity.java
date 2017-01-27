@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameGrid;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 
@@ -283,6 +284,7 @@ public class MainActivity extends BaseActivity {
         int modeIndex;
         Intent intent;
         GameMode gameMode;
+        GameController game;
 
         switch(view.getId()) {
             case R.id.mode_arrow_left:
@@ -304,12 +306,12 @@ public class MainActivity extends BaseActivity {
                 sizeIndex = viewPagerSize.getCurrentItem();
                 gridSize = GameGrid.getValidSizes().get(sizeIndex);
 
+                game = new GameController(gridSize, gameMode);
+                game.placeAllShips();//place all ships randomly for both players
+
                 // send game information to GameActivity
                 intent = new Intent(this, GameActivity.class);
-                intent.putExtra(Constants.GAME_MODE, gameMode);
-                intent.putExtra(Constants.GRID_SIZE, gridSize);
-                intent.putExtra(Constants.QUICK_START, true);
-                intent.putExtra(Constants.PLACE_SHIPS, false);
+                intent.putExtra("controller", game);
                 startActivity(intent);
                 break;
             case R.id.action_settings:
@@ -319,12 +321,12 @@ public class MainActivity extends BaseActivity {
                 sizeIndex = viewPagerSize.getCurrentItem();
                 gridSize = GameGrid.getValidSizes().get(sizeIndex);
 
-                // Send game information to SettingsActivity
+                game = new GameController(gridSize, gameMode);
+                game.placeAllShips();//place all ships randomly for both players
+
+                // send game information to PlaceShipActivity
                 intent = new Intent(this, PlaceShipActivity.class);
-                intent.putExtra(Constants.GAME_MODE, gameMode);
-                intent.putExtra(Constants.GRID_SIZE, gridSize);
-                intent.putExtra(Constants.QUICK_START, false);
-                intent.putExtra(Constants.PLACE_SHIPS, true);
+                intent.putExtra("controller", game);
                 startActivity(intent);
                 break;
             default:
