@@ -28,14 +28,20 @@ public class GameController implements Parcelable {
     public GameController(int gridSize, GameMode mode) {
         if (mode == GameMode.CUSTOM)
             throw new IllegalArgumentException("Provide ship-count for custom game-mode.");
-        if (gridSize != 10)
+        if (gridSize != 5 && gridSize != 10)
             throw new IllegalArgumentException("Provide ship-count for custom game-size.");
         this.gridSize = gridSize;
         this.currentPlayer = false;
         this.mode = mode;
-        this.gridFirstPlayer = new GameGrid(gridSize, new int[] {1, 2, 1, 1});
-        this.gridSecondPlayer = new GameGrid(gridSize, new int[] {1, 2, 1, 1});
 
+        switch (gridSize) {
+            case 5:
+                this.gridFirstPlayer = new GameGrid(gridSize, new int[] {2, 1, 0, 0});
+                this.gridSecondPlayer = new GameGrid(gridSize, new int[] {2, 1, 0, 0});
+            default:
+                this.gridFirstPlayer = new GameGrid(gridSize, new int[] {1, 2, 1, 1});
+                this.gridSecondPlayer = new GameGrid(gridSize, new int[] {1, 2, 1, 1});
+        }
 
         if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
             this.opponentAI = new GameAI(this.gridSize, this.mode, this);
@@ -50,6 +56,14 @@ public class GameController implements Parcelable {
 
     public GameGrid getGridSecondPlayer() {
         return gridSecondPlayer;
+    }
+
+    /**
+     * Places all ships for both players randomly, resulting in a legit placement to start the game.
+     */
+    public void placeAllShips() {
+        this.getGridFirstPlayer().getShipSet().placeShipsRandomly();
+        this.getGridSecondPlayer().getShipSet().placeShipsRandomly();
     }
 
     /**
