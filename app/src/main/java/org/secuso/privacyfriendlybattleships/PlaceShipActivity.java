@@ -55,4 +55,8 @@ public class PlaceShipActivity extends BaseActivity {
     protected void setupGridView(int size){
         //TODO: Implement this method. Maybe use the same method of the class GameActivity
     }
+
+    protected void setShips(){
+        //TODO: Implement this method
+    }
 }

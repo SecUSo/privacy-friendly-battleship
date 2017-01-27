@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,54 +24,17 @@ public class GameActivity extends BaseActivity {
     private ImageView mArrowLeft;
     private ImageView mArrowRight;
 
+    private GameGridAdapter adapterPlayerOne;
+    private GameGridAdapter adapterPlayerTwo;
     private GameMode gameMode;
+    private int gridSize;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
-
-
-        final SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.scroller);
-        if(mViewPager != null) {
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-        }
-
-        int index = mSharedPreferences.getInt("lastChosenPage", 0);
-
-        mViewPager.setCurrentItem(index);
-        mArrowLeft = (ImageView) findViewById(R.id.arrow_left);
-        mArrowRight = (ImageView) findViewById(R.id.arrow_right);
-
-        //care for initial postiton of the ViewPager
-        mArrowLeft.setVisibility((index==0)?View.INVISIBLE:View.VISIBLE);
-        mArrowRight.setVisibility((index==mSectionsPagerAdapter.getCount()-1)?View.INVISIBLE:View.VISIBLE);
-
-        //Update ViewPager on change
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mArrowLeft.setVisibility((position==0)?View.INVISIBLE:View.VISIBLE);
-                mArrowRight.setVisibility((position==mSectionsPagerAdapter.getCount()-1)?View.INVISIBLE:View.VISIBLE);
-
-                //save position in settings
-                SharedPreferences.Editor editor = mSharedPreferences.edit();
-                editor.putInt("lastChosenPage", position);
-                editor.apply();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
 
         initGame();
         setupGridView();
@@ -81,15 +47,7 @@ public class GameActivity extends BaseActivity {
     }
 
     public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.arrow_left:
-                mViewPager.arrowScroll(View.FOCUS_LEFT);
-                break;
-            case R.id.arrow_right:
-                mViewPager.arrowScroll(View.FOCUS_RIGHT);
-                break;
-            default:
-        }
+
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -118,24 +76,68 @@ public class GameActivity extends BaseActivity {
      */
     protected void initGame() {
 
+        GameController game;
+
         // Initialize the game settings
         Bundle intentGame = getIntent().getExtras();
-        GameMode gameMode = (GameMode) intentGame.get(Constants.GAME_MODE);
-        int gridSize = (int) intentGame.get(Constants.GRID_SIZE);
+        gameMode = (GameMode) intentGame.get(Constants.GAME_MODE);
+        gridSize = (int) intentGame.get(Constants.GRID_SIZE);
         boolean quickStart = (boolean) intentGame.get(Constants.QUICK_START);
-        if(quickStart){
-            GameController game = new GameController(gridSize, gameMode);
-            //TODO: Place Ships appropiately or randomly
+        boolean placeShips = (boolean) intentGame.get(Constants.PLACE_SHIPS);
+
+        // Initialize the game
+        if(quickStart && !placeShips){
+            // Quick start button in the MainActivity is pushed. Set the ships randomly
+            game = new GameController(gameMode, gridSize);
+            game.setShipsRandomly(game.getGridFirstPlayer(), game.getShipSetFirstPlayer(), game.getShipCount());
+        }
+        else if(!quickStart && placeShips){
+            // Initialize the game and set the ships according to the PlaceShipsActivity
+            // TODO: Implement this case
         }
         else{
-
+            // NOTE: This case should never be reached
+            // Show an error dialog
+            throw new Error("You selected the wrong settings!");
         }
     }
 
     protected void setupGridView() {
-        //TODO: Implement this method
+
+        // Get the grid view of the respective XML-file
+        GridView gridView = (GridView) findViewById(R.id.game_gridview_big);
+        gridView.setBackgroundColor(0);
+
+        // Set the margins and the size of a grid
+        gridView.setNumColumns(gridSize);
+
+        gridView.setAdapter(new GameGridAdapter());
+
     }
 
+
+    public static class GameGridAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            return null;
+        }
+    }
 
 
     public static class PageFragment extends Fragment {
