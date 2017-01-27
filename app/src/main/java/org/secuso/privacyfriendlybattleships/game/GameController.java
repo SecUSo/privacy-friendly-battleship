@@ -97,6 +97,24 @@ public class GameController implements Parcelable {
         return gridSecondPlayer;
     }
 
+    public boolean isShipCountLegit(int[] shipCount){
+        // TODO: Think about the bound for the cells covered by the ships. The current bound is set
+        // to the half of the total amount of grid cells, such that the probability of randomly
+        // hitting a ship is at most 1/2.
+        int bound =  (int) Math.floor(getGridSize() * getGridSize() / 2);
+        System.out.println("Bound:");
+        System.out.println(bound);
+        int coveredGridCells = 2 * shipCount[0] + 3 * shipCount[1] + 4 * shipCount[2] + 5 * shipCount[3];
+        System.out.println("Covered grid cells:");
+        System.out.println(coveredGridCells);
+        if (coveredGridCells > bound){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     public int getGridSize() {
         return gridSize;
     }
