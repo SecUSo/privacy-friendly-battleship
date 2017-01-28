@@ -198,7 +198,6 @@ public class GameShipSet implements Parcelable{
         for (GameShip[] shipsSizeN : this.ships) {
             for (GameShip ship : shipsSizeN) {
                 if(ship != null)
-                    if(ship != null)
                         ship.recreateShip(this.grid, this);
             }
         }
