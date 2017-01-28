@@ -156,6 +156,8 @@ public class GameController implements Parcelable {
         this.gridSecondPlayer = grids[1];
 
         this.opponentAI = in.createTypedArray(GameAI.CREATOR)[0];
-        this.opponentAI.setController(this);
+        if(this.opponentAI != null) {
+            this.opponentAI.setController(this);
+        }
     }
 }
