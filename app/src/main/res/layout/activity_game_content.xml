@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_fullwidth"
             android:layout_marginTop="30sp"
-            android:layout_marginStart="30sp"/>
+            android:layout_marginStart="30sp"
+            android:onClick="onClickButton"/>
     </LinearLayout>
 </RelativeLayout>

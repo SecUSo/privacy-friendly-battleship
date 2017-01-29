@@ -141,6 +141,8 @@ public class GameController implements Parcelable {
         return mode;
     }
 
+    public boolean getCurrentPlayer(){ return this.currentPlayer;}
+
     @Override
     public int describeContents() { return 0; }
 

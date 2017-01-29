@@ -33,24 +33,8 @@ public class PlaceShipActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Initialize the grid and place the ships
-        initGrid();
     }
 
-    protected void initGrid() {
-        Bundle intentGrid = getIntent().getExtras();
-        GameMode gameMode = (GameMode) intentGrid.get(Constants.GAME_MODE);
-        int gridSize = (int) intentGrid.get(Constants.GRID_SIZE);
-        boolean quickStart = (boolean) intentGrid.get(Constants.QUICK_START);
-        boolean placeShips = (boolean) intentGrid.get(Constants.PLACE_SHIPS);
-        if(!quickStart && placeShips){
-            // TODO: Initialize the game or the game grid depending on the game mode
-            setupGridView(gridSize);
-        }
-        else{
-            // TODO: Throw exception or error
-        }
-
-    }
 
     protected void setupGridView(int size){
         //TODO: Implement this method. Maybe use the same method of the class GameActivity

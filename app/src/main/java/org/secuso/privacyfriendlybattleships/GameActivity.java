@@ -2,42 +2,52 @@ package org.secuso.privacyfriendlybattleships;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 
+import java.util.Timer;
+
 public class GameActivity extends BaseActivity {
+
+    private Timer timerUpdate;
+    private SharedPreferences preferences = null;
+
     private GameMode gameMode;
     private int gridSize;
     private GameController controller;
+    private GameGridAdapter adapterPlayerOne;
+    private GameGridAdapter adapterPlayerTwo;
+    private GridView gridViewBig;
+    private GridView gridViewSmall;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setupPreferences();
         setContentView(R.layout.activity_game);
 
+        // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         Intent intentIn = getIntent();
-        this.controller = (GameController) intentIn.getParcelableExtra("controller");
+        this.controller = intentIn.getParcelableExtra("controller");
 
         this.gridSize = controller.getGridSize();
         this.gameMode = controller.getMode();
 
+        // Set up the grids
         setupGridView();
+    }
+
+    private void setupPreferences() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -45,44 +55,34 @@ public class GameActivity extends BaseActivity {
         return R.id.nav_game;
     }
 
-    public void onClick(View view) {
-
+    public void onClickButton(View view) {
+        if(view.getId() == R.id.game_button_fire){
+            // TODO: Implement this case
+        }
     }
 
     protected void setupGridView() {
 
-        // Get the grid view of the respective XML-file
-        GridView gridView = (GridView) findViewById(R.id.game_gridview_big);
-        gridView.setBackgroundColor(0);
+        // Get the grid views of the respective XML-files
+        gridViewBig = (GridView) findViewById(R.id.game_gridview_big);
+        gridViewSmall = (GridView) findViewById(R.id.game_gridview_small);
 
-        // Set the margins and the size of a grid
-        gridView.setNumColumns(this.gridSize);
+        // Set the background color of the grid
+        gridViewBig.setBackgroundColor(Color.BLACK);
+        gridViewSmall.setBackgroundColor(Color.BLACK);
 
-        gridView.setAdapter(new GameGridAdapter());
+        // Set the columns of the grid
+        gridViewBig.setNumColumns(this.gridSize);
+        gridViewSmall.setNumColumns(this.gridSize);
+
+        // Set the size of the grids
+
+        // Initialize the grid for player one
+        adapterPlayerOne = new GameGridAdapter(this, this.controller);
+        gridViewBig.setAdapter(adapterPlayerOne);
+
+
 
     }
 
-
-    public static class GameGridAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
-        }
-    }
 }
