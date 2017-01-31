@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.secuso.privacyfriendlybattleships.game.GameController;
@@ -76,11 +77,31 @@ public class GameActivity extends BaseActivity {
         gridViewSmall.setNumColumns(this.gridSize);
 
         // Set the size of the grids
+        //TODO: Make the grid scalable
 
         // Initialize the grid for player one
-        adapterPlayerOne = new GameGridAdapter(this, this.controller);
+        /*
+        SharedPreferences preferenceGridSize = this.getSharedPreferences("Grid size", MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferenceGridSize.edit();
+        edit.clear();
+        edit.putString("Grid", GameGridAdapter.SMALL_GRID);
+        edit.commit();
+        */
+        adapterPlayerOne = new GameGridAdapter(this, this.controller, "");
         gridViewBig.setAdapter(adapterPlayerOne);
+        adapterPlayerOne = new GameGridAdapter(this, this.controller, GameGridAdapter.SMALL_GRID);
+        gridViewSmall.setAdapter(adapterPlayerOne);
 
+        // Define the listener for the big grid view, such that it is possible to click on it. When
+        // clicking on that grid, the corresponding cell should be yellow.
+        gridViewBig.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                adapterPlayerOne.notifyDataSetChanged();
+            }
+        });
 
 
     }

@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlybattleships;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +18,20 @@ import org.secuso.privacyfriendlybattleships.game.GameController;
 
 public class GameGridAdapter extends BaseAdapter {
 
+    public static final String SMALL_GRID = "SMALL";
+
     // TODO: Add the images of the ships to this adapter
 
     Context context;
     GameController game;
     int gridSize;
+    String whichGrid;   // Denotes whether the big or the small grid view is chosen
 
-    public GameGridAdapter(Context context, GameController game){
+    public GameGridAdapter(Context context, GameController game, String whichGrid){
         this.context = context;
         this.game = game;
         this.gridSize = game.getGridSize();
+        this.whichGrid = whichGrid;
     }
 
     // Return the grid size.
@@ -50,13 +55,16 @@ public class GameGridAdapter extends BaseAdapter {
 
         ImageView gridCell;
         /*
-        Get the current grid cell. Therefore, get the row and the column of the current
+        Get the grid cell of the current player. Therefore, get the row and the column of that
         grid cell. Note that the GridView enumerates the grid cells from left to right and
-        from the top to the bottom. Furthermore it is not relevant which GameGrid one chooses.
+        from the top to the bottom.
         */
         int cellColumn = i % this.gridSize;
         int cellRow = (i - cellColumn) / this.gridSize;
         GameCell currentCell = game.getGridFirstPlayer().getCell(cellColumn, cellRow);
+        if(game.getCurrentPlayer()){
+            currentCell = game.getGridSecondPlayer().getCell(cellColumn, cellRow);
+        }
 
         /*
          If the grid cell was not initialized, set the color of the current grid to black or white
@@ -67,31 +75,17 @@ public class GameGridAdapter extends BaseAdapter {
             // TODO: Set the Layout parameters such that the grid is scalable
             gridCell.setLayoutParams(new GridView.LayoutParams(30,30));
             gridCell.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            gridCell.setBackgroundColor(Color.WHITE);
             // Set the grid cell of the current player
-            if(!game.getCurrentPlayer()){
-                if(currentCell.isShip()){
-                    /*
-                    TODO: Add an icon for the ship.
-                    Currently the grid cell consists of an empty grid with a black background
-                     */
-                    gridCell.setBackgroundColor(Color.BLACK);
-                }
-                else{
-                    gridCell.setBackgroundColor(Color.WHITE);
-                }
+            if(this.whichGrid.equals(SMALL_GRID) && currentCell.isShip()){
+                /*
+                If the current cell contains a ship, then set the color of the cell to black, but
+                only if we set the small grid, since the current player shall not know where
+                the ships of the opponent are.
+                */
+                //TODO: Add the icon of the ship
+                gridCell.setBackgroundColor(Color.BLACK);
             }
-            else{
-                currentCell = game.getGridSecondPlayer().getCell(cellColumn, cellRow);
-                if(currentCell.isShip()){
-                    //TODO: Add the icon for the ship
-                    gridCell.setBackgroundColor(Color.BLACK);
-                }
-                else{
-                    gridCell.setBackgroundColor(Color.WHITE);
-                }
-            }
-            // Return the initialized grid cell
-            return gridCell;
         }
         else{
             gridCell = (ImageView) view;
