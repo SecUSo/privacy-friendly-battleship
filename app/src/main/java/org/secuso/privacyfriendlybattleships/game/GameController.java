@@ -16,7 +16,7 @@ public class GameController implements Parcelable {
     private boolean currentPlayer;//false if first players turn, true if second players turn
     private GameAI opponentAI;
 
-    // Initialize the amount of ships for the game grids
+    // Amount of ships for standard grid sizes.
     private final static int[] SHIPCOUNTFIVE = {2,1,0,0};
     private final static int[] SHIPCOUNTTEN = {1,2,1,1};
 
@@ -42,9 +42,11 @@ public class GameController implements Parcelable {
             case 5:
                 this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
                 this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
+                break;
             default:
                 this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
                 this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
+                break;
         }
 
         if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
@@ -174,6 +176,8 @@ public class GameController implements Parcelable {
         this.gridSecondPlayer = grids[1];
 
         this.opponentAI = in.createTypedArray(GameAI.CREATOR)[0];
-        this.opponentAI.setController(this);
+        if(this.opponentAI != null) {
+            this.opponentAI.setController(this);
+        }
     }
 }
