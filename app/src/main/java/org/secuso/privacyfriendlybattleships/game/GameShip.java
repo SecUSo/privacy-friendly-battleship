@@ -108,8 +108,8 @@ public class GameShip implements Parcelable{
      * before deleting the Object.
      */
     public void close() {
-        for (int i = 0; i < this.size; i++) {
-            if ( this.shipSet.shipsOnCell(this.shipsCells[i]) == 1) this.shipsCells[i].setShip(false);
+        for(GameCell cell : this.shipsCells){
+            if ( this.shipSet.shipsOnCell(cell) == 1) cell.setShip(false);
         }
     }
 

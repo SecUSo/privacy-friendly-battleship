@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.Before;
 import org.secuso.privacyfriendlybattleships.game.Direction;
 import org.secuso.privacyfriendlybattleships.game.GameController;
+import org.secuso.privacyfriendlybattleships.game.GameGrid;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +16,18 @@ import static org.junit.Assert.assertEquals;
 public class GameControllerTest {
     GameController controller;
     GameController controllerSmall;
+
+    public void printGrid(GameGrid grid) {
+        for(int i = 0; i < grid.getSize(); i++){
+            for(int j = 0; j < grid.getSize(); j++) {
+                if(grid.getCell(i, j).isShip())
+                    System.out.print("1");
+                else
+                    System.out.print("0");
+            }
+            System.out.println();
+        }
+    }
 
     @Before
     public void init() {
