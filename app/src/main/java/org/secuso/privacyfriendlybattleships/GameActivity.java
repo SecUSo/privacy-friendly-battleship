@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 
@@ -23,10 +25,10 @@ public class GameActivity extends BaseActivity {
     private GameMode gameMode;
     private int gridSize;
     private GameController controller;
-    private GameGridAdapter adapterPlayerOne;
-    private GameGridAdapter adapterPlayerTwo;
+    private GameGridAdapter adapterPlayer;
     private GridView gridViewBig;
     private GridView gridViewSmall;
+    private GameActivityLayoutProvider layoutProvider;
     private int positionGridCell;   // Save the current position of the grid cell clicked
     private View prevCell = null;
 
@@ -44,8 +46,11 @@ public class GameActivity extends BaseActivity {
         this.gridSize = controller.getGridSize();
         this.gameMode = controller.getMode();
 
-        // Set up the grids
-        setupGridView(this.controller.getCurrentPlayer());
+        // Create a GameActivityLayoutProvider in order to scale the grids appropriately
+        layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
+
+        // Set up the grids for player one
+        setupGridView();
     }
 
     private void setupPreferences() {
@@ -64,7 +69,7 @@ public class GameActivity extends BaseActivity {
         // TODO: Implement the rest of the method. Think about the game modes and how to realize them
     }
 
-    protected void setupGridView(boolean currentPlayer) {
+    protected void setupGridView() {
 
         // Get the grid views of the respective XML-files
         gridViewBig = (GridView) findViewById(R.id.game_gridview_big);
@@ -78,9 +83,14 @@ public class GameActivity extends BaseActivity {
         gridViewBig.setNumColumns(this.gridSize);
         gridViewSmall.setNumColumns(this.gridSize);
 
-        // Set the size of the grids
-        //TODO: Make the grid scalable
-
+        // Set the layout of the grids
+        final ViewGroup.MarginLayoutParams marginLayoutParamsBig = (ViewGroup.MarginLayoutParams) gridViewBig.getLayoutParams();
+        final ViewGroup.MarginLayoutParams marginLayoutParamsSmall = (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
+        marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(),layoutProvider.getMargin(),layoutProvider.getMarginRight(),0);
+        // NOTE: The big grid shall be
+        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft() / 3, layoutProvider.getMargin() / 3, layoutProvider.getMarginRight() / 3,0);
+        gridViewBig.setLayoutParams(marginLayoutParamsBig);
+        gridViewSmall.setLayoutParams(marginLayoutParamsSmall);
 
         // Initialize the grid for player one
 
@@ -91,10 +101,10 @@ public class GameActivity extends BaseActivity {
         edit.putString("Grid", GameGridAdapter.SMALL_GRID);
         edit.commit();
         */
-        final GameGridAdapter adapter = new GameGridAdapter(this, this.controller, "");
+        final GameGridAdapter adapter = new GameGridAdapter(this, this.layoutProvider, this.controller, "");
         gridViewBig.setAdapter(adapter);
-        adapterPlayerOne = new GameGridAdapter(this, this.controller, GameGridAdapter.SMALL_GRID);
-        gridViewSmall.setAdapter(adapterPlayerOne);
+        adapterPlayer = new GameGridAdapter(this, this.layoutProvider, this.controller, GameGridAdapter.SMALL_GRID);
+        gridViewSmall.setAdapter(adapterPlayer);
 
         // Define the listener for the big grid view, such that it is possible to click on it. When
         // clicking on that grid, the corresponding cell should be yellow.

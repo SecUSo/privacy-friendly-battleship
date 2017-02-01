@@ -4,21 +4,19 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 /**
- * Created by Athene on 01.02.2017.
+ * Created by Ali Kalsen on 01.02.2017.
  */
 
 public class GameActivityLayoutProvider {
 
-    private final static int MARGIN_LEFT = 35;  // in pixel
-    private final static int MARGIN_RIGHT = 35; // in pixel
+    private final static int MARGIN_LEFT = 30;  // in pixel
+    private final static int MARGIN_RIGHT = 30; // in pixel
     private final Context context;
-    private final GameController game;
     private final int gridSize;
 
-    public GameActivityLayoutProvider(Context context, GameController controller){
+    public GameActivityLayoutProvider(Context context, int gridSize){
         this.context = context;
-        this.game = controller;
-        this.gridSize = this.game.getGridSize();
+        this.gridSize = gridSize;
     }
 
     public int getCellSizeInPixel() {
@@ -26,18 +24,48 @@ public class GameActivityLayoutProvider {
         int orientation = this.context.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             int displayWidth = this.context.getResources().getDisplayMetrics().widthPixels;
-            cellSize = (displayWidth - MARGIN_LEFT - MARGIN_RIGHT) / this.gridSize;
+            // Subtract the cell size with 1, such that the lines of the grid are visible.
+            // TODO: Edit the cell size, if the lines of the grid are not visible
+            cellSize = ((displayWidth - getMarginLeft() - getMarginRight()) / this.gridSize) - 1;
         } else {
             // TODO: Think about the layout of the grid when the orientation is landscape
+            int displayHeight = context.getResources().getDisplayMetrics().heightPixels;
+            cellSize = (displayHeight - 2 * getMargin()) / this.gridSize;
         }
 
         return cellSize;
     }
 
     public int getMargin(){
-        int displayHeiht = this.context.getResources().getDisplayMetrics().heightPixels;
-
+        int displayHeight = this.context.getResources().getDisplayMetrics().heightPixels;
+        int cellHeight = this.gridSize * (getCellSizeInPixel() + 1);
+        int heightLeft = displayHeight - cellHeight;
+        return heightLeft / 2;
     }
 
+    public int getMarginLeft() {
+        int orientation=context.getResources().getConfiguration().orientation;
+        if(orientation== Configuration.ORIENTATION_PORTRAIT){
+            return MARGIN_LEFT;
+        }else{
+            return calculateLandscapeSideMargin();
+        }
+    }
+
+    public int getMarginRight() {
+        int orientation=context.getResources().getConfiguration().orientation;
+        if(orientation== Configuration.ORIENTATION_PORTRAIT){
+            return MARGIN_RIGHT;
+        }else{
+            return calculateLandscapeSideMargin();
+        }
+    }
+
+    private int calculateLandscapeSideMargin(){
+        int cellSpaceWidth = this.gridSize * (getCellSizeInPixel() + 1);
+        int displayWidth = context.getResources().getDisplayMetrics().widthPixels;
+        int spaceLeft = displayWidth - cellSpaceWidth;
+        return spaceLeft / 2;
+    }
 
 }

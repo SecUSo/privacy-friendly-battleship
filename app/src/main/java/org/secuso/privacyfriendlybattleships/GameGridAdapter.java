@@ -9,11 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameCell;
 import org.secuso.privacyfriendlybattleships.game.GameController;
 
 /**
- * Created by Ali Kalsen on 27.01.2017.
+ * Created by Ali Kalsen on 27.01.2017. Last edit on 01.02.2017.
  */
 
 public class GameGridAdapter extends BaseAdapter {
@@ -24,11 +25,13 @@ public class GameGridAdapter extends BaseAdapter {
 
     Context context;
     GameController game;
+    GameActivityLayoutProvider layoutProvider;
     int gridSize;
     String whichGrid;   // Denotes whether the big or the small grid view is chosen
 
-    public GameGridAdapter(Context context, GameController game, String whichGrid){
+    public GameGridAdapter(Context context, GameActivityLayoutProvider layout, GameController game, String whichGrid){
         this.context = context;
+        this.layoutProvider = layout;
         this.game = game;
         this.gridSize = game.getGridSize();
         this.whichGrid = whichGrid;
@@ -72,10 +75,19 @@ public class GameGridAdapter extends BaseAdapter {
           */
         if(view == null){
             gridCell = new ImageView(this.context);
-            // TODO: Set the Layout parameters such that the grid is scalable
-            gridCell.setLayoutParams(new GridView.LayoutParams(30,30));
+
+            // Scale the grid cells by using the GameActivityLayoutProvider
+            int cellSize = this.layoutProvider.getCellSizeInPixel();
+            if(this.whichGrid.equals(SMALL_GRID)){
+                cellSize = cellSize / 3;
+                gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
+            }
+            else{
+                gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
+            }
             gridCell.setScaleType(ImageView.ScaleType.CENTER_CROP);
             gridCell.setBackgroundColor(Color.WHITE);
+
             // Set the grid cell of the current player
             if(this.whichGrid.equals(SMALL_GRID) && currentCell.isShip()){
                 /*
