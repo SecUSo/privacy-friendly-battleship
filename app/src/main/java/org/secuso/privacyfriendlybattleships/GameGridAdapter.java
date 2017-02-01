@@ -54,7 +54,7 @@ public class GameGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int cellIndex, View view, ViewGroup viewGroup) {
 
         ImageView gridCell;
         /*
@@ -62,17 +62,18 @@ public class GameGridAdapter extends BaseAdapter {
         grid cell. Note that the GridView enumerates the grid cells from left to right and
         from the top to the bottom.
         */
-        int cellColumn = i % this.gridSize;
-        int cellRow = (i - cellColumn) / this.gridSize;
-        GameCell currentCell = game.getGridFirstPlayer().getCell(cellColumn, cellRow);
-        if(game.getCurrentPlayer()){
-            currentCell = game.getGridSecondPlayer().getCell(cellColumn, cellRow);
-        }
+        int cellColumn = cellIndex % this.gridSize;
+        int cellRow = cellIndex / this.gridSize;
+        GameCell currentCell = (!game.getCurrentPlayer()) ?
+                game.getGridFirstPlayer().getCell(cellColumn, cellRow) :
+                game.getGridSecondPlayer().getCell(cellColumn, cellRow);
 
         /*
          If the grid cell was not initialized, set the color of the current grid to black or white
          in case that the grid cell is a part of a ship or not.
           */
+
+
         if(view == null){
             gridCell = new ImageView(this.context);
 

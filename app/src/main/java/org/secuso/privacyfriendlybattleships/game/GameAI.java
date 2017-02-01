@@ -56,9 +56,9 @@ public class GameAI implements Parcelable{
 
         //attack opponent and update local grid
         if ( this.controller.makeMove(true, col, row) ) {
-            this.gridUnderAttack[row][col] = 1;
+            this.gridUnderAttack[col][row] = 1;
         } else {
-            this.gridUnderAttack[row][col] = 2;
+            this.gridUnderAttack[col][row] = 2;
         }
     }
 

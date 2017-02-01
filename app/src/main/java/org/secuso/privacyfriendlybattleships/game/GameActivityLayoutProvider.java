@@ -11,6 +11,7 @@ public class GameActivityLayoutProvider {
 
     private final static int MARGIN_LEFT = 30;  // in pixel
     private final static int MARGIN_RIGHT = 30; // in pixel
+    private final static int MARGIN_TOP = 30; //in pixel
     private final Context context;
     private final int gridSize;
 
@@ -26,7 +27,7 @@ public class GameActivityLayoutProvider {
             int displayWidth = this.context.getResources().getDisplayMetrics().widthPixels;
             // Subtract the cell size with 1, such that the lines of the grid are visible.
             // TODO: Edit the cell size, if the lines of the grid are not visible
-            cellSize = ((displayWidth - getMarginLeft() - getMarginRight()) / this.gridSize) - 1;
+            cellSize = ((displayWidth - getMarginLeft() - getMarginRight() ) / this.gridSize);
         } else {
             // TODO: Think about the layout of the grid when the orientation is landscape
             int displayHeight = context.getResources().getDisplayMetrics().heightPixels;
@@ -37,10 +38,18 @@ public class GameActivityLayoutProvider {
     }
 
     public int getMargin(){
+        /*
         int displayHeight = this.context.getResources().getDisplayMetrics().heightPixels;
         int cellHeight = this.gridSize * (getCellSizeInPixel() + 1);
         int heightLeft = displayHeight - cellHeight;
         return heightLeft / 2;
+        */
+        int orientation=context.getResources().getConfiguration().orientation;
+        if(orientation== Configuration.ORIENTATION_PORTRAIT){
+            return MARGIN_TOP;
+        }else{
+            return calculateLandscapeSideMargin();
+        }
     }
 
     public int getMarginLeft() {

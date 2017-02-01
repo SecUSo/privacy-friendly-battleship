@@ -13,6 +13,7 @@ import android.widget.GridView;
 
 import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameController;
+import org.secuso.privacyfriendlybattleships.game.GameGrid;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 
 import java.util.Timer;
@@ -64,8 +65,25 @@ public class GameActivity extends BaseActivity {
 
     public void onClickButton(View view) {
         int column = this.positionGridCell % this.gridSize;
-        int row = (this.positionGridCell - column) % this.gridSize;
-        this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
+        int row = this.positionGridCell / this.gridSize;
+
+        Boolean currentPlayer = this.controller.getCurrentPlayer();
+        GameGrid currentGrid = !currentPlayer ?
+                this.controller.getGridFirstPlayer() :
+                this.controller.getGridSecondPlayer();
+
+        if(currentGrid.getCell(column, row).isHit())
+            return;
+
+        this.controller.makeMove(currentPlayer, column, row);
+
+        if(this.controller.getMode() == GameMode.VS_AI_EASY || this.controller.getMode() == GameMode.VS_AI_HARD){
+            // The AI makes a move
+            this.controller.getOpponentAI().makeMove();
+            adapterPlayer.notifyDataSetChanged();
+        }else {
+            setupGridView();
+        }
         // TODO: Implement the rest of the method. Think about the game modes and how to realize them
     }
 
@@ -86,11 +104,14 @@ public class GameActivity extends BaseActivity {
         // Set the layout of the grids
         final ViewGroup.MarginLayoutParams marginLayoutParamsBig = (ViewGroup.MarginLayoutParams) gridViewBig.getLayoutParams();
         final ViewGroup.MarginLayoutParams marginLayoutParamsSmall = (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
-        marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(),layoutProvider.getMargin(),layoutProvider.getMarginRight(),0);
+        marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
         // NOTE: The big grid shall be
         marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft() / 3, layoutProvider.getMargin() / 3, layoutProvider.getMarginRight() / 3,0);
         gridViewBig.setLayoutParams(marginLayoutParamsBig);
         gridViewSmall.setLayoutParams(marginLayoutParamsSmall);
+
+        gridViewBig.setHorizontalSpacing(1);
+        gridViewBig.setVerticalSpacing(1);
 
         // Initialize the grid for player one
 
