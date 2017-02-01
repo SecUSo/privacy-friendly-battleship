@@ -130,7 +130,7 @@ public class GameShipSet implements Parcelable{
                 if (this.ships[i][j] == null)
                     continue;
 
-                for (int k = i; k < this.ships.length; k++) {
+                for (int k = 0; k < this.ships.length; k++) {
                     for (int l = 0; l < this.ships[k].length; l++) {
                         if ( this.ships[k][l] == null || this.ships[k][l].equals(this.ships[i][j]) )
                             continue;
@@ -153,8 +153,10 @@ public class GameShipSet implements Parcelable{
         int count = 0;
         for (GameShip[] shipsSizeN : this.ships) {
             for (GameShip ship : shipsSizeN) {
-                if ( ship == null ) continue;
-                if ( ship.isDestroyed() ) count++;
+                if ( ship == null )
+                    continue;
+                if ( ship.containsCell(cell) )
+                    count++;
             }
         }
         return count;
