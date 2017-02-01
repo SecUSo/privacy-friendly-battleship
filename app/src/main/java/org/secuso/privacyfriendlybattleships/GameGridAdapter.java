@@ -34,10 +34,10 @@ public class GameGridAdapter extends BaseAdapter {
         this.whichGrid = whichGrid;
     }
 
-    // Return the grid size.
+    // Return the number of all grid cells.
     @Override
     public int getCount() {
-        return this.gridSize;
+        return this.gridSize * this.gridSize;
     }
 
     @Override

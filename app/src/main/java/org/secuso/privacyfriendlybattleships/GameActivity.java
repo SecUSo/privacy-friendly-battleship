@@ -27,6 +27,7 @@ public class GameActivity extends BaseActivity {
     private GameGridAdapter adapterPlayerTwo;
     private GridView gridViewBig;
     private GridView gridViewSmall;
+    private int positionGridCell;   // Save the current position of the grid cell clicked
 
 
     @Override
@@ -44,7 +45,7 @@ public class GameActivity extends BaseActivity {
         this.gameMode = controller.getMode();
 
         // Set up the grids
-        setupGridView();
+        setupGridView(this.controller.getCurrentPlayer());
     }
 
     private void setupPreferences() {
@@ -57,12 +58,13 @@ public class GameActivity extends BaseActivity {
     }
 
     public void onClickButton(View view) {
-        if(view.getId() == R.id.game_button_fire){
-            // TODO: Implement this case
-        }
+        int column = this.positionGridCell % this.gridSize;
+        int row = (this.positionGridCell - column) % this.gridSize;
+        this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
+        // TODO: Implement the rest of the method. Think about the game modes and how to realize them
     }
 
-    protected void setupGridView() {
+    protected void setupGridView(boolean currentPlayer) {
 
         // Get the grid views of the respective XML-files
         gridViewBig = (GridView) findViewById(R.id.game_gridview_big);
@@ -79,7 +81,9 @@ public class GameActivity extends BaseActivity {
         // Set the size of the grids
         //TODO: Make the grid scalable
 
+
         // Initialize the grid for player one
+
         /*
         SharedPreferences preferenceGridSize = this.getSharedPreferences("Grid size", MODE_PRIVATE);
         SharedPreferences.Editor edit = preferenceGridSize.edit();
@@ -87,8 +91,8 @@ public class GameActivity extends BaseActivity {
         edit.putString("Grid", GameGridAdapter.SMALL_GRID);
         edit.commit();
         */
-        adapterPlayerOne = new GameGridAdapter(this, this.controller, "");
-        gridViewBig.setAdapter(adapterPlayerOne);
+        final GameGridAdapter adapter = new GameGridAdapter(this, this.controller, "");
+        gridViewBig.setAdapter(adapter);
         adapterPlayerOne = new GameGridAdapter(this, this.controller, GameGridAdapter.SMALL_GRID);
         gridViewSmall.setAdapter(adapterPlayerOne);
 
@@ -97,13 +101,12 @@ public class GameActivity extends BaseActivity {
         gridViewBig.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-                adapterPlayerOne.notifyDataSetChanged();
+                positionGridCell = i;
+                view.setBackgroundColor(Color.YELLOW);
+                // Display the grid cell, which was clicked.
+                adapter.notifyDataSetChanged();
             }
         });
-
-
     }
 
 }
