@@ -28,7 +28,7 @@ public class GameActivity extends BaseActivity {
     private GridView gridViewBig;
     private GridView gridViewSmall;
     private int positionGridCell;   // Save the current position of the grid cell clicked
-
+    private View prevCell = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +71,8 @@ public class GameActivity extends BaseActivity {
         gridViewSmall = (GridView) findViewById(R.id.game_gridview_small);
 
         // Set the background color of the grid
-        gridViewBig.setBackgroundColor(Color.BLACK);
-        gridViewSmall.setBackgroundColor(Color.BLACK);
+        gridViewBig.setBackgroundColor(Color.GRAY);
+        gridViewSmall.setBackgroundColor(Color.GRAY);
 
         // Set the columns of the grid
         gridViewBig.setNumColumns(this.gridSize);
@@ -101,8 +101,12 @@ public class GameActivity extends BaseActivity {
         gridViewBig.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(prevCell != null){
+                    prevCell.setBackgroundColor(Color.WHITE);
+                }
                 positionGridCell = i;
                 view.setBackgroundColor(Color.YELLOW);
+                prevCell = view;
                 // Display the grid cell, which was clicked.
                 adapter.notifyDataSetChanged();
             }
