@@ -3,6 +3,8 @@ package org.secuso.privacyfriendlybattleships;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.annotation.BoolRes;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,14 +29,14 @@ public class GameGridAdapter extends BaseAdapter {
     GameController game;
     GameActivityLayoutProvider layoutProvider;
     int gridSize;
-    String whichGrid;   // Denotes whether the big or the small grid view is chosen
+    Boolean isMainGrid;   // Denotes whether the big or the small grid view is chosen
 
-    public GameGridAdapter(Context context, GameActivityLayoutProvider layout, GameController game, String whichGrid){
+    public GameGridAdapter(Context context, GameActivityLayoutProvider layout, GameController game, Boolean isMainGrid){
         this.context = context;
         this.layoutProvider = layout;
         this.game = game;
         this.gridSize = game.getGridSize();
-        this.whichGrid = whichGrid;
+        this.isMainGrid = isMainGrid;
     }
 
     // Return the number of all grid cells.
@@ -64,9 +66,9 @@ public class GameGridAdapter extends BaseAdapter {
         */
         int cellColumn = cellIndex % this.gridSize;
         int cellRow = cellIndex / this.gridSize;
-        GameCell currentCell = (!game.getCurrentPlayer()) ?
-                game.getGridFirstPlayer().getCell(cellColumn, cellRow) :
-                game.getGridSecondPlayer().getCell(cellColumn, cellRow);
+        GameCell currentCell = (game.getCurrentPlayer() ^ this.isMainGrid) ?
+                game.getGridSecondPlayer().getCell(cellColumn, cellRow) :
+                game.getGridFirstPlayer().getCell(cellColumn, cellRow);
 
         /*
          If the grid cell was not initialized, set the color of the current grid to black or white
@@ -79,7 +81,7 @@ public class GameGridAdapter extends BaseAdapter {
 
             // Scale the grid cells by using the GameActivityLayoutProvider
             int cellSize = this.layoutProvider.getCellSizeInPixel();
-            if(this.whichGrid.equals(SMALL_GRID)){
+            if(!isMainGrid){
                 cellSize = cellSize / 3;
                 gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             }
@@ -90,7 +92,7 @@ public class GameGridAdapter extends BaseAdapter {
             gridCell.setBackgroundColor(Color.WHITE);
 
             // Set the grid cell of the current player
-            if(this.whichGrid.equals(SMALL_GRID) && currentCell.isShip()){
+            if(!isMainGrid && currentCell.isShip()){
                 /*
                 If the current cell contains a ship, then set the color of the cell to black, but
                 only if we set the small grid, since the current player shall not know where
@@ -103,12 +105,13 @@ public class GameGridAdapter extends BaseAdapter {
         else{
             gridCell = (ImageView) view;
         }
+
         if(currentCell.isHit() && currentCell.isShip()){
-            gridCell.setBackgroundColor(Color.GREEN);
+            gridCell.setBackgroundColor(Color.RED);
         }
         else{
             if(currentCell.isHit()){
-                gridCell.setBackgroundColor(Color.RED);
+                gridCell.setBackgroundColor(Color.BLUE);
             }
         }
         return gridCell;

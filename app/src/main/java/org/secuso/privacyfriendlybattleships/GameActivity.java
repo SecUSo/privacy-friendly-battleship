@@ -26,7 +26,8 @@ public class GameActivity extends BaseActivity {
     private GameMode gameMode;
     private int gridSize;
     private GameController controller;
-    private GameGridAdapter adapterPlayer;
+    private GameGridAdapter adapterMainGrid;
+    private GameGridAdapter adapterMiniGrid;
     private GridView gridViewBig;
     private GridView gridViewSmall;
     private GameActivityLayoutProvider layoutProvider;
@@ -51,7 +52,7 @@ public class GameActivity extends BaseActivity {
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
         // Set up the grids for player one
-        setupGridView();
+        setupGridViews();
     }
 
     private void setupPreferences() {
@@ -68,26 +69,28 @@ public class GameActivity extends BaseActivity {
         int row = this.positionGridCell / this.gridSize;
 
         Boolean currentPlayer = this.controller.getCurrentPlayer();
-        GameGrid currentGrid = !currentPlayer ?
+        GameGrid GridUnderAttack = currentPlayer ?
                 this.controller.getGridFirstPlayer() :
                 this.controller.getGridSecondPlayer();
 
-        if(currentGrid.getCell(column, row).isHit())
+        if(GridUnderAttack.getCell(column, row).isHit()){
             return;
+        }
 
         this.controller.makeMove(currentPlayer, column, row);
+        adapterMainGrid.notifyDataSetChanged();
 
         if(this.controller.getMode() == GameMode.VS_AI_EASY || this.controller.getMode() == GameMode.VS_AI_HARD){
             // The AI makes a move
             this.controller.getOpponentAI().makeMove();
-            adapterPlayer.notifyDataSetChanged();
+            adapterMiniGrid.notifyDataSetChanged();
         }else {
-            setupGridView();
+            setupGridViews();
         }
         // TODO: Implement the rest of the method. Think about the game modes and how to realize them
     }
 
-    protected void setupGridView() {
+    protected void setupGridViews() {
 
         // Get the grid views of the respective XML-files
         gridViewBig = (GridView) findViewById(R.id.game_gridview_big);
@@ -122,10 +125,10 @@ public class GameActivity extends BaseActivity {
         edit.putString("Grid", GameGridAdapter.SMALL_GRID);
         edit.commit();
         */
-        final GameGridAdapter adapter = new GameGridAdapter(this, this.layoutProvider, this.controller, "");
-        gridViewBig.setAdapter(adapter);
-        adapterPlayer = new GameGridAdapter(this, this.layoutProvider, this.controller, GameGridAdapter.SMALL_GRID);
-        gridViewSmall.setAdapter(adapterPlayer);
+        adapterMainGrid = new GameGridAdapter(this, this.layoutProvider, this.controller, true);
+        gridViewBig.setAdapter(adapterMainGrid);
+        adapterMiniGrid= new GameGridAdapter(this, this.layoutProvider, this.controller, false);
+        gridViewSmall.setAdapter(adapterMiniGrid);
 
         // Define the listener for the big grid view, such that it is possible to click on it. When
         // clicking on that grid, the corresponding cell should be yellow.
@@ -139,7 +142,7 @@ public class GameActivity extends BaseActivity {
                 view.setBackgroundColor(Color.YELLOW);
                 prevCell = view;
                 // Display the grid cell, which was clicked.
-                adapter.notifyDataSetChanged();
+                adapterMainGrid.notifyDataSetChanged();
             }
         });
     }
