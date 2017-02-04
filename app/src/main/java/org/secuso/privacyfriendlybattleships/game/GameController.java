@@ -97,13 +97,18 @@ public class GameController implements Parcelable {
             //current player has won the game
             //TODO: Do some action to finish the game.
         }
-
-        //prepare for next turn
-        this.currentPlayer = !this.currentPlayer;
-
         //return if move was a hit
         if( cellUnderAttack.isShip() ) return true;
         return false;
+    }
+
+    public void switchPlayers() {
+        // TODO: cleanup
+        if(this.getMode() != GameMode.VS_PLAYER) {
+            throw new IllegalStateException("woot?");
+        }
+        //prepare for next turn
+        this.currentPlayer = !this.currentPlayer;
     }
 
     private GameGrid gridUnderAttack() {

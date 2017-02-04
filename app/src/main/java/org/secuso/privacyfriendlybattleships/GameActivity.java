@@ -77,7 +77,10 @@ public class GameActivity extends BaseActivity {
             return;
         }
 
-        this.controller.makeMove(currentPlayer, column, row);
+        boolean isHit = this.controller.makeMove(currentPlayer, column, row);
+        if(!isHit) {
+            controller.switchPlayers();
+        }
         adapterMainGrid.notifyDataSetChanged();
 
         if(this.controller.getMode() == GameMode.VS_AI_EASY || this.controller.getMode() == GameMode.VS_AI_HARD){
