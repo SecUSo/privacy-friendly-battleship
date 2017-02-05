@@ -112,12 +112,15 @@ public class GameActivity extends BaseActivity {
         final ViewGroup.MarginLayoutParams marginLayoutParamsSmall = (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
         marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
         // NOTE: The big grid shall be
-        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft() / 3, layoutProvider.getMargin() / 3, layoutProvider.getMarginRight() / 3,0);
+        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
         gridViewBig.setLayoutParams(marginLayoutParamsBig);
         gridViewSmall.setLayoutParams(marginLayoutParamsSmall);
 
         gridViewBig.setHorizontalSpacing(1);
         gridViewBig.setVerticalSpacing(1);
+
+        gridViewSmall.setHorizontalSpacing(1);
+        gridViewSmall.setVerticalSpacing(1);
 
         // Initialize the grid for player one
 

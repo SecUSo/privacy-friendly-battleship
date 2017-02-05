@@ -82,7 +82,7 @@ public class GameGridAdapter extends BaseAdapter {
             // Scale the grid cells by using the GameActivityLayoutProvider
             int cellSize = this.layoutProvider.getCellSizeInPixel();
             if(!isMainGrid){
-                cellSize = cellSize / 3;
+                cellSize = cellSize / 2;
                 gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             }
             else{
