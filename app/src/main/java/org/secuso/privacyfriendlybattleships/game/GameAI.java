@@ -38,13 +38,14 @@ public class GameAI implements Parcelable{
 
     public void makeMove(){
         if(this.mode == GameMode.VS_AI_EASY) {
-            makeRandomMove();
+            while ( makeRandomMove() ) {};
+            this.controller.switchPlayers();
         } else if(this.mode == GameMode.VS_AI_HARD) {
             //TODO: implementation of AI for higher difficulty
         }
     }
 
-    private void makeRandomMove(){
+    private boolean makeRandomMove(){
         int col;
         int row;
 
@@ -55,11 +56,15 @@ public class GameAI implements Parcelable{
         } while (this.gridUnderAttack[col][row] != 0);
 
         //attack opponent and update local grid
-        if ( this.controller.makeMove(true, col, row) ) {
+        boolean isHit = this.controller.makeMove(true, col, row);
+
+        if ( isHit ) {
             this.gridUnderAttack[col][row] = 1;
         } else {
             this.gridUnderAttack[col][row] = 2;
         }
+
+        return isHit;
     }
 
     @Override

@@ -2,6 +2,10 @@ package org.secuso.privacyfriendlybattleships.game;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
+
+import org.secuso.privacyfriendlybattleships.GameActivity;
+import org.secuso.privacyfriendlybattleships.R;
 
 /**
  * Created by Ali Kalsen on 01.02.2017.
@@ -12,15 +16,16 @@ public class GameActivityLayoutProvider {
     private final static int MARGIN_LEFT = 30;  // in pixel
     private final static int MARGIN_RIGHT = 30; // in pixel
     private final static int MARGIN_TOP = 30; //in pixel
-    private final Context context;
+    private final GameActivity context;
     private final int gridSize;
+    private static final String TAG = GameActivityLayoutProvider.class.getSimpleName();
 
-    public GameActivityLayoutProvider(Context context, int gridSize){
+    public GameActivityLayoutProvider(GameActivity context, int gridSize){
         this.context = context;
         this.gridSize = gridSize;
     }
 
-    public int getCellSizeInPixel() {
+    public int getMainGridCellSizeInPixel() {
         int cellSize = 0;
         int orientation = this.context.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -28,6 +33,21 @@ public class GameActivityLayoutProvider {
             // Subtract the cell size with 1, such that the lines of the grid are visible.
             // TODO: Edit the cell size, if the lines of the grid are not visible
             cellSize = ((displayWidth - getMarginLeft() - getMarginRight() ) / this.gridSize);
+        } else {
+            // TODO: Think about the layout of the grid when the orientation is landscape
+            int displayHeight = context.getResources().getDisplayMetrics().heightPixels;
+            cellSize = (displayHeight - 2 * getMargin()) / this.gridSize;
+        }
+
+        return cellSize;
+    }
+
+    public int getMiniGridCellSizeInPixel() {
+        int cellSize;
+        int orientation = this.context.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            int layoutHeight = this.context.findViewById(R.id.game_linear_layout).getHeight();
+            cellSize =  (layoutHeight - getMargin()*2) / this.gridSize;
         } else {
             // TODO: Think about the layout of the grid when the orientation is landscape
             int displayHeight = context.getResources().getDisplayMetrics().heightPixels;
@@ -71,7 +91,7 @@ public class GameActivityLayoutProvider {
     }
 
     private int calculateLandscapeSideMargin(){
-        int cellSpaceWidth = this.gridSize * (getCellSizeInPixel() + 1);
+        int cellSpaceWidth = this.gridSize * (getMainGridCellSizeInPixel() + 1);
         int displayWidth = context.getResources().getDisplayMetrics().widthPixels;
         int spaceLeft = displayWidth - cellSpaceWidth;
         return spaceLeft / 2;

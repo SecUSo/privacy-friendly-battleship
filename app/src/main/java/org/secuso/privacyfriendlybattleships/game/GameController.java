@@ -103,10 +103,6 @@ public class GameController implements Parcelable {
     }
 
     public void switchPlayers() {
-        // TODO: cleanup
-        if(this.getMode() != GameMode.VS_PLAYER) {
-            throw new IllegalStateException("woot?");
-        }
         //prepare for next turn
         this.currentPlayer = !this.currentPlayer;
     }

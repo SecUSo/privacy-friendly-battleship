@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -33,6 +34,7 @@ public class GameActivity extends BaseActivity {
     private GameActivityLayoutProvider layoutProvider;
     private int positionGridCell;   // Save the current position of the grid cell clicked
     private View prevCell = null;
+    private static final String TAG = GameActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,18 @@ public class GameActivity extends BaseActivity {
 
         // Set up the grids for player one
         setupGridViews();
+
+        //set correct size for small grid
+        gridViewSmall.post(new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup.LayoutParams layoutParams = gridViewSmall.getLayoutParams();
+                layoutParams.width = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
+                layoutParams.height = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
+                Log.d(TAG, "" + layoutParams.width);
+                gridViewSmall.setLayoutParams(layoutParams);
+            }
+        });
     }
 
     private void setupPreferences() {
@@ -73,6 +87,7 @@ public class GameActivity extends BaseActivity {
                 this.controller.getGridFirstPlayer() :
                 this.controller.getGridSecondPlayer();
 
+        //Don't attack same cell twice
         if(GridUnderAttack.getCell(column, row).isHit()){
             return;
         }
@@ -83,14 +98,16 @@ public class GameActivity extends BaseActivity {
         }
         adapterMainGrid.notifyDataSetChanged();
 
-        if(this.controller.getMode() == GameMode.VS_AI_EASY || this.controller.getMode() == GameMode.VS_AI_HARD){
-            // The AI makes a move
+
+        if( this.controller.getCurrentPlayer() &&
+                (this.controller.getMode() == GameMode.VS_AI_EASY ||
+                 this.controller.getMode() == GameMode.VS_AI_HARD) ){
+            //make move for AI
             this.controller.getOpponentAI().makeMove();
             adapterMiniGrid.notifyDataSetChanged();
-        }else {
+        }else {//setup view for next player
             setupGridViews();
         }
-        // TODO: Implement the rest of the method. Think about the game modes and how to realize them
     }
 
     protected void setupGridViews() {
@@ -108,13 +125,22 @@ public class GameActivity extends BaseActivity {
         gridViewSmall.setNumColumns(this.gridSize);
 
         // Set the layout of the grids
-        final ViewGroup.MarginLayoutParams marginLayoutParamsBig = (ViewGroup.MarginLayoutParams) gridViewBig.getLayoutParams();
-        final ViewGroup.MarginLayoutParams marginLayoutParamsSmall = (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
+        final ViewGroup.MarginLayoutParams marginLayoutParamsBig =
+                (ViewGroup.MarginLayoutParams) gridViewBig.getLayoutParams();
+        final ViewGroup.MarginLayoutParams marginLayoutParamsSmall =
+                (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
+
         marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
-        // NOTE: The big grid shall be
-        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
+        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),layoutProvider.getMargin());
+
         gridViewBig.setLayoutParams(marginLayoutParamsBig);
         gridViewSmall.setLayoutParams(marginLayoutParamsSmall);
+
+        ViewGroup.LayoutParams layoutParams = gridViewSmall.getLayoutParams();
+        layoutParams.width = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
+        layoutParams.height = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
+        Log.d(TAG, "" + layoutParams.width);
+        gridViewSmall.setLayoutParams(layoutParams);
 
         gridViewBig.setHorizontalSpacing(1);
         gridViewBig.setVerticalSpacing(1);
@@ -123,14 +149,6 @@ public class GameActivity extends BaseActivity {
         gridViewSmall.setVerticalSpacing(1);
 
         // Initialize the grid for player one
-
-        /*
-        SharedPreferences preferenceGridSize = this.getSharedPreferences("Grid size", MODE_PRIVATE);
-        SharedPreferences.Editor edit = preferenceGridSize.edit();
-        edit.clear();
-        edit.putString("Grid", GameGridAdapter.SMALL_GRID);
-        edit.commit();
-        */
         adapterMainGrid = new GameGridAdapter(this, this.layoutProvider, this.controller, true);
         gridViewBig.setAdapter(adapterMainGrid);
         adapterMiniGrid= new GameGridAdapter(this, this.layoutProvider, this.controller, false);
@@ -151,6 +169,11 @@ public class GameActivity extends BaseActivity {
                 adapterMainGrid.notifyDataSetChanged();
             }
         });
+
+
     }
 
+    public GridView getGridViewBig() {
+        return gridViewBig;
+    }
 }

@@ -1,10 +1,6 @@
 package org.secuso.privacyfriendlybattleships;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.annotation.BoolRes;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -25,13 +21,14 @@ public class GameGridAdapter extends BaseAdapter {
 
     // TODO: Add the images of the ships to this adapter
 
-    Context context;
+    GameActivity context;
     GameController game;
     GameActivityLayoutProvider layoutProvider;
     int gridSize;
     Boolean isMainGrid;   // Denotes whether the big or the small grid view is chosen
+    private static final String TAG = GameGridAdapter.class.getSimpleName();
 
-    public GameGridAdapter(Context context, GameActivityLayoutProvider layout, GameController game, Boolean isMainGrid){
+    public GameGridAdapter(GameActivity context, GameActivityLayoutProvider layout, GameController game, Boolean isMainGrid){
         this.context = context;
         this.layoutProvider = layout;
         this.game = game;
@@ -80,12 +77,13 @@ public class GameGridAdapter extends BaseAdapter {
             gridCell = new ImageView(this.context);
 
             // Scale the grid cells by using the GameActivityLayoutProvider
-            int cellSize = this.layoutProvider.getCellSizeInPixel();
+            int cellSize;
             if(!isMainGrid){
-                cellSize = cellSize / 2;
+                cellSize = this.layoutProvider.getMiniGridCellSizeInPixel();
                 gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             }
             else{
+                cellSize = this.layoutProvider.getMainGridCellSizeInPixel();
                 gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             }
             gridCell.setScaleType(ImageView.ScaleType.CENTER_CROP);

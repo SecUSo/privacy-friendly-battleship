@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin">
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/game_gridview_big"
@@ -15,33 +16,28 @@
         android:gravity="center"/>
 
     <LinearLayout
+        android:id="@+id/game_linear_layout"
         android:layout_below="@id/game_gridview_big"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:gravity ="start"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        android:layout_height="match_parent">
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/game_gridview_small"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content"
-            android:columnWidth="30sp"
+            android:layout_height="match_parent"
+            android:layout_width="200dp"
             android:numColumns="auto_fit"
-            android:verticalSpacing="1sp"
-            android:horizontalSpacing="1sp"
-            android:stretchMode="columnWidth"/>
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"/>
 
         <Button
             android:id="@+id/game_button_fire"
             android:text="@string/game_button_fire"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_fullwidth"
-            android:layout_marginTop="30sp"
-            android:layout_marginStart="30sp"
+            android:layout_gravity="center"
             android:onClick="onClickButton"/>
     </LinearLayout>
 </RelativeLayout>
