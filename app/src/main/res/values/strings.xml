@@ -40,7 +40,17 @@
     <string name="game_button_start">New Game</string>
     <string name="game_button_continue">Continue Game</string>
     <string name="game_button_fire">Fire!</string>
+    <string name="game_time">Time</string>
+    <string name="game_draws">Draws</string>
+    <string name="game_player_one">Player 1</string>
+    <string name="game_player_two">Player 2</string>
     <string name="game_desc">This is the default main menu for game apps. The viewpager above should be used to switch between game modes.</string>
+
+    <!--###PLACE SHIPS###-->
+    <string name="size_5_ships">Ships of size 5</string>
+    <string name="size_4_ships">Ships of size 4</string>
+    <string name="size_3_ships">Ships of size 3</string>
+    <string name="size_2_ships">Ships of size 2</string>
 
     <!--###HELP###-->
     <string name="help">Help</string>

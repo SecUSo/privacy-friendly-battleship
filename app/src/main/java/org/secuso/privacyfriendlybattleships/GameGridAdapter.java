@@ -80,14 +80,8 @@ public class GameGridAdapter extends BaseAdapter {
             gridCell = new ImageView(this.context);
 
             // Scale the grid cells by using the GameActivityLayoutProvider
-            int cellSize = this.layoutProvider.getCellSizeInPixel();
-            if(!isMainGrid){
-                cellSize = cellSize / 2;
-                gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
-            }
-            else{
-                gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
-            }
+            int cellSize = isMainGrid ? layoutProvider.getCellSize() : layoutProvider.getCellSizeSmall();
+            gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             gridCell.setScaleType(ImageView.ScaleType.CENTER_CROP);
             gridCell.setBackgroundColor(Color.WHITE);
 

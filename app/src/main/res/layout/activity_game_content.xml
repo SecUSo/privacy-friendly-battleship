@@ -9,39 +9,55 @@
         android:layout_height="wrap_content"
         android:columnWidth="70dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="1sp"
-        android:horizontalSpacing="1sp"
         android:stretchMode="columnWidth"
         android:gravity="center"/>
 
     <LinearLayout
         android:layout_below="@id/game_gridview_big"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:gravity ="start"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        android:layout_height="wrap_content">
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/game_gridview_small"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content"
-            android:columnWidth="30sp"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="1sp"
-            android:horizontalSpacing="1sp"
-            android:stretchMode="columnWidth"/>
-
-        <Button
-            android:id="@+id/game_button_fire"
-            android:text="@string/game_button_fire"
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_fullwidth"
-            android:layout_marginTop="30sp"
-            android:layout_marginStart="30sp"
-            android:onClick="onClickButton"/>
+            android:numColumns="auto_fit"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity ="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_draws"
+                android:textStyle="bold"
+                android:layout_weight="10"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/draws"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:layout_weight="10"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/game_button_fire"
+                android:text="@string/game_button_fire"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_fullwidth"
+                android:onClick="onClickButton"
+                android:layout_weight="1"
+                android:layout_marginBottom="30px"/>
+        </LinearLayout>
+
     </LinearLayout>
+
 </RelativeLayout>

@@ -2,6 +2,7 @@ package org.secuso.privacyfriendlybattleships;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameController;
@@ -53,6 +56,23 @@ public class GameActivity extends BaseActivity {
 
         // Set up the grids for player one
         setupGridViews();
+
+        // Set up the time, the number of draws and the string for the current player
+        setupRest();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        /*
+        Create a new GridView based on the changed orientation. Reset the variable layoutProvider,
+        such that the layout of the grid can be recalculated.
+         */
+        layoutProvider.reset();
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setupGridViews();
+        }
     }
 
     private void setupPreferences() {
@@ -107,22 +127,21 @@ public class GameActivity extends BaseActivity {
         gridViewBig.setNumColumns(this.gridSize);
         gridViewSmall.setNumColumns(this.gridSize);
 
-        // Set the layout of the grids
+        // Set the layout and the size of the cells for the big grid
+        layoutProvider.computeCellSizeInPixel();
         final ViewGroup.MarginLayoutParams marginLayoutParamsBig = (ViewGroup.MarginLayoutParams) gridViewBig.getLayoutParams();
-        final ViewGroup.MarginLayoutParams marginLayoutParamsSmall = (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
-        marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
-        // NOTE: The big grid shall be
-        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMargin(), layoutProvider.getMarginRight(),0);
+        marginLayoutParamsBig.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMarginTop(), layoutProvider.getMarginRight(),0);
         gridViewBig.setLayoutParams(marginLayoutParamsBig);
-        gridViewSmall.setLayoutParams(marginLayoutParamsSmall);
-
         gridViewBig.setHorizontalSpacing(1);
         gridViewBig.setVerticalSpacing(1);
 
+        // Now set the layout and the size of the cells for the small grid
+        layoutProvider.computeCellSizeForSmallGrid();
+        final ViewGroup.MarginLayoutParams marginLayoutParamsSmall = (ViewGroup.MarginLayoutParams) gridViewSmall.getLayoutParams();
+        marginLayoutParamsSmall.setMargins(layoutProvider.getMarginLeft(), layoutProvider.getMarginTop(), layoutProvider.getMarginRight(), layoutProvider.getMarginBottom());
+        gridViewSmall.setLayoutParams(marginLayoutParamsSmall);
         gridViewSmall.setHorizontalSpacing(1);
         gridViewSmall.setVerticalSpacing(1);
-
-        // Initialize the grid for player one
 
         /*
         SharedPreferences preferenceGridSize = this.getSharedPreferences("Grid size", MODE_PRIVATE);
@@ -153,4 +172,35 @@ public class GameActivity extends BaseActivity {
         });
     }
 
+    protected void setupRest(){
+
+        TextView textPlayer = (TextView) findViewById(R.id.player_name);
+        int playerName = this.controller.getCurrentPlayer() ? R.string.game_player_one : R.string.game_player_two;
+        textPlayer.setText(getResources().getString(playerName));
+
+        TextView timerView = (TextView) findViewById(R.id.timerView);
+        timerView.setText(timeToString(0));
+
+        TextView drawsView = (TextView) findViewById(R.id.draws);
+        drawsView.setText(drawsToString(0));
+    }
+
+    protected void update(){
+        //TODO: Implement this method
+    }
+
+    protected String drawsToString(int draws){
+        return (draws < 10) ? "0" + String.valueOf(draws) : String.valueOf(draws);
+    }
+
+    private String timeToString(int time) {
+        int seconds = time % 60;
+        int minutes = ((time - seconds) / 60) % 60;
+        int hours = (time - minutes - seconds) / (3600);
+        String h, m, s;
+        s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
+        m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
+        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
+        return h + ":" + m + ":" + s;
+    }
 }
