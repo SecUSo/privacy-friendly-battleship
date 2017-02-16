@@ -4,11 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Alexander Müller on 16.12.2016.
+ * Created by Alexander Müller on 16.12.2016. Edited by Ali Kalsen on 15.02.2017
  */
 
 public class GameController implements Parcelable {
 
+    private BattleshipsTimer timerPlayerOne;
+    private BattleshipsTimer timerPlayerTwo;
+    private int attemptsPlayerOne;
+    private int attemptsPlayerTwo;
+    private boolean playerWins; // Falg for identifying the winner. If true, then player one has won, otherwise player two has won.
     private GameGrid gridFirstPlayer;
     private GameGrid gridSecondPlayer;
     private int gridSize;
@@ -27,6 +32,10 @@ public class GameController implements Parcelable {
         this.opponentAI = null; //only player vs player with custom game
         this.gridFirstPlayer = new GameGrid(gridSize, shipCount);
         this.gridSecondPlayer = new GameGrid(gridSize, shipCount);
+        this.timerPlayerOne = new BattleshipsTimer();
+        this.timerPlayerTwo = new BattleshipsTimer();
+        this.attemptsPlayerOne = 0;
+        this.attemptsPlayerTwo = 0;
     }
 
     public GameController(int gridSize, GameMode mode) {
@@ -54,6 +63,11 @@ public class GameController implements Parcelable {
         } else if (this.mode == GameMode.VS_PLAYER) {
             this.opponentAI = null;
         }
+
+        this.timerPlayerOne = new BattleshipsTimer();
+        this.timerPlayerTwo = new BattleshipsTimer();
+        this.attemptsPlayerOne = 0;
+        this.attemptsPlayerTwo = 0;
     }
 
     public GameGrid getGridFirstPlayer() {
@@ -91,12 +105,16 @@ public class GameController implements Parcelable {
 
         //mark cell hit
         cellUnderAttack.setHit(true);
+        increaseNumberOfAttempts();
 
-        //check if player has won
+        //check if the current player has won
         if (this.gridUnderAttack().getShipSet().allShipsDestroyed() ){
-            //current player has won the game
-            //TODO: Do some action to finish the game.
+            //Current player has won the game. If the current player is player one, then set
+            // playerWins = true, else player two wins. Therefore set playerWins = false
+            playerWins = !getCurrentPlayer() ? true : false;
+
         }
+
         //return if move was a hit
         if( cellUnderAttack.isShip() ) return true;
         return false;
@@ -104,7 +122,7 @@ public class GameController implements Parcelable {
 
     public void switchPlayers() {
         //prepare for next turn
-        this.currentPlayer = !this.currentPlayer;
+        this.currentPlayer = !getCurrentPlayer();
     }
 
     private GameGrid gridUnderAttack() {
@@ -180,5 +198,77 @@ public class GameController implements Parcelable {
         if(this.opponentAI != null) {
             this.opponentAI.setController(this);
         }
+
+        this.timerPlayerOne = new BattleshipsTimer();
+        this.timerPlayerTwo = new BattleshipsTimer();
+        this.attemptsPlayerOne = 0;
+        this.attemptsPlayerTwo = 0;
     }
+
+    public int getAttemptsPlayerOne(){
+        return attemptsPlayerOne;
+    }
+
+    public int getAttemptsPlayerTwo(){
+        // Note: The AI implicitly is the second player. Since its number of atttemtps are not relevant for the game,
+        // we display the number of attempts for the first player instead.
+        if(this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD){
+            return attemptsPlayerOne;
+        }
+        return attemptsPlayerTwo;
+    }
+
+    public void increaseNumberOfAttempts(){
+        if(!getCurrentPlayer()){
+            attemptsPlayerOne += 1;
+        }
+        else{
+            attemptsPlayerTwo += 1;
+        }
+    }
+
+    public int getTime(){
+        // Note: The AI implicitly is the second player. Since its time is not relevant for the game,
+        // we display the time of the first player instead.
+        if(this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD){
+            return timerPlayerOne.getTime();
+        }
+        else{
+            return !getCurrentPlayer() ? timerPlayerOne.getTime() : timerPlayerTwo.getTime();
+        }
+    }
+
+    public void startTimer(){
+        if(!getCurrentPlayer()){
+            timerPlayerOne.start();
+        }
+        else{
+            timerPlayerTwo.start();
+        }
+    }
+
+    public void stopTimer(){
+        if(!getCurrentPlayer()){
+            timerPlayerOne.stop();
+        }
+        else{
+            timerPlayerTwo.stop();
+        }
+    }
+
+    public String timeToString(int time) {
+        int seconds = time % 60;
+        int minutes = ((time - seconds) / 60) % 60;
+        int hours = (time - minutes - seconds) / (3600);
+        String h, m, s;
+        s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
+        m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
+        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
+        return h + ":" + m + ":" + s;
+    }
+
+    public boolean getWinner(){
+        return playerWins;
+    }
+
 }
