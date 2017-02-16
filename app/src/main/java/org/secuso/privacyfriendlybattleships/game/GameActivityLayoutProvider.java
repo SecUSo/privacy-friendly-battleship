@@ -1,8 +1,6 @@
 package org.secuso.privacyfriendlybattleships.game;
 
-import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
 
 import org.secuso.privacyfriendlybattleships.GameActivity;
 import org.secuso.privacyfriendlybattleships.R;

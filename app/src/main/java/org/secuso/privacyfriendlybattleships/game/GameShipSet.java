@@ -204,4 +204,23 @@ public class GameShipSet implements Parcelable{
             }
         }
     }
+
+    /**
+     * Finds the ship, which contains the cell.
+     * @param gameCell: The cell which is assigned to at most one ship.
+     * @return The ship containing gameCell.
+     */
+    public GameShip findShipContainingCell(GameCell gameCell){
+        GameShip shiptoFind = null;
+        if(gameCell.isShip()){
+            for(GameShip[] shipSizeN : this.ships){
+                for(GameShip ship : shipSizeN){
+                    if(ship.containsCell(gameCell)){
+                        shiptoFind = ship;
+                    }
+                }
+            }
+        }
+        return shiptoFind;
+    }
 }
