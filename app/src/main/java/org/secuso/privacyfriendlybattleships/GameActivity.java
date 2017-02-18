@@ -1,5 +1,8 @@
 package org.secuso.privacyfriendlybattleships;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,9 +16,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
+import org.secuso.privacyfriendlybattleships.game.GameCell;
 import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameGrid;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
+import org.secuso.privacyfriendlybattleships.game.GameShip;
 
 import java.util.Timer;
 
@@ -79,27 +84,33 @@ public class GameActivity extends BaseActivity {
     }
 
     public void onClickButton(View view) {
+
+        GameGrid GridUnderAttack = this.controller.gridUnderAttack();
+
         int column = this.positionGridCell % this.gridSize;
         int row = this.positionGridCell / this.gridSize;
-
-        Boolean currentPlayer = this.controller.getCurrentPlayer();
-        GameGrid GridUnderAttack = currentPlayer ?
-                this.controller.getGridFirstPlayer() :
-                this.controller.getGridSecondPlayer();
+        GameCell attackedCell = GridUnderAttack.getCell(column, row);
 
         //Don't attack same cell twice
-        if(GridUnderAttack.getCell(column, row).isHit()){
+        if(attackedCell.isHit()){
             return;
         }
 
-        boolean isHit = this.controller.makeMove(currentPlayer, column, row);
+        boolean isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
         if(!isHit) {
             controller.switchPlayers();
         }
+        else{
+            GameShip ship = GridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
+            if(ship.isDestroyed()){
+                // Show dialog
+                new GameDialog().show(getFragmentManager(), GameDialog.class.getSimpleName());
+            }
+        }
+
         adapterMainGrid.notifyDataSetChanged();
 
-
-        if( this.controller.getCurrentPlayer() &&
+        if(this.controller.getCurrentPlayer() &&
                 (this.controller.getMode() == GameMode.VS_AI_EASY ||
                  this.controller.getMode() == GameMode.VS_AI_HARD) ){
             //make move for AI
@@ -173,7 +184,18 @@ public class GameActivity extends BaseActivity {
 
     }
 
-    public GridView getGridViewBig() {
-        return gridViewBig;
+    public static class GameDialog extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.game_dialog_hit)
+                    .setPositiveButton("OK", null);
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+
     }
+
 }

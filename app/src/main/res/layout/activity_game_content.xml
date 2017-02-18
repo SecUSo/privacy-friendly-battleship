@@ -26,18 +26,24 @@
             android:layout_height="match_parent"
             android:layout_width="200dp"
             android:numColumns="auto_fit"
-            android:verticalSpacing="1dp"
-            android:horizontalSpacing="1dp"/>
+            android:verticalSpacing="1px"
+            android:horizontalSpacing="1px"/>
 
-        <Button
-            android:id="@+id/game_button_fire"
-            android:text="@string/game_button_fire"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:textColor="@color/white"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_fullwidth"
-            android:layout_gravity="center"
-            android:onClick="onClickButton"/>
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/game_button_fire"
+                android:text="@string/game_button_fire"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_fullwidth"
+                android:layout_gravity="center_vertical"
+                android:onClick="onClickButton" />
+
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

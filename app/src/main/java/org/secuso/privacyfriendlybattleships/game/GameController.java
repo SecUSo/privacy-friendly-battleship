@@ -107,11 +107,8 @@ public class GameController implements Parcelable {
         this.currentPlayer = !this.currentPlayer;
     }
 
-    private GameGrid gridUnderAttack() {
-        if (this.currentPlayer) {
-            return gridFirstPlayer;
-        }
-        return gridSecondPlayer;
+    public GameGrid gridUnderAttack() {
+        return this.currentPlayer ? gridFirstPlayer : gridSecondPlayer;
     }
 
     public boolean isShipCountLegit(int[] shipCount){
