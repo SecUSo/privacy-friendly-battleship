@@ -3,10 +3,12 @@ package org.secuso.privacyfriendlybattleships;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ import java.util.Timer;
 
 public class GameActivity extends BaseActivity {
 
+    private Handler handler;
     private Timer timerUpdate;
     private SharedPreferences preferences = null;
 
@@ -117,7 +120,35 @@ public class GameActivity extends BaseActivity {
             this.controller.getOpponentAI().makeMove();
             adapterMiniGrid.notifyDataSetChanged();
         }else {//setup view for next player
-            setupGridViews();
+            if(!isHit){
+
+                // Build a handler in order to delay the fade out of the grids.
+                this.handler = new Handler();
+                this.handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // Fade out the grids
+                        gridViewBig.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+                        gridViewSmall.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+
+                        /*
+                        Build a second handler. Delay the switch of the players and the dialog after
+                        the grids have been faded out.
+                        */
+                        Handler innerHandler = new Handler();
+                        innerHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                new SwitchDialog().show(getFragmentManager(), SwitchDialog.class.getSimpleName());
+                            }
+                        }, MAIN_CONTENT_FADEOUT_DURATION);
+                    }
+                }, 1000);
+            }
+            else{
+                setupGridViews();
+            }
         }
     }
 
@@ -181,7 +212,14 @@ public class GameActivity extends BaseActivity {
             }
         });
 
+    }
 
+    public void fadeInGrids(){
+
+        setupGridViews();
+        // Fade in the grids
+        gridViewBig.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        gridViewSmall.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
     }
 
     public static class GameDialog extends DialogFragment {
@@ -196,6 +234,26 @@ public class GameActivity extends BaseActivity {
             return builder.create();
         }
 
+    }
+
+    public static class SwitchDialog extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.game_dialog_next_player)
+                    .setMessage(R.string.game_dialog_ready)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Fade in the grids after the next player has clicked on the button
+                            ((GameActivity) getActivity()).fadeInGrids();
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
     }
 
 }
