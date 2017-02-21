@@ -314,7 +314,7 @@ public class MainActivity extends BaseActivity {
                 intent.putExtra("controller", game);
                 startActivity(intent);
                 break;
-            case R.id.action_settings:
+            case R.id.place_ships_button:
                 // Get the selected game mode and the grid size
                 modeIndex = viewPagerMode.getCurrentItem();
                 gameMode = GameMode.getValidTypes().get(modeIndex);

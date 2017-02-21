@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlybattleships;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,14 @@ public class GameGridAdapter extends BaseAdapter {
 
     // TODO: Add the images of the ships to this adapter
 
-    GameActivity context;
+    Activity context;
     GameController game;
     GameActivityLayoutProvider layoutProvider;
     int gridSize;
     Boolean isMainGrid;   // Denotes whether the big or the small grid view is chosen
     private static final String TAG = GameGridAdapter.class.getSimpleName();
 
-    public GameGridAdapter(GameActivity context, GameActivityLayoutProvider layout, GameController game, Boolean isMainGrid){
+    public GameGridAdapter(Activity context, GameActivityLayoutProvider layout, GameController game, Boolean isMainGrid){
         this.context = context;
         this.layoutProvider = layout;
         this.game = game;

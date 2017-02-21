@@ -13,7 +13,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- ###MAIN### -->
-    <string name="main_button_text">Schnelles Spiel</string>
+    <string name="main_button_quick_start">Schnelles Spiel</string>
+    <string name="main_button_place_ships">Schiffe platzieren</string>
     <string name="main_button_disabled_text">Inaktiver Button</string>
     <string name="main_button_1">1</string>
     <string name="main_button_2">2</string>

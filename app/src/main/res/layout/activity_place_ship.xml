@@ -1,34 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="org.secuso.privacyfriendlybattleships.PlaceShipActivity">
+    android:layout_margin="16dp">
 
-    <android.support.design.widget.AppBarLayout
+    <!-- <include layout="@layout/content_place_ship" /> -->
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/placement_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:columnWidth="70dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="1sp"
+        android:horizontalSpacing="1sp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <LinearLayout
+        android:id="@+id/game_linear_layout"
+        android:layout_below="@id/placement_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    </android.support.design.widget.AppBarLayout>
+        <Button
+            android:id="@+id/placement_arrow_left"
+            android:text="<"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:onClick="onClickButton"
+            />
 
-    <include layout="@layout/content_place_ship" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+            <Button
+                android:id="@+id/placement_arrow_up"
+                android:text="^"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@drawable/button_fullwidth"
+                android:textColor="@color/white"
+                android:onClick="onClickButton"
+                />
 
-</android.support.design.widget.CoordinatorLayout>
+            <Button
+                android:id="@+id/placement_arrow_down"
+                android:text="v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/button_fullwidth"
+                android:textColor="@color/white"
+                android:onClick="onClickButton"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/placement_arrow_right"
+            android:text=">"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:onClick="onClickButton"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
