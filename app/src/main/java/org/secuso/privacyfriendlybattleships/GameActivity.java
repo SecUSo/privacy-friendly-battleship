@@ -101,10 +101,9 @@ public class GameActivity extends BaseActivity {
 
         boolean isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
         if(!isHit) {
-            controller.switchPlayers();
-            if(this.controller.getCurrentPlayer() &&
-                    (this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) )
+            if((this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) )
             {
+                controller.switchPlayers();
                 //make move for AI
                 this.controller.getOpponentAI().makeMove();
                 adapterMiniGrid.notifyDataSetChanged();
@@ -243,6 +242,7 @@ public class GameActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // Fade in the grids after the next player has clicked on the button
+                            ((GameActivity)getActivity()).controller.switchPlayers();
                             ((GameActivity) getActivity()).fadeInGrids();
                         }
                     });
