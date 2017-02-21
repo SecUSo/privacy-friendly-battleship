@@ -95,7 +95,7 @@ public class GameActivity extends BaseActivity {
         GameCell attackedCell = GridUnderAttack.getCell(column, row);
 
         //Don't attack same cell twice
-        if(attackedCell.isHit()){
+        if(attackedCell.isHit() || this.prevCell == null){
             return;
         }
 
@@ -140,7 +140,9 @@ public class GameActivity extends BaseActivity {
                         innerHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                new SwitchDialog().show(getFragmentManager(), SwitchDialog.class.getSimpleName());
+                                SwitchDialog switchDialog = new SwitchDialog();
+                                switchDialog.setCancelable(false);
+                                switchDialog.show(getFragmentManager(), SwitchDialog.class.getSimpleName());
                             }
                         }, MAIN_CONTENT_FADEOUT_DURATION);
                     }
