@@ -61,6 +61,9 @@ public class GameActivity extends BaseActivity {
         // Create a GameActivityLayoutProvider in order to scale the grids appropriately
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
+        // Set up the time
+        //setUpTimer();
+
         // Set up the grids for player one
         setupGridViews();
 
@@ -75,7 +78,24 @@ public class GameActivity extends BaseActivity {
                 gridViewSmall.setLayoutParams(layoutParams);
             }
         });
+
+        // Start the timer for player one
+        //this.controller.startTimer();
     }
+
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.controller.startTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.controller.stopTimer();
+    }
+    */
 
     private void setupPreferences() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -88,6 +108,7 @@ public class GameActivity extends BaseActivity {
 
     public void onClickButton(View view) {
 
+        //this.controller.stopTimer();
         GameGrid GridUnderAttack = this.controller.gridUnderAttack();
 
         int column = this.positionGridCell % this.gridSize;
@@ -144,6 +165,7 @@ public class GameActivity extends BaseActivity {
             }
         }
         adapterMainGrid.notifyDataSetChanged();
+        //this.controller.startTimer();
     }
 
     protected void setupGridViews() {
@@ -207,6 +229,25 @@ public class GameActivity extends BaseActivity {
         });
 
     }
+
+   /*
+    public void setUpTimer(){
+        // Setup timer task and timer view. This setup updates the current time of a player every second.
+        final TextView timerView = (TextView) findViewById(R.id.timerView);
+        timerUpdate = new Timer();
+        timerUpdate.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        timerView.setText(controller.timeToString(controller.getTime()));
+                    }
+                });
+            }
+        }, 0, 1000);
+    }
+    */
 
     public void fadeInGrids(){
 
