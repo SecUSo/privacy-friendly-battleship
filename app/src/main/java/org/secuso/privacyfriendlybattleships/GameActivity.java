@@ -94,7 +94,7 @@ public class GameActivity extends BaseActivity {
         int row = this.positionGridCell / this.gridSize;
         GameCell attackedCell = GridUnderAttack.getCell(column, row);
 
-        //Don't attack same cell twice
+        //Do not attack the same cell twice and do not click the fire button without clicking on a cell.
         if(attackedCell.isHit() || this.prevCell == null){
             return;
         }
@@ -102,26 +102,14 @@ public class GameActivity extends BaseActivity {
         boolean isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
         if(!isHit) {
             controller.switchPlayers();
-        }
-        else{
-            GameShip ship = GridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
-            if(ship.isDestroyed()){
-                // Show dialog
-                new GameDialog().show(getFragmentManager(), GameDialog.class.getSimpleName());
+            if(this.controller.getCurrentPlayer() &&
+                    (this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) )
+            {
+                //make move for AI
+                this.controller.getOpponentAI().makeMove();
+                adapterMiniGrid.notifyDataSetChanged();
             }
-        }
-
-        adapterMainGrid.notifyDataSetChanged();
-
-        if(this.controller.getCurrentPlayer() &&
-                (this.controller.getMode() == GameMode.VS_AI_EASY ||
-                 this.controller.getMode() == GameMode.VS_AI_HARD) ){
-            //make move for AI
-            this.controller.getOpponentAI().makeMove();
-            adapterMiniGrid.notifyDataSetChanged();
-        }else {//setup view for next player
-            if(!isHit){
-
+            else{
                 // Build a handler in order to delay the fade out of the grids.
                 this.handler = new Handler();
                 this.handler.postDelayed(new Runnable() {
@@ -148,10 +136,15 @@ public class GameActivity extends BaseActivity {
                     }
                 }, 1000);
             }
-            else{
-                setupGridViews();
+        }
+        else{
+            GameShip ship = GridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
+            if(ship.isDestroyed()){
+                // Show dialog
+                new GameDialog().show(getFragmentManager(), GameDialog.class.getSimpleName());
             }
         }
+        adapterMainGrid.notifyDataSetChanged();
     }
 
     protected void setupGridViews() {
