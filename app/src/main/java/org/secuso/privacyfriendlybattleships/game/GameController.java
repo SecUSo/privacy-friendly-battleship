@@ -9,6 +9,9 @@ import android.os.Parcelable;
 
 public class GameController implements Parcelable {
 
+    private BattleshipsTimer timePlayerOne;
+    private BattleshipsTimer timePlayerTwo;
+
     private GameGrid gridFirstPlayer;
     private GameGrid gridSecondPlayer;
     private int gridSize;
@@ -27,6 +30,8 @@ public class GameController implements Parcelable {
         this.opponentAI = null; //only player vs player with custom game
         this.gridFirstPlayer = new GameGrid(gridSize, shipCount);
         this.gridSecondPlayer = new GameGrid(gridSize, shipCount);
+        this.timePlayerOne = new BattleshipsTimer();
+        this.timePlayerTwo = new BattleshipsTimer();
     }
 
     public GameController(int gridSize, GameMode mode) {
@@ -178,4 +183,39 @@ public class GameController implements Parcelable {
             this.opponentAI.setController(this);
         }
     }
+
+    public void startTimer(){
+        if(getCurrentPlayer()){
+            this.timePlayerTwo.start();
+        }
+        else{
+            this.timePlayerOne.start();
+        }
+
+    }
+
+    public void stopTimer(){
+        if(getCurrentPlayer()){
+            this.timePlayerTwo.stop();
+        }
+        else{
+            this.timePlayerOne.stop();
+        }
+    }
+
+    public int getTime(){
+        return getCurrentPlayer() ? this.timePlayerTwo.getTime() : this.timePlayerOne.getTime();
+    }
+
+    public String timeToString(int time) {
+        int seconds = time % 60;
+        int minutes = ((time - seconds) / 60) % 60;
+        int hours = (time - minutes - seconds) / (3600);
+        String h, m, s;
+        s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
+        m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
+        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
+        return h + ":" + m + ":" + s;
+    }
+
 }

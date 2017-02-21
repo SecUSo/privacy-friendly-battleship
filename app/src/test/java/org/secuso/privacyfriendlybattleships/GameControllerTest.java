@@ -9,6 +9,8 @@ import org.secuso.privacyfriendlybattleships.game.GameGrid;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 import org.secuso.privacyfriendlybattleships.game.GameShip;
 
+import java.util.Timer;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -18,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class GameControllerTest {
     private GameController controller;
     private GameController controllerSmall;
+    private Timer timer;
 
     public void printGrid(GameGrid grid) {
         for(int i = 0; i < grid.getSize(); i++){
@@ -35,6 +38,7 @@ public class GameControllerTest {
     public void init() {
         controller = new GameController(10, GameMode.VS_AI_EASY);
         controllerSmall = new GameController(5, new int[] {0, 1, 0, 0} );
+        timer = new Timer();
 
         //place ships for first player
         controller.getGridFirstPlayer().getShipSet().placeShip(6, 4, 5, Direction.EAST);
@@ -132,6 +136,42 @@ public class GameControllerTest {
         controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(false, 1, 2), true);
         assertEquals(controllerSmall.makeMove(false, 1, 3), true);
+    }
+
+    @Test
+    public void testTime() throws InterruptedException {
+
+        controllerSmall.startTimer();
+        controllerSmall.makeMove(false, 1, 1);
+        controllerSmall.makeMove(false, 2, 2);
+
+        // Pause the test for two seconds. This shall simulate the time needed to do the moves
+        Thread.sleep(2000);
+        controllerSmall.stopTimer();
+        System.out.println("Time player one: " + controllerSmall.timeToString(controllerSmall.getTime()));
+
+        controllerSmall.switchPlayers();
+
+        controllerSmall.startTimer();
+        controllerSmall.makeMove(true, 3, 3);
+        controllerSmall.makeMove(true, 2, 3);
+        controllerSmall.makeMove(true, 4, 3);
+
+        Thread.sleep(3000);
+        controllerSmall.stopTimer();
+        System.out.println("Time AI: " + controllerSmall.timeToString(controllerSmall.getTime()));
+
+        controllerSmall.switchPlayers();
+
+        controllerSmall.startTimer();
+        controllerSmall.makeMove(false, 1, 2);
+        controllerSmall.makeMove(false, 1, 3);
+
+        Thread.sleep(2000);
+        controllerSmall.stopTimer();
+        System.out.println("Time player one: " + controllerSmall.timeToString(controllerSmall.getTime()));
+
+        System.out.println("Time: " + controllerSmall.timeToString(controllerSmall.getTime()));
     }
 
     @Test
