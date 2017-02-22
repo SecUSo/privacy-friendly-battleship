@@ -114,6 +114,17 @@ public class GameController implements Parcelable {
         return gridSecondPlayer;
     }
 
+    /**
+     * Returns the grid of the current player.
+     * @return grid of current player
+     */
+    public GameGrid getCurrentGrid() {
+        if (!this.currentPlayer) {
+            return gridFirstPlayer;
+        }
+        return gridSecondPlayer;
+    }
+
     public boolean isShipCountLegit(int[] shipCount){
         // TODO: Think about the bound for the cells covered by the ships. The current bound is set
         // to the half of the total amount of grid cells, such that the probability of randomly

@@ -1,10 +1,7 @@
 package org.secuso.privacyfriendlybattleships.game;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.res.Configuration;
-import android.util.Log;
-
-import org.secuso.privacyfriendlybattleships.GameActivity;
 import org.secuso.privacyfriendlybattleships.R;
 
 /**
@@ -16,11 +13,11 @@ public class GameActivityLayoutProvider {
     private final static int MARGIN_LEFT = 30;  // in pixel
     private final static int MARGIN_RIGHT = 30; // in pixel
     private final static int MARGIN_TOP = 30; //in pixel
-    private final GameActivity context;
+    private final Activity context;
     private final int gridSize;
     private static final String TAG = GameActivityLayoutProvider.class.getSimpleName();
 
-    public GameActivityLayoutProvider(GameActivity context, int gridSize){
+    public GameActivityLayoutProvider(Activity context, int gridSize){
         this.context = context;
         this.gridSize = gridSize;
     }

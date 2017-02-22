@@ -42,28 +42,6 @@ public class GameGrid implements Parcelable{
         }
     }
 
-    /*public GameGrid(@StringRes int resIDString, int size){
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                this.cellGrid[i][j] = new GameCell(i, j, this);
-            }
-        }
-    }*/
-
-    /*
-    public GameGrid() {
-        this.size = 10;
-        this.cellGrid = new GameCell[this.size][this.size];
-        this.shipSet = new GameShipSet(this);
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                this.cellGrid[i][j] = new GameCell(i, j, this);
-            }
-        }
-    }
-    */
-
     /**
      * Returns the cell at the given row and column. Rows and columns start with 0.
      * @param col Column of the cell to be returned

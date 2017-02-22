@@ -3,9 +3,11 @@ package org.secuso.privacyfriendlybattleships;
 import org.junit.Test;
 import org.junit.Before;
 import org.secuso.privacyfriendlybattleships.game.Direction;
+import org.secuso.privacyfriendlybattleships.game.GameCell;
 import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameGrid;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
+import org.secuso.privacyfriendlybattleships.game.GameShip;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,6 +46,20 @@ public class GameControllerTest {
         //place ships for short game
         controllerSmall.getGridFirstPlayer().getShipSet().placeShip(3, 3, 3, Direction.EAST);
         controllerSmall.getGridSecondPlayer().getShipSet().placeShip(1, 1, 3, Direction.NORTH);
+    }
+
+    @Test
+    public void testFindShipContainingCell(){
+        GameGrid grid = null;
+        if(!controller.getCurrentPlayer()){
+            grid = controller.getGridFirstPlayer();
+        }
+        else{
+            grid = controller.getGridSecondPlayer();
+        }
+        GameCell cell = grid.getCell(1,1);
+        GameShip ship = grid.getShipSet().findShipContainingCell(cell);
+        assertEquals(ship.getSize(), 3);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -106,11 +122,17 @@ public class GameControllerTest {
         assertEquals(controller.getGridFirstPlayer().getCell(0, 0).isHit(), false);
 
         assertEquals(controllerSmall.makeMove(false, 1, 1), true);
+        controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(true, 2, 2), false);
+        controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(false, 1, 2), true);
+        controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(true, 3, 3), true);
+        controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(false, 1, 3), true);
+        controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(true, 3, 2), false);
+        controllerSmall.switchPlayers();
     }
 
     @Test
@@ -119,11 +141,17 @@ public class GameControllerTest {
         assertEquals(controller.getGridSecondPlayer().getShipSet().allShipsDestroyed(), true);//no ships placed
 
         controllerSmall.makeMove(false, 1, 1);
+        controllerSmall.switchPlayers();
         controllerSmall.makeMove(true, 2, 2);
+        controllerSmall.switchPlayers();
         controllerSmall.makeMove(false, 1, 2);
+        controllerSmall.switchPlayers();
         controllerSmall.makeMove(true, 3, 3);
+        controllerSmall.switchPlayers();
         controllerSmall.makeMove(false, 1, 3);
+        controllerSmall.switchPlayers();
         controllerSmall.makeMove(true, 3, 2);
+        controllerSmall.switchPlayers();
 
         assertEquals(controllerSmall.getGridFirstPlayer().getShipSet().allShipsDestroyed(), false);
         assertEquals(controllerSmall.getGridSecondPlayer().getShipSet().allShipsDestroyed(), true);

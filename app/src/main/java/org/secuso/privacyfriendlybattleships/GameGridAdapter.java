@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlybattleships;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +22,37 @@ public class GameGridAdapter extends BaseAdapter {
 
     // TODO: Add the images of the ships to this adapter
 
-    GameActivity context;
+    Activity context;
     GameController game;
     GameActivityLayoutProvider layoutProvider;
     int gridSize;
-    Boolean isMainGrid;   // Denotes whether the big or the small grid view is chosen
+    Boolean isMainGrid;// Denotes whether the big or the small grid view is chosen
     private static final String TAG = GameGridAdapter.class.getSimpleName();
+    private Boolean shipsNotPlaced;
 
-    public GameGridAdapter(GameActivity context, GameActivityLayoutProvider layout, GameController game, Boolean isMainGrid){
+    public GameGridAdapter(Activity context,
+                           GameActivityLayoutProvider layout,
+                           GameController game,
+                           Boolean isMainGrid){
         this.context = context;
         this.layoutProvider = layout;
         this.game = game;
         this.gridSize = game.getGridSize();
         this.isMainGrid = isMainGrid;
+        this.shipsNotPlaced = false;
+    }
+
+    public GameGridAdapter(Activity context,
+                           GameActivityLayoutProvider layout,
+                           GameController game,
+                           Boolean isMainGrid,
+                           Boolean shipsNotPlaced){
+        this.context = context;
+        this.layoutProvider = layout;
+        this.game = game;
+        this.gridSize = game.getGridSize();
+        this.isMainGrid = isMainGrid;
+        this.shipsNotPlaced = shipsNotPlaced;
     }
 
     // Return the number of all grid cells.
@@ -63,9 +82,14 @@ public class GameGridAdapter extends BaseAdapter {
         */
         int cellColumn = cellIndex % this.gridSize;
         int cellRow = cellIndex / this.gridSize;
-        GameCell currentCell = (game.getCurrentPlayer() ^ this.isMainGrid) ?
-                game.getGridSecondPlayer().getCell(cellColumn, cellRow) :
-                game.getGridFirstPlayer().getCell(cellColumn, cellRow);
+        GameCell currentCell;
+        if (shipsNotPlaced) {
+            currentCell = game.getCurrentGrid().getCell(cellColumn, cellRow);
+        } else {
+            currentCell = (isMainGrid ^ game.getCurrentPlayer()) ?
+                    game.getGridSecondPlayer().getCell(cellColumn, cellRow) :
+                    game.getGridFirstPlayer().getCell(cellColumn, cellRow);
+        }
 
         /*
          If the grid cell was not initialized, set the color of the current grid to black or white
@@ -80,36 +104,29 @@ public class GameGridAdapter extends BaseAdapter {
             int cellSize;
             if(!isMainGrid){
                 cellSize = this.layoutProvider.getMiniGridCellSizeInPixel();
-                gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             }
-            else{
+            else{//is main grid
                 cellSize = this.layoutProvider.getMainGridCellSizeInPixel();
-                gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             }
+
+            gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
             gridCell.setScaleType(ImageView.ScaleType.CENTER_CROP);
             gridCell.setBackgroundColor(Color.WHITE);
 
             // Set the grid cell of the current player
-            if(!isMainGrid && currentCell.isShip()){
-                /*
-                If the current cell contains a ship, then set the color of the cell to black, but
-                only if we set the small grid, since the current player shall not know where
-                the ships of the opponent are.
-                */
+            if(currentCell.isShip() && !isMainGrid || currentCell.isShip() && shipsNotPlaced){
                 //TODO: Add the icon of the ship
                 gridCell.setBackgroundColor(Color.BLACK);
             }
-        }
-        else{
+        } else{
             gridCell = (ImageView) view;
         }
 
-        if(currentCell.isHit() && currentCell.isShip()){
-            gridCell.setBackgroundColor(Color.RED);
-        }
-        else{
-            if(currentCell.isHit()){
-                gridCell.setBackgroundColor(Color.BLUE);
+        if(currentCell.isHit()) {
+            if(currentCell.isShip()) {
+                gridCell.setBackgroundColor(context.getResources().getColor(R.color.red));
+            } else {
+                gridCell.setBackgroundColor(context.getResources().getColor(R.color.lightblue));
             }
         }
         return gridCell;

@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:background="@drawable/button_fullwidth"
+        android:background="@drawable/button_normal"
         android:text="@string/main_button_quick_start"
         android:id="@+id/quick_start_button"
         android:onClick="onClick"/>
@@ -104,9 +104,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:background="@drawable/button_disabled"
-        android:text="@string/main_button_settings"
-        android:id="@+id/main_button_disabled"
+        android:background="@drawable/button_fullwidth"
+        android:text="@string/main_button_place_ships"
+        android:id="@+id/place_ships_button"
         android:onClick="onClick"/>
 
 </LinearLayout>

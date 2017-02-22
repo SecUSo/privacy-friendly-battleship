@@ -17,11 +17,12 @@ public class GameShip implements Parcelable{
     private int startCellCol;
     private int startCellRow;
 
-    public GameShip(GameGrid grid, GameShipSet shipSet, GameCell shipStart, int shipSize, Direction shipOrientation) {
-        if (    (this.orientation == Direction.NORTH) && ( (shipStart.getRow() + (shipSize - 1) ) >= grid.getSize() ) ||
-                (this.orientation == Direction.SOUTH) && ( (shipStart.getRow() - (shipSize - 1) ) < 0 ) ||
-                (this.orientation == Direction.EAST) && ( (shipStart.getCol() - (shipSize - 1) ) < 0 ) ||
-                (this.orientation == Direction.WEST) && ( (shipStart.getCol() + (shipSize - 1) ) >= grid.getSize())) {
+    public GameShip(GameGrid grid,
+                    GameShipSet shipSet,
+                    GameCell shipStart,
+                    int shipSize,
+                    Direction shipOrientation) {
+        if ( !argumentsValid(shipStart, shipSize, shipOrientation, grid.getSize())) {
             throw new IllegalArgumentException("The ship exceeds the limits of the game field");
         }
 
@@ -34,6 +35,17 @@ public class GameShip implements Parcelable{
 
         //initialize shipsCells with cells of the ship
        initializeShipsCells();
+    }
+
+    static Boolean argumentsValid(GameCell shipStart, int shipSize, Direction orientation, int gridSize) {
+        if (    (orientation == Direction.NORTH) &&
+                ( (shipStart.getRow() + (shipSize - 1) ) >= gridSize ) ||
+                (orientation == Direction.SOUTH) && ( (shipStart.getRow() - (shipSize - 1) ) < 0 ) ||
+                (orientation == Direction.EAST) && ( (shipStart.getCol() - (shipSize - 1) ) < 0 ) ||
+                (orientation == Direction.WEST) && ( (shipStart.getCol() + (shipSize - 1) ) >= gridSize)) {
+            return false;
+        }
+        return true;
     }
 
     private void initializeShipsCells() {
@@ -111,6 +123,148 @@ public class GameShip implements Parcelable{
         for(GameCell cell : this.shipsCells){
             if ( this.shipSet.shipsOnCell(cell) == 1) cell.setShip(false);
         }
+    }
+
+    public void moveShip(Direction direction) {
+        int col = -1;
+        int row = -1;
+        switch (direction) {
+            case NORTH:
+                col = startCellCol;
+                row = startCellRow - 1;
+                break;
+            case EAST:
+                col = startCellCol + 1;
+                row = startCellRow;
+                break;
+            case SOUTH:
+                col = startCellCol;
+                row = startCellRow + 1;
+                break;
+            case WEST:
+                col = startCellCol - 1;
+                row = startCellRow;
+                break;
+        }
+
+        if ( col < 0 || col >= grid.getSize() || row < 0 || row >= grid.getSize() ){
+            return;
+        }
+
+        if ( !argumentsValid(
+                this.grid.getCell(col, row),
+                this.size,
+                this.orientation,
+                this.grid.getSize()) ) {
+            return;
+        }
+
+        this.close();
+        this.startCellCol = col;
+        this.startCellRow = row;
+        this.initializeShipsCells();
+    }
+
+    public void turnShipRight() {
+        int middleCellIndex = this.size / 2;
+        Direction newOrientation = Direction.NORTH;
+        int newStartCol = startCellCol;
+        int newStartRow = startCellRow;
+        switch (this.orientation) {
+            case NORTH:
+                newOrientation = Direction.EAST;
+                newStartCol = this.startCellCol + middleCellIndex;
+                newStartRow = this.startCellRow + middleCellIndex;
+                if ( newStartCol < this.size - 1 )
+                    newStartCol = this.size - 1;
+                if ( newStartCol > this.grid.getSize() - 1 )
+                    newStartCol = this.grid.getSize() - 1;
+                break;
+            case EAST:
+                newOrientation = Direction.SOUTH;
+                newStartCol = this.startCellCol - middleCellIndex;
+                newStartRow = this.startCellRow + middleCellIndex;
+                if ( newStartRow < this.size - 1 )
+                    newStartRow = this.size - 1;
+                if ( newStartRow > this.grid.getSize() - 1 )
+                    newStartRow = this.grid.getSize() - 1;
+                break;
+            case SOUTH:
+                newOrientation = Direction.WEST;
+                newStartCol = this.startCellCol - middleCellIndex;
+                newStartRow = this.startCellRow - middleCellIndex;
+                if ( newStartCol < 0 )
+                    newStartCol = 0;
+                if ( newStartCol + this.size - 1 > this.grid.getSize() - 1)
+                    newStartCol = this.grid.getSize() - this.size;
+                break;
+            case WEST:
+                newOrientation = Direction.NORTH;
+                newStartCol = this.startCellCol + middleCellIndex;
+                newStartRow = this.startCellRow - middleCellIndex;
+                if ( newStartRow < 0)
+                    newStartRow = 0;
+                if ( newStartRow + this.size - 1 > this.grid.getSize() - 1 )
+                    newStartRow = this.grid.getSize() - this.size;
+                break;
+        }
+
+        this.close();
+        this.orientation = newOrientation;
+        this.startCellCol = newStartCol;
+        this.startCellRow = newStartRow;
+        this.initializeShipsCells();
+    }
+
+    public void turnShipLeft() {
+        int middleCellIndex = this.size / 2;
+        Direction newOrientation = Direction.NORTH;
+        int newStartCol = startCellCol;
+        int newStartRow = startCellRow;
+        switch (this.orientation) {
+            case NORTH:
+                newOrientation = Direction.WEST;
+                newStartCol = this.startCellCol - middleCellIndex;
+                newStartRow = this.startCellRow + middleCellIndex;
+                if ( newStartCol < 0 )
+                    newStartCol = 0;
+                if ( newStartCol + this.size - 1 > this.grid.getSize() - 1)
+                    newStartCol = this.grid.getSize() - this.size;
+                break;
+            case EAST:
+                newOrientation = Direction.NORTH;
+                newStartCol = this.startCellCol - middleCellIndex;
+                newStartRow = this.startCellRow - middleCellIndex;
+                if ( newStartRow < 0)
+                    newStartRow = 0;
+                if ( newStartRow + this.size - 1 > this.grid.getSize() - 1 )
+                    newStartRow = this.grid.getSize() - this.size;
+                break;
+            case SOUTH:
+                newOrientation = Direction.EAST;
+                newStartCol = this.startCellCol + middleCellIndex;
+                newStartRow = this.startCellRow - middleCellIndex;
+                if ( newStartCol < this.size - 1 )
+                    newStartCol = this.size - 1;
+                if ( newStartCol > this.grid.getSize() - 1 )
+                    newStartCol = this.grid.getSize() - 1;
+                break;
+            case WEST:
+                newOrientation = Direction.SOUTH;
+                newStartCol = this.startCellCol + middleCellIndex;
+                newStartRow = this.startCellRow + middleCellIndex;
+                if ( newStartRow < this.size - 1 )
+                    newStartRow = this.size - 1;
+                if ( newStartRow > this.grid.getSize() - 1 )
+                    newStartRow = this.grid.getSize() - 1;
+                break;
+        }
+
+        this.close();
+        this.orientation = newOrientation;
+        this.startCellCol = newStartCol;
+        this.startCellRow = newStartRow;
+        this.initializeShipsCells();
     }
 
     @Override

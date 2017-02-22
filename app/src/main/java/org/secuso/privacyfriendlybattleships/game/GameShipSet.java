@@ -97,18 +97,14 @@ public class GameShipSet implements Parcelable{
         }
     }
 
-    private GameShip getRandomShip(int size) {
-        GameShip ship = null;
+    private GameShip getRandomShip(int size) {GameCell cell;
+        Direction orientation;
+        do {
+            cell = grid.getRandomCell();
+            orientation = Direction.getRandomDirection();
+        } while ( !GameShip.argumentsValid(cell, size, orientation, grid.getSize() ) );
 
-        //TODO: implement without relying on exception e.g. with static method argumentsLegal() in GameShip
-        while ( ship == null ) {
-            try {
-                ship = new GameShip( grid, this, grid.getRandomCell(), size, Direction.getRandomDirection() );
-            } catch (IllegalArgumentException e) {
-                ship = null;
-            }
-        }
-        return ship;
+        return new GameShip( grid, this, cell, size, orientation );
     }
 
     public boolean allShipsPlaced() {
@@ -203,5 +199,24 @@ public class GameShipSet implements Parcelable{
                         ship.recreateShip(this.grid, this);
             }
         }
+    }
+
+    /**
+     * Finds the ship, which contains the cell.
+     * @param gameCell: The cell which is assigned to at most one ship.
+     * @return The ship containing gameCell.
+     */
+    public GameShip findShipContainingCell(GameCell gameCell){
+        GameShip shiptoFind = null;
+        if(gameCell.isShip()){
+            for(GameShip[] shipSizeN : this.ships){
+                for(GameShip ship : shipSizeN){
+                    if(ship.containsCell(gameCell)){
+                        return ship;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
