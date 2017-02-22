@@ -18,9 +18,10 @@ import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameMode;
 import org.secuso.privacyfriendlybattleships.game.GameShip;
 
-/*
-In this activity, the ships are set on the grid, after the button "Settings" has been pushed.
+/**
+ * Created by Alexander Müller on 21.02.2017.
  */
+
 public class PlaceShipActivity extends BaseActivity {
 
     private SharedPreferences preferences = null;
@@ -45,7 +46,6 @@ public class PlaceShipActivity extends BaseActivity {
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
         setupGridView(this.gridSize);
-        // Initialize the grid and place the ships
     }
 
 
@@ -122,13 +122,16 @@ public class PlaceShipActivity extends BaseActivity {
                 this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.WHITE);
             } else if (shipsOnCell == 1) {
                 this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.BLACK);
-            } else if (shipsOnCell == 2) {
+            } else if (shipsOnCell >= 2) {
                 this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.RED);
             }
         }
     }
 
     public void onClickButton(View view) {
+        if ( this.selectedShip == null )
+            return;
+
         GameCell[] oldCells = this.selectedShip.getShipsCells();
         switch (view.getId()) {
             case R.id.placement_arrow_right:
@@ -143,9 +146,42 @@ public class PlaceShipActivity extends BaseActivity {
             case R.id.placement_arrow_down:
                 this.selectedShip.moveShip(Direction.SOUTH);
                 break;
+            case R.id.placement_turn_right:
+                this.selectedShip.turnShipRight();
+                break;
+            case R.id.placement_turn_left:
+                this.selectedShip.turnShipLeft();
+                break;
         }
         unhighlightCells(oldCells);
         highlightCells(this.selectedShip.getShipsCells());
+    }
+
+    public void onClickReady(View view) {
+        if (!this.controller.getCurrentGrid().getShipSet().placementLegit()) {
+            //TODO: show popup explaining correct ship placement
+            return;
+        }
+
+        if (    this.controller.getMode() == GameMode.VS_AI_EASY ||
+                this.controller.getMode() == GameMode.VS_AI_HARD) {
+            //Call GameActivity and provide GameController
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra("controller", this.controller);
+            startActivity(intent);
+        } else if (this.controller.getMode() == GameMode.VS_PLAYER) {
+            if (this.controller.getCurrentPlayer()) {
+                //Call GameActivity and provide GameController
+                Intent intent = new Intent(this, GameActivity.class);
+                intent.putExtra("controller", this.controller);
+                startActivity(intent);
+            } else {
+                //TODO: implement transition between players
+                this.controller.switchPlayers();
+                setupGridView(this.controller.getGridSize());
+            }
+        }
+
     }
 
     private void setupPreferences() {

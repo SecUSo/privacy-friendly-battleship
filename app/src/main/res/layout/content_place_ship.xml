@@ -31,12 +31,15 @@
             android:background="@drawable/button_fullwidth"
             android:textColor="@color/white"
             android:onClick="onClickButton"
+            android:layout_weight="1"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
 
             <Button
                 android:id="@+id/placement_arrow_up"
@@ -71,6 +74,50 @@
             android:background="@drawable/button_fullwidth"
             android:textColor="@color/white"
             android:onClick="onClickButton"
+            android:layout_weight="1"
+            />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/placement_turn_right"
+            android:text="TR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:onClick="onClickButton"
+            />
+
+        <Button
+            android:id="@+id/placement_turn_left"
+            android:text="TL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:onClick="onClickButton"
+            />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/placement_ready"
+            android:text="Ready"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:onClick="onClickReady"
+            android:layout_weight="1"
             />
 
     </LinearLayout>
