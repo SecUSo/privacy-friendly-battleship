@@ -160,7 +160,8 @@ public class GameActivity extends BaseActivity {
                     prevCell.setBackgroundColor(Color.WHITE);
                 }
                 positionGridCell = i;
-                view.setBackgroundColor(Color.YELLOW);
+                view.setBackgroundColor(
+                        adapterMainGrid.context.getResources().getColor(R.color.yellow));
                 prevCell = view;
                 // Display the grid cell, which was clicked.
                 adapterMainGrid.notifyDataSetChanged();

@@ -124,9 +124,9 @@ public class GameGridAdapter extends BaseAdapter {
 
         if(currentCell.isHit()) {
             if(currentCell.isShip()) {
-                gridCell.setBackgroundColor(Color.RED);
+                gridCell.setBackgroundColor(context.getResources().getColor(R.color.red));
             } else {
-                gridCell.setBackgroundColor(Color.BLUE);
+                gridCell.setBackgroundColor(context.getResources().getColor(R.color.lightblue));
             }
         }
         return gridCell;

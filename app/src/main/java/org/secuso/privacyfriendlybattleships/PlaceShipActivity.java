@@ -107,7 +107,9 @@ public class PlaceShipActivity extends BaseActivity {
         for( GameCell cell : cells ) {
             int col = cell.getCol();
             int row = cell.getRow();
-            this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.YELLOW);
+            this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(
+                    gridAdapter.context.getResources().getColor(R.color.yellow)
+            );
         }
     }
 
@@ -121,7 +123,8 @@ public class PlaceShipActivity extends BaseActivity {
             } else if (shipsOnCell == 1) {
                 this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.BLACK);
             } else if (shipsOnCell >= 2) {
-                this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.RED);
+                this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(
+                        gridAdapter.context.getResources().getColor(R.color.red));
             }
         }
     }
