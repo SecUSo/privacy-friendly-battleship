@@ -22,89 +22,75 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/placement_arrow_left"
-            android:text="left"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/arrow_left"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/button_fullwidth"
-            android:textColor="@color/white"
+            android:src="@drawable/arrow_left_black"
+            android:adjustViewBounds="true"
             android:onClick="onClickButton"
-            android:layout_weight="1"
-            />
+            android:layout_gravity="center_vertical"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_weight="1">
+            android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/placement_arrow_up"
-                android:text="up"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/arrow_up"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:background="@drawable/button_fullwidth"
-                android:textColor="@color/white"
+                android:src="@drawable/arrow_up_black"
+                android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                />
+                android:layout_weight="1"/>
 
-            <Button
-                android:id="@+id/placement_arrow_down"
-                android:text="down"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/arrow_down"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@drawable/button_fullwidth"
-                android:textColor="@color/white"
+                android:src="@drawable/arrow_down_black"
+                android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                />
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/placement_arrow_right"
-            android:text="right"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/arrow_right"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/button_fullwidth"
-            android:textColor="@color/white"
+            android:src="@drawable/arrow_right_back"
+            android:adjustViewBounds="true"
             android:onClick="onClickButton"
-            android:layout_weight="1"
-            />
+            android:layout_gravity="center_vertical"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/placement_turn_right"
-            android:text="TR"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/button_fullwidth"
-            android:textColor="@color/white"
-            android:onClick="onClickButton"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/placement_turn_left"
-            android:text="TL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/button_fullwidth"
-            android:textColor="@color/white"
-            android:onClick="onClickButton"
-            />
+            <ImageView
+                android:id="@+id/rotate_right"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_rotate_right_black"
+                android:adjustViewBounds="true"
+                android:onClick="onClickButton"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+
+            <ImageView
+                android:id="@+id/rotate_left"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_rotate_left_black"
+                android:adjustViewBounds="true"
+                android:onClick="onClickButton"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 
@@ -116,6 +102,7 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/button_fullwidth"
             android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClickReady"
             android:layout_weight="1"
             />
