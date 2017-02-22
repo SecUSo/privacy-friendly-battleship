@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
-import org.secuso.privacyfriendlybattleships.R;
 import org.secuso.privacyfriendlybattleships.game.Direction;
 import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameCell;
@@ -67,7 +65,7 @@ public class PlaceShipActivity extends BaseActivity {
                 layoutProvider.getMarginLeft(),
                 layoutProvider.getMargin(),
                 layoutProvider.getMarginRight(),
-                layoutProvider.getMargin());
+                0);
 
         gridView.setLayoutParams(marginLayoutParams);
         gridView.setHorizontalSpacing(1);
@@ -134,22 +132,22 @@ public class PlaceShipActivity extends BaseActivity {
 
         GameCell[] oldCells = this.selectedShip.getShipsCells();
         switch (view.getId()) {
-            case R.id.placement_arrow_right:
+            case R.id.arrow_right:
                 this.selectedShip.moveShip(Direction.EAST);
                 break;
-            case R.id.placement_arrow_left:
+            case R.id.arrow_left:
                 this.selectedShip.moveShip(Direction.WEST);
                 break;
-            case R.id.placement_arrow_up:
+            case R.id.arrow_up:
                 this.selectedShip.moveShip(Direction.NORTH);
                 break;
-            case R.id.placement_arrow_down:
+            case R.id.arrow_down:
                 this.selectedShip.moveShip(Direction.SOUTH);
                 break;
-            case R.id.placement_turn_right:
+            case R.id.rotate_right:
                 this.selectedShip.turnShipRight();
                 break;
-            case R.id.placement_turn_left:
+            case R.id.rotate_left:
                 this.selectedShip.turnShipLeft();
                 break;
         }
