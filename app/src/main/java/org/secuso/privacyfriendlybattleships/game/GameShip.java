@@ -17,11 +17,12 @@ public class GameShip implements Parcelable{
     private int startCellCol;
     private int startCellRow;
 
-    public GameShip(GameGrid grid, GameShipSet shipSet, GameCell shipStart, int shipSize, Direction shipOrientation) {
-        if (    (this.orientation == Direction.NORTH) && ( (shipStart.getRow() + (shipSize - 1) ) >= grid.getSize() ) ||
-                (this.orientation == Direction.SOUTH) && ( (shipStart.getRow() - (shipSize - 1) ) < 0 ) ||
-                (this.orientation == Direction.EAST) && ( (shipStart.getCol() - (shipSize - 1) ) < 0 ) ||
-                (this.orientation == Direction.WEST) && ( (shipStart.getCol() + (shipSize - 1) ) >= grid.getSize())) {
+    public GameShip(GameGrid grid,
+                    GameShipSet shipSet,
+                    GameCell shipStart,
+                    int shipSize,
+                    Direction shipOrientation) {
+        if ( !argumentsValid(shipStart, shipSize, shipOrientation, grid.getSize())) {
             throw new IllegalArgumentException("The ship exceeds the limits of the game field");
         }
 
@@ -34,6 +35,17 @@ public class GameShip implements Parcelable{
 
         //initialize shipsCells with cells of the ship
        initializeShipsCells();
+    }
+
+    static Boolean argumentsValid(GameCell shipStart, int shipSize, Direction orientation, int gridSize) {
+        if (    (orientation == Direction.NORTH) &&
+                ( (shipStart.getRow() + (shipSize - 1) ) >= gridSize ) ||
+                (orientation == Direction.SOUTH) && ( (shipStart.getRow() - (shipSize - 1) ) < 0 ) ||
+                (orientation == Direction.EAST) && ( (shipStart.getCol() - (shipSize - 1) ) < 0 ) ||
+                (orientation == Direction.WEST) && ( (shipStart.getCol() + (shipSize - 1) ) >= gridSize)) {
+            return false;
+        }
+        return true;
     }
 
     private void initializeShipsCells() {
@@ -111,6 +123,46 @@ public class GameShip implements Parcelable{
         for(GameCell cell : this.shipsCells){
             if ( this.shipSet.shipsOnCell(cell) == 1) cell.setShip(false);
         }
+    }
+
+    public void moveShip(Direction direction) {
+        int col = -1;
+        int row = -1;
+        switch (direction) {
+            case NORTH:
+                col = startCellCol;
+                row = startCellRow - 1;
+                break;
+            case EAST:
+                col = startCellCol + 1;
+                row = startCellRow;
+                break;
+            case SOUTH:
+                col = startCellCol;
+                row = startCellRow + 1;
+                break;
+            case WEST:
+                col = startCellCol - 1;
+                row = startCellRow;
+                break;
+        }
+
+        if ( col < 0 || col >= grid.getSize() || row < 0 || row >= grid.getSize() ){
+            return;
+        }
+
+        if ( !argumentsValid(
+                this.grid.getCell(col, row),
+                this.size,
+                this.orientation,
+                this.grid.getSize()) ) {
+            return;
+        }
+
+        this.close();
+        this.startCellCol = col;
+        this.startCellRow = row;
+        this.initializeShipsCells();
     }
 
     @Override

@@ -80,4 +80,6 @@
     <string name="viewhelp">View Help</string>
     <string name="main_button_welcomedialog">Show Welcome</string>
 
+    <string name="title_activity_place_ships">Placement</string>
+
 </resources>

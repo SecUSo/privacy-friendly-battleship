@@ -58,6 +58,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlybattleships.MainActivity" />
         </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlybattleships.PlaceShipActivity"
+            android:label="@string/title_activity_place_ships"
+            android:parentActivityName="org.secuso.privacyfriendlybattleships.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlybattleships.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

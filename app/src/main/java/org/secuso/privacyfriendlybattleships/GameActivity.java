@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -63,7 +62,6 @@ public class GameActivity extends BaseActivity {
                 ViewGroup.LayoutParams layoutParams = gridViewSmall.getLayoutParams();
                 layoutParams.width = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
                 layoutParams.height = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
-                Log.d(TAG, "" + layoutParams.width);
                 gridViewSmall.setLayoutParams(layoutParams);
             }
         });
@@ -139,7 +137,6 @@ public class GameActivity extends BaseActivity {
         ViewGroup.LayoutParams layoutParams = gridViewSmall.getLayoutParams();
         layoutParams.width = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
         layoutParams.height = layoutProvider.getMiniGridCellSizeInPixel() * gridSize + gridSize-1;
-        Log.d(TAG, "" + layoutParams.width);
         gridViewSmall.setLayoutParams(layoutParams);
 
         gridViewBig.setHorizontalSpacing(1);
