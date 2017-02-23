@@ -136,6 +136,10 @@ public class GameControllerTest {
         controllerSmall.switchPlayers();
         assertEquals(controllerSmall.makeMove(false, 1, 2), true);
         assertEquals(controllerSmall.makeMove(false, 1, 3), true);
+        System.out.println("Attempts player one: " + controllerSmall.getAttemptsPlayerOne());
+        System.out.println("Attempts AI: " + controllerSmall.getAttemptsPlayerTwo());
+        assertEquals(controllerSmall.getAttemptsPlayerOne(), 4);
+        assertEquals(controllerSmall.getAttemptsPlayerTwo(), 3);
     }
 
     @Test

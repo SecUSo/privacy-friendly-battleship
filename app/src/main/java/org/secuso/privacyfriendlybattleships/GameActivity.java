@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameCell;
@@ -25,6 +26,7 @@ import org.secuso.privacyfriendlybattleships.game.GameMode;
 import org.secuso.privacyfriendlybattleships.game.GameShip;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends BaseActivity {
 
@@ -62,7 +64,8 @@ public class GameActivity extends BaseActivity {
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
         // Set up the time
-        //setUpTimer();
+        setUpTimer();
+        setUpToolbar();
 
         // Set up the grids for player one
         setupGridViews();
@@ -80,7 +83,7 @@ public class GameActivity extends BaseActivity {
         });
 
         // Start the timer for player one
-        //this.controller.startTimer();
+        this.controller.startTimer();
     }
 
     /*
@@ -108,7 +111,7 @@ public class GameActivity extends BaseActivity {
 
     public void onClickButton(View view) {
 
-        //this.controller.stopTimer();
+        this.controller.stopTimer();
         GameGrid GridUnderAttack = this.controller.gridUnderAttack();
 
         int column = this.positionGridCell % this.gridSize;
@@ -122,8 +125,7 @@ public class GameActivity extends BaseActivity {
 
         boolean isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
         if(!isHit) {
-            if((this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) )
-            {
+            if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
                 controller.switchPlayers();
                 //make move for AI
                 this.controller.getOpponentAI().makeMove();
@@ -165,7 +167,8 @@ public class GameActivity extends BaseActivity {
             }
         }
         adapterMainGrid.notifyDataSetChanged();
-        //this.controller.startTimer();
+        this.controller.startTimer();
+        setUpToolbar();
     }
 
     protected void setupGridViews() {
@@ -230,7 +233,22 @@ public class GameActivity extends BaseActivity {
 
     }
 
-   /*
+    public void setUpToolbar(){
+
+        // Set the name of the current player
+        TextView playerName = (TextView) findViewById(R.id.player_name);
+        int currentPlayerName = this.controller.getCurrentPlayer() ? R.string.game_player_two : R.string.game_player_one;
+        playerName.setText(currentPlayerName);
+
+        // Set the number of attempts
+        TextView attempts = (TextView) findViewById(R.id.game_attempts);
+        int attemptsCurrentPlayer = this.controller.getCurrentPlayer() ? this.controller.getAttemptsPlayerTwo()
+                                                                        : this.controller.getAttemptsPlayerOne();
+        attempts.setText(this.controller.attemptsToString(attemptsCurrentPlayer));
+
+    }
+
+
     public void setUpTimer(){
         // Setup timer task and timer view. This setup updates the current time of a player every second.
         final TextView timerView = (TextView) findViewById(R.id.timerView);
@@ -247,7 +265,7 @@ public class GameActivity extends BaseActivity {
             }
         }, 0, 1000);
     }
-    */
+
 
     public void fadeInGrids(){
 

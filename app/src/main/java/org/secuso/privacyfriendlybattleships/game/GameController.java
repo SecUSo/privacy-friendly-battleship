@@ -9,6 +9,8 @@ import android.os.Parcelable;
 
 public class GameController implements Parcelable {
 
+    private int attemptsPlayerOne;
+    private int attemptsPlayerTwo;
     private BattleshipsTimer timePlayerOne;
     private BattleshipsTimer timePlayerTwo;
 
@@ -32,6 +34,8 @@ public class GameController implements Parcelable {
         this.gridSecondPlayer = new GameGrid(gridSize, shipCount);
         this.timePlayerOne = new BattleshipsTimer();
         this.timePlayerTwo = new BattleshipsTimer();
+        this.attemptsPlayerOne = 0;
+        this.attemptsPlayerTwo = 0;
     }
 
     public GameController(int gridSize, GameMode mode) {
@@ -59,6 +63,10 @@ public class GameController implements Parcelable {
         } else if (this.mode == GameMode.VS_PLAYER) {
             this.opponentAI = null;
         }
+        this.timePlayerOne = new BattleshipsTimer();
+        this.timePlayerTwo = new BattleshipsTimer();
+        this.attemptsPlayerOne = 0;
+        this.attemptsPlayerTwo = 0;
     }
 
     public GameGrid getGridFirstPlayer() {
@@ -96,6 +104,7 @@ public class GameController implements Parcelable {
 
         //mark cell hit
         cellUnderAttack.setHit(true);
+        increaseAttempts();
 
         //check if player has won
         if (this.gridUnderAttack().getShipSet().allShipsDestroyed() ){
@@ -182,6 +191,27 @@ public class GameController implements Parcelable {
         if(this.opponentAI != null) {
             this.opponentAI.setController(this);
         }
+        this.timePlayerOne = new BattleshipsTimer();
+        this.timePlayerTwo = new BattleshipsTimer();
+        this.attemptsPlayerOne = 0;
+        this.attemptsPlayerTwo = 0;
+    }
+
+    public int getAttemptsPlayerOne(){
+        return this.attemptsPlayerOne;
+    }
+
+    public int getAttemptsPlayerTwo(){
+        return this.attemptsPlayerTwo;
+    }
+
+    public void increaseAttempts(){
+        if(getCurrentPlayer()){
+            this.attemptsPlayerTwo += 1;
+        }
+        else{
+            this.attemptsPlayerOne += 1;
+        }
     }
 
     public void startTimer(){
@@ -195,16 +225,17 @@ public class GameController implements Parcelable {
     }
 
     public void stopTimer(){
-        if(getCurrentPlayer()){
-            this.timePlayerTwo.stop();
-        }
-        else{
-            this.timePlayerOne.stop();
-        }
+        this.timePlayerOne.stop();
+        this.timePlayerTwo.stop();
     }
 
     public int getTime(){
-        return getCurrentPlayer() ? this.timePlayerTwo.getTime() : this.timePlayerOne.getTime();
+        if(getMode() == GameMode.VS_AI_EASY || getMode() == GameMode.VS_AI_HARD){
+            return this.timePlayerOne.getTime();
+        }
+        else{
+            return getCurrentPlayer() ? this.timePlayerTwo.getTime() : this.timePlayerOne.getTime();
+        }
     }
 
     public String timeToString(int time) {
@@ -216,6 +247,10 @@ public class GameController implements Parcelable {
         m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
         h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
         return h + ":" + m + ":" + s;
+    }
+
+    public String attemptsToString(int attempts){
+        return (attempts < 10) ? "0" + String.valueOf(attempts) : String.valueOf(attempts);
     }
 
 }

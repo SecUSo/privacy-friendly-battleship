@@ -40,6 +40,10 @@
     <string name="game_button_start">New Game</string>
     <string name="game_button_continue">Continue Game</string>
     <string name="game_button_fire">Fire!</string>
+    <string name="game_player_one">Player 1</string>
+    <string name="game_player_two">Player 2</string>
+    <string name="game_time">Time:</string>
+    <string name="game_attempts">Attempts:</string>
     <string name="game_dialog_hit">You have destroyed a ship!</string>
     <string name="game_dialog_next_player">Next player</string>
     <string name="game_dialog_ready">Are you ready?</string>
@@ -59,9 +63,9 @@
 
     <!--###ABOUT###-->
     <string name="about">About</string>
-    <string name="version_number">Version 2.0</string>
+    <string name="version_number">Version 1.0</string>
     <string name="about_author">Authors: </string>
-    <string name="about_author_names" translatable="false">Karola Marky</string>
+    <string name="about_author_names" translatable="false">Ali Kalsen, Alexander Müller</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
