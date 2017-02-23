@@ -10,6 +10,7 @@ public final class Constants {
 
     // Preferences Constants
     public final static String FIRST_APP_START          = "FIRST_APP_START";
+    public final static String FIRST_PLACEMENT_START    = "FIRST_PLACEMENT_START";
 
     // Intent Extra Constants
     public final static String PLACE_SHIPS              = "PLACE_SHIPS";

@@ -1,10 +1,16 @@
 package org.secuso.privacyfriendlybattleships;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,8 +50,25 @@ public class PlaceShipActivity extends BaseActivity {
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
         setupGridView(this.gridSize);
+
+        // Show the tutorial dialog if first time in activity
+        if (isFirstAppStart()) {
+            showTutorialDialog();
+            setActivityStarted();
+        }
     }
 
+    private boolean isFirstAppStart() {
+        return preferences.getBoolean(Constants.FIRST_APP_START, true);
+    }
+
+    private void showTutorialDialog() {
+        new TutorialDialog().show(getFragmentManager(), TutorialDialog.class.getSimpleName());
+    }
+
+    private void setActivityStarted() {
+        preferences.edit().putBoolean(Constants.FIRST_PLACEMENT_START, false).commit();
+    }
 
     protected void setupGridView(int size){
         // Get the grid views of the respective XML-files
@@ -108,8 +131,7 @@ public class PlaceShipActivity extends BaseActivity {
             int col = cell.getCol();
             int row = cell.getRow();
             this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(
-                    gridAdapter.context.getResources().getColor(R.color.yellow)
-            );
+                    gridAdapter.context.getResources().getColor(R.color.yellow) );
         }
     }
 
@@ -187,5 +209,26 @@ public class PlaceShipActivity extends BaseActivity {
 
     private void setupPreferences() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    public static class TutorialDialog extends DialogFragment {
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            LayoutInflater i = getActivity().getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setView(i.inflate(R.layout.welcome_dialog, null));
+            builder.setIcon(R.mipmap.icon);
+            builder.setTitle(getActivity().getString(R.string.placement_tutorial_text));
+            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
+
+            return builder.create();
+        }
     }
 }

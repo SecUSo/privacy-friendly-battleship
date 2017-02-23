@@ -83,5 +83,6 @@
     <!-- ### SHIP PLACEMENT ### -->
     <string name="title_activity_place_ships">Placement</string>
     <string name="place_ships_ready">Ready</string>
+    <string name="placement_tutorial_text">Select a ship by tapping on it and move it with the arrow buttons. When you are satisfied with the placement of the ships, press the "Ready" button to confirm.</string>
 
 </resources>
