@@ -256,7 +256,7 @@ public class MainActivity extends BaseActivity {
 
             builder.setView(i.inflate(R.layout.welcome_dialog, null));
             builder.setIcon(R.mipmap.icon);
-            builder.setTitle(getActivity().getString(R.string.welcome_text));
+            builder.setTitle(getActivity().getString(R.string.welcome));
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
             builder.setNegativeButton(getActivity().getString(R.string.help), new DialogInterface.OnClickListener() {
                 @Override

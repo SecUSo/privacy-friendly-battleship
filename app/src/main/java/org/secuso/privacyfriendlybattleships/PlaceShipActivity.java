@@ -29,7 +29,7 @@ import org.secuso.privacyfriendlybattleships.game.GameShip;
 public class PlaceShipActivity extends BaseActivity {
 
     private SharedPreferences preferences = null;
-    private GameController controller;
+    private static GameController controller;
     private int gridSize;
     private GameActivityLayoutProvider layoutProvider;
     private GridView gridView;
@@ -52,14 +52,14 @@ public class PlaceShipActivity extends BaseActivity {
         setupGridView(this.gridSize);
 
         // Show the tutorial dialog if first time in activity
-        if (isFirstAppStart()) {
+        if (isFirstActivityStart()) {
             showTutorialDialog();
             setActivityStarted();
         }
     }
 
-    private boolean isFirstAppStart() {
-        return preferences.getBoolean(Constants.FIRST_APP_START, true);
+    private boolean isFirstActivityStart() {
+        return preferences.getBoolean(Constants.FIRST_PLACEMENT_START, true);
     }
 
     private void showTutorialDialog() {
@@ -68,6 +68,14 @@ public class PlaceShipActivity extends BaseActivity {
 
     private void setActivityStarted() {
         preferences.edit().putBoolean(Constants.FIRST_PLACEMENT_START, false).commit();
+    }
+
+    private void showInvalidPlacementDialog() {
+        new InvalidPlacementDialog().show(getFragmentManager(), InvalidPlacementDialog.class.getSimpleName());
+    }
+
+    private void showSwitchPlayerDialog() {
+        new SwitchPlayerDialog().show(getFragmentManager(), SwitchPlayerDialog.class.getSimpleName());
     }
 
     protected void setupGridView(int size){
@@ -182,7 +190,7 @@ public class PlaceShipActivity extends BaseActivity {
 
     public void onClickReady(View view) {
         if (!this.controller.getCurrentGrid().getShipSet().placementLegit()) {
-            //TODO: show popup explaining correct ship placement
+            showInvalidPlacementDialog();
             return;
         }
 
@@ -194,14 +202,16 @@ public class PlaceShipActivity extends BaseActivity {
             startActivity(intent);
         } else if (this.controller.getMode() == GameMode.VS_PLAYER) {
             if (this.controller.getCurrentPlayer()) {
+                //TODO: Fade-out grid and show popup for player 1
                 //Call GameActivity and provide GameController
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("controller", this.controller);
                 startActivity(intent);
             } else {
-                //TODO: implement transition between players
-                this.controller.switchPlayers();
+                //TODO: implement transition between players including fade-out of grid
                 setupGridView(this.controller.getGridSize());
+                showSwitchPlayerDialog();
+                this.controller.switchPlayers();
             }
         }
 
@@ -223,9 +233,54 @@ public class PlaceShipActivity extends BaseActivity {
             LayoutInflater i = getActivity().getLayoutInflater();
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-            builder.setView(i.inflate(R.layout.welcome_dialog, null));
+            builder.setView(i.inflate(R.layout.placement_dialog, null));
             builder.setIcon(R.mipmap.icon);
-            builder.setTitle(getActivity().getString(R.string.placement_tutorial_text));
+            builder.setTitle(getActivity().getString(R.string.placement_tutorial_title));
+            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
+
+            return builder.create();
+        }
+    }
+
+    public static class InvalidPlacementDialog extends DialogFragment {
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            LayoutInflater i = getActivity().getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setView(i.inflate(R.layout.placement_invalid_dialog, null));
+            builder.setIcon(R.mipmap.icon);
+            builder.setTitle(getActivity().getString(R.string.placement_tutorial_title));
+            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
+
+            return builder.create();
+        }
+    }
+
+    public static class SwitchPlayerDialog extends DialogFragment {
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            LayoutInflater i = getActivity().getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setView(i.inflate(R.layout.placement_switch_player_dialog, null));
+            builder.setIcon(R.mipmap.icon);
+            if (!controller.getCurrentPlayer())
+                builder.setTitle(getActivity().getString(R.string.player) + " 1");
+            else
+                builder.setTitle(getActivity().getString(R.string.player) + " 2");
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
 
             return builder.create();
