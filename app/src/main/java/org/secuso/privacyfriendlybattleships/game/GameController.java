@@ -106,11 +106,6 @@ public class GameController implements Parcelable {
         cellUnderAttack.setHit(true);
         increaseAttempts();
 
-        //check if player has won
-        if (this.gridUnderAttack().getShipSet().allShipsDestroyed() ){
-            //current player has won the game
-            //TODO: Do some action to finish the game.
-        }
         //return if move was a hit
         if( cellUnderAttack.isShip() ) return true;
         return false;

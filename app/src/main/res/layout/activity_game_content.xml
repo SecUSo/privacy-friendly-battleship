@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_fullwidth"
                 android:layout_gravity="center_vertical"
-                android:onClick="onClickButton" />
+                android:onClick="onClickFireButton" />
 
         </LinearLayout>
     </LinearLayout>

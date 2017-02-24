@@ -40,6 +40,7 @@
     <string name="game_button_start">New Game</string>
     <string name="game_button_continue">Continue Game</string>
     <string name="game_button_fire">Fire!</string>
+    <string name="game_button_done">Done</string>
     <string name="game_player_one">Player 1</string>
     <string name="game_player_two">Player 2</string>
     <string name="game_time">Time:</string>
@@ -47,6 +48,7 @@
     <string name="game_dialog_hit">You have destroyed a ship!</string>
     <string name="game_dialog_next_player">Next player</string>
     <string name="game_dialog_ready">Are you ready?</string>
+    <string name="game_dialog_loss">Too bad... but you lost!</string>
     <string name="game_desc">This is the default main menu for game apps. The viewpager above should be used to switch between game modes.</string>
 
     <!--###HELP###-->
@@ -84,6 +86,7 @@
     <string name="welcome_text">This App serves as a guideline to see the basic design of Privacy Friendly Apps. The sourcecode is available at GitHub. For further explanations have a look at the Privacy Friendly App Guide.\n\nThe welcome screen should introduce the app and the key elements of the start page.</string>
     <string name="welcome">Welcome</string>
     <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
     <string name="viewhelp">View Help</string>
     <string name="main_button_welcomedialog">Show Welcome</string>
 

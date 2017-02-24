@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class GameActivity extends BaseActivity {
     private Timer timerUpdate;
     private SharedPreferences preferences = null;
 
+    private TextView playerName;
+    private TextView attempts;
     private GameMode gameMode;
     private int gridSize;
     private GameController controller;
@@ -42,6 +46,10 @@ public class GameActivity extends BaseActivity {
     private GridView gridViewBig;
     private GridView gridViewSmall;
     private GameActivityLayoutProvider layoutProvider;
+
+    private boolean isHit;
+    private GameCell attackedCell;
+    private GameGrid gridUnderAttack;
     private int positionGridCell;   // Save the current position of the grid cell clicked
     private View prevCell = null;
     private static final String TAG = GameActivity.class.getSimpleName();
@@ -65,7 +73,13 @@ public class GameActivity extends BaseActivity {
 
         // Set up the time
         setUpTimer();
-        setUpToolbar();
+
+        // Initialize the toolbar by setting the name of the current player and the number of attempts
+        this.playerName = (TextView) findViewById(R.id.player_name);
+        this.attempts = (TextView) findViewById(R.id.game_attempts);
+
+        // Update the toolbar
+        updateToolbar();
 
         // Set up the grids for player one
         setupGridViews();
@@ -86,7 +100,13 @@ public class GameActivity extends BaseActivity {
         this.controller.startTimer();
     }
 
-    /*
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        // Go back to the MainActivity
+        this.controller.stopTimer();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -98,7 +118,6 @@ public class GameActivity extends BaseActivity {
         super.onPause();
         this.controller.stopTimer();
     }
-    */
 
     private void setupPreferences() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -109,66 +128,125 @@ public class GameActivity extends BaseActivity {
         return R.id.nav_game;
     }
 
-    public void onClickButton(View view) {
 
-        this.controller.stopTimer();
-        GameGrid GridUnderAttack = this.controller.gridUnderAttack();
+    public void onClickDoneButton(View view){
 
+        // Fade out the grids
+        gridViewBig.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+        gridViewSmall.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+
+        /*
+        Build a handler. Delay the switch of the players and the dialog after the grids have been
+        faded out.
+        */
+        this.handler = new Handler();
+        this.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SwitchDialog switchDialog = new SwitchDialog();
+                switchDialog.setCancelable(false);
+                switchDialog.show(getFragmentManager(), SwitchDialog.class.getSimpleName());
+            }
+        }, MAIN_CONTENT_FADEOUT_DURATION);
+
+        /*
+        Change the listener and the text of the "Done" button, such that the grids fade out
+        after the button has been clicked.
+        */
+        Button fireButton = (Button) findViewById(R.id.game_button_fire);
+        fireButton.setText(R.string.game_button_fire);
+        fireButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                gridViewBig.setClickable(true);
+                onClickFireButton(view);
+            }
+        });
+
+    }
+
+
+    public void onClickFireButton(View view) {
+
+        this.gridUnderAttack = this.controller.gridUnderAttack();
+
+        // Get the cell, which shall be attacked
         int column = this.positionGridCell % this.gridSize;
         int row = this.positionGridCell / this.gridSize;
-        GameCell attackedCell = GridUnderAttack.getCell(column, row);
+        this.attackedCell = gridUnderAttack.getCell(column, row);
 
         //Do not attack the same cell twice and do not click the fire button without clicking on a cell.
         if(attackedCell.isHit() || this.prevCell == null){
             return;
         }
 
-        boolean isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
-        if(!isHit) {
+        // Attack the cell and update the main grid
+        this.isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
+        updateToolbar();
+        adapterMainGrid.notifyDataSetChanged();
+        gridViewBig.setClickable(false);
+
+        GameShip ship = this.gridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
+        if(isHit){
+            if(ship.isDestroyed()){
+                // Show dialog
+                new GameDialog().show(getFragmentManager(), GameDialog.class.getSimpleName());
+                /*
+                //check if player has won
+                if (this.gridUnderAttack.getShipSet().allShipsDestroyed() ){
+                    //current player has won the game
+                }
+                */
+            }
+        }
+        else{
+            this.controller.stopTimer();
+
+            // If the attacked cell does not contain a ship, then stop the timer and switch the player
             if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
                 controller.switchPlayers();
                 //make move for AI
                 this.controller.getOpponentAI().makeMove();
                 adapterMiniGrid.notifyDataSetChanged();
+                if(this.controller.getOpponentAI().isAIWinner()){
+                    timerUpdate.cancel();
+
+                    /*
+                    Create a dialog. Therefore, instantiate a bundle which transfers the data from the
+                    current game to the dialog.
+                     */
+                    /*
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Time", this.controller.timeToString(this.controller.getTime()));
+                    bundle.putString("Attempts", this.controller.attemptsToString(this.controller.getAttemptsPlayerOne()));
+                    */
+                    // Instantiate the lose dialog and show it
+                    LoseDialog loseDialog = new LoseDialog();
+                    //loseDialog.newInstance(bundle);
+                    loseDialog.setCancelable(false);
+                    loseDialog.show(getFragmentManager(), LoseDialog.class.getSimpleName());
+                }
+                else{
+                    // Restart the timer for player one
+                    this.controller.startTimer();
+                }
             }
             else{
-                // Build a handler in order to delay the fade out of the grids.
-                this.handler = new Handler();
-                this.handler.postDelayed(new Runnable() {
+
+                /*
+                Change the listener and the text of the "Fire" button, such that the grids fade out
+                after the button has been clicked.
+                 */
+                Button doneButton = (Button) findViewById(R.id.game_button_fire);
+                doneButton.setText(R.string.game_button_done);
+                doneButton.setOnClickListener(new View.OnClickListener(){
                     @Override
-                    public void run() {
-
-                        // Fade out the grids
-                        gridViewBig.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
-                        gridViewSmall.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
-
-                        /*
-                        Build a second handler. Delay the switch of the players and the dialog after
-                        the grids have been faded out.
-                        */
-                        Handler innerHandler = new Handler();
-                        innerHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                SwitchDialog switchDialog = new SwitchDialog();
-                                switchDialog.setCancelable(false);
-                                switchDialog.show(getFragmentManager(), SwitchDialog.class.getSimpleName());
-                            }
-                        }, MAIN_CONTENT_FADEOUT_DURATION);
+                    public void onClick(View view) {
+                        onClickDoneButton(view);
                     }
-                }, 1000);
+                });
             }
         }
-        else{
-            GameShip ship = GridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
-            if(ship.isDestroyed()){
-                // Show dialog
-                new GameDialog().show(getFragmentManager(), GameDialog.class.getSimpleName());
-            }
-        }
-        adapterMainGrid.notifyDataSetChanged();
-        this.controller.startTimer();
-        setUpToolbar();
     }
 
     protected void setupGridViews() {
@@ -230,24 +308,20 @@ public class GameActivity extends BaseActivity {
                 adapterMainGrid.notifyDataSetChanged();
             }
         });
-
     }
 
-    public void setUpToolbar(){
+    public void updateToolbar(){
+        if(this.gameMode == GameMode.VS_PLAYER || this.gameMode == GameMode.CUSTOM){
+            int currentPlayerName = this.controller.getCurrentPlayer() ? R.string.game_player_two : R.string.game_player_one;
+            this.playerName.setText(currentPlayerName);
+        }
+        else{
+            this.playerName.setText("");
+        }
 
-        // Set the name of the current player
-        TextView playerName = (TextView) findViewById(R.id.player_name);
-        int currentPlayerName = this.controller.getCurrentPlayer() ? R.string.game_player_two : R.string.game_player_one;
-        playerName.setText(currentPlayerName);
-
-        // Set the number of attempts
-        TextView attempts = (TextView) findViewById(R.id.game_attempts);
-        int attemptsCurrentPlayer = this.controller.getCurrentPlayer() ? this.controller.getAttemptsPlayerTwo()
-                                                                        : this.controller.getAttemptsPlayerOne();
-        attempts.setText(this.controller.attemptsToString(attemptsCurrentPlayer));
-
+        int attemptsCurrentPlayer = this.controller.getCurrentPlayer() ? this.controller.getAttemptsPlayerTwo() : this.controller.getAttemptsPlayerOne();
+        this.attempts.setText(this.controller.attemptsToString(attemptsCurrentPlayer));
     }
-
 
     public void setUpTimer(){
         // Setup timer task and timer view. This setup updates the current time of a player every second.
@@ -265,7 +339,6 @@ public class GameActivity extends BaseActivity {
             }
         }, 0, 1000);
     }
-
 
     public void fadeInGrids(){
 
@@ -302,10 +375,56 @@ public class GameActivity extends BaseActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // Fade in the grids after the next player has clicked on the button
                             ((GameActivity)getActivity()).controller.switchPlayers();
+
+                            // Update the toolbar
+                            ((GameActivity) getActivity()).updateToolbar();
                             ((GameActivity) getActivity()).fadeInGrids();
+                            ((GameActivity) getActivity()).controller.startTimer();
                         }
                     });
             // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
+
+    public static class LoseDialog extends DialogFragment {
+
+        private String time;
+        private String attempts;
+
+        public void newInstance(Bundle bundle){
+            this.time = bundle.getString("Time");
+            this.attempts = bundle.getString("Attempts");
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState){
+
+            // Set the current time and the number of attempts for player one
+            //TextView textTime = (TextView) getActivity().findViewById(R.id.lose_dialog_time);
+            //textTime.setText(this.time);
+
+            //TextView textAttempts = (TextView) getActivity().findViewById(R.id.lose_dialog_attempts);
+            //textAttempts.setText(this.attempts);
+
+            // Build the dialog
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(inflater.inflate(R.layout.lose_dialog, null))
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Go back to the (old) MainActivity.
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    // Exit the GameActivity
+                    getActivity().finish();
+                }
+            });
+
             return builder.create();
         }
     }
