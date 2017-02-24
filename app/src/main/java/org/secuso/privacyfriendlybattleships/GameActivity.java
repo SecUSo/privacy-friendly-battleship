@@ -67,6 +67,11 @@ public class GameActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        //TODO: shop popup, asking if player wants to return to the menu
+    }
+
     private void setupPreferences() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }

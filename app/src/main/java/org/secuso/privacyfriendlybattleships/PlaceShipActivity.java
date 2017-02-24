@@ -8,11 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import org.secuso.privacyfriendlybattleships.game.Direction;
@@ -29,7 +34,7 @@ import org.secuso.privacyfriendlybattleships.game.GameShip;
 public class PlaceShipActivity extends BaseActivity {
 
     private SharedPreferences preferences = null;
-    private static GameController controller;
+    private GameController controller;
     private int gridSize;
     private GameActivityLayoutProvider layoutProvider;
     private GridView gridView;
@@ -58,6 +63,10 @@ public class PlaceShipActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     private boolean isFirstActivityStart() {
         return preferences.getBoolean(Constants.FIRST_PLACEMENT_START, true);
     }
@@ -75,7 +84,9 @@ public class PlaceShipActivity extends BaseActivity {
     }
 
     private void showSwitchPlayerDialog() {
-        new SwitchPlayerDialog().show(getFragmentManager(), SwitchPlayerDialog.class.getSimpleName());
+        DialogFragment switchDialog = new SwitchPlayerDialog();
+        switchDialog.setCancelable(false);
+        switchDialog.show(getFragmentManager(), SwitchPlayerDialog.class.getSimpleName());
     }
 
     protected void setupGridView(int size){
@@ -202,19 +213,38 @@ public class PlaceShipActivity extends BaseActivity {
             startActivity(intent);
         } else if (this.controller.getMode() == GameMode.VS_PLAYER) {
             if (this.controller.getCurrentPlayer()) {
-                //TODO: Fade-out grid and show popup for player 1
+                this.fadeOutGridView();
                 //Call GameActivity and provide GameController
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("controller", this.controller);
                 startActivity(intent);
             } else {
-                //TODO: implement transition between players including fade-out of grid
-                setupGridView(this.controller.getGridSize());
+                this.fadeOutGridView();
                 showSwitchPlayerDialog();
-                this.controller.switchPlayers();
             }
         }
 
+    }
+
+    private void fadeOutGridView() {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setDuration(300);
+        this.gridView.startAnimation(fadeOut);
+        this.gridView.setVisibility(View.INVISIBLE);
+    }
+
+    private void fadeInGridView() {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(500);
+        this.gridView.startAnimation(fadeIn);
+        this.gridView.setVisibility(View.VISIBLE);
+    }
+
+    private void switchPlayers() {
+        this.controller.switchPlayers();
+        setupGridView(this.controller.getGridSize());
     }
 
     private void setupPreferences() {
@@ -277,11 +307,17 @@ public class PlaceShipActivity extends BaseActivity {
 
             builder.setView(i.inflate(R.layout.placement_switch_player_dialog, null));
             builder.setIcon(R.mipmap.icon);
-            if (!controller.getCurrentPlayer())
-                builder.setTitle(getActivity().getString(R.string.player) + " 1");
+            if (!((PlaceShipActivity)getActivity()).controller.getCurrentPlayer())
+                builder.setTitle(getActivity().getString(R.string.player) + " 2");//player will be switched now
             else
-                builder.setTitle(getActivity().getString(R.string.player) + " 2");
-            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
+                builder.setTitle(getActivity().getString(R.string.player) + " 1");//player will be switched now
+
+            builder.setPositiveButton(getActivity().getString(R.string.okay), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ((PlaceShipActivity) getActivity()).switchPlayers();
+                    ((PlaceShipActivity)getActivity()).fadeInGridView();
+                }
+            });
 
             return builder.create();
         }

@@ -263,13 +263,6 @@ public class MainActivity extends BaseActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     ((MainActivity)getActivity()).goToNavigationItem(R.id.nav_help);
                 }
-/*                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getActivity(), HelpActivity.class);
-                    intent.putExtra(HelpActivity.EXTRA_SHOW_FRAGMENT, HelpActivity.HelpFragment.class.getName());
-                    intent.putExtra(HelpActivity.EXTRA_NO_HEADERS, true);
-                    startActivity(intent);
-                }*/
             });
 
             return builder.create();
