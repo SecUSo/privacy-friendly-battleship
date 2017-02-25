@@ -40,11 +40,7 @@ public class GameAI implements Parcelable{
 
     public void makeMove() {
         if(this.mode == GameMode.VS_AI_EASY) {
-            while ( makeRandomMove() ) {
-                if(isAIWinner()){
-                    break;
-                }
-            };
+            while ( makeRandomMove() ) {};
             this.controller.switchPlayers();
         } else if(this.mode == GameMode.VS_AI_HARD) {
             //TODO: implementation of AI for higher difficulty
@@ -69,6 +65,7 @@ public class GameAI implements Parcelable{
             // Check if the AI has won set hasAIWon to true in that case.
             if (this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() ){
                 this.hasAIWon = true;
+                return false;
             }
         } else {
             this.gridUnderAttack[col][row] = 2;

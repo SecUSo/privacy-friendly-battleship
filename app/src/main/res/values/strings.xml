@@ -49,6 +49,8 @@
     <string name="game_dialog_next_player">Next player</string>
     <string name="game_dialog_ready">Are you ready?</string>
     <string name="game_dialog_loss">Too bad... but you lost!</string>
+    <string name="game_dialog_win">Congratulations to... </string>
+    <string name="game_dialog_show_gamefield">Show Gamefield</string>
     <string name="game_desc">This is the default main menu for game apps. The viewpager above should be used to switch between game modes.</string>
 
     <!--###HELP###-->
@@ -87,6 +89,7 @@
     <string name="welcome">Welcome</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
+    <string name="finish">Finish</string>
     <string name="viewhelp">View Help</string>
     <string name="main_button_welcomedialog">Show Welcome</string>
 

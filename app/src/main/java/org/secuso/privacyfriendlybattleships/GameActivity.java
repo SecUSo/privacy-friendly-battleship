@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -47,6 +46,7 @@ public class GameActivity extends BaseActivity {
     private GridView gridViewSmall;
     private GameActivityLayoutProvider layoutProvider;
 
+    private boolean move;
     private boolean isHit;
     private GameCell attackedCell;
     private GameGrid gridUnderAttack;
@@ -189,14 +189,15 @@ public class GameActivity extends BaseActivity {
         GameShip ship = this.gridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
         if(isHit){
             if(ship.isDestroyed()){
-                // Show dialog
-                new GameDialog().show(getFragmentManager(), GameDialog.class.getSimpleName());
+                this.controller.stopTimer();
                 /*
-                //check if player has won
-                if (this.gridUnderAttack.getShipSet().allShipsDestroyed() ){
-                    //current player has won the game
-                }
-                */
+                 Show dialog. The dialog will check if the current player has won after the player
+                 has clicked on the OK button, cf. the respective onCreateDialog method.
+                  */
+                GameDialog gameDialog = new GameDialog();
+                gameDialog.setCancelable(false);
+                gameDialog.show(getFragmentManager(), GameDialog.class.getSimpleName());
+
             }
         }
         else{
@@ -215,14 +216,13 @@ public class GameActivity extends BaseActivity {
                     Create a dialog. Therefore, instantiate a bundle which transfers the data from the
                     current game to the dialog.
                      */
-                    /*
+
                     Bundle bundle = new Bundle();
                     bundle.putString("Time", this.controller.timeToString(this.controller.getTime()));
                     bundle.putString("Attempts", this.controller.attemptsToString(this.controller.getAttemptsPlayerOne()));
-                    */
+
                     // Instantiate the lose dialog and show it
-                    LoseDialog loseDialog = new LoseDialog();
-                    //loseDialog.newInstance(bundle);
+                    LoseDialog loseDialog = LoseDialog.newInstance(bundle);
                     loseDialog.setCancelable(false);
                     loseDialog.show(getFragmentManager(), LoseDialog.class.getSimpleName());
                 }
@@ -248,6 +248,35 @@ public class GameActivity extends BaseActivity {
             }
         }
     }
+
+    public void onClickFinishButton(View view){
+        Button finishButton = (Button) findViewById(R.id.game_button_fire);
+        finishButton.setText(R.string.finish);
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToMainActivity(null);
+            }
+        });
+    }
+
+    /*
+    public void makeMoveAI() {
+
+        if(this.gameMode == GameMode.VS_AI_EASY) {
+            this.move = true;
+            while(move){
+                move = controller.getOpponentAI().makeRandomMove();
+                adapterMiniGrid.notifyDataSetChanged();
+                if(!move){
+                    controller.switchPlayers();
+                }
+            }
+        } else if(this.gameMode == GameMode.VS_AI_HARD) {
+            //TODO: implementation of AI for higher difficulty
+        }
+    }
+    */
 
     protected void setupGridViews() {
 
@@ -323,6 +352,53 @@ public class GameActivity extends BaseActivity {
         this.attempts.setText(this.controller.attemptsToString(attemptsCurrentPlayer));
     }
 
+    public void fadeInGrids(){
+
+        setupGridViews();
+        // Fade in the grids
+        gridViewBig.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        gridViewSmall.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+    }
+
+    public void goToMainActivity(View view){
+
+        // Go back to the (old) MainActivity.
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        // Exit the GameActivity
+        this.finish();
+    }
+
+    public void terminate(){
+        //check if player has won
+        if (this.gridUnderAttack.getShipSet().allShipsDestroyed() ){
+            //current player has won the game
+            this.controller.stopTimer();
+            timerUpdate.cancel();
+            /*
+            Create a dialog. Therefore, instantiate a bundle which transfers the data from the
+            current game to the dialog.
+            */
+            int nameWinner = this.controller.getCurrentPlayer() ? R.string.game_player_two : R.string.game_player_one;
+            int attemptsWinner = this.controller.getCurrentPlayer() ? this.controller.getAttemptsPlayerTwo()
+                                                                    : this.controller.getAttemptsPlayerOne();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Player", nameWinner);
+            bundle.putString("Time", this.controller.timeToString(this.controller.getTime()));
+            bundle.putString("Attempts", this.controller.attemptsToString(attemptsWinner));
+
+            // Instantiate the win dialog and show it
+            WinDialog winDialog = WinDialog.newInstance(bundle);
+            winDialog.setCancelable(false);
+            winDialog.show(getFragmentManager(), WinDialog.class.getSimpleName());
+        }
+        else{
+            this.controller.startTimer();
+        }
+    }
+
     public void setUpTimer(){
         // Setup timer task and timer view. This setup updates the current time of a player every second.
         final TextView timerView = (TextView) findViewById(R.id.timerView);
@@ -340,14 +416,6 @@ public class GameActivity extends BaseActivity {
         }, 0, 1000);
     }
 
-    public void fadeInGrids(){
-
-        setupGridViews();
-        // Fade in the grids
-        gridViewBig.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
-        gridViewSmall.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
-    }
-
     public static class GameDialog extends DialogFragment {
 
         @Override
@@ -355,7 +423,13 @@ public class GameActivity extends BaseActivity {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(R.string.game_dialog_hit)
-                    .setPositiveButton("OK", null);
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Check if the game has a winner and terminate it in that case.
+                            ((GameActivity) getActivity()).terminate();
+                        }
+                    });
             // Create the AlertDialog object and return it
             return builder.create();
         }
@@ -374,7 +448,7 @@ public class GameActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // Fade in the grids after the next player has clicked on the button
-                            ((GameActivity)getActivity()).controller.switchPlayers();
+                            ((GameActivity) getActivity()).controller.switchPlayers();
 
                             // Update the toolbar
                             ((GameActivity) getActivity()).updateToolbar();
@@ -392,41 +466,102 @@ public class GameActivity extends BaseActivity {
         private String time;
         private String attempts;
 
-        public void newInstance(Bundle bundle){
-            this.time = bundle.getString("Time");
-            this.attempts = bundle.getString("Attempts");
+        public static LoseDialog newInstance(Bundle bundle){
+            LoseDialog loseDialog = new LoseDialog();
+            loseDialog.setArguments(bundle);
+            return loseDialog;
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState){
 
-            // Set the current time and the number of attempts for player one
-            //TextView textTime = (TextView) getActivity().findViewById(R.id.lose_dialog_time);
-            //textTime.setText(this.time);
+            this.time = getArguments().getString("Time");
+            this.attempts = getArguments().getString("Attempts");
 
-            //TextView textAttempts = (TextView) getActivity().findViewById(R.id.lose_dialog_attempts);
-            //textAttempts.setText(this.attempts);
+            // Get the layout for the lose dialog as a view
+            View loseDialogView = getActivity().getLayoutInflater().inflate(R.layout.lose_dialog, null);
+
+            // Set the current time and the number of attempts.
+            TextView textTime = (TextView) loseDialogView.findViewById(R.id.lose_dialog_time);
+            textTime.setText(this.time);
+
+            TextView textAttempts = (TextView) loseDialogView.findViewById(R.id.lose_dialog_attempts);
+            textAttempts.setText(this.attempts);
 
             // Build the dialog
-            LayoutInflater inflater = getActivity().getLayoutInflater();
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(inflater.inflate(R.layout.lose_dialog, null))
+            builder.setView(loseDialogView)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    // Go back to the (old) MainActivity.
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-
-                    // Exit the GameActivity
-                    getActivity().finish();
+                    ((GameActivity) getActivity()).goToMainActivity(null);
                 }
-            });
+            })
+                    .setNegativeButton(R.string.game_dialog_show_gamefield, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ((GameActivity) getActivity()).onClickFinishButton(getView());
+                        }
+                    });
 
             return builder.create();
         }
+    }
+
+    public static class WinDialog extends DialogFragment {
+
+        private String time;
+        private String attempts;
+        private int playerName;
+
+        public static WinDialog newInstance(Bundle bundle){
+            WinDialog winDialog = new WinDialog();
+            winDialog.setArguments(bundle);
+            return winDialog;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState){
+
+            this.time = getArguments().getString("Time");
+            this.attempts = getArguments().getString("Attempts");
+            this.playerName = getArguments().getInt("Player");
+
+            // Get the layout for the lose dialog as a view
+            View winDialogView = getActivity().getLayoutInflater().inflate(R.layout.win_dialog, null);
+
+            // Set the current time, the name of the player and the number of attempts.
+            TextView textTime = (TextView) winDialogView.findViewById(R.id.win_dialog_time);
+            textTime.setText(this.time);
+
+            TextView textAttempts = (TextView) winDialogView.findViewById(R.id.win_dialog_attempts);
+            textAttempts.setText(this.attempts);
+
+            TextView textPlayerName = (TextView) winDialogView.findViewById(R.id.win_dialog_player_name);
+            textPlayerName.setText(this.playerName);
+
+            // Build the dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.game_dialog_win)
+                    .setView(winDialogView)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ((GameActivity) getActivity()).goToMainActivity(null);
+                        }
+                    })
+                    .setNegativeButton(R.string.game_dialog_show_gamefield, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ((GameActivity) getActivity()).onClickFinishButton(getView());
+                        }
+                    });
+
+            return builder.create();
+        }
+
     }
 
 }
