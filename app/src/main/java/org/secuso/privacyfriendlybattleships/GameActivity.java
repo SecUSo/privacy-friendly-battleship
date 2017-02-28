@@ -5,11 +5,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +33,6 @@ public class GameActivity extends BaseActivity {
 
     private Handler handler;
     private Timer timerUpdate;
-    private SharedPreferences preferences = null;
 
     private TextView playerName;
     private TextView attempts;
@@ -58,7 +57,14 @@ public class GameActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setupPreferences();
+
+        // Show the welcome dialog only once after the app has been started
+        if (isFirstAppStart()) {
+            // Show a help dialog
+            new HelpDialog().show(getFragmentManager(), HelpDialog.class.getSimpleName());
+            setAppStarted();
+        }
+
         setContentView(R.layout.activity_game);
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
@@ -67,6 +73,9 @@ public class GameActivity extends BaseActivity {
 
         this.gridSize = controller.getGridSize();
         this.gameMode = controller.getMode();
+
+        // Set up the handler, which will be needed later in the code.
+        this.handler = new Handler();
 
         // Create a GameActivityLayoutProvider in order to scale the grids appropriately
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
@@ -102,9 +111,23 @@ public class GameActivity extends BaseActivity {
 
     @Override
     public void onBackPressed(){
+        // Check if the menu drawer is open
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            // Display a dialog which asks the current player, if he wants to quit the game
+            this.controller.stopTimer();
+            GoBackDialog goBackDialog = new GoBackDialog();
+            goBackDialog.setCancelable(false);
+            goBackDialog.show(getFragmentManager(), GoBackDialog.class.getSimpleName());
+        }
+    }
+
+    public void goBack(){
+        // Go Back to the MainActivity
+        timerUpdate.cancel();
         super.onBackPressed();
-        // Go back to the MainActivity
-        this.controller.stopTimer();
     }
 
     @Override
@@ -119,15 +142,13 @@ public class GameActivity extends BaseActivity {
         this.controller.stopTimer();
     }
 
-    private void setupPreferences() {
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    public void onClickHelpButton(View view){
+        this.controller.stopTimer();
+        // Show a help dialog
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setCancelable(false);
+        helpDialog.show(getFragmentManager(), HelpDialog.class.getSimpleName());
     }
-
-    @Override
-    protected int getNavigationDrawerID() {
-        return R.id.nav_game;
-    }
-
 
     public void onClickDoneButton(View view){
 
@@ -139,11 +160,21 @@ public class GameActivity extends BaseActivity {
         Build a handler. Delay the switch of the players and the dialog after the grids have been
         faded out.
         */
-        this.handler = new Handler();
         this.handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SwitchDialog switchDialog = new SwitchDialog();
+
+                /*
+                Get the name of the next player. Note that the players are switched when the
+                SwitchDialog is executed.
+                 */
+                int playerName = controller.getCurrentPlayer() ?  R.string.game_player_one : R.string.game_player_two;
+
+                // Create a bundle for transferring data to the SwitchDialog
+                Bundle bundle = new Bundle();
+                bundle.putInt("Name", playerName);
+
+                SwitchDialog switchDialog = SwitchDialog.newInstance(bundle);
                 switchDialog.setCancelable(false);
                 switchDialog.show(getFragmentManager(), SwitchDialog.class.getSimpleName());
             }
@@ -165,7 +196,6 @@ public class GameActivity extends BaseActivity {
 
     }
 
-
     public void onClickFireButton(View view) {
 
         this.gridUnderAttack = this.controller.gridUnderAttack();
@@ -184,17 +214,19 @@ public class GameActivity extends BaseActivity {
         this.isHit = this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
         updateToolbar();
         adapterMainGrid.notifyDataSetChanged();
-        gridViewBig.setClickable(false);
 
         GameShip ship = this.gridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
         if(isHit){
             if(ship.isDestroyed()){
                 this.controller.stopTimer();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("Size", ship.getSize());
                 /*
                  Show dialog. The dialog will check if the current player has won after the player
                  has clicked on the OK button, cf. the respective onCreateDialog method.
                   */
-                GameDialog gameDialog = new GameDialog();
+                GameDialog gameDialog = GameDialog.newInstance(bundle);
                 gameDialog.setCancelable(false);
                 gameDialog.show(getFragmentManager(), GameDialog.class.getSimpleName());
 
@@ -202,7 +234,7 @@ public class GameActivity extends BaseActivity {
         }
         else{
             this.controller.stopTimer();
-
+            gridViewBig.setClickable(false);
             // If the attacked cell does not contain a ship, then stop the timer and switch the player
             if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
                 controller.switchPlayers();
@@ -418,12 +450,30 @@ public class GameActivity extends BaseActivity {
 
     public static class GameDialog extends DialogFragment {
 
+        private int size;
+
+        public static GameDialog newInstance(Bundle bundle){
+            GameDialog gameDialog = new GameDialog();
+            gameDialog.setArguments(bundle);
+            return gameDialog;
+        }
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            this.size = getArguments().getInt("Size");
+
+            // Get the layout for the lose dialog as a view
+            View gameDialogView = getActivity().getLayoutInflater().inflate(R.layout.game_dialog, null);
+
+            // Set the size of the ship destroyed
+            TextView textShipSize = (TextView) gameDialogView.findViewById(R.id.game_dialog_ship_size);
+            textShipSize.setText(String.valueOf(this.size));
+
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.game_dialog_hit)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setView(gameDialogView)
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // Check if the game has a winner and terminate it in that case.
@@ -438,13 +488,29 @@ public class GameActivity extends BaseActivity {
 
     public static class SwitchDialog extends DialogFragment {
 
+        private int playerName;
+
+        public static SwitchDialog newInstance(Bundle bundle){
+            SwitchDialog switchDialog = new SwitchDialog();
+            switchDialog.setArguments(bundle);
+            return switchDialog;
+        }
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            this.playerName = getArguments().getInt("Name");
+
+            // Get the layout for the lose dialog as a view
+            View switchDialogView = getActivity().getLayoutInflater().inflate(R.layout.switch_dialog, null);
+
+            TextView textPlayerName = (TextView) switchDialogView.findViewById(R.id.switch_dialog_title_player_name);
+            textPlayerName.setText(this.playerName);
+
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.game_dialog_next_player)
-                    .setMessage(R.string.game_dialog_ready)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setView(switchDialogView)
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // Fade in the grids after the next player has clicked on the button
@@ -491,7 +557,7 @@ public class GameActivity extends BaseActivity {
             // Build the dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setView(loseDialogView)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -545,7 +611,7 @@ public class GameActivity extends BaseActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.game_dialog_win)
                     .setView(winDialogView)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -564,4 +630,55 @@ public class GameActivity extends BaseActivity {
 
     }
 
+    public static class GoBackDialog extends DialogFragment{
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.game_dialog_quit)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ((GameActivity) getActivity()).goBack();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener(){
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // Resume the timer
+                            ((GameActivity) getActivity()).controller.startTimer();
+                        }
+                    });
+
+            return builder.create();
+        }
+
+    }
+
+    public static class HelpDialog extends DialogFragment{
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState){
+
+            View helpDialogView = getActivity().getLayoutInflater().inflate(R.layout.help_dialog, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(helpDialogView)
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener(){
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if( !((GameActivity) getActivity()).isFirstAppStart() ){
+                                ((GameActivity) getActivity()).controller.startTimer();
+                            }
+                        }
+                    });
+
+
+            return builder.create();
+        }
+
+    }
 }

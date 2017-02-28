@@ -46,7 +46,7 @@
                 android:background="@drawable/button_fullwidth"
                 android:layout_gravity="right"
                 android:scaleY="0.9"
-                android:onClick="" />
+                android:onClick="onClickHelpButton" />
 
             <Button
                 android:id="@+id/game_button_fire"

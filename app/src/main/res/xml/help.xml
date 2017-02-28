@@ -1,24 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/help_overview_heading">
-    <Preference
-        android:selectable="false"
-        android:persistent="false"
-        android:title=""
-        android:summary="@string/help_intro"/>
+    <PreferenceCategory android:title="@string/help_menu_game_mode">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:icon="@drawable/ic_people_black_24px"
+            android:summary="@string/help_menu_game_mode_dual_player"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:icon="@drawable/ic_person_black_24px"
+            android:summary="@string/help_menu_game_mode_vs_ai_easy"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:icon="@drawable/ic_person_black_24px"
+            android:summary="@string/help_menu_game_mode_vs_ai_hard"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/help_menu_game_size">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_menu_game_size_description"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_menu_start">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_menu_quick_start"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_menu_settings"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_how_to_play">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_game_intro"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_game_step_one"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_game_step_two"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_game_step_three"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/help_game_step_four"/>
+    </PreferenceCategory>
+
+<!--
     <PreferenceCategory android:title="@string/help_category_example">
         <Preference android:title="@string/help_example"
             android:summary="@string/pref_example_summary"
             android:selectable="false"/>
     </PreferenceCategory>
+    -->
 
     <PreferenceCategory android:title="@string/help_privacy_heading">
-        <Preference
-            android:summary="@string/help_permissionXY_description"
-            android:title="@string/help_permissionXY_heading" />
         <Preference
             android:summary="@string/help_permissions_description"
             android:title="@string/help_permissions_heading" />

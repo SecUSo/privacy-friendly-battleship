@@ -30,7 +30,20 @@
     <string name="title_activity_game">Spiel</string>
     <string name="game_button_start">Neues Spiel</string>
     <string name="game_button_continue">Spiel fortsetzen</string>
-    <string name="game_desc">Dies ist das Standard-Menü für Spiele-Apps. Der Viewpager oben sollte verwendet werden, um zwischen verschiedenen Spielmodi zu wechseln.</string>
+    <string name="game_button_fire">Schießen!</string>
+    <string name="game_button_done">Fertig</string>
+    <string name="game_player_one">Spieler 1</string>
+    <string name="game_player_two">Spieler 2</string>
+    <string name="game_time">Zeit:</string>
+    <string name="game_attempts">Versuche:</string>
+    <string name="game_dialog_hit_prefix">Du hast ein Schiff der Größe </string>
+    <string name="game_dialog_hit_suffix">zerstört!</string>
+    <string name="game_dialog_next_player">ist an der Reihe!</string>
+    <string name="game_dialog_ready">Bist du bereit?</string>
+    <string name="game_dialog_loss">Schade... aber du hast verloren!</string>
+    <string name="game_dialog_win">Und der Gewinner ist... </string>
+    <string name="game_dialog_show_gamefield">Zeige Spielfeld</string>
+    <string name="game_dialog_quit">Willst du das Spiel abbrechen??</string>
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
@@ -64,6 +77,10 @@
     <string name="welcome_text">Diese App soll als Anleitung zum Design von Privacy Friendly Apps dienen. Ihr Quellcode ist auf GitHub verfügbar. Weitere Infos im Privacy Friendly App Guide. Im Welcome Dialog sollen Schlüsselfunktionalitäten der App vorgestellt werden.</string>
     <string name="welcome">Willkommen</string>
     <string name="okay">Okay</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="finish">Fertig!</string>
     <string name="viewhelp">Hilfe</string>
     <string name="main_button_welcomedialog">Willkommen</string>
 
