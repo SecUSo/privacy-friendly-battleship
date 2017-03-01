@@ -18,5 +18,4 @@ public final class Constants {
     public final static String GRID_SIZE                = "GAME_SIZE";
     public final static String GAME_MODE                = "GAME_MODE";
 
-
 }

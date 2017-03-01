@@ -23,6 +23,8 @@ import android.view.View;
  */
 public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
+    // Preferences for first app start
+    public final static String FIRST_APP_START = "FIRST_APP_START";
     // delay to launch nav drawer item, to allow close animation to play
     static final int NAVDRAWER_LAUNCH_DELAY = 250;
     // fade in and fade out durations for the main content when switching between
@@ -74,6 +76,14 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
         final int itemId = item.getItemId();
 
         return goToNavigationItem(itemId);
+    }
+
+    public void setAppStarted() {
+        mSharedPreferences.edit().putBoolean(FIRST_APP_START, false).commit();
+    }
+
+    public boolean isFirstAppStart() {
+        return mSharedPreferences.getBoolean(FIRST_APP_START, true);
     }
 
     protected boolean goToNavigationItem(final int itemId) {
@@ -137,10 +147,6 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
                 intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                break;
-            case R.id.nav_game:
-                intent = new Intent(this, GameActivity.class);
-                createBackStack(intent);
                 break;
             case R.id.nav_about:
                 intent = new Intent(this, AboutActivity.class);

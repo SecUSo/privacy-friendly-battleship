@@ -34,13 +34,40 @@
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/player_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_player_one"
+                        android:layout_weight="6"/>
+
+                    <TextView
+                        android:id="@+id/time_string"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_time"
+                        android:layout_marginEnd="1pt"/>
+
                      <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00:00"
-                        android:layout_weight="2"
                         android:id="@+id/timerView"
-                        android:gravity="end"/>
+                         android:layout_weight="4"/>
+
+                    <TextView
+                        android:id="@+id/attempts_string"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_attempts"
+                        android:layout_marginEnd="1pt"/>
+
+                    <TextView
+                        android:id="@+id/game_attempts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"/>
                 </LinearLayout>
 
             </android.support.v7.widget.Toolbar>
@@ -61,6 +88,7 @@
         android:background="@color/white"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"/>
+
 </android.support.v4.widget.DrawerLayout>
 
 

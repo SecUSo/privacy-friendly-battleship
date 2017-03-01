@@ -40,19 +40,40 @@
     <string name="game_button_start">New Game</string>
     <string name="game_button_continue">Continue Game</string>
     <string name="game_button_fire">Fire!</string>
-    <string name="game_desc">This is the default main menu for game apps. The viewpager above should be used to switch between game modes.</string>
+    <string name="game_button_done">Done</string>
+    <string name="game_player_one">Player 1</string>
+    <string name="game_player_two">Player 2</string>
+    <string name="game_time">Time:</string>
+    <string name="game_attempts">Attempts:</string>
+    <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
+    <string name="game_dialog_hit_suffix">!</string>
+    <string name="game_dialog_next_player">", it's your turn!"</string>
+    <string name="game_dialog_ready">Are you ready?</string>
+    <string name="game_dialog_loss">Too bad... but you lost!</string>
+    <string name="game_dialog_win">And the winner is... </string>
+    <string name="game_dialog_show_gamefield">Show Gamefield</string>
+    <string name="game_dialog_quit">Do you want to quit the game?</string>
 
     <!--###HELP###-->
     <string name="help">Help</string>
-    <string name="help_overview_heading">Overview</string>
-    <string name="help_example">Example Help Entry</string>
-    <string name="help_category_example">Example Help Category</string>
+    <string name="help_menu_game_mode">Game Mode</string>
+    <string name="help_menu_game_mode_dual_player">Create a dual player mode.</string>
+    <string name="help_menu_game_mode_vs_ai_easy">Play against the computer in the easy mode.</string>
+    <string name="help_menu_game_mode_vs_ai_hard">Play against the computer in the hard mode.</string>
+    <string name="help_menu_game_size">Size of the game field</string>
+    <string name="help_menu_game_size_description">Select the size of the game field. The possible sizes for the game field are 5x5 or 10x10.</string>
+    <string name="help_menu_start">Start the game</string>
+    <string name="help_menu_quick_start">Press the quick start button if you want to start the game with the game mode and the size of the game field you have chosen. The ships will be placed randomly.</string>
+    <string name="help_menu_settings">Press the settings button if you want to place the ships individually. Besides, you can customize the ship set.</string>
+    <string name="help_how_to_play">How to play the game</string>
+    <string name="help_game_intro">The big grid displays the game field of your opponent. The small grid displays your own game field. Depending on the game mode, you can do the following steps:</string>
+    <string name="help_game_step_one">1. Choose a cell you want to attack by clicking on it.</string>
+    <string name="help_game_step_two">2. Press the fire button. The color of the cell you have chosen changes to red or blue, whether the cell contains a part of a ship or not.</string>
+    <string name="help_game_step_three">3. In case you have hit a part of a ship, you can attack other cells until you have a miss.</string>
+    <string name="help_game_step_four">4. In case you have a miss, click on the done button and hand the phone to your opponent, who may attack your ships. If you play against the computer, the computer will attack your ships.</string>
     <string name="help_privacy_heading">Privacy Info</string>
-    <string name="help_permissionXY_heading">Permission XY</string>
-    <string name="help_permissionXY_description">is needed because &#8230; If XY is not granted feature YZ is not usable.</string>
     <string name="help_permissions_heading">Permissions</string>
-    <string name="help_permissions_description">Privacy Friendly Example does not use any permissions.</string>
-    <string name="help_intro">This app shows the basic design of Privacy Friendly Apps. The functionality of the app should be introduced with 1 to 2 sentences in this section.</string>
+    <string name="help_permissions_description">Privacy Friendly Batlleships does not use any permissions.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
@@ -77,6 +98,10 @@
     <string name="welcome_text">Welcome to the Privacy Friendly Battleships App. In the Main menu you can choose a game mode and the size of the game board. Tap on \"QUICK START\" to directly start the game or on \"PLACE SHIPS\" to place your battleships. Enjoy the game!</string>
     <string name="welcome">Welcome</string>
     <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="finish">Finish</string>
     <string name="viewhelp">View Help</string>
     <string name="main_button_welcomedialog">Show Welcome</string>
 

@@ -12,6 +12,7 @@ import java.util.Random;
 public class GameAI implements Parcelable{
 
     private byte[][] gridUnderAttack;//represents the opponents grid; 0: unknown, 1: ship, 2: water
+    private boolean hasAIWon;
     private int gridSize;
     private GameMode mode;
     private GameController controller;
@@ -34,9 +35,10 @@ public class GameAI implements Parcelable{
 
         //initialize random number generator
         this.ranGen = new Random();
+        this.hasAIWon = false;
     }
 
-    public void makeMove(){
+    public void makeMove() {
         if(this.mode == GameMode.VS_AI_EASY) {
             while ( makeRandomMove() ) {};
             this.controller.switchPlayers();
@@ -60,6 +62,11 @@ public class GameAI implements Parcelable{
 
         if ( isHit ) {
             this.gridUnderAttack[col][row] = 1;
+            // Check if the AI has won set hasAIWon to true in that case.
+            if (this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() ){
+                this.hasAIWon = true;
+                return false;
+            }
         } else {
             this.gridUnderAttack[col][row] = 2;
         }
@@ -102,5 +109,9 @@ public class GameAI implements Parcelable{
 
     public void setController(GameController controller) {
         this.controller = controller;
+    }
+
+    public boolean isAIWinner(){
+        return this.hasAIWon;
     }
 }

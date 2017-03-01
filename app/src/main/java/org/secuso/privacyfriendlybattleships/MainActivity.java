@@ -6,9 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,14 +23,12 @@ import org.secuso.privacyfriendlybattleships.game.GameMode;
 
 public class MainActivity extends BaseActivity {
 
-    private SharedPreferences preferences = null;
     private ViewPager viewPagerMode = null;//ViewPager for selection of game mode
     private ViewPager viewPagerSize = null;//ViewPager for selection of grid size
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupPreferences();
 
         // Show the welcome dialog only once after the app has been started
         if (isFirstAppStart()) {
@@ -227,18 +223,6 @@ public class MainActivity extends BaseActivity {
         new WelcomeDialog().show(getFragmentManager(), WelcomeDialog.class.getSimpleName());
     }
 
-    private void setupPreferences() {
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-    }
-    
-    private void setAppStarted() {
-        preferences.edit().putBoolean(Constants.FIRST_APP_START, false).commit();
-    }
-
-    private boolean isFirstAppStart() {
-        return preferences.getBoolean(Constants.FIRST_APP_START, true);
-    }
-
     public static class WelcomeDialog extends DialogFragment {
 
 
@@ -255,7 +239,7 @@ public class MainActivity extends BaseActivity {
 
 
             builder.setView(i.inflate(R.layout.welcome_dialog, null));
-            builder.setIcon(R.mipmap.icon);
+            builder.setIcon(R.mipmap.icon_drawer);
             builder.setTitle(getActivity().getString(R.string.welcome));
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
             builder.setNegativeButton(getActivity().getString(R.string.help), new DialogInterface.OnClickListener() {
