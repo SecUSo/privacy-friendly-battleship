@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Schiffe versenken</string>
-    <string name="app_name_long">Privacy Friendly Schiffe versenken</string>
+    <string name="app_name_long">Privacy Friendly Schiffe Versenken</string>
 
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
@@ -68,7 +68,7 @@
     <string name="pref_example_summary">Beispiel Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
-    <string name="welcome_text">Diese App soll als Anleitung zum Design von Privacy Friendly Apps dienen. Ihr Quellcode ist auf GitHub verfügbar. Weitere Infos im Privacy Friendly App Guide. Im Welcome Dialog sollen Schlüsselfunktionalitäten der App vorgestellt werden.</string>
+    <string name="welcome_text">Willkommen bei Privacy Friendly Battleships. Im Hauptmenü kann der Spielmodus und die Spielfeldgröße durch wischen nach links/rechts ausgewählt werden. Das Spiel kann durch tippen auf \"SCHNELLES SPIEL\" direkt gestartet werden. Durch tippen auf \"SCHIFFE PLATZIEREN\" gelangt man zum platzieren der Schiffe. Viel Spaß beim Spiel!</string>
     <string name="welcome">Willkommen</string>
     <string name="okay">Okay</string>
     <string name="viewhelp">Hilfe</string>
@@ -76,5 +76,11 @@
 
     <!-- ### SHIP PLACEMENT ### -->
     <string name="place_ships_ready">Bereit</string>
+    <string name="title_activity_place_ships">Platzierung der Schiffe</string>
+    <string name="placement_tutorial_text">Durch tippen auf ein Schiff wird dieses ausgewählt. Das ausgewählte Schiff kann dann mittels der Pfeile gedreht und verschoben werden. Wenn Du mit der Platzierung der Schiffe zufrieden bist, kann diese durch tippen auf \"BEREIT\" bestätigt werden. Zum korrekten platzieren der Schiffe müssen diese einen Abstand von mindestens einem Feld haben.</string>
+    <string name="placement_tutorial_title">Platzieren der Schiffe</string>
+    <string name="placement_invalid_text">Die Schiffe müssen zueinander einen Abstand von mindestens einem Feld haben, um fortzufahren.</string>
+    <string name="placement_next_player_text">Platziere deine Schiffe.</string>
+    <string name="player">Spieler</string>
 
 </resources>

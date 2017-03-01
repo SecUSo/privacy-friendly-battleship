@@ -256,20 +256,13 @@ public class MainActivity extends BaseActivity {
 
             builder.setView(i.inflate(R.layout.welcome_dialog, null));
             builder.setIcon(R.mipmap.icon);
-            builder.setTitle(getActivity().getString(R.string.welcome_text));
+            builder.setTitle(getActivity().getString(R.string.welcome));
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
             builder.setNegativeButton(getActivity().getString(R.string.help), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     ((MainActivity)getActivity()).goToNavigationItem(R.id.nav_help);
                 }
-/*                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getActivity(), HelpActivity.class);
-                    intent.putExtra(HelpActivity.EXTRA_SHOW_FRAGMENT, HelpActivity.HelpFragment.class.getName());
-                    intent.putExtra(HelpActivity.EXTRA_NO_HEADERS, true);
-                    startActivity(intent);
-                }*/
             });
 
             return builder.create();

@@ -32,8 +32,8 @@
     <string name="mode_vs_cpu_hard">CPU hard</string>
     <string name="mode_custom">Custom</string>
 
-    <string name="size_5x5">5x5</string>
-    <string name="size_10x10">10x10</string>
+    <string name="size_5x5" translatable="false">5x5</string>
+    <string name="size_10x10" translatable="false">10x10</string>
 
     <!-- ###GAME###-->
     <string name="title_activity_game">Game</string>
@@ -74,7 +74,7 @@
     <string name="pref_example_summary">Example Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
-    <string name="welcome_text">This App serves as a guideline to see the basic design of Privacy Friendly Apps. The sourcecode is available at GitHub. For further explanations have a look at the Privacy Friendly App Guide.\n\nThe welcome screen should introduce the app and the key elements of the start page.</string>
+    <string name="welcome_text">Welcome to the Privacy Friendly Battleships App. In the Main menu you can choose a game mode and the size of the game board. Tap on \"QUICK START\" to directly start the game or on \"PLACE SHIPS\" to place your battleships. Enjoy the game!</string>
     <string name="welcome">Welcome</string>
     <string name="okay">Okay</string>
     <string name="viewhelp">View Help</string>
@@ -83,5 +83,10 @@
     <!-- ### SHIP PLACEMENT ### -->
     <string name="title_activity_place_ships">Placement</string>
     <string name="place_ships_ready">Ready</string>
+    <string name="placement_tutorial_title">Place the ships</string>
+    <string name="placement_tutorial_text">Select a ship by tapping on it and move it with the arrow buttons. When you are satisfied with the placement of the ships, press the \"READY\" button to confirm. For a valid placement, the ships have to be at least one cell apart from each other.</string>
+    <string name="placement_invalid_text">The ships have to be at least one cell apart from each other to continue.</string>
+    <string name="player">Player</string>
+    <string name="placement_next_player_text">Place your ships.</string>
 
 </resources>
