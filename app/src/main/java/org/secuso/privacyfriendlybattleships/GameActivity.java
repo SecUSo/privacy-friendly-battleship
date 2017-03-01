@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlybattleships;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -658,22 +660,27 @@ public class GameActivity extends BaseActivity {
     public static class HelpDialog extends DialogFragment{
 
         @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+        }
+
+        @Override
         public Dialog onCreateDialog(Bundle savedInstanceState){
-
-            View helpDialogView = getActivity().getLayoutInflater().inflate(R.layout.help_dialog, null);
+            LayoutInflater i = getActivity().getLayoutInflater();
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(helpDialogView)
-                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener(){
 
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            if( !((GameActivity) getActivity()).isFirstAppStart() ){
-                                ((GameActivity) getActivity()).controller.startTimer();
-                            }
-                        }
-                    });
+            builder.setView(i.inflate(R.layout.help_dialog, null));
+            builder.setTitle(getActivity().getString(R.string.help_dialog_title));
+            builder.setIcon(R.mipmap.icon_drawer);
 
-
+            builder.setPositiveButton(getActivity().getString(R.string.okay), new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if( !((GameActivity) getActivity()).isFirstAppStart() ){
+                        ((GameActivity) getActivity()).controller.startTimer();
+                    }
+                }
+            });
             return builder.create();
         }
 

@@ -33,31 +33,31 @@
             android:id="@+id/linear_layout_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="30px"
-            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/game_button_help"
                 android:text="@string/help"
                 android:textColor="@color/white"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_fullwidth"
-                android:layout_gravity="right"
-                android:scaleY="0.9"
-                android:onClick="onClickHelpButton" />
+                android:layout_gravity="center_horizontal"
+                android:onClick="onClickHelpButton"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <Button
                 android:id="@+id/game_button_fire"
                 android:text="@string/game_button_fire"
                 android:textColor="@color/white"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_fullwidth"
-                android:layout_gravity="right"
-                android:scaleY="0.9"
-                android:onClick="onClickFireButton" />
+                android:layout_gravity="center_horizontal"
+                android:onClick="onClickFireButton"/>
 
         </LinearLayout>
     </LinearLayout>

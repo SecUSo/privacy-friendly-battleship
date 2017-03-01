@@ -264,7 +264,7 @@ public class PlaceShipActivity extends BaseActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             builder.setView(i.inflate(R.layout.placement_dialog, null));
-            builder.setIcon(R.mipmap.icon);
+            builder.setIcon(R.mipmap.icon_drawer);
             builder.setTitle(getActivity().getString(R.string.placement_tutorial_title));
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
 
@@ -285,7 +285,7 @@ public class PlaceShipActivity extends BaseActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             builder.setView(i.inflate(R.layout.placement_invalid_dialog, null));
-            builder.setIcon(R.mipmap.icon);
+            builder.setIcon(R.mipmap.icon_drawer);
             builder.setTitle(getActivity().getString(R.string.placement_tutorial_title));
             builder.setPositiveButton(getActivity().getString(R.string.okay), null);
 
@@ -306,7 +306,7 @@ public class PlaceShipActivity extends BaseActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             builder.setView(i.inflate(R.layout.placement_switch_player_dialog, null));
-            builder.setIcon(R.mipmap.icon);
+            builder.setIcon(R.mipmap.icon_drawer);
             if (!((PlaceShipActivity)getActivity()).controller.getCurrentPlayer())
                 builder.setTitle(getActivity().getString(R.string.player) + " 2");//player will be switched now
             else
