@@ -112,13 +112,10 @@ public class GameAI implements Parcelable{
             this.gridUnderAttack[col][row] = Cell.SHIP.val;
 
             //add adjacent cells to candidates
-            for (int i = -1; i < 2; i++){
-                for (int j = -1; j < 2; j++) {
-                    if (isValidTarget(col + j, row + i)) {
-                        this.shipCandidates.add(new int[] {col+j, row+i});
-                    }
-                }
-            }
+            if (isValidTarget(col - 1, row)) this.shipCandidates.add(new int[] {col-1, row});
+            if (isValidTarget(col + 1, row)) this.shipCandidates.add(new int[] {col+1, row});
+            if (isValidTarget(col, row - 1)) this.shipCandidates.add(new int[] {col, row-1});
+            if (isValidTarget(col, row + 1)) this.shipCandidates.add(new int[] {col, row+1});
 
             // Check if the AI has won
             if (this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() ){
@@ -148,13 +145,10 @@ public class GameAI implements Parcelable{
             this.gridUnderAttack[col][row] = Cell.SHIP.val;
 
             //add adjacent cells to candidates
-            for (int i = -1; i < 2; i++){
-                for (int j = -1; j < 2; j++) {
-                    if (isValidTarget(col + j, row + i)) {
-                        this.shipCandidates.add(new int[] {col+j, row+i});
-                    }
-                }
-            }
+            if (isValidTarget(col - 1, row)) this.shipCandidates.add(new int[] {col-1, row});
+            if (isValidTarget(col + 1, row)) this.shipCandidates.add(new int[] {col+1, row});
+            if (isValidTarget(col, row - 1)) this.shipCandidates.add(new int[] {col, row-1});
+            if (isValidTarget(col, row + 1)) this.shipCandidates.add(new int[] {col, row+1});
 
             // Check if the AI has won set hasAIWon to true in that case.
             if (this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() ){
