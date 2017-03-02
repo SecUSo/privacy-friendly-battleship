@@ -126,6 +126,18 @@ public class GameShipSet implements Parcelable{
                 if (this.ships[i][j] == null)
                     continue;
 
+                for (GameCell cell : this.ships[i][j].getShipsCells() ){
+                    if ( this.shipsOnCell(cell) > 1 ) return false;
+                }
+            }
+        }
+
+        /* //implementation for ship-distance of at least one cell
+        for (int i = 0; i < this.ships.length; i++) {
+            for (int j = 0; j < this.ships[i].length; j++) {
+                if (this.ships[i][j] == null)
+                    continue;
+
                 for (int k = 0; k < this.ships.length; k++) {
                     for (int l = 0; l < this.ships[k].length; l++) {
                         if ( this.ships[k][l] == null || this.ships[k][l].equals(this.ships[i][j]) )
@@ -137,6 +149,7 @@ public class GameShipSet implements Parcelable{
                 }
             }
         }
+        */
         return true;
     }
 

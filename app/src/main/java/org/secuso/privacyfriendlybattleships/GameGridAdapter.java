@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameCell;
 import org.secuso.privacyfriendlybattleships.game.GameController;
 

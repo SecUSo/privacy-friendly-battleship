@@ -110,8 +110,8 @@
     <string name="title_activity_place_ships">Placement</string>
     <string name="place_ships_ready">Ready</string>
     <string name="placement_tutorial_title">Place the ships</string>
-    <string name="placement_tutorial_text">Select a ship by tapping on it and move it with the arrow buttons. When you are satisfied with the placement of the ships, press the \"READY\" button to confirm. For a valid placement, the ships have to be at least one cell apart from each other.</string>
-    <string name="placement_invalid_text">The ships have to be at least one cell apart from each other to continue.</string>
+    <string name="placement_tutorial_text">Select a ship by tapping on it and move it with the arrow buttons. When you are satisfied with the placement of the ships, press the \"READY\" button to confirm. For a valid placement, the ships must not overlap each other.</string>
+    <string name="placement_invalid_text">The ships must not overlap each other.</string>
     <string name="player">Player</string>
     <string name="placement_next_player_text">Place your ships.</string>
 

@@ -95,9 +95,9 @@
     <!-- ### SHIP PLACEMENT ### -->
     <string name="place_ships_ready">Bereit</string>
     <string name="title_activity_place_ships">Platzierung der Schiffe</string>
-    <string name="placement_tutorial_text">Durch tippen auf ein Schiff wird dieses ausgewählt. Das ausgewählte Schiff kann dann mittels der Pfeile gedreht und verschoben werden. Wenn Du mit der Platzierung der Schiffe zufrieden bist, kann diese durch tippen auf \"BEREIT\" bestätigt werden. Zum korrekten platzieren der Schiffe müssen diese einen Abstand von mindestens einem Feld haben.</string>
+    <string name="placement_tutorial_text">Durch tippen auf ein Schiff wird dieses ausgewählt. Das ausgewählte Schiff kann dann mittels der Pfeile gedreht und verschoben werden. Wenn Du mit der Platzierung der Schiffe zufrieden bist, kann diese durch tippen auf \"BEREIT\" bestätigt werden. Zum korrekten platzieren der Schiffe dürfen diese nicht miteinander kollidieren.</string>
     <string name="placement_tutorial_title">Platzieren der Schiffe</string>
-    <string name="placement_invalid_text">Die Schiffe müssen zueinander einen Abstand von mindestens einem Feld haben, um fortzufahren.</string>
+    <string name="placement_invalid_text">Die Schiffe dürfen sich nicht überlappen.</string>
     <string name="placement_next_player_text">Platziere deine Schiffe.</string>
     <string name="player">Spieler</string>
 

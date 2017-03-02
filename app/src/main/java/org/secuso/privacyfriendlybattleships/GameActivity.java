@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlybattleships.game.GameActivityLayoutProvider;
 import org.secuso.privacyfriendlybattleships.game.GameCell;
 import org.secuso.privacyfriendlybattleships.game.GameController;
 import org.secuso.privacyfriendlybattleships.game.GameGrid;

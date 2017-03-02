@@ -1,8 +1,7 @@
-package org.secuso.privacyfriendlybattleships.game;
+package org.secuso.privacyfriendlybattleships;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import org.secuso.privacyfriendlybattleships.R;
 
 /**
  * Created by Ali Kalsen on 01.02.2017.
