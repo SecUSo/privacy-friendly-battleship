@@ -1,2 +1,2 @@
 ## Libraries
-This App does not use any foreign libraries.
+Privacy friendly Battleship does not use any foreign libraries.
