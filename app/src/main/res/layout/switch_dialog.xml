@@ -29,11 +29,4 @@
             android:textSize="15dp"/>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/switch_dialog_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/game_dialog_ready"/>
-
 </LinearLayout>
