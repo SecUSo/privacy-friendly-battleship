@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships.game;
+package org.secuso.privacyfriendlybattleship.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -243,12 +243,10 @@ public class GameController implements Parcelable {
     public String timeToString(int time) {
         int seconds = time % 60;
         int minutes = ((time - seconds) / 60) % 60;
-        int hours = (time - minutes - seconds) / (3600);
-        String h, m, s;
+        String m, s;
         s = (seconds < 10) ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
         m = (minutes < 10) ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
-        h = (hours < 10) ? "0" + String.valueOf(hours) : String.valueOf(hours);
-        return h + ":" + m + ":" + s;
+        return m + ":" + s;
     }
 
     public String attemptsToString(int attempts){

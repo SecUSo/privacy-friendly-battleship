@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

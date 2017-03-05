@@ -1,13 +1,13 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.secuso.privacyfriendlybattleships.game.Direction;
-import org.secuso.privacyfriendlybattleships.game.GameCell;
-import org.secuso.privacyfriendlybattleships.game.GameController;
-import org.secuso.privacyfriendlybattleships.game.GameGrid;
-import org.secuso.privacyfriendlybattleships.game.GameMode;
-import org.secuso.privacyfriendlybattleships.game.GameShip;
+import org.secuso.privacyfriendlybattleship.game.Direction;
+import org.secuso.privacyfriendlybattleship.game.GameCell;
+import org.secuso.privacyfriendlybattleship.game.GameController;
+import org.secuso.privacyfriendlybattleship.game.GameGrid;
+import org.secuso.privacyfriendlybattleship.game.GameMode;
+import org.secuso.privacyfriendlybattleship.game.GameShip;
 
 import java.util.Timer;
 

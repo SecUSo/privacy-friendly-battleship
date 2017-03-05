@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -8,8 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import org.secuso.privacyfriendlybattleships.game.GameCell;
-import org.secuso.privacyfriendlybattleships.game.GameController;
+import org.secuso.privacyfriendlybattleship.R;
+import org.secuso.privacyfriendlybattleship.game.GameCell;
+import org.secuso.privacyfriendlybattleship.game.GameController;
 
 /**
  * Created by Ali Kalsen on 27.01.2017. Last edit on 01.02.2017.

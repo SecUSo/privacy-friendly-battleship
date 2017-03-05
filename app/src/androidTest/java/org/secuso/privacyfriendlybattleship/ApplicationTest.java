@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

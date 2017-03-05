@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships.game;
+package org.secuso.privacyfriendlybattleship.game;
 
 import java.util.Timer;
 import java.util.TimerTask;

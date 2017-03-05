@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,11 +20,13 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlybattleships.game.GameCell;
-import org.secuso.privacyfriendlybattleships.game.GameController;
-import org.secuso.privacyfriendlybattleships.game.GameGrid;
-import org.secuso.privacyfriendlybattleships.game.GameMode;
-import org.secuso.privacyfriendlybattleships.game.GameShip;
+import org.secuso.privacyfriendlybattleship.Constants;
+import org.secuso.privacyfriendlybattleship.R;
+import org.secuso.privacyfriendlybattleship.game.GameCell;
+import org.secuso.privacyfriendlybattleship.game.GameController;
+import org.secuso.privacyfriendlybattleship.game.GameGrid;
+import org.secuso.privacyfriendlybattleship.game.GameMode;
+import org.secuso.privacyfriendlybattleship.game.GameShip;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -45,7 +47,7 @@ public class GameActivity extends BaseActivity {
     private GridView gridViewSmall;
     private GameActivityLayoutProvider layoutProvider;
 
-    private boolean move;
+    private boolean hasStarted;
     private boolean isHit;
     private GameCell attackedCell;
     private GameGrid gridUnderAttack;
@@ -57,20 +59,11 @@ public class GameActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        // Show the welcome dialog only once after the app has been started
-        if (isFirstAppStart()) {
-            // Show a help dialog
-            new HelpDialog().show(getFragmentManager(), HelpDialog.class.getSimpleName());
-            setAppStarted();
-        }
-
         setContentView(R.layout.activity_game);
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         Intent intentIn = getIntent();
         this.controller = intentIn.getParcelableExtra("controller");
-
         this.gridSize = controller.getGridSize();
         this.gameMode = controller.getMode();
 
@@ -80,9 +73,6 @@ public class GameActivity extends BaseActivity {
         // Create a GameActivityLayoutProvider in order to scale the grids appropriately
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
-        // Set up the time
-        setUpTimer();
-
         // Initialize the toolbar by setting the name of the current player and the number of attempts
         this.playerName = (TextView) findViewById(R.id.player_name);
         this.attempts = (TextView) findViewById(R.id.game_attempts);
@@ -90,7 +80,7 @@ public class GameActivity extends BaseActivity {
         // Update the toolbar
         updateToolbar();
 
-        // Set up the grids for player one
+        // Set up the grids for player one and make them invisible unitl player one is ready.
         setupGridViews();
 
         //set correct size for small grid
@@ -104,8 +94,55 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-        // Start the timer for player one
-        this.controller.startTimer();
+        if(controller.getMode() == GameMode.VS_PLAYER || controller.getMode() == GameMode.CUSTOM){
+            showSwitchDialog();
+            // Show the help dialog on top of the switch dialog in case the app has started for the first time.
+            showHelpDialog();
+        }
+        else{
+            showHelpDialog();
+            // Set up the time
+            setUpTimer();
+            // Start the timer for player one
+            this.controller.startTimer();
+        }
+    }
+
+    private boolean isFirstActivityStart() {
+        return mSharedPreferences.getBoolean(Constants.FIRST_GAME_START, true);
+
+    }
+
+    private void setActivityStarted(){
+        mSharedPreferences.edit().putBoolean(Constants.FIRST_GAME_START, false).commit();
+    }
+
+    /**
+     * Shows the help dialog when the app has started for the first time.
+     */
+    public void showHelpDialog(){
+        if (isFirstActivityStart()) {
+            HelpDialog helpDialog = new HelpDialog();
+            helpDialog.setCancelable(false);
+            helpDialog.show(getFragmentManager(), HelpDialog.class.getSimpleName());
+        }
+    }
+
+    public void showSwitchDialog(){
+        this.controller.stopTimer();
+        this.hasStarted = false;
+        // Make the grids invisible until player one is ready
+        gridViewBig.setAlpha(0.0f);
+        gridViewSmall.setAlpha(0.0f);
+
+        // Create a bundle for transferring data to the SwitchDialog
+        Bundle bundle = new Bundle();
+        bundle.putInt("Name", R.string.game_player_one);
+
+        // Ask if player one is ready
+        SwitchDialog newSwitchDialog = SwitchDialog.newInstance(bundle);
+        newSwitchDialog.setCancelable(false);
+        newSwitchDialog.show(getFragmentManager(), SwitchDialog.class.getSimpleName());
     }
 
     @Override
@@ -129,6 +166,7 @@ public class GameActivity extends BaseActivity {
         super.onBackPressed();
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
         this.controller.startTimer();
@@ -187,7 +225,7 @@ public class GameActivity extends BaseActivity {
         fireButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                gridViewBig.setClickable(true);
+                //gridViewBig.setClickable(true);
                 onClickFireButton(view);
             }
         });
@@ -218,7 +256,9 @@ public class GameActivity extends BaseActivity {
             if(ship.isDestroyed()){
                 this.controller.stopTimer();
 
+                int playerName = controller.getCurrentPlayer() ?  R.string.game_player_one : R.string.game_player_two;
                 Bundle bundle = new Bundle();
+                bundle.putInt("Name", playerName);
                 bundle.putInt("Size", ship.getSize());
                 /*
                  Show dialog. The dialog will check if the current player has won after the player
@@ -232,7 +272,10 @@ public class GameActivity extends BaseActivity {
         }
         else{
             this.controller.stopTimer();
-            gridViewBig.setClickable(false);
+
+            //gridViewBig.setEnabled(false);
+            //gridViewBig.setClickable(false);
+
             // If the attacked cell does not contain a ship, then stop the timer and switch the player
             if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
                 controller.switchPlayers();
@@ -388,6 +431,12 @@ public class GameActivity extends BaseActivity {
         // Fade in the grids
         gridViewBig.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
         gridViewSmall.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        if(!this.hasStarted){
+            this.hasStarted = true;
+            this.controller.startTimer();
+            // Set up the timer on the toolbar
+            setUpTimer();
+        }
     }
 
     public void goToMainActivity(View view){
@@ -449,6 +498,7 @@ public class GameActivity extends BaseActivity {
     public static class GameDialog extends DialogFragment {
 
         private int size;
+        private int playerName;
 
         public static GameDialog newInstance(Bundle bundle){
             GameDialog gameDialog = new GameDialog();
@@ -460,6 +510,7 @@ public class GameActivity extends BaseActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             this.size = getArguments().getInt("Size");
+            this.playerName = getArguments().getInt("Name");
 
             // Get the layout for the lose dialog as a view
             View gameDialogView = getActivity().getLayoutInflater().inflate(R.layout.game_dialog, null);
@@ -470,7 +521,9 @@ public class GameActivity extends BaseActivity {
 
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(gameDialogView)
+            builder.setTitle(this.playerName)
+                    .setIcon(R.mipmap.icon_drawer)
+                    .setView(gameDialogView)
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -500,19 +553,23 @@ public class GameActivity extends BaseActivity {
             this.playerName = getArguments().getInt("Name");
 
             // Get the layout for the lose dialog as a view
-            View switchDialogView = getActivity().getLayoutInflater().inflate(R.layout.switch_dialog, null);
+            //View switchDialogView = getActivity().getLayoutInflater().inflate(R.layout.switch_dialog, null);
 
-            TextView textPlayerName = (TextView) switchDialogView.findViewById(R.id.switch_dialog_title_player_name);
-            textPlayerName.setText(this.playerName);
+            //TextView textPlayerName = (TextView) switchDialogView.findViewById(R.id.switch_dialog_title_player_name);
+            //textPlayerName.setText(this.playerName);
 
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(switchDialogView)
+            builder.setTitle(this.playerName)
+                    .setIcon(R.mipmap.icon_drawer)
+                    .setMessage(R.string.game_dialog_next_player)
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // Fade in the grids after the next player has clicked on the button
-                            ((GameActivity) getActivity()).controller.switchPlayers();
+                            if(((GameActivity) getActivity()).hasStarted){
+                                ((GameActivity) getActivity()).controller.switchPlayers();
+                            }
 
                             // Update the toolbar
                             ((GameActivity) getActivity()).updateToolbar();
@@ -555,14 +612,16 @@ public class GameActivity extends BaseActivity {
             // Build the dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setView(loseDialogView)
+                    .setTitle(R.string.game_dialog_loss)
+                    .setIcon(R.mipmap.icon_drawer)
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
 
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ((GameActivity) getActivity()).goToMainActivity(null);
-                }
-            })
-                    .setNegativeButton(R.string.game_dialog_show_gamefield, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ((GameActivity) getActivity()).goToMainActivity(null);
+                        }
+                    })
+                    .setNegativeButton(R.string.game_dialog_show_game_board, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             ((GameActivity) getActivity()).onClickFinishButton(getView());
@@ -608,6 +667,7 @@ public class GameActivity extends BaseActivity {
             // Build the dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.game_dialog_win)
+                    .setIcon(R.mipmap.icon_drawer)
                     .setView(winDialogView)
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
 
@@ -616,7 +676,7 @@ public class GameActivity extends BaseActivity {
                             ((GameActivity) getActivity()).goToMainActivity(null);
                         }
                     })
-                    .setNegativeButton(R.string.game_dialog_show_gamefield, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.game_dialog_show_game_board, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             ((GameActivity) getActivity()).onClickFinishButton(getView());
@@ -634,7 +694,8 @@ public class GameActivity extends BaseActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.game_dialog_quit)
+            builder.setTitle(R.string.game_dialog_quit)
+                    .setIcon(R.mipmap.icon_drawer)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
 
                         @Override
@@ -675,8 +736,11 @@ public class GameActivity extends BaseActivity {
             builder.setPositiveButton(getActivity().getString(R.string.okay), new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    if( !((GameActivity) getActivity()).isFirstAppStart() ){
+                    if( !((GameActivity) getActivity()).isFirstActivityStart() ){
                         ((GameActivity) getActivity()).controller.startTimer();
+                    }
+                    else{
+                        ((GameActivity) getActivity()).setActivityStarted();
                     }
                 }
             });

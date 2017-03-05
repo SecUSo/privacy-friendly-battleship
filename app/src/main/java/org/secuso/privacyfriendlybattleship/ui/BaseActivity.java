@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,13 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.secuso.privacyfriendlybattleship.R;
+
 /**
  * Created by Chris on 04.07.2016.
  */
 public class BaseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
-    // Preferences for first app start
-    public final static String FIRST_APP_START = "FIRST_APP_START";
     // delay to launch nav drawer item, to allow close animation to play
     static final int NAVDRAWER_LAUNCH_DELAY = 250;
     // fade in and fade out durations for the main content when switching between
@@ -76,14 +76,6 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
         final int itemId = item.getItemId();
 
         return goToNavigationItem(itemId);
-    }
-
-    public void setAppStarted() {
-        mSharedPreferences.edit().putBoolean(FIRST_APP_START, false).commit();
-    }
-
-    public boolean isFirstAppStart() {
-        return mSharedPreferences.getBoolean(FIRST_APP_START, true);
     }
 
     protected boolean goToNavigationItem(final int itemId) {
