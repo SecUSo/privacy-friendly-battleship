@@ -47,11 +47,10 @@
     <string name="game_attempts">Attempts:</string>
     <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
     <string name="game_dialog_hit_suffix">!</string>
-    <string name="game_dialog_next_player">", it's your turn!"</string>
-    <string name="game_dialog_ready">Are you ready?</string>
+    <string name="game_dialog_next_player">... it\'s your turn! Are you ready?</string>
     <string name="game_dialog_loss">Too bad... but you lost!</string>
     <string name="game_dialog_win">And the winner is... </string>
-    <string name="game_dialog_show_gamefield">Show Gamefield</string>
+    <string name="game_dialog_show_game_board">Show Game board</string>
     <string name="game_dialog_quit">Do you want to quit the game?</string>
 
     <!--###HELP###-->
@@ -60,18 +59,18 @@
     <string name="help_menu_game_mode_dual_player">Create a dual player mode.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Play against the computer in the easy mode.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Play against the computer in the hard mode.</string>
-    <string name="help_menu_game_size">Size of the game field</string>
-    <string name="help_menu_game_size_description">Select the size of the game field. The possible sizes for the game field are 5x5 or 10x10.</string>
+    <string name="help_menu_game_size">Size of the game board</string>
+    <string name="help_menu_game_size_description">Select the size of the game board. The possible sizes for the game board are 5x5 or 10x10.</string>
     <string name="help_menu_start">Start the game</string>
-    <string name="help_menu_quick_start">Press the quick start button if you want to start the game with the game mode and the size of the game field you have chosen. The ships will be placed randomly.</string>
-    <string name="help_menu_settings">Press the settings button if you want to place the ships individually. Besides, you can customize the ship set.</string>
+    <string name="help_menu_quick_start">Press the \"Quick Start\" button if you want to start the game with the game mode and the size of the game board you have chosen. The ships will be placed randomly.</string>
+    <string name="help_menu_settings">Press the \"Place Ships\" if you want to place the ships individually. Besides, you can customize the ship set.</string>
     <string name="help_how_to_play">How to play the game</string>
-    <string name="help_game_intro">The big grid displays the game field of your opponent. The small grid displays your own game field. Depending on the game mode, you can do the following steps:</string>
+    <string name="help_game_intro">The big grid displays the game board of your opponent. The small grid displays your own game board. Depending on the game mode, you can do the following steps:</string>
     <string name="help_dialog_title">How to play</string>
     <string name="help_game_step_one">1. Choose a cell you want to attack by clicking on it.</string>
-    <string name="help_game_step_two">2. Press the fire button. The color of the cell you have chosen changes to red or blue, whether the cell contains a part of a ship or not.</string>
+    <string name="help_game_step_two">2. Press the \"Fire\" button. The color of the cell you have chosen changes to red or blue, depending on whether the cell contains a part of a ship or not.</string>
     <string name="help_game_step_three">3. In case you have hit a part of a ship, you can attack other cells until you have a miss.</string>
-    <string name="help_game_step_four">4. In case you have a miss, click on the done button and hand the phone to your opponent, who may attack your ships. If you play against the computer, the computer will attack your ships.</string>
+    <string name="help_game_step_four">4. In case you have a miss, click on the \"Done\" button and reach the phone to your opponent, who may attack your ships. If you play against the computer, the computer will attack your ships.</string>
     <string name="help_privacy_heading">Privacy Info</string>
     <string name="help_permissions_heading">Permissions</string>
     <string name="help_permissions_description">Privacy Friendly Batlleships does not use any permissions.</string>

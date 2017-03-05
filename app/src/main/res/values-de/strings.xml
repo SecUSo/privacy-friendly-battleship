@@ -45,25 +45,33 @@
     <string name="game_attempts">Versuche:</string>
     <string name="game_dialog_hit_prefix">Du hast ein Schiff der Größe </string>
     <string name="game_dialog_hit_suffix">zerstört!</string>
-    <string name="game_dialog_next_player">ist an der Reihe!</string>
-    <string name="game_dialog_ready">Bist du bereit?</string>
-    <string name="game_dialog_loss">Schade... aber du hast verloren!</string>
-    <string name="game_dialog_win">Und der Gewinner ist... </string>
+    <string name="game_dialog_next_player">… ist an der Reihe! Bist du bereit?</string>
+    <string name="game_dialog_loss">Schade… aber du hast verloren!</string>
+    <string name="game_dialog_win">Und der Gewinner ist… </string>
     <string name="game_dialog_show_gamefield">Zeige Spielfeld</string>
     <string name="game_dialog_quit">Willst du das Spiel abbrechen??</string>
->>>>>>> Fire_Button
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
-    <string name="help_overview_heading">Übersicht</string>
-    <string name="help_example">Beispiel Hilfe-Eintrag</string>
-    <string name="help_category_example">Beispiel Hilfe-Kategorie</string>
+    <string name="help_menu_game_mode">Spielmodus</string>
+    <string name="help_menu_game_mode_dual_player">Spielt zu zweit gegeneinander!</string>
+    <string name="help_menu_game_mode_vs_ai_easy">Spiele gegen den Computer im einfachen Modus.</string>
+    <string name="help_menu_game_mode_vs_ai_hard">Spiele gegen den Computer im schwierigen Modus.</string>
+    <string name="help_menu_game_size">Größe des Spielfeldes</string>
+    <string name="help_menu_game_size_description">Wähle die Größe des Spielfelds aus. Die möglichen Größen sind 5x5 oder 10x10.</string>
+    <string name="help_menu_start">Starten des Spiels</string>
+    <string name="help_menu_quick_start">Drücke den Button \"Schnelles Spiel\", falls du das Spiel mit dem ausgewählten Modus und der ausgewählten Spielfeldgröße starten willst. Die Schiffe werden zufällig auf dem Spielfeld verteilt.</string>
+    <string name="help_menu_settings">Drücke den Button \"Schiffe platzieren\", falls du die Schiffe auf dem Spielfeld individuell verteilen willst.</string>
+    <string name="help_how_to_play">Spielanleitung</string>
+    <string name="help_game_intro">Das große Gitter stellt das Spielfeld deines Gegners dar. Die Schiffe werden nicht eingeblendet. Das kleine Gitter ist dein eigenes Spielfeld. Abhängig vom Spielmodus kannst du folgende Schritte durchführen:</string>
+    <string name="help_dialog_title">Spielanleitung</string>
+    <string name="help_game_step_one">1. Klicke auf die Zelle, die du angreifen willst.</string>
+    <string name="help_game_step_two">2. Drücke den \"Feuern!\" Button. Die ausgewählte Zelle wird bei einem Treffer rot und bei einer Niete blau gefärbt.</string>
+    <string name="help_game_step_three">3. Bei einem Treffer kannst du solange andere Zellen angreifen, bis du eine Niete hast.</string>
+    <string name="help_game_step_four">4. Falls du eine Niete hast, klicke auf den \"Fertig!\" Button und reiche das Smartphone an deinen Gegner, welcher deine Schiffe angreifen darf. Falls du gegen den Computer spielst, greift dieser deine Schiffe an.</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
-    <string name="help_permissionXY_heading">Berechtigung XY</string>
-    <string name="help_permissionXY_description">wird benötigt um &#8230; Hier auch erklären, was passiert, wenn diese Berechtigung entzogen wird.</string>
     <string name="help_permissions_heading">Berechtigungen</string>
-    <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
-    <string name="help_intro">Diese app demonstriert das Basis-Design einer Privacy Friendly App. Die Funktionalität der App sollte in 1 bis 2 Sätzen erklärt werden.</string>
+    <string name="help_permissions_description">Privacy Friendly Batlleships verwendet keine Berechtigungen.</string>
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
