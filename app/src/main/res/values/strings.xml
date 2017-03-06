@@ -49,9 +49,9 @@
     <string name="game_dialog_hit_suffix">!</string>
     <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
     <string name="game_dialog_ready">Are you ready?</string>
-    <string name="game_dialog_loss">Too bad... but you lost!</string>
+    <string name="game_dialog_loss">Too bad! You lost.</string>
     <string name="game_dialog_win">And the winner is... </string>
-    <string name="game_dialog_show_game_board">Show Game board</string>
+    <string name="game_dialog_show_game_board">Show game board</string>
     <string name="game_dialog_quit">Quit the game?</string>
 
     <!--###HELP###-->
