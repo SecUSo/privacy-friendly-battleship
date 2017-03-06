@@ -119,8 +119,7 @@ public class GameGridAdapter extends BaseAdapter {
             // Set the grid cell of the current player
             if(currentCell.isShip() && !isMainGrid || currentCell.isShip() && shipsNotPlaced){
                 //TODO: Add the icon of the ship
-                int scaledCellSize = cellSize / 2;
-                gridCell.setImageBitmap(decodeSampledBitmapFromResource(context.getResources(), R.drawable.ship_middle, scaledCellSize));
+                gridCell.setImageResource(R.drawable.ic_info_black_24dp);
             }
         } else{
             gridCell = (ImageView) view;
