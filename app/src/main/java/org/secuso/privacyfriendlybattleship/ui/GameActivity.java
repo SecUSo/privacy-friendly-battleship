@@ -167,6 +167,12 @@ public class GameActivity extends BaseActivity {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        this.controller.startTimer();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         this.controller.startTimer();
@@ -256,7 +262,7 @@ public class GameActivity extends BaseActivity {
             if(ship.isDestroyed()){
                 this.controller.stopTimer();
 
-                int playerName = controller.getCurrentPlayer() ?  R.string.game_player_one : R.string.game_player_two;
+                int playerName = controller.getCurrentPlayer() ?  R.string.game_player_two : R.string.game_player_one;
                 Bundle bundle = new Bundle();
                 bundle.putInt("Name", playerName);
                 bundle.putInt("Size", ship.getSize());
@@ -272,9 +278,6 @@ public class GameActivity extends BaseActivity {
         }
         else{
             this.controller.stopTimer();
-
-            //gridViewBig.setEnabled(false);
-            //gridViewBig.setClickable(false);
 
             // If the attacked cell does not contain a ship, then stop the timer and switch the player
             if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
@@ -310,6 +313,7 @@ public class GameActivity extends BaseActivity {
                 Change the listener and the text of the "Fire" button, such that the grids fade out
                 after the button has been clicked.
                  */
+                gridViewBig.setEnabled(false);
                 Button doneButton = (Button) findViewById(R.id.game_button_fire);
                 doneButton.setText(R.string.game_button_done);
                 doneButton.setOnClickListener(new View.OnClickListener(){
@@ -430,6 +434,7 @@ public class GameActivity extends BaseActivity {
         setupGridViews();
         // Fade in the grids
         gridViewBig.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+        gridViewBig.setEnabled(true);
         gridViewSmall.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
         if(!this.hasStarted){
             this.hasStarted = true;
