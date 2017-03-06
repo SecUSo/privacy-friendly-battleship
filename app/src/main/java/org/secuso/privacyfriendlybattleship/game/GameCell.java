@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships.game;
+package org.secuso.privacyfriendlybattleship.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;

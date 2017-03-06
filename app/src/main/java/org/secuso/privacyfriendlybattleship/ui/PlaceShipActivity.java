@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,11 +19,14 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import org.secuso.privacyfriendlybattleships.game.Direction;
-import org.secuso.privacyfriendlybattleships.game.GameCell;
-import org.secuso.privacyfriendlybattleships.game.GameController;
-import org.secuso.privacyfriendlybattleships.game.GameMode;
-import org.secuso.privacyfriendlybattleships.game.GameShip;
+
+import org.secuso.privacyfriendlybattleship.Constants;
+import org.secuso.privacyfriendlybattleship.R;
+import org.secuso.privacyfriendlybattleship.game.Direction;
+import org.secuso.privacyfriendlybattleship.game.GameCell;
+import org.secuso.privacyfriendlybattleship.game.GameController;
+import org.secuso.privacyfriendlybattleship.game.GameMode;
+import org.secuso.privacyfriendlybattleship.game.GameShip;
 
 /**
  * Created by Alexander Müller on 21.02.2017.
@@ -62,7 +65,8 @@ public class PlaceShipActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 
     private boolean isFirstActivityStart() {
@@ -205,6 +209,7 @@ public class PlaceShipActivity extends BaseActivity {
 
         if (    this.controller.getMode() == GameMode.VS_AI_EASY ||
                 this.controller.getMode() == GameMode.VS_AI_HARD) {
+
             //Call GameActivity and provide GameController
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("controller", this.controller);
@@ -212,6 +217,10 @@ public class PlaceShipActivity extends BaseActivity {
         } else if (this.controller.getMode() == GameMode.VS_PLAYER) {
             if (this.controller.getCurrentPlayer()) {
                 this.fadeOutGridView();
+
+                // Re-switch the current player, such that player one starts
+                this.controller.switchPlayers();
+
                 //Call GameActivity and provide GameController
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("controller", this.controller);

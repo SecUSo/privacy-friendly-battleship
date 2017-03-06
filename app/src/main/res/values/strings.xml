@@ -47,11 +47,11 @@
     <string name="game_attempts">Attempts:</string>
     <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
     <string name="game_dialog_hit_suffix">!</string>
-    <string name="game_dialog_next_player">", it's your turn!"</string>
+    <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
     <string name="game_dialog_ready">Are you ready?</string>
     <string name="game_dialog_loss">Too bad... but you lost!</string>
     <string name="game_dialog_win">And the winner is... </string>
-    <string name="game_dialog_show_gamefield">Show Gamefield</string>
+    <string name="game_dialog_show_game_board">Show Game board</string>
     <string name="game_dialog_quit">Do you want to quit the game?</string>
 
     <!--###HELP###-->
@@ -60,8 +60,8 @@
     <string name="help_menu_game_mode_dual_player">Play against another player.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Play against the computer in easy mode.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Play against the computer in hard mode.</string>
-    <string name="help_menu_game_size">Size of the game field</string>
-    <string name="help_menu_game_size_description">Select the size of the game field. The possible sizes for the game field are 5x5 or 10x10.</string>
+    <string name="help_menu_game_size">Size of the game board</string>
+    <string name="help_menu_game_size_description">Select the size of the game board. The possible sizes for the game field are 5x5 or 10x10.</string>
     <string name="help_menu_start">Start the game</string>
     <string name="help_menu_quick_start">Press the \"QUICK START\" to start the game with the selected mode and size. The ships will be placed randomly for you and your opponent..</string>
     <string name="help_menu_settings">Press the \"PLACE SHIPS\" button if you want to place your ships manually.</string>

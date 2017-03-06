@@ -1,7 +1,9 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+
+import org.secuso.privacyfriendlybattleship.R;
 
 /**
  * Created by yonjuni on 17.06.16.

@@ -1,12 +1,12 @@
-package org.secuso.privacyfriendlybattleships.game;
+package org.secuso.privacyfriendlybattleship.game;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 
+import org.secuso.privacyfriendlybattleship.R;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.secuso.privacyfriendlybattleships.R;
 
 /**
  * Created by Alexander Müller on 16.12.2016. Edited by Ali Kalsen on 16.01.2017.

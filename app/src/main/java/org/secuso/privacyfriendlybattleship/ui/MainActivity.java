@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlybattleships;
+package org.secuso.privacyfriendlybattleship.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.secuso.privacyfriendlybattleships.game.GameController;
-import org.secuso.privacyfriendlybattleships.game.GameGrid;
-import org.secuso.privacyfriendlybattleships.game.GameMode;
+import org.secuso.privacyfriendlybattleship.Constants;
+import org.secuso.privacyfriendlybattleship.R;
+import org.secuso.privacyfriendlybattleship.game.GameController;
+import org.secuso.privacyfriendlybattleship.game.GameGrid;
+import org.secuso.privacyfriendlybattleship.game.GameMode;
 
 public class MainActivity extends BaseActivity {
 
@@ -40,6 +42,14 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setupViewPagerMode();
         setupViewPagerSize();
+    }
+
+    private boolean isFirstAppStart() {
+        return mSharedPreferences.getBoolean(Constants.FIRST_APP_START, true);
+    }
+
+    private void setAppStarted() {
+        mSharedPreferences.edit().putBoolean(Constants.FIRST_APP_START, false).commit();
     }
 
     @Override

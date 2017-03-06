@@ -44,13 +44,12 @@
     <string name="game_attempts">Versuche:</string>
     <string name="game_dialog_hit_prefix">Du hast ein Schiff der Größe </string>
     <string name="game_dialog_hit_suffix">zerstört!</string>
-    <string name="game_dialog_next_player">ist an der Reihe!</string>
+    <string name="game_dialog_next_player">… ist an der Reihe! Bist du bereit?</string>
+    <string name="game_dialog_loss">Schade… aber du hast verloren!</string>
+    <string name="game_dialog_win">Und der Gewinner ist… </string>
     <string name="game_dialog_ready">Bist du bereit?</string>
-    <string name="game_dialog_loss">Schade... aber du hast verloren!</string>
-    <string name="game_dialog_win">Und der Gewinner ist... </string>
     <string name="game_dialog_show_gamefield">Zeige Spielfeld</string>
     <string name="game_dialog_quit">Willst du das Spiel abbrechen??</string>
->>>>>>> Fire_Button
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
@@ -58,6 +57,22 @@
     <string name="help_privacy_heading">Datenschutzinfo</string>
     <string name="help_permissions_heading">Berechtigungen</string>
     <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
+    <string name="help_dialog_title">Spielanleitung</string>
+    <string name="help_game_intro">Das obere Raster zeigt das Spielfeld deines Gegners, das untere dein eigenes. Um zu spielen, befolge die folgenden Schritte.</string>
+    <string name="help_game_step_four">4. Hast du nicht getroffen, kannst du deinen Zug durch klicken auf \"FERTIG\" beenden und das Gerät an deinen Gegenspieler weiter reichen. Spielst du gegen den Computer, greift dieser automatisch an.</string>
+    <string name="help_game_step_one">1. Wähle das anzugreifende Feld, durch tippen darauf, aus.</string>
+    <string name="help_game_step_two">2. Bestätige durch drücken des \"FEUER\" Buttons. Das Feld färbt sich bei einem Treffer rot, beim Verfehlen blau.</string>
+    <string name="help_game_step_three">3. Bei einem Treffer, kannst du erneut auf das gegnerische Feld feuern.</string>
+    <string name="help_how_to_play">Spielanleitung</string>
+    <string name="help_menu_game_mode">Spielmodus</string>
+    <string name="help_menu_game_mode_dual_player">Spielt zu zweit gegeneinander.</string>
+    <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfach.</string>
+    <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwer.</string>
+    <string name="help_menu_game_size">Größe des Spielfeldes.</string>
+    <string name="help_menu_game_size_description">Wähle die Größe des Spielfeldes. Möglich sind Spielfeldgrößen 5x5 und 10x10.</string>
+    <string name="help_menu_quick_start">Tippe auf \"SCHNELLES SPIEL\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
+    <string name="help_menu_settings">Tippe auf \"SCHIFFE PLATZIEREN\", um die Schiffe selbst zu platzieren.</string>
+    <string name="help_menu_start">Starten des Spiels</string>
 
     <!--###ABOUT###-->
     <string name="about">Über</string>
@@ -94,21 +109,5 @@
     <string name="placement_invalid_text">Die Schiffe dürfen sich nicht überlappen.</string>
     <string name="placement_next_player_text">Platziere deine Schiffe.</string>
     <string name="player">Spieler</string>
-    <string name="help_dialog_title">Spielanleitung</string>
-    <string name="help_game_intro">Das obere Raster zeigt das Spielfeld deines Gegners, das untere dein eigenes. Um zu spielen, befolge die folgenden Schritte.</string>
-    <string name="help_game_step_four">4. Hast du nicht getroffen, kannst du deinen Zug durch klicken auf \"FERTIG\" beenden und das Gerät an deinen Gegenspieler weiter reichen. Spielst du gegen den Computer, greift dieser automatisch an.</string>
-    <string name="help_game_step_one">1. Wähle das anzugreifende Feld, durch tippen darauf, aus.</string>
-    <string name="help_game_step_two">2. Bestätige durch drücken des \"FEUER\" Buttons. Das Feld färbt sich bei einem Treffer rot, beim Verfehlen blau.</string>
-    <string name="help_game_step_three">3. Bei einem Treffer, kannst du erneut auf das gegnerische Feld feuern.</string>
-    <string name="help_how_to_play">Spielanleitung</string>
-    <string name="help_menu_game_mode">Spielmodus</string>
-    <string name="help_menu_game_mode_dual_player">Zweispieler Spiel auswählen.</string>
-    <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfach.</string>
-    <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwer.</string>
-    <string name="help_menu_game_size">Größe des Spielfeldes.</string>
-    <string name="help_menu_game_size_description">Wähle die Größe des Spielfeldes. Möglich sind Spielfeldgrößen 5x5 und 10x10.</string>
-    <string name="help_menu_quick_start">Tippe auf \"SCHNELLES SPIEL\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
-    <string name="help_menu_settings">Tippe auf \"SCHIFFE PLATZIEREN\", um die Schiffe selbst zu platzieren.</string>
-    <string name="help_menu_start">Start des Spiels</string>
 
 </resources>

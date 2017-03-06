@@ -1,11 +1,11 @@
-package org.secuso.privacyfriendlybattleships.game;
+package org.secuso.privacyfriendlybattleship.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Random;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Alexander Müller on 16.12.2016. Edited by Ali Kalsen on 16.01.2017
