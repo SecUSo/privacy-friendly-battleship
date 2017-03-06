@@ -60,13 +60,12 @@
             android:summary="@string/help_game_step_four"/>
     </PreferenceCategory>
 
-<!--
-    <PreferenceCategory android:title="@string/help_category_example">
-        <Preference android:title="@string/help_example"
-            android:summary="@string/pref_example_summary"
-            android:selectable="false"/>
+    <PreferenceCategory android:title="@string/placement_tutorial_title">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/placement_tutorial_text" />
     </PreferenceCategory>
-    -->
 
     <PreferenceCategory android:title="@string/help_privacy_heading">
         <Preference
