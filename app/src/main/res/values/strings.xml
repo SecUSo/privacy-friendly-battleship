@@ -52,7 +52,7 @@
     <string name="game_dialog_loss">Too bad... but you lost!</string>
     <string name="game_dialog_win">And the winner is... </string>
     <string name="game_dialog_show_game_board">Show Game board</string>
-    <string name="game_dialog_quit">Do you want to quit the game?</string>
+    <string name="game_dialog_quit">Quit the game?</string>
 
     <!--###HELP###-->
     <string name="help">Help</string>
