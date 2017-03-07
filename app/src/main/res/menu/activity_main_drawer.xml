@@ -9,7 +9,7 @@
                 android:icon="@drawable/ic_menu_home"
                 android:title="@string/action_main" />
             <item
-                android:id="@+id/nav_settings"
+                android:id="@+id/nav_ship_set"
                 android:icon="@drawable/ic_menu_settings"
                 android:title="@string/action_settings" />
         </group>

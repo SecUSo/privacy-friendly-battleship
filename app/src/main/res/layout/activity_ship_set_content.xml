@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/ship_set_size_five_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/ship_set_size_five_ships"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+
+            <TextView
+                android:id="@+id/ship_set_size_five_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/ship_set_size_four_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/ship_set_size_four_ships"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+
+            <TextView
+                android:id="@+id/ship_set_size_four_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/ship_set_size_three_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/ship_set_size_three_ships"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+
+            <TextView
+                android:id="@+id/ship_set_size_three_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/ship_set_size_two_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/ship_set_size_two_ships"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="-"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+
+            <TextView
+                android:id="@+id/ship_set_size_two_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="+"
+                android:textColor="@color/white"
+                android:background="@drawable/button_fullwidth"
+                android:onClick=""/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ship_set_button"
+        android:text="@string/ship_set_ready"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_fullwidth"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickShipSetReady"/>
+
+</LinearLayout>

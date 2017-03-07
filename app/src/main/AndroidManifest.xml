@@ -43,7 +43,7 @@
                 android:value="org.secuso.privacyfriendlybattleship.ui.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlybattleship.ui.SettingsActivity"
+            android:name="org.secuso.privacyfriendlybattleship.ui.ShipSetActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
             android:screenOrientation="portrait"
