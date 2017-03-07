@@ -1,9 +1,6 @@
 package org.secuso.privacyfriendlybattleship.ui;
 
 import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,8 @@ import android.widget.ImageView;
 import org.secuso.privacyfriendlybattleship.R;
 import org.secuso.privacyfriendlybattleship.game.GameCell;
 import org.secuso.privacyfriendlybattleship.game.GameController;
+
+import static android.R.attr.bitmap;
 
 /**
  * Created by Ali Kalsen on 27.01.2017. Last edit on 01.02.2017.
@@ -29,7 +28,7 @@ public class GameGridAdapter extends BaseAdapter {
     int gridSize;
     Boolean isMainGrid;// Denotes whether the big or the small grid view is chosen
     private static final String TAG = GameGridAdapter.class.getSimpleName();
-    private Boolean shipsNotPlaced;
+    private Boolean showShips;
 
     public GameGridAdapter(Activity context,
                            GameActivityLayoutProvider layout,
@@ -40,20 +39,20 @@ public class GameGridAdapter extends BaseAdapter {
         this.game = game;
         this.gridSize = game.getGridSize();
         this.isMainGrid = isMainGrid;
-        this.shipsNotPlaced = false;
+        this.showShips = false;
     }
 
     public GameGridAdapter(Activity context,
                            GameActivityLayoutProvider layout,
                            GameController game,
                            Boolean isMainGrid,
-                           Boolean shipsNotPlaced){
+                           Boolean showShips){
         this.context = context;
         this.layoutProvider = layout;
         this.game = game;
         this.gridSize = game.getGridSize();
         this.isMainGrid = isMainGrid;
-        this.shipsNotPlaced = shipsNotPlaced;
+        this.showShips = showShips;
     }
 
     // Return the number of all grid cells.
@@ -84,7 +83,7 @@ public class GameGridAdapter extends BaseAdapter {
         int cellColumn = cellIndex % this.gridSize;
         int cellRow = cellIndex / this.gridSize;
         GameCell currentCell;
-        if (shipsNotPlaced) {
+        if (showShips) {
             currentCell = game.getCurrentGrid().getCell(cellColumn, cellRow);
         } else {
             currentCell = (isMainGrid ^ game.getCurrentPlayer()) ?
@@ -111,11 +110,11 @@ public class GameGridAdapter extends BaseAdapter {
             }
 
             gridCell.setLayoutParams(new GridView.LayoutParams(cellSize,cellSize));
-            gridCell.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            gridCell.setScaleType(ImageView.ScaleType.CENTER_CROP);
             gridCell.setBackgroundColor(Color.WHITE);
 
             // Set the grid cell of the current player
-            if(currentCell.isShip() && !isMainGrid || currentCell.isShip() && shipsNotPlaced){
+            if(currentCell.isShip() && !isMainGrid || currentCell.isShip() && showShips){
                 gridCell.setImageResource(currentCell.getResourceId());
             }
         } else{

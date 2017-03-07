@@ -42,7 +42,7 @@ public class GameActivityLayoutProvider {
         int orientation = this.context.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             int layoutHeight = this.context.findViewById(R.id.game_linear_layout).getHeight();
-            cellSize =  (layoutHeight - getMargin()*2) / this.gridSize;
+            cellSize =  (layoutHeight - getMargin()*2 - (gridSize-1)) / this.gridSize;
         } else {
             // TODO: Think about the layout of the grid when the orientation is landscape
             int displayHeight = context.getResources().getDisplayMetrics().heightPixels;

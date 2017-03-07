@@ -78,35 +78,43 @@ public class GameCell implements Parcelable{
             case NORTH:
                 if (this.equals( ship.getFirstCell() )){
                     //return North-start
+                    return R.drawable.ship_front_up;
                 }
                 if (this.equals( ship.getLastCell() )){
                     //return North-end
+                    return R.drawable.ship_back_up;
                 }
-                return R.drawable.arrow_up_black;
+                return R.drawable.ship_middle_up;
             case EAST:
                 if (this.equals( ship.getFirstCell() )){
                     //return East-start
+                    return R.drawable.ship_front_right;
                 }
                 if (this.equals( ship.getLastCell() )){
                     //return East-end
+                    return R.drawable.ship_back_right;
                 }
-                return R.drawable.arrow_right_black;
+                return R.drawable.ship_middle_right;
             case SOUTH:
                 if (this.equals( ship.getFirstCell() )){
                     //return South-start
+                    return R.drawable.ship_front_down;
                 }
                 if (this.equals( ship.getLastCell() )){
                     //return South-end
+                    return R.drawable.ship_back_down;
                 }
-                return R.drawable.arrow_down_black;
+                return R.drawable.ship_middle_up;
             case WEST:
                 if (this.equals( ship.getFirstCell() )){
                     //return West-start
+                    return R.drawable.ship_front_left;
                 }
                 if (this.equals( ship.getLastCell() )){
                     //return West-end
+                    return R.drawable.ship_back_left;
                 }
-                return R.drawable.arrow_left_black;
+                return R.drawable.ship_middle_right;
         }
         return R.drawable.ic_info_black_24dp;
     }

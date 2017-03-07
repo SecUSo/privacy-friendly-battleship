@@ -180,6 +180,7 @@ public class PlaceShipActivity extends BaseActivity {
                 cellView.setImageAlpha(255);
             } else if (shipsOnCell >= 2) {
                 cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.red));
+                cellView.setImageResource(cell.getResourceId());
                 cellView.setImageAlpha(255);
             }
         }

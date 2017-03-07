@@ -52,7 +52,7 @@
     <string name="game_dialog_loss">Too bad! You lost.</string>
     <string name="game_dialog_win">And the winner is... </string>
     <string name="game_dialog_show_game_board">Show game board</string>
-    <string name="game_dialog_quit">Quit the game?</string>
+    <string name="game_dialog_quit">Do you want to quit the game?</string>
 
     <!--###HELP###-->
     <string name="help">Help</string>
@@ -115,5 +115,6 @@
     <string name="player">Player</string>
     <string name="placement_next_player_text">Place your ships.</string>
     <string name="help_overview_heading">Overview</string>
+    <string name="game_dialog_show_gamefield">Show game board</string>
 
 </resources>

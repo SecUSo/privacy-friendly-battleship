@@ -83,6 +83,7 @@ public class GameActivity extends BaseActivity {
         // Set up the grids for player one and make them invisible unitl player one is ready.
         setupGridViews();
 
+
         //set correct size for small grid
         gridViewSmall.post(new Runnable() {
             @Override
@@ -93,6 +94,7 @@ public class GameActivity extends BaseActivity {
                 gridViewSmall.setLayoutParams(layoutParams);
             }
         });
+
 
         if(controller.getMode() == GameMode.VS_PLAYER || controller.getMode() == GameMode.CUSTOM){
             showSwitchDialog();
@@ -332,28 +334,10 @@ public class GameActivity extends BaseActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToMainActivity(null);
+                goToMainActivity();
             }
         });
     }
-
-    /*
-    public void makeMoveAI() {
-
-        if(this.gameMode == GameMode.VS_AI_EASY) {
-            this.move = true;
-            while(move){
-                move = controller.getOpponentAI().makeRandomMove();
-                adapterMiniGrid.notifyDataSetChanged();
-                if(!move){
-                    controller.switchPlayers();
-                }
-            }
-        } else if(this.gameMode == GameMode.VS_AI_HARD) {
-            //TODO: implementation of AI for higher difficulty
-        }
-    }
-    */
 
     protected void setupGridViews() {
 
@@ -444,7 +428,7 @@ public class GameActivity extends BaseActivity {
         }
     }
 
-    public void goToMainActivity(View view){
+    public void goToMainActivity(){
 
         // Go back to the (old) MainActivity.
         Intent intent = new Intent(this, MainActivity.class);
@@ -461,6 +445,7 @@ public class GameActivity extends BaseActivity {
             //current player has won the game
             this.controller.stopTimer();
             timerUpdate.cancel();
+            gridViewBig.setEnabled(false);
             /*
             Create a dialog. Therefore, instantiate a bundle which transfers the data from the
             current game to the dialog.
@@ -623,7 +608,7 @@ public class GameActivity extends BaseActivity {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((GameActivity) getActivity()).goToMainActivity(null);
+                            ((GameActivity) getActivity()).goToMainActivity();
                         }
                     })
                     .setNegativeButton(R.string.game_dialog_show_game_board, new DialogInterface.OnClickListener() {
@@ -678,7 +663,7 @@ public class GameActivity extends BaseActivity {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((GameActivity) getActivity()).goToMainActivity(null);
+                            ((GameActivity) getActivity()).goToMainActivity();
                         }
                     })
                     .setNegativeButton(R.string.game_dialog_show_game_board, new DialogInterface.OnClickListener() {
@@ -705,7 +690,7 @@ public class GameActivity extends BaseActivity {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((GameActivity) getActivity()).goBack();
+                            ((GameActivity) getActivity()).goToMainActivity();
                         }
                     })
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener(){

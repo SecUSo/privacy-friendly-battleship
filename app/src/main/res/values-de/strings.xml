@@ -41,15 +41,15 @@
     <string name="game_player_one">Spieler 1</string>
     <string name="game_player_two">Spieler 2</string>
     <string name="game_time">Zeit:</string>
-    <string name="game_attempts">Versuche:</string>
+    <string name="game_attempts">Züge:</string>
     <string name="game_dialog_hit_prefix">Du hast ein Schiff der Größe </string>
-    <string name="game_dialog_hit_suffix">zerstört!</string>
+    <string name="game_dialog_hit_suffix">" zerstört!"</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Bist du bereit?</string>
-    <string name="game_dialog_loss">Schade… aber du hast verloren!</string>
+    <string name="game_dialog_loss">Schade! Du hast leider verloren.</string>
     <string name="game_dialog_win">Und der Gewinner ist… </string>
     <string name="game_dialog_ready">Bist du bereit?</string>
     <string name="game_dialog_show_gamefield">Zeige Spielfeld</string>
-    <string name="game_dialog_quit">Spiel abbrechen?</string>
+    <string name="game_dialog_quit">Möchtest du das Spiel abbrechen?</string>
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
