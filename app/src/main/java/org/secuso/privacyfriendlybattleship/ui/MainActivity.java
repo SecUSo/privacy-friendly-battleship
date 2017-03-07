@@ -23,6 +23,13 @@ import org.secuso.privacyfriendlybattleship.game.GameController;
 import org.secuso.privacyfriendlybattleship.game.GameGrid;
 import org.secuso.privacyfriendlybattleship.game.GameMode;
 
+/**
+ * This activity implements the main menu of the app. In the main menu, one can choose the game mode
+ * and size of the game board.
+ *
+ * @author Alexander Müller, Ali Kalsen
+ */
+
 public class MainActivity extends BaseActivity {
 
     private ViewPager viewPagerMode = null;//ViewPager for selection of game mode

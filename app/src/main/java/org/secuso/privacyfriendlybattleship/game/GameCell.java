@@ -77,38 +77,39 @@ public class GameCell implements Parcelable{
         switch (ship.getOrientation()) {
             case NORTH:
                 if (this.equals( ship.getFirstCell() )){
-                    //return North-start
+                    return R.drawable.ic_triangle_top;
                 }
                 if (this.equals( ship.getLastCell() )){
-                    //return North-end
+                    return R.drawable.ic_triangle_bottom;
                 }
-                return R.drawable.arrow_up_black;
+                return R.drawable.ship_middle;
             case EAST:
                 if (this.equals( ship.getFirstCell() )){
-                    //return East-start
+                    return R.drawable.ic_triangle_right;
                 }
                 if (this.equals( ship.getLastCell() )){
-                    //return East-end
+                    return R.drawable.ic_triangle_left;
                 }
-                return R.drawable.arrow_right_black;
+                return R.drawable.ship_middle;
             case SOUTH:
                 if (this.equals( ship.getFirstCell() )){
-                    //return South-start
+                    return R.drawable.ic_triangle_bottom;
                 }
                 if (this.equals( ship.getLastCell() )){
-                    //return South-end
+                    return R.drawable.ic_triangle_top;
                 }
-                return R.drawable.arrow_down_black;
+                return R.drawable.ship_middle;
             case WEST:
                 if (this.equals( ship.getFirstCell() )){
-                    //return West-start
+                    return R.drawable.ic_triangle_left;
                 }
                 if (this.equals( ship.getLastCell() )){
-                    //return West-end
+                    return R.drawable.ic_triangle_right;
                 }
-                return R.drawable.arrow_left_black;
+                return R.drawable.ship_middle;
+
+            default: return R.drawable.ship_middle;
         }
-        return R.drawable.ic_info_black_24dp;
     }
 
     @Override

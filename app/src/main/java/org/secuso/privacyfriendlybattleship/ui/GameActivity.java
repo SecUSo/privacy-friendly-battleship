@@ -31,6 +31,14 @@ import org.secuso.privacyfriendlybattleship.game.GameShip;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * This activity enables a user to play the game depending on the game mode and size of the game
+ * board he has chosen in the MainActivity. This activity is called either in the MainActivity by
+ * pressing on the QUICK START button or when the PlaceShipActivity has finished.
+ *
+ * @author Alexander Müller, Ali Kalsen
+ */
+
 public class GameActivity extends BaseActivity {
 
     private Handler handler;

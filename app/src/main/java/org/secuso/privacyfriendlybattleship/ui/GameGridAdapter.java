@@ -16,14 +16,16 @@ import org.secuso.privacyfriendlybattleship.game.GameCell;
 import org.secuso.privacyfriendlybattleship.game.GameController;
 
 /**
- * Created by Ali Kalsen on 27.01.2017. Last edit on 01.02.2017.
+ * This class implements an adapter for the grid view in the GameActivity, which changes the color
+ * of a cell when an action is executed on the grid, e.g clicking on the grid.
+ *
+ * @author Ali Kalsen
+ * @since 27.01.2017
  */
 
 public class GameGridAdapter extends BaseAdapter {
 
     public static final String SMALL_GRID = "SMALL";
-
-    // TODO: Add the images of the ships to this adapter
 
     Activity context;
     GameController game;

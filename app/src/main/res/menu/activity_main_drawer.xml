@@ -8,10 +8,6 @@
                 android:id="@+id/nav_example"
                 android:icon="@android:drawable/ic_menu_gallery"
                 android:title="@string/action_main" />
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@android:drawable/ic_menu_manage"
-                android:title="@string/action_settings" />
         </group>
         <group android:id="@+id/nav_group_add"
             android:checkableBehavior="all">
