@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:columnWidth="70dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="1sp"
-        android:horizontalSpacing="1sp"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
         android:stretchMode="columnWidth"
         android:gravity="center"/>
 

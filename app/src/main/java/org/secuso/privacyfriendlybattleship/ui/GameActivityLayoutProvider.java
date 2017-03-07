@@ -12,7 +12,7 @@ import org.secuso.privacyfriendlybattleship.R;
 public class GameActivityLayoutProvider {
 
     private final static int MARGIN_LEFT = 30;  // in pixel
-    private final static int MARGIN_RIGHT = 30; // in pixel
+    private final static int MARGIN_RIGHT = 31; // in pixel; +1 to avoid GridView problems due to rounding error
     private final static int MARGIN_TOP = 30; //in pixel
     private final Activity context;
     private final int gridSize;
@@ -28,11 +28,8 @@ public class GameActivityLayoutProvider {
         int orientation = this.context.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             int displayWidth = this.context.getResources().getDisplayMetrics().widthPixels;
-            // Subtract the cell size with 1, such that the lines of the grid are visible.
-            // TODO: Edit the cell size, if the lines of the grid are not visible
-            cellSize = ((displayWidth - getMarginLeft() - getMarginRight() ) / this.gridSize);
+            cellSize = (displayWidth - getMarginLeft()- getMarginRight() - (gridSize-1) ) / this.gridSize;
         } else {
-            // TODO: Think about the layout of the grid when the orientation is landscape
             int displayHeight = context.getResources().getDisplayMetrics().heightPixels;
             cellSize = (displayHeight - 2 * getMargin()) / this.gridSize;
         }

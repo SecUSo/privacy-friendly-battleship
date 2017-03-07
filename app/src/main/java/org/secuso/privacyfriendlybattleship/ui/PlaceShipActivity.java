@@ -102,7 +102,7 @@ public class PlaceShipActivity extends BaseActivity {
         // Set the columns of the grid
         gridView.setNumColumns(this.gridSize);
 
-        // Set the layout of the grids
+        // Set the layout of the grid
         final ViewGroup.MarginLayoutParams marginLayoutParams =
                 (ViewGroup.MarginLayoutParams) gridView.getLayoutParams();
 
