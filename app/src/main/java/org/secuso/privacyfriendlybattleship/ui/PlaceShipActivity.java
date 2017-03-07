@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import org.secuso.privacyfriendlybattleship.Constants;
 import org.secuso.privacyfriendlybattleship.R;
@@ -151,8 +152,16 @@ public class PlaceShipActivity extends BaseActivity {
         for( GameCell cell : cells ) {
             int col = cell.getCol();
             int row = cell.getRow();
-            this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(
-                    gridAdapter.context.getResources().getColor(R.color.yellow) );
+            ImageView cellView = (ImageView) this.gridView.getChildAt( row * this.gridSize + col );
+            cellView.setImageResource(cell.getResourceId());
+            cellView.setImageAlpha(128);
+
+            int shipsOnCell = this.controller.getCurrentGrid().getShipSet().shipsOnCell(cell);
+            if (shipsOnCell == 1){
+                cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.yellow));
+            } else {
+                cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.red));
+            }
         }
     }
 
@@ -161,13 +170,17 @@ public class PlaceShipActivity extends BaseActivity {
             int col = cell.getCol();
             int row = cell.getRow();
             int shipsOnCell = this.controller.getCurrentGrid().getShipSet().shipsOnCell(cell);
+            ImageView cellView = (ImageView) this.gridView.getChildAt( row * this.gridSize + col );
             if (shipsOnCell == 0) {
-                this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.WHITE);
+                cellView.setBackgroundColor(Color.WHITE);
+                cellView.setImageResource(0);
             } else if (shipsOnCell == 1) {
-                this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(Color.BLACK);
+                cellView.setBackgroundColor(Color.WHITE);
+                cellView.setImageResource(cell.getResourceId());
+                cellView.setImageAlpha(255);
             } else if (shipsOnCell >= 2) {
-                this.gridView.getChildAt( row * this.gridSize + col ).setBackgroundColor(
-                        gridAdapter.context.getResources().getColor(R.color.red));
+                cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.red));
+                cellView.setImageAlpha(255);
             }
         }
     }

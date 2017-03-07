@@ -62,7 +62,7 @@
             android:id="@+id/arrow_right"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right_back"
+            android:src="@drawable/arrow_right_black"
             android:adjustViewBounds="true"
             android:onClick="onClickButton"
             android:layout_gravity="center_vertical"/>

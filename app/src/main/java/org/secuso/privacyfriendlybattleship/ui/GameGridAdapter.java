@@ -1,6 +1,9 @@
 package org.secuso.privacyfriendlybattleship.ui;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,8 +118,7 @@ public class GameGridAdapter extends BaseAdapter {
 
             // Set the grid cell of the current player
             if(currentCell.isShip() && !isMainGrid || currentCell.isShip() && shipsNotPlaced){
-                //TODO: Add the icon of the ship
-                gridCell.setBackgroundColor(Color.BLACK);
+                gridCell.setImageResource(currentCell.getResourceId());
             }
         } else{
             gridCell = (ImageView) view;
@@ -130,5 +132,50 @@ public class GameGridAdapter extends BaseAdapter {
             }
         }
         return gridCell;
+    }
+
+    /**
+     * This method scales the images for a ship.
+     * @param options:
+     * @param reqCellSize: The size of the cell, which should not be exceeded by the image of the ship.
+     * @return The size of the image.
+     */
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqCellSize) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqCellSize || width > reqCellSize) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqCellSize
+                    && (halfWidth / inSampleSize) >= reqCellSize) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqCellSize) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqCellSize);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 }
