@@ -153,8 +153,15 @@ public class PlaceShipActivity extends BaseActivity {
             int col = cell.getCol();
             int row = cell.getRow();
             ImageView cellView = (ImageView) this.gridView.getChildAt( row * this.gridSize + col );
-            cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.yellow));
-            cellView.setImageResource(R.drawable.ic_info_black_24dp);
+            cellView.setImageResource(cell.getResourceId());
+            cellView.setImageAlpha(128);
+
+            int shipsOnCell = this.controller.getCurrentGrid().getShipSet().shipsOnCell(cell);
+            if (shipsOnCell == 1){
+                cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.yellow));
+            } else {
+                cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.red));
+            }
         }
     }
 
@@ -169,8 +176,11 @@ public class PlaceShipActivity extends BaseActivity {
                 cellView.setImageResource(0);
             } else if (shipsOnCell == 1) {
                 cellView.setBackgroundColor(Color.WHITE);
+                cellView.setImageResource(cell.getResourceId());
+                cellView.setImageAlpha(255);
             } else if (shipsOnCell >= 2) {
                 cellView.setBackgroundColor(gridAdapter.context.getResources().getColor(R.color.red));
+                cellView.setImageAlpha(255);
             }
         }
     }

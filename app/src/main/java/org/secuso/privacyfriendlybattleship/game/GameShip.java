@@ -78,6 +78,18 @@ public class GameShip implements Parcelable{
         return size;
     }
 
+    public Direction getOrientation() {
+        return orientation;
+    }
+
+    public GameCell getFirstCell() {
+        return this.shipsCells[0];
+    }
+
+    public GameCell getLastCell() {
+        return this.shipsCells[this.size-1];
+    }
+
     public GameCell[] getShipsCells() {
         return shipsCells;
     }

@@ -3,6 +3,8 @@ package org.secuso.privacyfriendlybattleship.game;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.secuso.privacyfriendlybattleship.R;
+
 import static java.lang.Math.max;
 
 /**
@@ -64,6 +66,49 @@ public class GameCell implements Parcelable{
         if (distance > 1)
             return false;
         return true;
+    }
+
+    public int getResourceId() {
+        if (!this.isShip) {
+            return 0;
+        }
+
+        GameShip ship = this.getGrid().getShipSet().findShipContainingCell(this);
+        switch (ship.getOrientation()) {
+            case NORTH:
+                if (this.equals( ship.getFirstCell() )){
+                    //return North-start
+                }
+                if (this.equals( ship.getLastCell() )){
+                    //return North-end
+                }
+                return R.drawable.arrow_up_black;
+            case EAST:
+                if (this.equals( ship.getFirstCell() )){
+                    //return East-start
+                }
+                if (this.equals( ship.getLastCell() )){
+                    //return East-end
+                }
+                return R.drawable.arrow_right_black;
+            case SOUTH:
+                if (this.equals( ship.getFirstCell() )){
+                    //return South-start
+                }
+                if (this.equals( ship.getLastCell() )){
+                    //return South-end
+                }
+                return R.drawable.arrow_down_black;
+            case WEST:
+                if (this.equals( ship.getFirstCell() )){
+                    //return West-start
+                }
+                if (this.equals( ship.getLastCell() )){
+                    //return West-end
+                }
+                return R.drawable.arrow_left_black;
+        }
+        return R.drawable.ic_info_black_24dp;
     }
 
     @Override
