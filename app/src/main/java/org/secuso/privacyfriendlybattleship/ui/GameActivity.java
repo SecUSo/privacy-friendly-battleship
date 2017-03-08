@@ -14,10 +14,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlybattleship.Constants;
@@ -103,13 +105,23 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-
         if(controller.getMode() == GameMode.VS_PLAYER || controller.getMode() == GameMode.CUSTOM){
             showSwitchDialog();
             // Show the help dialog on top of the switch dialog in case the app has started for the first time.
             showHelpDialog();
         }
         else{
+            //setup GridViews again after layout is finished to avoid wrong icon rendering
+            final LinearLayout layout = (LinearLayout) findViewById(R.id.game_linear_layout);
+            ViewTreeObserver vto = layout.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    setupGridViews();
+                }
+            });
+
             showHelpDialog();
             // Set up the time
             setUpTimer();
