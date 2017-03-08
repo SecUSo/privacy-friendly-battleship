@@ -20,24 +20,38 @@ public class GameController implements Parcelable {
     private GameMode mode;
     private boolean currentPlayer;//false if first players turn, true if second players turn
     private GameAI opponentAI;
+    private int[] shipCount;
 
     // Amount of ships for standard grid sizes.
     private final static int[] SHIPCOUNTFIVE = {2,1,0,0};
     private final static int[] SHIPCOUNTTEN = {1,2,1,1};
 
-    public GameController(int gridSize, int[] shipCount) {
+
+    public GameController(GameMode gameMode, int gridSize, int[] shipCount) {
         this.gridSize = gridSize;
-        this.mode = GameMode.CUSTOM;
+        this.mode = gameMode;
         this.currentPlayer = false;
-        this.opponentAI = null; //only player vs player with custom game
-        this.gridFirstPlayer = new GameGrid(gridSize, shipCount);
-        this.gridSecondPlayer = new GameGrid(gridSize, shipCount);
+        this.shipCount = shipCount;
+
+        this.gridFirstPlayer = new GameGrid(gridSize, this.shipCount);
+        this.gridSecondPlayer = new GameGrid(gridSize, this.shipCount);
+
+        if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
+            this.opponentAI = new GameAI(this.gridSize, this.mode, this);
+        } else if (this.mode == GameMode.VS_PLAYER) {
+            this.opponentAI = null;
+        }
         this.timePlayerOne = new BattleshipsTimer();
         this.timePlayerTwo = new BattleshipsTimer();
         this.attemptsPlayerOne = 0;
         this.attemptsPlayerTwo = 0;
     }
 
+    /**
+     * This constructor is called in the MainActivity
+     * @param gridSize: The size of the game board
+     * @param mode: The game mode
+     */
     public GameController(int gridSize, GameMode mode) {
         if (mode == GameMode.CUSTOM)
             throw new IllegalArgumentException("Provide ship-count for custom game-mode.");
@@ -49,10 +63,12 @@ public class GameController implements Parcelable {
 
         switch (gridSize) {
             case 5:
+                this.shipCount = SHIPCOUNTFIVE;
                 this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
                 this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
                 break;
             default:
+                this.shipCount = SHIPCOUNTTEN;
                 this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
                 this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
                 break;
@@ -132,9 +148,8 @@ public class GameController implements Parcelable {
     }
 
     public boolean isShipCountLegit(int[] shipCount){
-        // TODO: Think about the bound for the cells covered by the ships. The current bound is set
-        // to the half of the total amount of grid cells, such that the probability of randomly
-        // hitting a ship is at most 1/2.
+        // The current bound for the numer of cells covered by the ships is set to the half of the
+        // total amount of grid cells, such that the probability of randomly hitting a ship is at most 1/2.
         int bound =  (int) Math.floor(getGridSize() * getGridSize() / 2);
         int coveredGridCells = 2 * shipCount[0] + 3 * shipCount[1] + 4 * shipCount[2] + 5 * shipCount[3];
         if (coveredGridCells > bound){
@@ -238,6 +253,10 @@ public class GameController implements Parcelable {
         else{
             return getCurrentPlayer() ? this.timePlayerTwo.getTime() : this.timePlayerOne.getTime();
         }
+    }
+
+    public int[] getShipCount(){
+        return this.shipCount;
     }
 
     public String timeToString(int time) {

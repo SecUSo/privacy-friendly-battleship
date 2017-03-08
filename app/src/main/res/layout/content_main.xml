@@ -105,8 +105,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/button_fullwidth"
-        android:text="@string/main_button_place_ships"
-        android:id="@+id/place_ships_button"
+        android:text="@string/action_settings"
+        android:id="@+id/action_settings"
         android:onClick="onClick"/>
 
 </LinearLayout>

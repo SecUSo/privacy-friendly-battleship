@@ -232,4 +232,20 @@ public class GameShipSet implements Parcelable{
         }
         return null;
     }
+
+    public int getNumberOfShipsSize2(){
+        return size2Ships.length;
+    }
+
+    public int getNumberOfShipsSize3(){
+        return size3Ships.length;
+    }
+
+    public int getNumberOfShipsSize4(){
+        return size4Ships.length;
+    }
+
+    public int getNumberOfShipsSize5(){
+        return size5Ships.length;
+    }
 }

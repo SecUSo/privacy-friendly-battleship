@@ -215,14 +215,6 @@ public class PlaceShipActivity extends BaseActivity {
         highlightCells(this.selectedShip.getShipsCells());
     }
 
-    public void onClickShipSet(View view){
-        //Go to ShipSetActivity
-        Intent intent = new Intent(this, ShipSetActivity.class);
-        intent.putExtra("controller", this.controller);
-        startActivity(intent);
-
-    }
-
     public void onClickReady(View view) {
         if (!this.controller.getCurrentGrid().getShipSet().placementLegit()) {
             showInvalidPlacementDialog();

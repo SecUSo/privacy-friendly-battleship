@@ -27,7 +27,7 @@
                 android:text="-"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="subtractShipOfSize5"/>
 
 
             <TextView
@@ -44,7 +44,7 @@
                 android:text="+"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="addShipOfSize5"/>
 
         </LinearLayout>
 
@@ -72,7 +72,7 @@
                 android:text="-"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="subtractShipOfSize4"/>
 
 
             <TextView
@@ -89,7 +89,7 @@
                 android:text="+"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="addShipOfSize4"/>
 
         </LinearLayout>
 
@@ -117,7 +117,7 @@
                 android:text="-"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="subtractShipOfSize3"/>
 
 
             <TextView
@@ -134,7 +134,7 @@
                 android:text="+"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="addShipOfSize3"/>
 
         </LinearLayout>
 
@@ -162,7 +162,7 @@
                 android:text="-"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="subtractShipOfSize2"/>
 
 
             <TextView
@@ -179,20 +179,37 @@
                 android:text="+"
                 android:textColor="@color/white"
                 android:background="@drawable/button_fullwidth"
-                android:onClick=""/>
+                android:onClick="addShipOfSize2"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/ship_set_button"
-        android:text="@string/ship_set_ready"
-        android:textColor="@color/white"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_fullwidth"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onClickShipSetReady"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/ship_set_button"
+            android:text="@string/ship_set_ready"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_fullwidth"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClickShipSetReady"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+
+        <Button
+            android:id="@+id/ship_set_place_ships_button"
+            android:text="@string/main_button_place_ships"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_fullwidth"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClickPlaceShips"/>
+
+    </LinearLayout>
 
 </LinearLayout>

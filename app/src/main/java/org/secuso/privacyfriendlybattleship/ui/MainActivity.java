@@ -301,18 +301,17 @@ public class MainActivity extends BaseActivity {
                 intent.putExtra("controller", game);
                 startActivity(intent);
                 break;
-            case R.id.place_ships_button:
+            case R.id.action_settings:
                 // Get the selected game mode and the grid size
                 modeIndex = viewPagerMode.getCurrentItem();
                 gameMode = GameMode.getValidTypes().get(modeIndex);
                 sizeIndex = viewPagerSize.getCurrentItem();
                 gridSize = GameGrid.getValidSizes().get(sizeIndex);
 
-                game = new GameController(gridSize, gameMode);
-                game.placeAllShips();//place all ships randomly for both players
+                game = new GameController(gridSize, gameMode);//place all ships randomly for both players
 
-                // send game information to PlaceShipActivity
-                intent = new Intent(this, PlaceShipActivity.class);
+                // send game information to ShipSetActivity
+                intent = new Intent(this, ShipSetActivity.class);
                 intent.putExtra("controller", game);
                 startActivity(intent);
                 break;

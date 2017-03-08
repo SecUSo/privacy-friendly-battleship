@@ -60,6 +60,13 @@
             android:summary="@string/help_game_step_four"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/ship_set_title">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:summary="@string/ship_set_message" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/placement_tutorial_title">
         <Preference
             android:selectable="false"
