@@ -309,6 +309,7 @@ public class GameActivity extends BaseActivity {
                 adapterMiniGrid.notifyDataSetChanged();
                 if(this.controller.getOpponentAI().isAIWinner()){
                     timerUpdate.cancel();
+                    gridViewBig.setEnabled(false);
 
                     /*
                     Create a dialog. Therefore, instantiate a bundle which transfers the data from the
