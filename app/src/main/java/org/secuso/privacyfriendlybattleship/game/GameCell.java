@@ -104,7 +104,7 @@ public class GameCell implements Parcelable{
                     //return South-end
                     return R.drawable.ship_back_down;
                 }
-                return R.drawable.ship_middle_up;
+                return R.drawable.ship_middle_down;
             case WEST:
                 if (this.equals( ship.getFirstCell() )){
                     //return West-start
@@ -114,7 +114,7 @@ public class GameCell implements Parcelable{
                     //return West-end
                     return R.drawable.ship_back_left;
                 }
-                return R.drawable.ship_middle_right;
+                return R.drawable.ship_middle_left;
         }
         return R.drawable.ic_info_black_24dp;
     }
