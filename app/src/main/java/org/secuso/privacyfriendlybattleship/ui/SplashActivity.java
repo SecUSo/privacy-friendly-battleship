@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by yonjuni on 24.10.16.
+ * This activity is called when the app starts. It displays the logo of the app.
  */
 
 public class SplashActivity extends AppCompatActivity {

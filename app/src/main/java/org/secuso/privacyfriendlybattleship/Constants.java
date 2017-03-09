@@ -1,7 +1,10 @@
 package org.secuso.privacyfriendlybattleship;
 
 /**
- * Created by McLovin on 06.01.2017.
+ * This class contains some strings used in several activities.
+ *
+ * @author Ali Kalsn
+ * @since 06.01.2017
  */
 
 public final class Constants {
@@ -13,11 +16,5 @@ public final class Constants {
     public final static String FIRST_PLACEMENT_START    = "FIRST_PLACEMENT_START";
     public final static String FIRST_GAME_START         = "FIRST_GAME_START";
     public final static String FIRST_SHIP_SET_START     = "FIRST_SHIP_SET_START";
-
-    // Intent Extra Constants
-    public final static String PLACE_SHIPS              = "PLACE_SHIPS";
-    public final static String QUICK_START              = "QUICK_START";
-    public final static String GRID_SIZE                = "GAME_SIZE";
-    public final static String GAME_MODE                = "GAME_MODE";
 
 }

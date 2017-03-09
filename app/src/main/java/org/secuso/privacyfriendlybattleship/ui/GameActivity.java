@@ -14,10 +14,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlybattleship.Constants;
@@ -30,6 +32,14 @@ import org.secuso.privacyfriendlybattleship.game.GameShip;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+/**
+ * This activity enables a user to play the game depending on the game mode and size of the game
+ * board he has chosen in the MainActivity. This activity is called either in the MainActivity by
+ * pressing on the QUICK START button or when the PlaceShipActivity has finished.
+ *
+ * @author Alexander Müller, Ali Kalsen
+ */
 
 public class GameActivity extends BaseActivity {
 
@@ -95,13 +105,23 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-
         if(controller.getMode() == GameMode.VS_PLAYER || controller.getMode() == GameMode.CUSTOM){
             showSwitchDialog();
             // Show the help dialog on top of the switch dialog in case the app has started for the first time.
             showHelpDialog();
         }
         else{
+            //setup GridViews again after layout is finished to avoid wrong icon rendering
+            final LinearLayout layout = (LinearLayout) findViewById(R.id.game_linear_layout);
+            ViewTreeObserver vto = layout.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    setupGridViews();
+                }
+            });
+
             showHelpDialog();
             // Set up the time
             setUpTimer();
@@ -281,6 +301,7 @@ public class GameActivity extends BaseActivity {
 
         // If the attacked cell does not contain a ship, then stop the timer and switch the player
         if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
+
             // Delay the move of the AI by 250 ms
             this.handler.postDelayed(new Runnable() {
                 @Override
@@ -291,6 +312,7 @@ public class GameActivity extends BaseActivity {
                     adapterMiniGrid.notifyDataSetChanged();
                     if(controller.getOpponentAI().isAIWinner()){
                         timerUpdate.cancel();
+
 
                     /*
                     Create a dialog. Therefore, instantiate a bundle which transfers the data from the

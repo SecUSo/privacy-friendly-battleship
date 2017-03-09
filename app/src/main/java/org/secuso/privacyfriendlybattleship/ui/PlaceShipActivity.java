@@ -234,11 +234,13 @@ public class PlaceShipActivity extends BaseActivity {
 
                 // Re-switch the current player, such that player one starts
                 this.controller.switchPlayers();
-
                 //Call GameActivity and provide GameController
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("controller", this.controller);
                 startActivity(intent);
+
+                // Finish the PlaceShipActivity
+                this.finish();
             } else {
                 this.fadeOutGridView();
                 showSwitchPlayerDialog();

@@ -6,7 +6,10 @@ import android.content.res.Configuration;
 import org.secuso.privacyfriendlybattleship.R;
 
 /**
- * Created by Ali Kalsen on 01.02.2017.
+ * This class computes the size of the grid cell for the big and the small grid view in pixel.
+ *
+ * @author Ali Kalsen
+ * @since 01.02.2017
  */
 
 public class GameActivityLayoutProvider {
