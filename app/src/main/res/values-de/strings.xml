@@ -49,10 +49,10 @@
     <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
     <string name="help_dialog_title">Spielanleitung</string>
     <string name="help_game_intro">Das obere Raster zeigt das Spielfeld deines Gegners, das untere dein eigenes. Um zu spielen, befolge die folgenden Schritte.</string>
-    <string name="help_game_step_four">4. Hast du nicht getroffen, kannst du deinen Zug durch klicken auf \"FERTIG\" beenden und das Gerät an deinen Gegenspieler weiter reichen. Spielst du gegen den Computer, greift dieser automatisch an.</string>
+    <string name="help_game_step_four">4. Falls du gegen jemand anderen spielst, kannst du deinen Zug durch Klicken auf \"FERTIG\" beenden und das Gerät an deinen Gegenspieler weiter reichen. Spielst du gegen den Computer, greift dieser automatisch an.</string>
     <string name="help_game_step_one">1. Wähle das anzugreifende Feld, durch tippen darauf, aus.</string>
     <string name="help_game_step_two">2. Bestätige durch drücken des \"FEUER\" Buttons. Das Feld färbt sich bei einem Treffer rot, beim Verfehlen blau.</string>
-    <string name="help_game_step_three">3. Bei einem Treffer, kannst du erneut auf das gegnerische Feld feuern.</string>
+    <string name="help_game_step_three">3. Falls du gegen den Computer spielst, führt dieser seinen Spielzug aus.</string>
     <string name="help_how_to_play">Spielanleitung</string>
     <string name="help_menu_game_mode">Spielmodus</string>
     <string name="help_menu_game_mode_dual_player">Spielt zu zweit gegeneinander.</string>

@@ -73,7 +73,7 @@ public class ShipSetActivity extends BaseActivity {
          ship size.
           */
 
-        int bound = numberGridCells / 2;
+        int bound = numberGridCells * 2 / 5;
 
         this.boundShipSet2 = bound / 2;
         this.boundShipSet3 = bound / 3;

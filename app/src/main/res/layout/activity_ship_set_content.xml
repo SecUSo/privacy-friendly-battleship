@@ -2,31 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="130dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/ship_set_size_five_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/ship_set_size_five_ships"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="-"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="subtractShipOfSize5"/>
 
 
@@ -39,39 +40,34 @@
                 android:layout_marginEnd="5dp"/>
 
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="+"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="addShipOfSize5"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/ship_set_size_four_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/ship_set_size_four_ships"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="-"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="subtractShipOfSize4"/>
 
 
@@ -84,39 +80,34 @@
                 android:layout_marginEnd="5dp"/>
 
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="+"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="addShipOfSize4"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/ship_set_size_three_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/ship_set_size_three_ships"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="-"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="subtractShipOfSize3"/>
 
 
@@ -129,39 +120,33 @@
                 android:layout_marginEnd="5dp"/>
 
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="+"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="addShipOfSize3"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/ship_set_size_two_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/ship_set_size_two_ships"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="-"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="subtractShipOfSize2"/>
 
 
@@ -174,16 +159,18 @@
                 android:layout_marginEnd="5dp"/>
 
             <Button
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:text="+"
                 android:textColor="@color/white"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="addShipOfSize2"/>
 
-        </LinearLayout>
-
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height" />
 
     <LinearLayout
         android:layout_width="wrap_content"

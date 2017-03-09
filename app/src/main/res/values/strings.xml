@@ -61,8 +61,8 @@
     <string name="help_dialog_title">How to play</string>
     <string name="help_game_step_one">1. Choose a cell you want to attack by clicking on it.</string>
     <string name="help_game_step_two">2. Press the \"FIRE\" button to confirm. The cell becomes red to indicate a hit, or blue to indicate a miss.</string>
-    <string name="help_game_step_three">3. In case of a hit, you can attack your opponents grid again.</string>
-    <string name="help_game_step_four">4. In case of a miss, click the \"DONE\" button to end your turn and hand the phone to your opponent, who may attack your ships. If you play against the computer, the computer will attack your ships.</string>
+    <string name="help_game_step_three">3. If you play against the computer, the computer will attack your ships.</string>
+    <string name="help_game_step_four">4. If you play against another opponent, click the \"DONE\" button to end your turn and hand the phone to your opponent, who may attack your ships.</string>
     <string name="help_privacy_heading">Privacy Info</string>
     <string name="help_permissions_heading">Permissions</string>
     <string name="help_permissions_description">Privacy Friendly Batlleships does not use any permissions.</string>
