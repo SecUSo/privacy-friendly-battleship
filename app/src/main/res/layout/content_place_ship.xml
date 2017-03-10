@@ -7,7 +7,7 @@
         android:id="@+id/placement_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="70dp"
+        android:columnWidth="80dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="1dp"
         android:horizontalSpacing="1dp"
@@ -95,25 +95,18 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/placement_ready"
+            android:text="@string/place_ships_ready"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/placement_ready"
-                android:text="@string/place_ships_ready"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/button_fullwidth"
-                android:textColor="@color/white"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:onClick="onClickReady"
-                android:layout_weight="1"
-                />
-
-        </LinearLayout>
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:onClick="onClickReady"
+            android:layout_weight="1"
+            />
 
     </LinearLayout>
 
