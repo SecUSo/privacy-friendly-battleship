@@ -7,7 +7,7 @@
         android:id="@+id/placement_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="70dp"
+        android:columnWidth="80dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="1dp"
         android:horizontalSpacing="1dp"
