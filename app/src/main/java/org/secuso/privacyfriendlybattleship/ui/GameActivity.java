@@ -57,8 +57,9 @@ public class GameActivity extends BaseActivity {
     private GridView gridViewSmall;
     private GameActivityLayoutProvider layoutProvider;
 
+    private boolean isCellClicked;
     private boolean hasStarted;
-    private boolean moveMade;
+    private boolean moveMade;       // Necessary for the help and the back button in order to control the timer
     private GameCell attackedCell;
     private GameGrid gridUnderAttack;
     private int positionGridCell;   // Save the current position of the grid cell clicked
@@ -270,17 +271,19 @@ public class GameActivity extends BaseActivity {
         this.attackedCell = gridUnderAttack.getCell(column, row);
 
         //Do not attack the same cell twice and do not click the fire button without clicking on a cell.
-        if(attackedCell.isHit() || this.prevCell == null){
+        if(attackedCell.isHit() || this.prevCell == null || !isCellClicked){
             return;
         }
 
-        // Attack the cell and update the main grid
+        // Attack the cell and update the main grid.
         this.controller.makeMove(this.controller.getCurrentPlayer(), column, row);
         this.moveMade = true;
+        // Denote that the cells are not clicked anymore such that fire button can only be executed if a cell has been clicked
+        this.isCellClicked = false;
         updateToolbar();
         adapterMainGrid.notifyDataSetChanged();
 
-        GameShip ship = this.gridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
+        final GameShip ship = this.gridUnderAttack.getShipSet().findShipContainingCell(attackedCell);
         this.controller.stopTimer();
         // Check if the current hit has destroyed a ship
         if(ship != null && ship.isDestroyed()){
@@ -298,26 +301,31 @@ public class GameActivity extends BaseActivity {
             gameDialog.show(getFragmentManager(), GameDialog.class.getSimpleName());
 
         }
+        else{
+            // Terminate the fire button
+            terminateFireButton();
+        }
+    }
 
+    // Switch the player or make the move for the AI
+    private void terminateFireButton(){
         // If the attacked cell does not contain a ship, then stop the timer and switch the player
         if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
 
-            // Delay the move of the AI by 250 ms
+            controller.switchPlayers();
+            //make move for AI
+            controller.getOpponentAI().makeMove();
             this.handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    controller.switchPlayers();
-                    //make move for AI
-                    controller.getOpponentAI().makeMove();
                     adapterMiniGrid.notifyDataSetChanged();
                     if(controller.getOpponentAI().isAIWinner()){
                         timerUpdate.cancel();
 
-
-                    /*
-                    Create a dialog. Therefore, instantiate a bundle which transfers the data from the
-                    current game to the dialog.
-                     */
+                /*
+                Create a dialog. Therefore, instantiate a bundle which transfers the data from the
+                current game to the dialog.
+                */
 
                         Bundle bundle = new Bundle();
                         bundle.putString("Time", controller.timeToString(controller.getTime()));
@@ -328,20 +336,19 @@ public class GameActivity extends BaseActivity {
                         loseDialog.setCancelable(false);
                         loseDialog.show(getFragmentManager(), LoseDialog.class.getSimpleName());
                     }
-                    else{
+                    else {
                         // Restart the timer for player one
                         controller.startTimer();
                     }
                 }
-            }, 0);
+            }, 250);
             this.moveMade = false;
         }
         else{
-
-                /*
-                Change the listener and the text of the "Fire" button, such that the grids fade out
-                after the button has been clicked.
-                 */
+            /*
+            Change the listener and the text of the "Fire" button, such that the grids fade out
+            after the button has been clicked.
+            */
             gridViewBig.setEnabled(false);
             Button doneButton = (Button) findViewById(R.id.game_button_fire);
             doneButton.setText(R.string.game_button_done);
@@ -422,6 +429,7 @@ public class GameActivity extends BaseActivity {
                 prevCell = view;
                 // Display the grid cell, which was clicked.
                 adapterMainGrid.notifyDataSetChanged();
+                isCellClicked = true;
             }
         });
     }
@@ -448,10 +456,12 @@ public class GameActivity extends BaseActivity {
         gridViewSmall.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
         if(!this.hasStarted){
             this.hasStarted = true;
-            this.moveMade = false;
             this.controller.startTimer();
             // Set up the timer on the toolbar
             setUpTimer();
+        }
+        else{
+            this.moveMade = false;
         }
     }
 
@@ -487,6 +497,9 @@ public class GameActivity extends BaseActivity {
             WinDialog winDialog = WinDialog.newInstance(bundle);
             winDialog.setCancelable(false);
             winDialog.show(getFragmentManager(), WinDialog.class.getSimpleName());
+        }
+        else {
+            terminateFireButton();
         }
     }
 
@@ -719,8 +732,10 @@ public class GameActivity extends BaseActivity {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            // Resume the timer
-                            ((GameActivity) getActivity()).controller.startTimer();
+                            if( !((GameActivity) getActivity()).moveMade ){
+                                // Resume the timer
+                                ((GameActivity) getActivity()).controller.startTimer();
+                            }
                         }
                     });
 

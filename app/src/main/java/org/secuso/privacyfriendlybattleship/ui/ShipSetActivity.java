@@ -176,23 +176,27 @@ public class ShipSetActivity extends BaseActivity {
     }
 
     public void updateShipsofSize2(){
+        String shipSet2 = shipsSize2 < 10 ? "0" + String.valueOf(shipsSize2) : String.valueOf(shipsSize2);
         TextView ships2 = (TextView) findViewById(R.id.ship_set_size_two_number);
-        ships2.setText(String.valueOf(shipsSize2));
+        ships2.setText(shipSet2);
     }
 
     public void updateShipsofSize3(){
+        String shipSet3 = shipsSize3 < 10 ? "0" + String.valueOf(shipsSize3) : String.valueOf(shipsSize3);
         TextView ships3 = (TextView) findViewById(R.id.ship_set_size_three_number);
-        ships3.setText(String.valueOf(shipsSize3));
+        ships3.setText(shipSet3);
     }
 
     public void updateShipsofSize4(){
+        String shipSet4 = shipsSize4 < 10 ? "0" + String.valueOf(shipsSize4) : String.valueOf(shipsSize4);
         TextView ships4 = (TextView) findViewById(R.id.ship_set_size_four_number);
-        ships4.setText(String.valueOf(shipsSize4));
+        ships4.setText(shipSet4);
     }
 
     public void updateShipsofSize5(){
+        String shipSet5 = shipsSize5 < 10 ? "0" + String.valueOf(shipsSize5) : String.valueOf(shipsSize5);
         TextView ships5 = (TextView) findViewById(R.id.ship_set_size_five_number);
-        ships5.setText(String.valueOf(shipsSize5));
+        ships5.setText(shipSet5);
     }
 
     public void onClickShipSetReady(View view){

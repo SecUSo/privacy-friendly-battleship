@@ -106,15 +106,16 @@
     <string name="player">Player</string>
     <string name="placement_next_player_text">Place your ships.</string>
 
-    <!-- #### SHIP SET ### -->
-    <string name="ship_set_title">Customize the ship set</string>
-    <string name="ship_set_message">You can add or delete a ship of a certain size by pressing on the corresponding + or - button respectively. Note that the number of ships is bounded.</string>
+    <!-- ### SHIP SET ### -->
+    <string name="title_activity_ship_set">Customize the ship set</string>
     <string name="ship_set_size_five_ships">Ships of size 5</string>
     <string name="ship_set_size_four_ships">Ships of size 4</string>
     <string name="ship_set_size_three_ships">Ships of size 3</string>
     <string name="ship_set_size_two_ships">Ships of size 2</string>
+    <string name="ship_set_start_game">Start</string>
+    <string name="ship_set_title">Customize the ship set</string>
+    <string name="ship_set_message">You can add or remove a ship of a certain size by pressing on the respective + or - button. Note that the number of ships is bounded.</string>
     <string name="ship_set_alert_title">Caution!</string>
     <string name="ship_set_alert_message">Please add at least one ship to the ship set.</string>
-    <string name="ship_set_ready">Start</string>
 
 </resources>

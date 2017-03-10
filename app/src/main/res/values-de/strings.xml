@@ -5,6 +5,7 @@
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="action_ship_set">Anzahl der Schiffe</string>
     <string name="action_main">Hauptmenü</string>
     <string name="action_game">Spiel</string>
@@ -102,14 +103,15 @@
     <string name="game_dialog_show_game_board">Spielfeld anzeigen</string>
 
     <!-- #### SHIP SET ### -->
-    <string name="ship_set_title">Konfigurieren der Anzahl der Schiffe</string>
-    <string name="ship_set_message">Du kannst ein Schiff einer bestimmten Größe durch Klicken auf den entsprechenden + oder - Button hinzufügen oder entfernen. Beachte, dass die Anzahl der Schiffe nach oben beschränkt ist.</string>
+    <string name="title_activity_ship_set">Anzahl der Schiffe</string>
     <string name="ship_set_size_five_ships">Schiffe der Größe 5</string>
     <string name="ship_set_size_four_ships">Schiffe der Größe 4</string>
     <string name="ship_set_size_three_ships">Schiffe der Größe 3</string>
     <string name="ship_set_size_two_ships">Schiffe der Größe 2</string>
+    <string name="ship_set_start_game">Start</string>
+    <string name="ship_set_title">Konfigurieren der Anzahl der Schiffe</string>
+    <string name="ship_set_message">Du kannst ein Schiff einer bestimmten Größe durch Klicken auf den entsprechenden + oder - Button hinzufügen oder entfernen. Beachte, dass die Anzahl der Schiffe nach oben beschränkt ist.</string>
     <string name="ship_set_alert_title">Achtung!</string>
     <string name="ship_set_alert_message">Bitte füge mindestens ein Schiff ein.</string>
-    <string name="ship_set_ready">Start</string>
 
 </resources>
