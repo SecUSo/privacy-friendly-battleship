@@ -39,12 +39,10 @@
     <string name="game_dialog_loss">Schade! Du hast leider verloren.</string>
     <string name="game_dialog_win">Und der Gewinner ist… </string>
     <string name="game_dialog_ready">Bist du bereit?</string>
-    <string name="game_dialog_show_gamefield">Zeige Spielfeld</string>
     <string name="game_dialog_quit">Möchtest du das Spiel abbrechen?</string>
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
-    <string name="help_overview_heading">Übersicht</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
     <string name="help_permissions_heading">Berechtigungen</string>
     <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
