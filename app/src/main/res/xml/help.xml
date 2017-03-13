@@ -10,12 +10,12 @@
         <Preference
             android:selectable="false"
             android:persistent="false"
-            android:icon="@drawable/ic_person_black_24px"
+            android:icon="@drawable/ic_cpu_easy"
             android:summary="@string/help_menu_game_mode_vs_ai_easy"/>
         <Preference
             android:selectable="false"
             android:persistent="false"
-            android:icon="@drawable/ic_person_black_24px"
+            android:icon="@drawable/ic_cpu_hard"
             android:summary="@string/help_menu_game_mode_vs_ai_hard"/>
     </PreferenceCategory>
 

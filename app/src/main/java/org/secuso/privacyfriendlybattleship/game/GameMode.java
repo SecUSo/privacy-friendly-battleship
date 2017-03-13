@@ -14,8 +14,8 @@ import java.util.List;
 
 public enum GameMode {
     VS_PLAYER(R.string.mode_two_player, R.drawable.ic_people_black_24px),
-    VS_AI_EASY(R.string.mode_vs_cpu_easy, R.drawable.ic_person_black_24px),
-    VS_AI_HARD(R.string.mode_vs_cpu_hard, R.drawable.ic_person_black_24px),
+    VS_AI_EASY(R.string.mode_vs_cpu_easy, R.drawable.ic_cpu_easy),
+    VS_AI_HARD(R.string.mode_vs_cpu_hard, R.drawable.ic_cpu_hard),
     CUSTOM(R.string.mode_custom, R.drawable.ic_people_black_24px);
 
     private final int resIDString;
