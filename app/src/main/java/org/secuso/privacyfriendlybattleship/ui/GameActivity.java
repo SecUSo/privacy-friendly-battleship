@@ -541,8 +541,10 @@ public class GameActivity extends BaseActivity {
     }
 
     public void showShipsOnMainGrid(){
+        this.controller.switchPlayers();
         GameGridAdapter newAdapter = new GameGridAdapter(this, this.layoutProvider, this.controller, true, true);
         gridViewBig.setAdapter(newAdapter);
+        gridViewBig.setEnabled(false);
     }
 
     public static class GameDialog extends DialogFragment {
