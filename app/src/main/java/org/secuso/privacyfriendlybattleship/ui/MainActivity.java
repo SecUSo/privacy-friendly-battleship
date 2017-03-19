@@ -1,20 +1,21 @@
-/*
-    Copyright 2017 Alexander Müller, Ali Kalsen
-
-    This file is part of Privacy Friendly Battleships.
-
-    Privacy Friendly Battleships is free software: you can redistribute
-    it and/or modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    Privacy Friendly Battleships is distributed in the hope that it will
-    be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
-    of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see http://www.gnu.org/licenses/.
+/**
+ * Copyright (c) 2017, Alexander Müller, Ali Kalsen and affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * MainActivity.java is part of Privacy Friendly Battleship.
+ *
+ * Privacy Friendly Battleship is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Privacy Friendly Battleship is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Privacy Friendly Battleship. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.secuso.privacyfriendlybattleship.ui;
@@ -328,18 +329,17 @@ public class MainActivity extends BaseActivity {
                 intent.putExtra("controller", game);
                 startActivity(intent);
                 break;
-            case R.id.place_ships_button:
+            case R.id.action_settings:
                 // Get the selected game mode and the grid size
                 modeIndex = viewPagerMode.getCurrentItem();
                 gameMode = GameMode.getValidTypes().get(modeIndex);
                 sizeIndex = viewPagerSize.getCurrentItem();
                 gridSize = GameGrid.getValidSizes().get(sizeIndex);
 
-                game = new GameController(gridSize, gameMode);
-                game.placeAllShips();//place all ships randomly for both players
+                game = new GameController(gridSize, gameMode);//place all ships randomly for both players
 
-                // send game information to PlaceShipActivity
-                intent = new Intent(this, PlaceShipActivity.class);
+                // send game information to ShipSetActivity
+                intent = new Intent(this, ShipSetActivity.class);
                 intent.putExtra("controller", game);
                 startActivity(intent);
                 break;

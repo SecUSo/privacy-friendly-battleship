@@ -15,5 +15,6 @@ public final class Constants {
     public final static String FIRST_APP_START          = "FIRST_APP_START";
     public final static String FIRST_PLACEMENT_START    = "FIRST_PLACEMENT_START";
     public final static String FIRST_GAME_START         = "FIRST_GAME_START";
+    public final static String FIRST_SHIP_SET_START     = "FIRST_SHIP_SET_START";
 
 }

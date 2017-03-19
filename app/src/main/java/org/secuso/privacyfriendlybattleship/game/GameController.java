@@ -1,33 +1,10 @@
-/*
-    Copyright 2017 Alexander Müller, Ali Kalsen
-
-    This file is part of Privacy Friendly Battleships.
-
-    Privacy Friendly Battleships is free software: you can redistribute
-    it and/or modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    Privacy Friendly Battleships is distributed in the hope that it will
-    be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
-    of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see http://www.gnu.org/licenses/.
- */
-
 package org.secuso.privacyfriendlybattleship.game;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * This class represents the battleships game and provides the possibility
- * to make turns, switch the player and access underlying classes for
- * ship placement, grids or AI.
- *
- * @author Alexander Müller, Ali Kalsen
+ * Created by Alexander Müller on 16.12.2016.
  */
 
 public class GameController implements Parcelable {
@@ -43,24 +20,38 @@ public class GameController implements Parcelable {
     private GameMode mode;
     private boolean currentPlayer;//false if first players turn, true if second players turn
     private GameAI opponentAI;
+    private int[] shipCount;
 
     // Amount of ships for standard grid sizes.
     private final static int[] SHIPCOUNTFIVE = {2,1,0,0};
     private final static int[] SHIPCOUNTTEN = {1,2,1,1};
 
-    public GameController(int gridSize, int[] shipCount) {
+
+    public GameController(GameMode gameMode, int gridSize, int[] shipCount) {
         this.gridSize = gridSize;
-        this.mode = GameMode.CUSTOM;
+        this.mode = gameMode;
         this.currentPlayer = false;
-        this.opponentAI = null; //only player vs player with custom game
-        this.gridFirstPlayer = new GameGrid(gridSize, shipCount);
-        this.gridSecondPlayer = new GameGrid(gridSize, shipCount);
+        this.shipCount = shipCount;
+
+        this.gridFirstPlayer = new GameGrid(gridSize, this.shipCount);
+        this.gridSecondPlayer = new GameGrid(gridSize, this.shipCount);
+
+        if (this.mode == GameMode.VS_AI_EASY || this.mode == GameMode.VS_AI_HARD) {
+            this.opponentAI = new GameAI(this.gridSize, this.mode, this);
+        } else if (this.mode == GameMode.VS_PLAYER) {
+            this.opponentAI = null;
+        }
         this.timePlayerOne = new BattleshipsTimer();
         this.timePlayerTwo = new BattleshipsTimer();
         this.attemptsPlayerOne = 0;
         this.attemptsPlayerTwo = 0;
     }
 
+    /**
+     * This constructor is called in the MainActivity
+     * @param gridSize: The size of the game board
+     * @param mode: The game mode
+     */
     public GameController(int gridSize, GameMode mode) {
         if (mode == GameMode.CUSTOM)
             throw new IllegalArgumentException("Provide ship-count for custom game-mode.");
@@ -72,10 +63,12 @@ public class GameController implements Parcelable {
 
         switch (gridSize) {
             case 5:
+                this.shipCount = SHIPCOUNTFIVE;
                 this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
                 this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTFIVE);
                 break;
             default:
+                this.shipCount = SHIPCOUNTTEN;
                 this.gridFirstPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
                 this.gridSecondPlayer = new GameGrid(gridSize, SHIPCOUNTTEN);
                 break;
@@ -155,7 +148,9 @@ public class GameController implements Parcelable {
     }
 
     public boolean isShipCountLegit(int[] shipCount){
-        int bound =  (int) Math.floor(getGridSize() * getGridSize() / 2);
+        // The current bound for the numer of cells covered by the ships is set to the half of the
+        // total amount of grid cells, such that the probability of randomly hitting a ship is at most 1/2.
+        int bound =  (int) Math.floor(getGridSize() * getGridSize() * 2 / 5);
         int coveredGridCells = 2 * shipCount[0] + 3 * shipCount[1] + 4 * shipCount[2] + 5 * shipCount[3];
         if (coveredGridCells > bound){
             return false;
@@ -258,6 +253,10 @@ public class GameController implements Parcelable {
         else{
             return getCurrentPlayer() ? this.timePlayerTwo.getTime() : this.timePlayerOne.getTime();
         }
+    }
+
+    public int[] getShipCount(){
+        return this.shipCount;
     }
 
     public String timeToString(int time) {

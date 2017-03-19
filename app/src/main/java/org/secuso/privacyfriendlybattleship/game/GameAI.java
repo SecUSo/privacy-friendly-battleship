@@ -79,10 +79,10 @@ public class GameAI implements Parcelable{
 
     public void makeMove() {
         if(this.mode == GameMode.VS_AI_EASY) {
-            while ( makeRandomMove() ) {};
+            makeRandomMove();
             this.controller.switchPlayers();
         } else if(this.mode == GameMode.VS_AI_HARD) {
-            while ( makeSmartMove() ) {};
+            makeSmartMove();
             this.controller.switchPlayers();
         }
     }

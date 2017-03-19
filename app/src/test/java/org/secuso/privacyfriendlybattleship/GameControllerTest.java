@@ -12,6 +12,7 @@ import org.secuso.privacyfriendlybattleship.game.GameShip;
 import java.util.Timer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Alexander Müller on 18.12.2016.
@@ -37,7 +38,7 @@ public class GameControllerTest {
     @Before
     public void init() {
         controller = new GameController(10, GameMode.VS_AI_EASY);
-        controllerSmall = new GameController(5, new int[] {0, 1, 0, 0} );
+        controllerSmall = new GameController(GameMode.CUSTOM, 5, new int[] {0, 1, 0, 0} );
         timer = new Timer();
 
         //place ships for first player
@@ -50,6 +51,12 @@ public class GameControllerTest {
         //place ships for short game
         controllerSmall.getGridFirstPlayer().getShipSet().placeShip(3, 3, 3, Direction.EAST);
         controllerSmall.getGridSecondPlayer().getShipSet().placeShip(1, 1, 3, Direction.NORTH);
+    }
+
+    @Test
+    public void testEquals(){
+        GameCell cell = controller.getGridFirstPlayer().getCell(1,1);
+        assertTrue(controller.getGridSecondPlayer().getCell(1,1).equals(cell));
     }
 
     @Test
