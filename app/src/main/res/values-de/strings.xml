@@ -17,6 +17,7 @@
     <string name="main_button_quick_start">Schnelles Spiel</string>
     <string name="main_button_place_ships">Schiffe platzieren</string>
     <string name="main_button_ship_set">Anzahl der Schiffe</string>
+    <string name="custom_game">Eigenes Spiel</string>
 
     <string name="mode_two_player">Zwei Spieler</string>
     <string name="mode_vs_cpu_easy">CPU leicht</string>
@@ -106,7 +107,7 @@
     <string name="ship_set_size_four_ships">Schiffe der Größe 4</string>
     <string name="ship_set_size_three_ships">Schiffe der Größe 3</string>
     <string name="ship_set_size_two_ships">Schiffe der Größe 2</string>
-    <string name="ship_set_start_game">Start</string>
+    <string name="ship_set_start_game">Spiel direkt starten</string>
     <string name="ship_set_title">Konfigurieren der Anzahl der Schiffe</string>
     <string name="ship_set_message">Du kannst ein Schiff einer bestimmten Größe durch Klicken auf den entsprechenden + oder - Button hinzufügen oder entfernen. Beachte, dass die Anzahl der Schiffe nach oben beschränkt ist.</string>
     <string name="ship_set_alert_title">Achtung!</string>
