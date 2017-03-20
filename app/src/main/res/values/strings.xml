@@ -5,10 +5,7 @@
     <!-- ###DRAWER###-->
     <string name="action_help">Help</string>
     <string name="action_about">About</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_ship_set">Ship set</string>
     <string name="action_main">Main</string>
-    <string name="action_game">Game</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,21 +13,17 @@
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Quick Start</string>
     <string name="main_button_place_ships">Place Ships</string>
-    <string name="main_button_ship_set">Ship set</string>
     <string name="custom_game">Custom Game</string>
+    <string name="game_mode">Game Mode</string>
+    <string name="game_size">Board Size</string>
 
     <string name="mode_two_player">Two players</string>
     <string name="mode_vs_cpu_easy">CPU easy</string>
     <string name="mode_vs_cpu_hard">CPU hard</string>
     <string name="mode_custom">Custom</string>
 
-    <string name="size_5x5" translatable="false">5x5</string>
-    <string name="size_10x10" translatable="false">10x10</string>
-
     <!-- ###GAME###-->
     <string name="title_activity_game">Game</string>
-    <string name="game_button_start">New Game</string>
-    <string name="game_button_continue">Continue Game</string>
     <string name="game_button_fire">Fire!</string>
     <string name="game_button_done">Done</string>
     <string name="game_player_one">Player 1</string>
@@ -40,7 +33,6 @@
     <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
     <string name="game_dialog_hit_suffix">!</string>
     <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
-    <string name="game_dialog_ready">Are you ready?</string>
     <string name="game_dialog_loss">Too bad! You lost.</string>
     <string name="game_dialog_win">And the winner is... </string>
     <string name="game_dialog_show_game_board">Show game board</string>
@@ -81,22 +73,14 @@
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
     <!-- ###SETTINGS### -->
-    <string name="title_activity_settings">Settings</string>
-    <string name="pref_header_general">General</string>
-    <string name="pref_example_switch">Example Switch</string>
-    <string name="pref_example_switch_summary">Example Switch Summary</string>
-    <string name="pref_example_summary">Example Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
     <string name="welcome_text">Welcome to the Privacy Friendly Battleships App. In the Main menu you can choose a game mode and the size of the game board. Tap on \"QUICK START\" to directly start the game or on \"PLACE SHIPS\" to place your battleships. Enjoy the game!</string>
     <string name="welcome">Welcome</string>
     <string name="okay">Okay</string>
-    <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="finish">Finish</string>
-    <string name="viewhelp">View Help</string>
-    <string name="main_button_welcomedialog">Show Welcome</string>
 
     <!-- ### SHIP PLACEMENT ### -->
     <string name="title_activity_place_ships">Placement</string>

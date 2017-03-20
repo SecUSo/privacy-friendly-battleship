@@ -5,10 +5,7 @@
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
-    <string name="action_settings">Einstellungen</string>
-    <string name="action_ship_set">Anzahl der Schiffe</string>
     <string name="action_main">Hauptmenü</string>
-    <string name="action_game">Spiel</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,7 +13,6 @@
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Schnelles Spiel</string>
     <string name="main_button_place_ships">Schiffe platzieren</string>
-    <string name="main_button_ship_set">Anzahl der Schiffe</string>
     <string name="custom_game">Eigenes Spiel</string>
 
     <string name="mode_two_player">Zwei Spieler</string>
@@ -26,8 +22,6 @@
 
     <!-- ###GAME###-->
     <string name="title_activity_game">Spiel</string>
-    <string name="game_button_start">Neues Spiel</string>
-    <string name="game_button_continue">Spiel fortsetzen</string>
     <string name="game_button_fire">Feuern!</string>
     <string name="game_button_done">Fertig</string>
     <string name="game_player_one">Spieler 1</string>
@@ -39,7 +33,6 @@
     <string name="game_dialog_next_player">… ist an der Reihe! Bist du bereit?</string>
     <string name="game_dialog_loss">Schade! Du hast leider verloren.</string>
     <string name="game_dialog_win">Und der Gewinner ist… </string>
-    <string name="game_dialog_ready">Bist du bereit?</string>
     <string name="game_dialog_quit">Möchtest du das Spiel abbrechen?</string>
 
     <!--###HELP###-->
@@ -74,26 +67,18 @@
     <string name="more_info">Weitere Infos unter:</string>
 
     <!-- ###SETTINGS### -->
-    <string name="title_activity_settings">Einstellungen</string>
-    <string name="pref_header_general">Allgemein</string>
-    <string name="pref_example_switch">Beispiel Switch</string>
-    <string name="pref_example_switch_summary">Beispiel Switch Summary</string>
-    <string name="pref_example_summary">Beispiel Summary</string>
 
     <!-- ### WELCOME DIALOG ### -->
     <string name="welcome_text">Willkommen bei Privacy Friendly Battleships. Im Hauptmenü kann der Spielmodus und die Spielfeldgröße durch wischen nach links/rechts ausgewählt werden. Das Spiel kann durch tippen auf \"SCHNELLES SPIEL\" direkt gestartet werden. Durch tippen auf \"SCHIFFE PLATZIEREN\" gelangt man zum platzieren der Schiffe. Viel Spaß beim Spiel!</string>
     <string name="welcome">Willkommen</string>
     <string name="okay">Okay</string>
-    <string name="cancel">Abbrechen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="finish">Fertig!</string>
-    <string name="viewhelp">Hilfe</string>
-    <string name="main_button_welcomedialog">Willkommen</string>
 
     <!-- ### SHIP PLACEMENT ### -->
     <string name="place_ships_ready">Bereit</string>
-    <string name="title_activity_place_ships">Platzierung der Schiffe</string>
+    <string name="title_activity_place_ships">Platzieren der Schiffe</string>
     <string name="placement_tutorial_text">Durch tippen auf ein Schiff wird dieses ausgewählt. Das ausgewählte Schiff kann dann mittels der Pfeile gedreht und verschoben werden. Wenn Du mit der Platzierung der Schiffe zufrieden bist, kann diese durch tippen auf \"BEREIT\" bestätigt werden. Zum korrekten platzieren der Schiffe dürfen diese nicht miteinander kollidieren.</string>
     <string name="placement_tutorial_title">Platzieren der Schiffe</string>
     <string name="placement_invalid_text">Die Schiffe dürfen sich nicht überlappen.</string>
@@ -112,5 +97,7 @@
     <string name="ship_set_message">Du kannst ein Schiff einer bestimmten Größe durch Klicken auf den entsprechenden + oder - Button hinzufügen oder entfernen. Beachte, dass die Anzahl der Schiffe nach oben beschränkt ist.</string>
     <string name="ship_set_alert_title">Achtung!</string>
     <string name="ship_set_alert_message">Bitte füge mindestens ein Schiff ein.</string>
+    <string name="game_mode">Spielmodus</string>
+    <string name="game_size">Spielfeldgröße</string>
 
 </resources>
