@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="320dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="275sp" android:layout_height="275sp"
+        android:weightSum="5"
+        android:background="@drawable/ic_trophy_black_48dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_trophy_award_black_48dp" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:background="@color/middleblue"
+                android:layout_gravity="bottom"
+                android:foregroundGravity="bottom"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/win_middle_linear"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:background="@color/transparent"
+            android:orientation="vertical"
+            android:weightSum="5"
+            >
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:layout_marginTop="46dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+                <TextView
+                    android:id="@+id/win_dialog_player_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_player_one"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                <TextView
+                    android:id="@+id/win_dialog_time_string"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_time"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/win_dialog_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                <TextView
+                    android:id="@+id/win_dialog_attempts_string"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_attempts"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:id="@+id/win_dialog_attempts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/middleblue"
+                    android:layout_gravity="bottom"
+                    android:foregroundGravity="bottom"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_trophy_award_black_48dp"
+                android:background="@color/transparent" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:background="@color/middleblue"
+                android:layout_gravity="bottom"
+                android:foregroundGravity="bottom"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

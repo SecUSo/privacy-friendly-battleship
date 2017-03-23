@@ -27,6 +27,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -73,7 +74,6 @@ public class PlaceShipActivity extends BaseActivity {
         Intent intentIn = getIntent();
         this.controller = intentIn.getParcelableExtra("controller");
         this.gridSize = controller.getGridSize();
-
         layoutProvider = new GameActivityLayoutProvider(this, this.gridSize);
 
         setupGridView(this.gridSize);
@@ -126,11 +126,21 @@ public class PlaceShipActivity extends BaseActivity {
         final ViewGroup.MarginLayoutParams marginLayoutParams =
                 (ViewGroup.MarginLayoutParams) gridView.getLayoutParams();
 
-        marginLayoutParams.setMargins(
-                layoutProvider.getMarginLeft(),
-                layoutProvider.getMargin(),
-                layoutProvider.getMarginRight(),
-                0);
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT){
+            marginLayoutParams.setMargins(
+                    layoutProvider.getMarginLeft(),
+                    layoutProvider.getMargin(),
+                    layoutProvider.getMarginRight(),
+                    0);
+        }
+        else if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+            marginLayoutParams.setMargins(
+                    layoutProvider.getMarginLeft(),
+                    layoutProvider.getMargin(),
+                    layoutProvider.getMarginRight(),
+                    layoutProvider.getMargin());
+        }
 
         gridView.setLayoutParams(marginLayoutParams);
         gridView.setHorizontalSpacing(1);

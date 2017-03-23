@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getNavigationDrawerID() {
-        return R.id.nav_example;
+        return R.id.nav_main;
     }
 
     public class SectionsPagerModeAdapter extends FragmentPagerAdapter {
@@ -289,7 +289,6 @@ public class MainActivity extends BaseActivity {
             return builder.create();
         }
     }
-
 
     public void onClick(View view) {
 

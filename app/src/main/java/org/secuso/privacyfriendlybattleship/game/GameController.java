@@ -132,12 +132,17 @@ public class GameController implements Parcelable {
         this.currentPlayer = !this.currentPlayer;
     }
 
+    /**
+     * Returns the grid attacked by the current player. Note the difference between the methods
+     * gridUnderAttack() and getCurrentGrid(). The former is mainly used in the GameActvity and GameAI.
+     * @return The grid attacked
+     */
     public GameGrid gridUnderAttack() {
         return this.currentPlayer ? gridFirstPlayer : gridSecondPlayer;
     }
 
     /**
-     * Returns the grid of the current player.
+     * Returns the grid of the current player. Used in the GameGridAdapter and the PlaceShipActivity.
      * @return grid of current player
      */
     public GameGrid getCurrentGrid() {

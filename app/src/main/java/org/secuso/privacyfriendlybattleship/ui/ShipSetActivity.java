@@ -25,6 +25,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ import org.secuso.privacyfriendlybattleship.game.GameShipSet;
 
 public class ShipSetActivity extends BaseActivity {
 
+    private Intent intentIn;
     private GameController controller;
     private int[] newShipCount;
     private GameMode gameMode;
@@ -66,11 +68,16 @@ public class ShipSetActivity extends BaseActivity {
         setContentView(R.layout.activity_ship_set);
 
         /*
-        Get the parameters from the MainActivity or the PlaceShipActivity and initialize the
+        Get the parameters from the MainActivity and initialize the
         parameters necessary for this activity.
          */
-        Intent intentIn = getIntent();
+        this.intentIn = getIntent();
         this.controller = intentIn.getParcelableExtra("controller");
+
+        // Check if a previous instance can be recreated after the configuration has changed.
+        if(savedInstanceState != null){
+            this.controller = savedInstanceState.getParcelable("controller");
+        }
         this.gameMode = this.controller.getMode();
         this.shipSet = this.controller.getGridFirstPlayer().getShipSet();
         this.numberGridCells = this.controller.getGridSize() * this.controller.getGridSize();
@@ -248,6 +255,13 @@ public class ShipSetActivity extends BaseActivity {
             intent.putExtra("controller", this.controller);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        this.controller = new GameController(this.gameMode, this.controller.getGridSize(), newShipCount);
+        savedInstanceState.putParcelable("controller", this.controller);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public static class TutorialShipSetDialog extends DialogFragment {
