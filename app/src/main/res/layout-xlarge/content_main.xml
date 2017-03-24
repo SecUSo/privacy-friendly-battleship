@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:background="@drawable/button_fullwidth"
-        android:text="@string/action_settings"
+        android:text="@string/custom_game"
         android:id="@+id/action_settings"
         android:onClick="onClick"/>
 
