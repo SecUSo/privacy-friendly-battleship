@@ -19,16 +19,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/title_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_mode"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_centerHorizontal="true" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/modeScroller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:rotation="90"/>
 
         <ImageView
             android:id="@+id/mode_arrow_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
             android:layout_alignParentTop="true"
             android:padding="@dimen/activity_vertical_margin"
@@ -52,16 +65,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/title_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_size"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_centerHorizontal="true" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/sizeScroller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:rotation="90"/>
 
         <ImageView
             android:id="@+id/size_arrow_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
             android:layout_alignParentTop="true"
             android:padding="@dimen/activity_vertical_margin"

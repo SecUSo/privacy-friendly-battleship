@@ -281,7 +281,7 @@ public class GameActivity extends BaseActivity {
         super.onResume();
         if(this.hasStarted || this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
             this.controller.startTimer();
-            if(this.moveMade || this.isSwitchDialogDisplayed || this.isGameFinished){
+            if(this.moveMade || this.isSwitchDialogDisplayed || this.isGameFinished || this.controller.getOpponentAI().isAIWinner()){
                 this.controller.stopTimer();
             }
         }
