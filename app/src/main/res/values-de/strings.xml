@@ -40,7 +40,7 @@
     <string name="help">Hilfe</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
     <string name="help_permissions_heading">Berechtigungen</string>
-    <string name="help_permissions_description">Privacy Friendly Beispiel verwendet keine Berechtigungen. </string>
+    <string name="help_permissions_description">Privacy Friendly Schiffe versenken verwendet keine Berechtigungen.</string>
     <string name="help_dialog_title">Spielanleitung</string>
     <string name="help_game_intro">Das obere Raster zeigt das Spielfeld deines Gegners, das untere dein eigenes. Um zu spielen, befolge die folgenden Schritte.</string>
     <string name="help_game_step_four">4. Falls du gegen jemand anderen spielst, kannst du deinen Zug durch Klicken auf \"FERTIG\" beenden und das Gerät an deinen Gegenspieler weiter reichen. Spielst du gegen den Computer, greift dieser automatisch an.</string>
