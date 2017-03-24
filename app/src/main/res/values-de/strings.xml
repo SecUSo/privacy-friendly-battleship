@@ -29,6 +29,7 @@
     <string name="game_button_continue">Spiel fortsetzen</string>
     <string name="game_button_fire">Feuern!</string>
     <string name="game_button_done">Fertig</string>
+    <string name="game_button_show_ships">Zeige alle Schiffe</string>
     <string name="game_player_one">Spieler 1</string>
     <string name="game_player_two">Spieler 2</string>
     <string name="game_time">Zeit:</string>

@@ -82,6 +82,7 @@ public class GameActivity extends BaseActivity {
     private boolean hasStarted;
     private boolean moveMade;       // Necessary for the help and the back button in order to control the timer and the configuration changes
     private boolean isGameFinished;
+    private boolean isShowAllShipsClicked;
     private GameCell attackedCell;
     private GameGrid gridUnderAttack;
     private int positionGridCell;   // Save the current position of the grid cell clicked
@@ -93,8 +94,9 @@ public class GameActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
 
-        // Since the GameActivity is created, the game has not finished
+        // Since the GameActivity is created, the game has not finished and the "Show all ships" button has not been clicked
         this.isGameFinished = false;
+        this.isShowAllShipsClicked = false;
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         Intent intentIn = getIntent();
@@ -158,8 +160,8 @@ public class GameActivity extends BaseActivity {
                 // Do the following steps if the configuration has changed
                 if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed()){
                     if(this.isGameFinished){
-                        this.controller.switchPlayers();
-                        gridViewBig.setEnabled(false);
+                        //showShipsOnMainGrid();
+                        onClickShowMainGridButton(null);
                         onClickFinishButton(null);
                     }
                 }
@@ -201,6 +203,75 @@ public class GameActivity extends BaseActivity {
             this.controller.startTimer();
         }
     }
+    /*
+    This method is called after the method onStart() e.g. when the configuration of the device has
+    changed. E.g. when the layout of the device changes from portrait to landscape.
+     */
+    /*
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        this.controller = savedInstanceState.getParcelable("controller");
+        this.moveMade = savedInstanceState.getBoolean("move made");
+        this.hasStarted = savedInstanceState.getBoolean("has started");
+        this.isGameFinished = savedInstanceState.getBoolean("game finished");
+
+        this.gridSize = controller.getGridSize();
+        this.gameMode = controller.getMode();
+
+        if(this.isGameFinished){
+            *//*
+            Re-switch the player such that the correct toolbar and grids are shown after the game
+            has finished and the configuration has changed.
+             *//*
+            this.controller.switchPlayers();
+            // Update the toolbar
+            updateToolbar();
+
+            // Set up the grids for the current player and make them invisible until the player is ready.
+            setupGridViews();
+        }
+    }
+    */
+
+    /*
+    This method is called after the method onRestoreInstanceState().
+     */
+    /*
+    @Override
+    public void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        // Do the following steps if the configuration has changed
+        if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed()){
+            if(this.isGameFinished){
+                //this.controller.switchPlayers();
+                showShipsOnMainGrid();
+                onClickFinishButton(null);
+            }
+        }
+        else{
+            // Check if a cell was attacked
+            if(moveMade){
+                this.controller.stopTimer();
+                        *//*
+                        Change the listener and the text of the "Fire" button, such that the grids fade out
+                        after the button has been clicked.
+                        *//*
+                gridViewBig.setEnabled(false);
+                Button doneButton = (Button) findViewById(R.id.game_button_fire);
+                doneButton.setText(R.string.game_button_done);
+                doneButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        onClickDoneButton(view);
+                    }
+                });
+            }
+        }
+    }
+    */
 
     private boolean isFirstActivityStart() {
         return mSharedPreferences.getBoolean(Constants.FIRST_GAME_START, true);
@@ -240,27 +311,6 @@ public class GameActivity extends BaseActivity {
         newSwitchDialog.show(getFragmentManager(), SwitchDialog.class.getSimpleName());
     }
 
-    public void showWinDialog(){
-        timerUpdate.cancel();
-        gridViewBig.setEnabled(false);
-            /*
-            Create a dialog. Therefore, instantiate a bundle which transfers the data from the
-            current game to the dialog.
-            */
-        int nameWinner = this.controller.getCurrentPlayer() ? R.string.game_player_two : R.string.game_player_one;
-        int attemptsWinner = this.controller.getCurrentPlayer() ? this.controller.getAttemptsPlayerTwo()
-                : this.controller.getAttemptsPlayerOne();
-        Bundle bundle = new Bundle();
-        bundle.putInt("Player", nameWinner);
-        bundle.putString("Time", this.controller.timeToString(this.controller.getTime()));
-        bundle.putString("Attempts", this.controller.attemptsToString(attemptsWinner));
-
-        // Instantiate the win dialog and show it
-        WinDialog winDialog = WinDialog.newInstance(bundle);
-        winDialog.setCancelable(false);
-        winDialog.show(getFragmentManager(), WinDialog.class.getSimpleName());
-    }
-
     @Override
     public void onBackPressed(){
         // Check if the menu drawer is open
@@ -276,22 +326,20 @@ public class GameActivity extends BaseActivity {
         }
     }
 
-    public void goBack(){
-        // Go Back to the MainActivity
-        timerUpdate.cancel();
-        super.onBackPressed();
-    }
-
     @Override
     public void onStart(){
         super.onStart();
-        this.controller.startTimer();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.controller.startTimer();
+        if(this.hasStarted){
+            this.controller.startTimer();
+            if(this.moveMade){
+                this.controller.stopTimer();
+            }
+        }
     }
 
     @Override
@@ -302,6 +350,10 @@ public class GameActivity extends BaseActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        if(this.isGameFinished && !this.isShowAllShipsClicked){
+            this.controller.switchPlayers();
+        }
+        savedInstanceState.putParcelable("controller", this.controller);
         savedInstanceState.putBoolean("move made", this.moveMade);
         savedInstanceState.putBoolean("has started", this.hasStarted);
         savedInstanceState.putBoolean("game finished", this.isGameFinished);
@@ -475,6 +527,32 @@ public class GameActivity extends BaseActivity {
         });
     }
 
+    public void onClickShowMainGridButton(View view){
+
+        // Only switch the players once after the game has finished in order to display the ships on the grid
+        if(!this.isGameFinished){
+            this.isGameFinished = true;
+            //this.controller.switchPlayers();
+        }
+
+        /*
+        Change the listener and the text of the "HELP" button, such that the ships on the main grid
+        are displayed after the button has been clicked.
+        */
+        final Button showAllShipsButton = (Button) findViewById(R.id.game_button_help);
+        showAllShipsButton.setText(R.string.game_button_show_ships);
+        showAllShipsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                controller.switchPlayers();
+                isShowAllShipsClicked = true;
+                showAllShipsButton.setBackground(getResources().getDrawable(R.drawable.button_disabled));
+                showAllShipsButton.setEnabled(false);
+                showShipsOnMainGrid();
+            }
+        });
+    }
+
     protected void setupGridViews() {
 
         // Get the grid views of the respective XML-files
@@ -518,17 +596,8 @@ public class GameActivity extends BaseActivity {
         gridViewSmall.setHorizontalSpacing(1);
         gridViewSmall.setVerticalSpacing(1);
 
-        // Initialize the grid for player one
-        if(this.isGameFinished){
-            this.controller.switchPlayers();
-            adapterMainGrid = new GameGridAdapter(this, this.layoutProvider, this.controller, true, true);
-            this.controller.switchPlayers();
-            adapterMiniGrid= new GameGridAdapter(this, this.layoutProvider, this.controller, false, true);
-        }
-        else{
-            adapterMainGrid = new GameGridAdapter(this, this.layoutProvider, this.controller, true);
-            adapterMiniGrid= new GameGridAdapter(this, this.layoutProvider, this.controller, false);
-        }
+        adapterMainGrid = new GameGridAdapter(this, this.layoutProvider, this.controller, true);
+        adapterMiniGrid= new GameGridAdapter(this, this.layoutProvider, this.controller, false);
         gridViewBig.setAdapter(adapterMainGrid);
         gridViewSmall.setAdapter(adapterMiniGrid);
 
@@ -593,7 +662,24 @@ public class GameActivity extends BaseActivity {
     public void terminate(){
         //check if player has won
         if (this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() ){
-            showWinDialog();
+            timerUpdate.cancel();
+            gridViewBig.setEnabled(false);
+            /*
+            Create a dialog. Therefore, instantiate a bundle which transfers the data from the
+            current game to the dialog.
+            */
+            int nameWinner = this.controller.getCurrentPlayer() ? R.string.game_player_two : R.string.game_player_one;
+            int attemptsWinner = this.controller.getCurrentPlayer() ? this.controller.getAttemptsPlayerTwo()
+                    : this.controller.getAttemptsPlayerOne();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Player", nameWinner);
+            bundle.putString("Time", this.controller.timeToString(this.controller.getTime()));
+            bundle.putString("Attempts", this.controller.attemptsToString(attemptsWinner));
+
+            // Instantiate the win dialog and show it
+            WinDialog winDialog = WinDialog.newInstance(bundle);
+            winDialog.setCancelable(false);
+            winDialog.show(getFragmentManager(), WinDialog.class.getSimpleName());
         }
         else {
             terminateFireButton();
@@ -618,11 +704,6 @@ public class GameActivity extends BaseActivity {
     }
 
     public void showShipsOnMainGrid(){
-        // Only switch the players once after the game has finished
-        if(!this.isGameFinished){
-            this.isGameFinished = true;
-            this.controller.switchPlayers();
-        }
         GameGridAdapter newAdapter = new GameGridAdapter(this, this.layoutProvider, this.controller, true, true);
         gridViewBig.setAdapter(newAdapter);
         gridViewBig.setEnabled(false);
@@ -751,7 +832,7 @@ public class GameActivity extends BaseActivity {
                     .setNegativeButton(R.string.game_dialog_show_game_board, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((GameActivity) getActivity()).showShipsOnMainGrid();
+                            ((GameActivity) getActivity()).onClickShowMainGridButton(getView());
                             ((GameActivity) getActivity()).onClickFinishButton(getView());
                         }
                     });
@@ -807,7 +888,7 @@ public class GameActivity extends BaseActivity {
                     .setNegativeButton(R.string.game_dialog_show_game_board, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((GameActivity) getActivity()).showShipsOnMainGrid();
+                            ((GameActivity) getActivity()).onClickShowMainGridButton(getView());
                             ((GameActivity) getActivity()).onClickFinishButton(getView());
                         }
                     });
