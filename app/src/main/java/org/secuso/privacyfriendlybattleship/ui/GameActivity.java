@@ -120,7 +120,8 @@ public class GameActivity extends BaseActivity {
         if(this.isGameFinished){
             /*
             Re-switch the player such that the correct toolbar and grids are shown after the game
-            has finished and the configuration has changed.
+            has finished and the configuration has changed. Note that the number of switches has to
+            be even in order to get the correct player every time the GameActivity is recreated.
             */
             this.controller.switchPlayers();
         }
@@ -158,9 +159,10 @@ public class GameActivity extends BaseActivity {
             }
             else{
                 // Do the following steps if the configuration has changed
+
+                // Check if the game has been finished
                 if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed()){
                     if(this.isGameFinished){
-                        //showShipsOnMainGrid();
                         onClickShowMainGridButton(null);
                         onClickFinishButton(null);
                     }
@@ -170,8 +172,8 @@ public class GameActivity extends BaseActivity {
                     if(moveMade){
                         this.controller.stopTimer();
                         /*
-                        Change the listener and the text of the "Fire" button, such that the grids fade out
-                        after the button has been clicked.
+                        Change the listener and the text of the "Fire" button, such that a move can
+                        be finished after the button has been clicked.
                         */
                         gridViewBig.setEnabled(false);
                         Button doneButton = (Button) findViewById(R.id.game_button_fire);
@@ -198,80 +200,15 @@ public class GameActivity extends BaseActivity {
                 }
             });
 
+            if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() || this.controller.getOpponentAI().isAIWinner()){
+                if(this.isGameFinished){
+                    onClickShowMainGridButton(null);
+                    onClickFinishButton(null);
+                }
+            }
             showHelpDialog();
-            // Start the timer for player one
-            this.controller.startTimer();
         }
     }
-    /*
-    This method is called after the method onStart() e.g. when the configuration of the device has
-    changed. E.g. when the layout of the device changes from portrait to landscape.
-     */
-    /*
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
-
-        this.controller = savedInstanceState.getParcelable("controller");
-        this.moveMade = savedInstanceState.getBoolean("move made");
-        this.hasStarted = savedInstanceState.getBoolean("has started");
-        this.isGameFinished = savedInstanceState.getBoolean("game finished");
-
-        this.gridSize = controller.getGridSize();
-        this.gameMode = controller.getMode();
-
-        if(this.isGameFinished){
-            *//*
-            Re-switch the player such that the correct toolbar and grids are shown after the game
-            has finished and the configuration has changed.
-             *//*
-            this.controller.switchPlayers();
-            // Update the toolbar
-            updateToolbar();
-
-            // Set up the grids for the current player and make them invisible until the player is ready.
-            setupGridViews();
-        }
-    }
-    */
-
-    /*
-    This method is called after the method onRestoreInstanceState().
-     */
-    /*
-    @Override
-    public void onPostCreate(Bundle savedInstanceState){
-        super.onPostCreate(savedInstanceState);
-        // Do the following steps if the configuration has changed
-        if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed()){
-            if(this.isGameFinished){
-                //this.controller.switchPlayers();
-                showShipsOnMainGrid();
-                onClickFinishButton(null);
-            }
-        }
-        else{
-            // Check if a cell was attacked
-            if(moveMade){
-                this.controller.stopTimer();
-                        *//*
-                        Change the listener and the text of the "Fire" button, such that the grids fade out
-                        after the button has been clicked.
-                        *//*
-                gridViewBig.setEnabled(false);
-                Button doneButton = (Button) findViewById(R.id.game_button_fire);
-                doneButton.setText(R.string.game_button_done);
-                doneButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        onClickDoneButton(view);
-                    }
-                });
-            }
-        }
-    }
-    */
 
     private boolean isFirstActivityStart() {
         return mSharedPreferences.getBoolean(Constants.FIRST_GAME_START, true);
@@ -348,6 +285,10 @@ public class GameActivity extends BaseActivity {
         this.controller.stopTimer();
     }
 
+    /*
+    this method saves the auxiliary variables of the GameActivity, such that the game can be
+    recreated correctly once the configuration has changed.
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         if(this.isGameFinished && !this.isShowAllShipsClicked){
@@ -357,9 +298,6 @@ public class GameActivity extends BaseActivity {
         savedInstanceState.putBoolean("move made", this.moveMade);
         savedInstanceState.putBoolean("has started", this.hasStarted);
         savedInstanceState.putBoolean("game finished", this.isGameFinished);
-        if(this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
-            savedInstanceState.putBoolean("AI Winner", this.controller.getOpponentAI().isAIWinner());
-        }
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -447,10 +385,10 @@ public class GameActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putInt("Name", playerName);
             bundle.putInt("Size", ship.getSize());
-                /*
-                 Show a dialog. The dialog will check if the current player has won after the player
-                 has clicked on the OK button, cf. the respective onCreateDialog method.
-                  */
+            /*
+            Show a dialog. The dialog will check if the current player has won after the player
+            has clicked on the OK button, cf. the respective onCreateDialog method.
+            */
             GameDialog gameDialog = GameDialog.newInstance(bundle);
             gameDialog.setCancelable(false);
             gameDialog.show(getFragmentManager(), GameDialog.class.getSimpleName());
@@ -477,11 +415,10 @@ public class GameActivity extends BaseActivity {
                     if(controller.getOpponentAI().isAIWinner()){
                         timerUpdate.cancel();
 
-                /*
-                Create a dialog. Therefore, instantiate a bundle which transfers the data from the
-                current game to the dialog.
-                */
-
+                        /*
+                        Create a dialog. Therefore, instantiate a bundle which transfers the data from the
+                        current game to the dialog.
+                        */
                         Bundle bundle = new Bundle();
                         bundle.putString("Time", controller.timeToString(controller.getTime()));
                         bundle.putString("Attempts", controller.attemptsToString(controller.getAttemptsPlayerOne()));
@@ -528,11 +465,9 @@ public class GameActivity extends BaseActivity {
     }
 
     public void onClickShowMainGridButton(View view){
-
         // Only switch the players once after the game has finished in order to display the ships on the grid
         if(!this.isGameFinished){
             this.isGameFinished = true;
-            //this.controller.switchPlayers();
         }
 
         /*
@@ -958,6 +893,5 @@ public class GameActivity extends BaseActivity {
             });
             return builder.create();
         }
-
     }
 }
