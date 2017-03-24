@@ -164,11 +164,10 @@ public class GameActivity extends BaseActivity {
                 // Do the following steps if the configuration has changed
 
                 // Check if the game has been finished
-                if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed()){
-                    if(this.isGameFinished){
-                        onClickShowMainGridButton(null);
-                        onClickFinishButton(null);
-                    }
+                if(this.isGameFinished){
+                    gridViewBig.setEnabled(false);
+                    onClickShowMainGridButton(null);
+                    onClickFinishButton(null);
                 }
                 else{
                     // Check if a cell was attacked
@@ -208,12 +207,10 @@ public class GameActivity extends BaseActivity {
                 }
             });
 
-            if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() || this.controller.getOpponentAI().isAIWinner()){
-                if(this.isGameFinished){
-                    gridViewBig.setEnabled(false);
-                    onClickShowMainGridButton(null);
-                    onClickFinishButton(null);
-                }
+            if(this.isGameFinished){
+                gridViewBig.setEnabled(false);
+                onClickShowMainGridButton(null);
+                onClickFinishButton(null);
             }
             showHelpDialog();
         }
