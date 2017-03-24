@@ -26,6 +26,7 @@
     <string name="title_activity_game">Game</string>
     <string name="game_button_fire">Fire!</string>
     <string name="game_button_done">Done</string>
+    <string name="game_button_show_ships">Show all ships</string>
     <string name="game_player_one">Player 1</string>
     <string name="game_player_two">Player 2</string>
     <string name="game_time">Time:</string>

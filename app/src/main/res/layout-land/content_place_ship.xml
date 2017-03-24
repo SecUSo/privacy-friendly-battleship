@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/placement_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:verticalSpacing="1px"
+        android:horizontalSpacing="1px"
+        android:stretchMode="columnWidth"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/game_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/arrow_left"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_left_black"
+                android:adjustViewBounds="true"
+                android:onClick="onClickButton"
+                android:layout_gravity="center_vertical"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/arrow_up"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_up_black"
+                    android:adjustViewBounds="true"
+                    android:onClick="onClickButton"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/arrow_down"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_down_black"
+                    android:adjustViewBounds="true"
+                    android:onClick="onClickButton"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/arrow_right"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_right_black"
+                android:adjustViewBounds="true"
+                android:onClick="onClickButton"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/rotate_right"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_rotate_right_black"
+                android:adjustViewBounds="true"
+                android:onClick="onClickButton"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/rotate_left"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_rotate_left_black"
+                android:adjustViewBounds="true"
+                android:onClick="onClickButton"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/placement_ready"
+            android:text="@string/place_ships_ready"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@drawable/button_fullwidth"
+            android:textColor="@color/white"
+            android:onClick="onClickReady"/>
+
+    </LinearLayout>
+
+</LinearLayout>

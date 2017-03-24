@@ -13,21 +13,18 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlybattleship.ui.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlybattleship.ui.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlybattleship.ui.MainActivity" />
@@ -36,7 +33,6 @@
             android:name="org.secuso.privacyfriendlybattleship.ui.HelpActivity"
             android:label="@string/help"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,7 +42,6 @@
             android:name="org.secuso.privacyfriendlybattleship.ui.ShipSetActivity"
             android:label="@string/title_activity_ship_set"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -56,7 +51,6 @@
             android:name="org.secuso.privacyfriendlybattleship.ui.GameActivity"
             android:label="@string/title_activity_game"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,7 +60,6 @@
             android:name="org.secuso.privacyfriendlybattleship.ui.PlaceShipActivity"
             android:label="@string/title_activity_place_ships"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
