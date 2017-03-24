@@ -82,7 +82,8 @@ public class GameActivity extends BaseActivity {
     private boolean hasStarted;
     private boolean moveMade;       // Necessary for the help and the back button in order to control the timer and the configuration changes
     private boolean isGameFinished;
-    private boolean isShowAllShipsClicked;
+    private boolean isShowAllShipsButtonClicked;
+    private boolean isSwitchDialogDisplayed;
     private GameCell attackedCell;
     private GameGrid gridUnderAttack;
     private int positionGridCell;   // Save the current position of the grid cell clicked
@@ -96,7 +97,7 @@ public class GameActivity extends BaseActivity {
 
         // Since the GameActivity is created, the game has not finished and the "Show all ships" button has not been clicked
         this.isGameFinished = false;
-        this.isShowAllShipsClicked = false;
+        this.isShowAllShipsButtonClicked = false;
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         Intent intentIn = getIntent();
@@ -115,6 +116,7 @@ public class GameActivity extends BaseActivity {
             this.moveMade = savedInstanceState.getBoolean("move made");
             this.hasStarted = savedInstanceState.getBoolean("has started");
             this.isGameFinished = savedInstanceState.getBoolean("game finished");
+            this.isSwitchDialogDisplayed = savedInstanceState.getBoolean("switch dialog shown");
         }
 
         if(this.isGameFinished){
@@ -128,14 +130,15 @@ public class GameActivity extends BaseActivity {
 
         this.playerName = (TextView) findViewById(R.id.player_name);
         this.attempts = (TextView) findViewById(R.id.game_attempts);
+
         // Update the toolbar
         updateToolbar();
 
-        // Set up the time
-        setUpTimer();
-
         // Set up the grids for the current player and make them invisible until the player is ready.
         setupGridViews();
+
+        // Set up the time
+        setUpTimer();
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             //set correct size for small grid
@@ -170,7 +173,6 @@ public class GameActivity extends BaseActivity {
                 else{
                     // Check if a cell was attacked
                     if(moveMade){
-                        this.controller.stopTimer();
                         /*
                         Change the listener and the text of the "Fire" button, such that a move can
                         be finished after the button has been clicked.
@@ -184,6 +186,12 @@ public class GameActivity extends BaseActivity {
                                 onClickDoneButton(view);
                             }
                         });
+                    }
+                    else{
+                        if(this.isSwitchDialogDisplayed || !this.hasStarted){
+                            gridViewBig.setAlpha(0.0f);
+                            gridViewSmall.setAlpha(0.0f);
+                        }
                     }
                 }
             }
@@ -202,6 +210,7 @@ public class GameActivity extends BaseActivity {
 
             if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() || this.controller.getOpponentAI().isAIWinner()){
                 if(this.isGameFinished){
+                    gridViewBig.setEnabled(false);
                     onClickShowMainGridButton(null);
                     onClickFinishButton(null);
                 }
@@ -231,7 +240,6 @@ public class GameActivity extends BaseActivity {
     }
 
     public void showSwitchDialog(){
-        this.controller.stopTimer();
         this.hasStarted = false;
         // Make the grids invisible until player one is ready
         gridViewBig.setAlpha(0.0f);
@@ -271,9 +279,9 @@ public class GameActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(this.hasStarted){
+        if(this.hasStarted || this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
             this.controller.startTimer();
-            if(this.moveMade){
+            if(this.moveMade || this.isSwitchDialogDisplayed){
                 this.controller.stopTimer();
             }
         }
@@ -291,13 +299,14 @@ public class GameActivity extends BaseActivity {
      */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        if(this.isGameFinished && !this.isShowAllShipsClicked){
+        if(this.isGameFinished && !this.isShowAllShipsButtonClicked){
             this.controller.switchPlayers();
         }
         savedInstanceState.putParcelable("controller", this.controller);
         savedInstanceState.putBoolean("move made", this.moveMade);
         savedInstanceState.putBoolean("has started", this.hasStarted);
         savedInstanceState.putBoolean("game finished", this.isGameFinished);
+        savedInstanceState.putBoolean("switch dialog shown", this.isSwitchDialogDisplayed);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -314,6 +323,9 @@ public class GameActivity extends BaseActivity {
         // Fade out the grids
         gridViewBig.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         gridViewSmall.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+
+        this.moveMade = false;
+        this.isSwitchDialogDisplayed = true;
 
         /*
         Build a handler. Delay the switch of the players and the dialog after the grids have been
@@ -480,7 +492,7 @@ public class GameActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 controller.switchPlayers();
-                isShowAllShipsClicked = true;
+                isShowAllShipsButtonClicked = true;
                 showAllShipsButton.setBackground(getResources().getDrawable(R.drawable.button_disabled));
                 showAllShipsButton.setEnabled(false);
                 showShipsOnMainGrid();
@@ -579,7 +591,7 @@ public class GameActivity extends BaseActivity {
             this.hasStarted = true;
         }
         else{
-            this.moveMade = false;
+            this.isSwitchDialogDisplayed = false;
         }
     }
 

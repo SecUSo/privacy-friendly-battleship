@@ -6,7 +6,8 @@
     android:layout_gravity="center">
 
     <LinearLayout
-        android:layout_width="275sp" android:layout_height="275sp"
+        android:layout_width="275sp"
+        android:layout_height="275sp"
         android:weightSum="5"
         android:background="@drawable/ic_trophy_black_48dp"
         android:orientation="horizontal"
