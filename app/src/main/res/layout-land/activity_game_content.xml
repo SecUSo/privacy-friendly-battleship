@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/game_gridview_big"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:verticalSpacing="1px"
+        android:horizontalSpacing="1px"
+        android:stretchMode="columnWidth"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/game_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/game_gridview_small"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:verticalSpacing="1px"
+            android:horizontalSpacing="1px"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="30px"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/game_button_help"
+                android:text="@string/help"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_fullwidth"
+                android:onClick="onClickHelpButton"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_gravity="center_vertical"/>
+
+            <Button
+                android:id="@+id/game_button_fire"
+                android:text="@string/game_button_fire"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_fullwidth"
+                android:onClick="onClickFireButton"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

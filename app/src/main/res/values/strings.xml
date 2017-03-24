@@ -26,13 +26,14 @@
     <string name="title_activity_game">Game</string>
     <string name="game_button_fire">Fire!</string>
     <string name="game_button_done">Done</string>
+    <string name="game_button_show_ships">Show all ships</string>
     <string name="game_player_one">Player 1</string>
     <string name="game_player_two">Player 2</string>
     <string name="game_time">Time:</string>
     <string name="game_attempts">Attempts:</string>
     <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
     <string name="game_dialog_hit_suffix">!</string>
-    <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
+    <string name="game_dialog_nhelp_permissions_descriptiont_player">It\'s your turn! Are you ready?</string>
     <string name="game_dialog_loss">Too bad! You lost.</string>
     <string name="game_dialog_win">And the winner is... </string>
     <string name="game_dialog_show_game_board">Show game board</string>
@@ -58,7 +59,7 @@
     <string name="help_game_step_four">4. If you play against another opponent, click the \"DONE\" button to end your turn and hand the phone to your opponent, who may attack your ships.</string>
     <string name="help_privacy_heading">Privacy Info</string>
     <string name="help_permissions_heading">Permissions</string>
-    <string name="help_permissions_description">Privacy Friendly Batlleships does not use any permissions.</string>
+    <string name="help_permissions_description">Privacy Friendly Battleship does not use any permissions.</string>
 
     <!--###ABOUT###-->
     <string name="about">About</string>
