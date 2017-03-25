@@ -164,11 +164,10 @@ public class GameActivity extends BaseActivity {
                 // Do the following steps if the configuration has changed
 
                 // Check if the game has been finished
-                if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed()){
-                    if(this.isGameFinished){
-                        onClickShowMainGridButton(null);
-                        onClickFinishButton(null);
-                    }
+                if(this.isGameFinished){
+                    gridViewBig.setEnabled(false);
+                    onClickShowMainGridButton(null);
+                    onClickFinishButton(null);
                 }
                 else{
                     // Check if a cell was attacked
@@ -208,12 +207,10 @@ public class GameActivity extends BaseActivity {
                 }
             });
 
-            if(this.controller.gridUnderAttack().getShipSet().allShipsDestroyed() || this.controller.getOpponentAI().isAIWinner()){
-                if(this.isGameFinished){
-                    gridViewBig.setEnabled(false);
-                    onClickShowMainGridButton(null);
-                    onClickFinishButton(null);
-                }
+            if(this.isGameFinished){
+                gridViewBig.setEnabled(false);
+                onClickShowMainGridButton(null);
+                onClickFinishButton(null);
             }
             showHelpDialog();
         }
@@ -281,7 +278,8 @@ public class GameActivity extends BaseActivity {
         super.onResume();
         if(this.hasStarted || this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD){
             this.controller.startTimer();
-            if(this.moveMade || this.isSwitchDialogDisplayed || this.isGameFinished || this.controller.getOpponentAI().isAIWinner()){
+            if(this.moveMade || this.isSwitchDialogDisplayed || this.isGameFinished ||
+                    (this.controller.getMode() != GameMode.VS_PLAYER && this.controller.getOpponentAI().isAIWinner()) ){
                 this.controller.stopTimer();
             }
         }

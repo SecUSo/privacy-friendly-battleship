@@ -26,6 +26,17 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <TextView
+            android:id="@+id/title_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_mode"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/activity_vertical_margin" />
+
         <ImageView
             android:id="@+id/mode_arrow_left"
             android:layout_width="wrap_content"
@@ -57,6 +68,17 @@
         android:layout_height="0dp"
         android:layoutDirection="ltr"
         android:layout_weight="4">
+        <TextView
+            android:id="@+id/title_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_size"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/sizeScroller"
             android:layout_width="match_parent"
@@ -100,7 +122,6 @@
         android:onClick="onClick"/>
 
     <Button
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
