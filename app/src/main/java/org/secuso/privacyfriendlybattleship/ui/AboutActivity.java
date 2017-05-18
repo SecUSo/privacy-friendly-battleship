@@ -23,8 +23,11 @@ package org.secuso.privacyfriendlybattleship.ui;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.TextView;
 
+import org.secuso.privacyfriendlybattleship.BuildConfig;
 import org.secuso.privacyfriendlybattleship.R;
 
 /**
@@ -46,6 +49,10 @@ public class AboutActivity extends AppCompatActivity {
             mainContent.setAlpha(0);
             mainContent.animate().alpha(1).setDuration(BaseActivity.MAIN_CONTENT_FADEIN_DURATION);
         }
+
+        ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.textFieldVersionName)).setText(BuildConfig.VERSION_NAME);
 
         overridePendingTransition(0, 0);
     }
