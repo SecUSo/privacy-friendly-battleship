@@ -7,8 +7,8 @@
     <string name="action_about">About</string>
     <string name="action_main">Main</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Random Order</string>
@@ -17,7 +17,7 @@
     <string name="game_mode">Game Mode</string>
     <string name="game_size">Board Size</string>
 
-    <string name="mode_two_player">Two players</string>
+    <string name="mode_two_player">2 players</string>
     <string name="mode_vs_cpu_easy">CPU easy</string>
     <string name="mode_vs_cpu_hard">CPU hard</string>
     <string name="mode_custom">Custom</string>

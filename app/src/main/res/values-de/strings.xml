@@ -7,15 +7,12 @@
     <string name="action_about">Über</string>
     <string name="action_main">Hauptmenü</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Schiffe zufällig</string>
-    <string name="main_button_place_ships">Schiffe platzieren</string>
+    <string name="main_button_place_ships">Schiffe manuell</string>
     <string name="custom_game">Schiffe wählen</string>
 
-    <string name="mode_two_player">Zwei Spieler</string>
+    <string name="mode_two_player">2 Spieler</string>
     <string name="mode_vs_cpu_easy">CPU leicht</string>
     <string name="mode_vs_cpu_hard">CPU schwer</string>
     <string name="mode_custom">Eigenes Spiel</string>
@@ -29,33 +26,33 @@
     <string name="game_player_two">Spieler 2</string>
     <string name="game_time">Zeit:</string>
     <string name="game_attempts">Züge:</string>
-    <string name="game_dialog_hit_prefix">Du hast ein Schiff der Größe </string>
+    <string name="game_dialog_hit_prefix">Sie haben hast ein Schiff der Größe </string>
     <string name="game_dialog_hit_suffix">" zerstört!"</string>
-    <string name="game_dialog_next_player">… ist an der Reihe! Bist du bereit?</string>
-    <string name="game_dialog_loss">Schade! Du hast leider verloren.</string>
+    <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
+    <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
     <string name="game_dialog_win">Und der Gewinner ist… </string>
-    <string name="game_dialog_quit">Möchtest du das Spiel abbrechen?</string>
+    <string name="game_dialog_quit">Möchten Sie das Spiel abbrechen?</string>
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
     <string name="help_permissions_heading">Berechtigungen</string>
-    <string name="help_permissions_description">Privacy Friendly Schiffe versenken verwendet keine Berechtigungen.</string>
+    <string name="help_permissions_description">Privacy Friendly Schiffe versenken benötigt keine Berechtigungen.</string>
     <string name="help_dialog_title">Spielanleitung</string>
-    <string name="help_game_intro">Das obere Raster zeigt das Spielfeld deines Gegners, das untere dein eigenes. Um zu spielen, befolge die folgenden Schritte.</string>
-    <string name="help_game_step_four">4. Falls du gegen jemand anderen spielst, kannst du deinen Zug durch Klicken auf \"FERTIG\" beenden und das Gerät an deinen Gegenspieler weiter reichen. Spielst du gegen den Computer, greift dieser automatisch an.</string>
-    <string name="help_game_step_one">1. Wähle das anzugreifende Feld, durch tippen darauf, aus.</string>
-    <string name="help_game_step_two">2. Bestätige durch drücken des \"FEUER\" Buttons. Das Feld färbt sich bei einem Treffer rot, beim Verfehlen blau.</string>
-    <string name="help_game_step_three">3. Falls du gegen den Computer spielst, führt dieser seinen Spielzug aus.</string>
+    <string name="help_game_intro">Das obere Raster zeigt das Spielfeld Ihres Gegners, das untere Ihr eigenes. Um zu spielen, befolgen Sie bitte die folgenden Schritte:</string>
+    <string name="help_game_step_four">4. Falls Sie gegen einen anderen Spieler spielen, können Sie Ihren Zug durch Klicken auf \"FERTIG\" beenden und das Gerät an Ihren Gegenspieler weiter reichen. Spielen Sie gegen den Computergegner, greift dieser automatisch an.</string>
+    <string name="help_game_step_one">1. Wählen Sie das anzugreifende Feld durch tippen darauf aus.</string>
+    <string name="help_game_step_two">2. Bestätigen Sie durch drücken des \"FEUER\" Buttons. Das Feld färbt sich bei einem Treffer rot, beim Verfehlen blau.</string>
+    <string name="help_game_step_three">3. Falls Sie gegen den Computergegner spielen, führt dieser seinen Spielzug aus.</string>
     <string name="help_how_to_play">Spielanleitung</string>
     <string name="help_menu_game_mode">Spielmodus</string>
-    <string name="help_menu_game_mode_dual_player">Spielt zu zweit gegeneinander.</string>
-    <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfach.</string>
-    <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwer.</string>
+    <string name="help_menu_game_mode_dual_player">Spielen Sie zu zweit gegeneinander.</string>
+    <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfacher Schwierigkeit.</string>
+    <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwerer Schwierigkeit.</string>
     <string name="help_menu_game_size">Größe des Spielfeldes.</string>
-    <string name="help_menu_game_size_description">Wähle die Größe des Spielfeldes. Möglich sind Spielfeldgrößen 5x5 und 10x10.</string>
-    <string name="help_menu_quick_start">Tippe auf \"Schiffe zufällig\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
-    <string name="help_menu_settings">Tippe auf \"Schiffe wählen\", um die Schiffe selbst zu platzieren.</string>
+    <string name="help_menu_game_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
+    <string name="help_menu_quick_start">Wählen Sie auf \"Schiffe zufällig\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
+    <string name="help_menu_settings">Wählen Sie auf \"Schiffe manuell\", um die Schiffe selbst zu platzieren.</string>
     <string name="help_menu_start">Starten des Spiels</string>
 
     <!--###ABOUT###-->
@@ -78,7 +75,7 @@
 
     <string name="slide_2_title">Spiel wählen</string>
     <string name="slide_2_desc">Sie können zwischen drei Spielmodi und zwei Spielfeldgrößen wählen.</string>
-    <string name="slide_2_desc2">Wählen Sie \"Schiffe zufällig\" so werden die Schiffe automatisch gesetzt. Um den Platz Ihrer Schiffe manuel zu setzen, wählen Sie bitte \"Schiffe platzieren\".</string>
+    <string name="slide_2_desc2">Wählen Sie \"Schiffe zufällig\" so werden die Schiffe automatisch gesetzt. Um den Platz Ihrer Schiffe manuel zu setzen, wählen Sie bitte \"Schiffe manuell\".</string>
 
     <string name="okay">Okay</string>
     <string name="yes">Ja</string>
@@ -103,9 +100,9 @@
     <string name="ship_set_size_two_ships">Schiffe der Größe 2</string>
     <string name="ship_set_start_game">Spiel direkt starten</string>
     <string name="ship_set_title">Konfigurieren der Anzahl der Schiffe</string>
-    <string name="ship_set_message">Du kannst ein Schiff einer bestimmten Größe durch Klicken auf den entsprechenden + oder - Button hinzufügen oder entfernen. Beachte, dass die Anzahl der Schiffe nach oben beschränkt ist.</string>
+    <string name="ship_set_message">Sie können ein Schiff einer bestimmten Größe durch Klicken auf den entsprechenden + oder - Button hinzufügen oder entfernen. Beachten Sie, dass die Anzahl der Schiffe beschränkt ist.</string>
     <string name="ship_set_alert_title">Achtung!</string>
-    <string name="ship_set_alert_message">Bitte füge mindestens ein Schiff ein.</string>
+    <string name="ship_set_alert_message">Bitte fügen Sie mindestens ein Schiff ein.</string>
     <string name="game_mode">Spielmodus</string>
     <string name="game_size">Spielfeldgröße</string>
 
