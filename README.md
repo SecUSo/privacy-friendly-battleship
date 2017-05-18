@@ -1,6 +1,7 @@
 ## Privacy Friendly Battleship
 
-This application contains the functionality of the Battleship board game. It includes a mode for playing against a computer opponent as well as a mode for playing against another player. This app belongs to the group of Privacy Friendly Apps developed by the Technische Universität Darmstadt. 
+This application contains the functionality of the Battleship board game. It includes a mode for playing against a computer opponent as well as a mode for playing against another player. 
+Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps developed by the Technische Universität Darmstadt. 
 
 ## Motivation
 
@@ -42,7 +43,8 @@ Markus Hau<br />
 
 Github-Users: <br />
 AlexanderMlr <br />
-McLovin90
+McLovin90 <br />
+yonjuni
 
 
 
