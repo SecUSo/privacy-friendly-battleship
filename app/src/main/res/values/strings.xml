@@ -13,7 +13,7 @@
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Random Order</string>
     <string name="main_button_place_ships">Place ships</string>
-    <string name="custom_game">Manuel Order</string>
+    <string name="custom_game">Manual Order</string>
     <string name="game_mode">Game Mode</string>
     <string name="game_size">Board Size</string>
 
@@ -48,8 +48,8 @@
     <string name="help_menu_game_size">Size of the game board</string>
     <string name="help_menu_game_size_description">Select the size of the game board. The possible sizes for the game field are 5x5 or 10x10.</string>
     <string name="help_menu_start">Start the game</string>
-    <string name="help_menu_quick_start">Press the \"QUICK START\" to start the game with the selected mode and size. The ships will be placed randomly for you and your opponent..</string>
-    <string name="help_menu_settings">Press the \"SETTINGS\" button if you want to customize your ship set and place them manually.</string>
+    <string name="help_menu_quick_start">Press the \"RANDOM ORDER\" to start the game with the selected mode and size. The ships will be placed randomly for you and your opponent.</string>
+    <string name="help_menu_settings">Press the \"MANUAL ORDER\" button if you want to customize your ship set and place them manually.</string>
     <string name="help_how_to_play">How to play the game</string>
     <string name="help_game_intro">The upper grid displays the game field of your opponent, the lower grid displays your own game field. To play the game, proceed as follows.</string>
     <string name="help_dialog_title">How to play</string>
@@ -84,7 +84,7 @@
 
     <string name="slide_2_title">Choose Game</string>
     <string name="slide_2_desc">You can choose between three game modes and two sizes of the game board.</string>
-    <string name="slide_2_desc2">Tap on \"Random order\" to directly start the game or on \"manuel order\" to place your battleships. Enjoy the game!</string>
+    <string name="slide_2_desc2">Tap on \"Random order\" to directly start the game or on \"manual order\" to place your battleships. Enjoy the game!</string>
 
     <string name="okay">Okay</string>
     <string name="yes">Yes</string>
