@@ -11,9 +11,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- ###MAIN### -->
-    <string name="main_button_quick_start">Schnelles Spiel</string>
+    <string name="main_button_quick_start">Schiffe zufällig</string>
     <string name="main_button_place_ships">Schiffe platzieren</string>
-    <string name="custom_game">Eigenes Spiel</string>
+    <string name="custom_game">Schiffe wählen</string>
 
     <string name="mode_two_player">Zwei Spieler</string>
     <string name="mode_vs_cpu_easy">CPU leicht</string>
@@ -22,7 +22,7 @@
 
     <!-- ###GAME###-->
     <string name="title_activity_game">Spiel</string>
-    <string name="game_button_fire">Feuern!</string>
+    <string name="game_button_fire">Feuern</string>
     <string name="game_button_done">Fertig</string>
     <string name="game_button_show_ships">Zeige alle Schiffe</string>
     <string name="game_player_one">Spieler 1</string>
@@ -54,8 +54,8 @@
     <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwer.</string>
     <string name="help_menu_game_size">Größe des Spielfeldes.</string>
     <string name="help_menu_game_size_description">Wähle die Größe des Spielfeldes. Möglich sind Spielfeldgrößen 5x5 und 10x10.</string>
-    <string name="help_menu_quick_start">Tippe auf \"SCHNELLES SPIEL\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
-    <string name="help_menu_settings">Tippe auf \"SCHIFFE PLATZIEREN\", um die Schiffe selbst zu platzieren.</string>
+    <string name="help_menu_quick_start">Tippe auf \"Schiffe zufällig\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
+    <string name="help_menu_settings">Tippe auf \"Schiffe wählen\", um die Schiffe selbst zu platzieren.</string>
     <string name="help_menu_start">Starten des Spiels</string>
 
     <!--###ABOUT###-->
@@ -70,7 +70,7 @@
     <!-- ###SETTINGS### -->
 
     <!-- ### WELCOME DIALOG ### -->
-    <string name="welcome_text">Willkommen bei Privacy Friendly Battleships. Im Hauptmenü kann der Spielmodus und die Spielfeldgröße durch wischen nach links/rechts ausgewählt werden. Das Spiel kann durch tippen auf \"SCHNELLES SPIEL\" direkt gestartet werden. Durch tippen auf \"SCHIFFE PLATZIEREN\" gelangt man zum platzieren der Schiffe. Viel Spaß beim Spiel!</string>
+    <string name="welcome_text">Willkommen bei Privacy Friendly Battleships. Im Hauptmenü kann der Spielmodus und die Spielfeldgröße durch wischen nach links/rechts ausgewählt werden. Das Spiel kann durch tippen auf \"Schiffe wählen\" direkt gestartet werden. Durch tippen auf \"Schiffe platzieren\" gelangt man zum platzieren der Schiffe. Viel Spaß beim Spiel!</string>
     <string name="welcome">Willkommen</string>
     <string name="okay">Okay</string>
     <string name="yes">Ja</string>
