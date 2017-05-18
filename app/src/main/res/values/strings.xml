@@ -12,8 +12,8 @@
 
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Random Order</string>
-    <string name="main_button_place_ships">Manuel Order</string>
-    <string name="custom_game">Custom Game</string>
+    <string name="main_button_place_ships">Place ships</string>
+    <string name="custom_game">Manuel Order</string>
     <string name="game_mode">Game Mode</string>
     <string name="game_size">Board Size</string>
 
@@ -24,7 +24,7 @@
 
     <!-- ###GAME###-->
     <string name="title_activity_game">Game</string>
-    <string name="game_button_fire">Fire!</string>
+    <string name="game_button_fire">Fire</string>
     <string name="game_button_done">Done</string>
     <string name="game_button_show_ships">Show all ships</string>
     <string name="game_player_one">Player 1</string>
@@ -85,7 +85,7 @@
     <string name="slide_2_title">Choose Game</string>
     <string name="slide_2_desc">You can choose between three game modes and two sizes of the game board.</string>
     <string name="slide_2_desc2">Tap on \"Random order\" to directly start the game or on \"manuel order\" to place your battleships. Enjoy the game!</string>
-    
+
     <string name="okay">Okay</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
