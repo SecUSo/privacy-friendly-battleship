@@ -116,7 +116,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:background="@drawable/button_normal"
+        android:background="@drawable/button_fullwidth"
         android:text="@string/main_button_quick_start"
         android:id="@+id/quick_start_button"
         android:onClick="onClick"/>
