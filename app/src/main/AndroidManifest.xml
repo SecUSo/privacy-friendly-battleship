@@ -22,6 +22,10 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name="org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="org.secuso.privacyfriendlybattleship.ui.AboutActivity"
             android:label="@string/about"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity">

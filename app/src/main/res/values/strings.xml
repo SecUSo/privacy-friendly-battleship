@@ -11,8 +11,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- ###MAIN### -->
-    <string name="main_button_quick_start">Quick Start</string>
-    <string name="main_button_place_ships">Place Ships</string>
+    <string name="main_button_quick_start">Random Order</string>
+    <string name="main_button_place_ships">Manuel Order</string>
     <string name="custom_game">Custom Game</string>
     <string name="game_mode">Game Mode</string>
     <string name="game_size">Board Size</string>
@@ -73,11 +73,19 @@
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-battleship">Github-Repo</a></string>
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
-    <!-- ###SETTINGS### -->
+    <!-- ###TUTORIAL### -->
 
-    <!-- ### WELCOME DIALOG ### -->
-    <string name="welcome_text">Welcome to the Privacy Friendly Battleships App. In the Main menu you can choose a game mode and the size of the game board. Tap on \"QUICK START\" to directly start the game or on \"PLACE SHIPS\" to place your battleships. Enjoy the game!</string>
-    <string name="welcome">Welcome</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="start">Start</string>
+
+    <string name="slide_1_title">Welcome</string>
+    <string name="slide_1_desc">Welcome to Privacy Friendly Battleship. Let\'s get ready for playing.</string>
+
+    <string name="slide_2_title">Choose Game</string>
+    <string name="slide_2_desc">You can choose between three game modes and two sizes of the game board.</string>
+    <string name="slide_2_desc2">Tap on \"Random order\" to directly start the game or on \"manuel order\" to place your battleships. Enjoy the game!</string>
+    
     <string name="okay">Okay</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

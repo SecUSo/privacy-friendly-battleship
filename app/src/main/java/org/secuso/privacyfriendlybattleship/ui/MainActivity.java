@@ -60,12 +60,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Show the welcome dialog only once after the app has been started
-        if (isFirstAppStart()) {
-            showWelcomeDialog();
-            setAppStarted();
-        }
-
         // Initialize the main page
         setContentView(R.layout.activity_main);
         setupViewPagerMode();
@@ -256,40 +250,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    //called at first app start
-    private void showWelcomeDialog() {
-        new WelcomeDialog().show(getFragmentManager(), WelcomeDialog.class.getSimpleName());
-    }
-
-    public static class WelcomeDialog extends DialogFragment {
-
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            LayoutInflater i = getActivity().getLayoutInflater();
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-
-            builder.setView(i.inflate(R.layout.welcome_dialog, null));
-            builder.setIcon(R.mipmap.icon_drawer);
-            builder.setTitle(getActivity().getString(R.string.welcome));
-            builder.setPositiveButton(getActivity().getString(R.string.okay), null);
-            builder.setNegativeButton(getActivity().getString(R.string.help), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    ((MainActivity)getActivity()).goToNavigationItem(R.id.nav_help);
-                }
-            });
-
-            return builder.create();
-        }
-    }
 
     public void onClick(View view) {
 
