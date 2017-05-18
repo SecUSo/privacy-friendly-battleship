@@ -32,8 +32,6 @@ import org.secuso.privacyfriendlybattleship.R;
 import org.secuso.privacyfriendlybattleship.game.GameCell;
 import org.secuso.privacyfriendlybattleship.game.GameController;
 
-import static android.R.attr.bitmap;
-
 /**
  * This class implements an adapter for the grid view in the GameActivity, which changes the color
  * of a cell when an action is executed on the grid, e.g clicking on the grid. Created on 27.01.2017.
