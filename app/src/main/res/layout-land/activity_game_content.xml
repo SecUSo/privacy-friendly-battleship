@@ -44,7 +44,7 @@
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="onClickHelpButton"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_gravity="center_vertical"/>
@@ -55,7 +55,7 @@
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_fullwidth"
+                android:background="@drawable/button_normal"
                 android:onClick="onClickFireButton"
                 android:layout_gravity="center_vertical"/>
 
