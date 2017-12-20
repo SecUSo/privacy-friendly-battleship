@@ -13,11 +13,11 @@
             android:checkableBehavior="all">
             <item
                 android:id="@+id/nav_help"
-                android:icon="@android:drawable/ic_menu_help"
+                android:icon="@drawable/ic_menu_help"
                 android:title="@string/action_help" />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@android:drawable/ic_menu_info_details"
+                android:icon="@drawable/ic_menu_info"
                 android:title="@string/action_about" />
         </group>
     </group>
