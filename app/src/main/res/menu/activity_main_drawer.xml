@@ -3,11 +3,14 @@
 
     <group android:id="@+id/nav_group_main"
         android:checkableBehavior="all">
-        <group>
             <item
                 android:id="@+id/nav_main"
                 android:icon="@drawable/ic_menu_home"
                 android:title="@string/action_main" />
+            <item
+                android:id="@+id/nav_tutorial"
+                android:icon="@drawable/ic_menu_tutorial"
+                android:title="@string/tutorial" />
         </group>
         <group android:id="@+id/nav_group_add"
             android:checkableBehavior="all">
@@ -20,5 +23,4 @@
                 android:icon="@drawable/ic_menu_info"
                 android:title="@string/action_about" />
         </group>
-    </group>
 </menu>

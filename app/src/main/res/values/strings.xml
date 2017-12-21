@@ -74,6 +74,7 @@
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
     <!-- ###TUTORIAL### -->
+    <string name="tutorial">Tutorial</string>
 
     <string name="skip">Skip</string>
     <string name="next">Next</string>

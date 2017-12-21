@@ -42,6 +42,9 @@ import org.secuso.privacyfriendlybattleship.ui.MainActivity;
 
 public class TutorialActivity extends AppCompatActivity {
 
+    private static final String TAG = TutorialActivity.class.getSimpleName();
+    public static final String ACTION_SHOW_ANYWAYS = TAG + ".ACTION_SHOW_ANYWAYS";
+
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -56,7 +59,7 @@ public class TutorialActivity extends AppCompatActivity {
 
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
-        if (!prefManager.isTutorialLaunch()) {
+        if (!prefManager.isTutorialLaunch() && (getIntent() == null || !ACTION_SHOW_ANYWAYS.equals(getIntent().getAction()))) {
             launchHomeScreen();
             finish();
         }

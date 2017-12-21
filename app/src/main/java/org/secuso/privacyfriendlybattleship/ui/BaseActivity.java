@@ -38,6 +38,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.secuso.privacyfriendlybattleship.R;
+import org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity;
+
+import static org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity.ACTION_SHOW_ANYWAYS;
 
 /**
  * Created by Chris on 04.07.2016. Edited by Ali Kalsen on 08.03.2017
@@ -157,6 +160,11 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
             case R.id.nav_main:
                 intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            case R.id.nav_tutorial:
+                intent = new Intent(this, TutorialActivity.class);
+                intent.setAction(ACTION_SHOW_ANYWAYS);
                 startActivity(intent);
                 break;
             case R.id.nav_about:
