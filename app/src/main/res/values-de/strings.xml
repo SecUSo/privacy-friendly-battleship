@@ -26,7 +26,7 @@
     <string name="game_player_two">Spieler 2</string>
     <string name="game_time">Zeit:</string>
     <string name="game_attempts">Züge:</string>
-    <string name="game_dialog_hit_prefix">Sie haben hast ein Schiff der Größe </string>
+    <string name="game_dialog_hit_prefix">Sie haben ein Schiff der Größe </string>
     <string name="game_dialog_hit_suffix">" zerstört!"</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
