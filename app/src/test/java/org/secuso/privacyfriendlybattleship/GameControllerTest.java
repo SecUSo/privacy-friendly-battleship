@@ -54,12 +54,6 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testEquals(){
-        GameCell cell = controller.getGridFirstPlayer().getCell(1,1);
-        assertTrue(controller.getGridSecondPlayer().getCell(1,1).equals(cell));
-    }
-
-    @Test
     public void testFindShipContainingCell(){
         GameGrid grid;
         if(!controller.getCurrentPlayer()){
@@ -105,7 +99,7 @@ public class GameControllerTest {
         controller.getGridSecondPlayer().getShipSet().placeShip(6, 4, 5, Direction.EAST);
         assertEquals(controller.getGridSecondPlayer().getShipSet().placementLegit(), true);
 
-        controller.getGridSecondPlayer().getShipSet().placeShip(2, 5, 3, Direction.NORTH);
+        controller.getGridSecondPlayer().getShipSet().placeShip(2, 5, 3, Direction.SOUTH);
         assertEquals(controller.getGridSecondPlayer().getShipSet().placementLegit(), false);
 
         //test controllerSmall

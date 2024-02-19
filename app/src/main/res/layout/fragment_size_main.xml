@@ -13,5 +13,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/select_size"
         android:layout_weight="1"
-        android:gravity="center"/>
+        android:gravity="center" />
 </LinearLayout>

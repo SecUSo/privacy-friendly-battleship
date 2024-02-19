@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/main_content"
+<LinearLayout android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,6 +19,7 @@
         android:layout_height="0dp"
         android:layoutDirection="ltr"
         android:layout_weight="4">
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/modeScroller"
             android:layout_width="match_parent"
@@ -41,26 +41,27 @@
             android:id="@+id/mode_arrow_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_centerVertical="true"
-            android:onClick="onClick"/>
+            android:onClick="onClick" />
+
         <ImageView
             android:id="@+id/mode_arrow_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_centerVertical="true"
-            android:onClick="onClick"/>
+            android:onClick="onClick" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -68,6 +69,7 @@
         android:layout_height="0dp"
         android:layoutDirection="ltr"
         android:layout_weight="4">
+
         <TextView
             android:id="@+id/title_size"
             android:layout_width="wrap_content"
@@ -89,26 +91,27 @@
             android:id="@+id/size_arrow_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_centerVertical="true"
-            android:onClick="onClick"/>
+            android:onClick="onClick" />
+
         <ImageView
             android:id="@+id/size_arrow_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_centerVertical="true"
-            android:onClick="onClick"/>
+            android:onClick="onClick" />
     </RelativeLayout>
 
     <Button
@@ -119,7 +122,7 @@
         android:background="@drawable/button_normal"
         android:text="@string/main_button_quick_start"
         android:id="@+id/quick_start_button"
-        android:onClick="onClick"/>
+        android:onClick="onClick" />
 
     <Button
         android:layout_width="match_parent"
@@ -128,6 +131,6 @@
         android:background="@drawable/button_fullwidth"
         android:text="@string/custom_game"
         android:id="@+id/action_settings"
-        android:onClick="onClick"/>
+        android:onClick="onClick" />
 
 </LinearLayout>

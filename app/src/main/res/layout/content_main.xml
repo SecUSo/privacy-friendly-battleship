@@ -7,10 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="org.secuso.privacyfriendlybattleship.ui.MainActivity">
 
@@ -41,14 +41,14 @@
             android:id="@+id/mode_arrow_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
         <ImageView
             android:id="@+id/mode_arrow_right"
@@ -61,7 +61,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -91,14 +91,14 @@
             android:id="@+id/size_arrow_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
         <ImageView
             android:id="@+id/size_arrow_right"
@@ -111,7 +111,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
     </RelativeLayout>
 
     <Button
