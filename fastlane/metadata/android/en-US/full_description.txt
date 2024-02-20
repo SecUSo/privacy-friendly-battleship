@@ -1,5 +1,20 @@
 
 
+Der Spieler kann dabei zwischen den Spielfeldgrößen 5x5 und 10x10 wählen und seine Schiffe frei platzieren. Die Anzahl der Schiffe kann vor dem Spiel selbst gewählt werden. Dabei sind Schiffe der Größen 2 (U-Boote), 3 (Zerstörer), 4 (Kreuzer) und 5 (Schlachtschiffe) möglich.
+
+Was unterscheidet Privacy Friendly Schiffe Versenken von anderen, ähnlichen Apps?
+
+1. Keine Berechtigungen
+Privacy Friendly Schiffe versenken verwendet keine Berechtigungen.
+Zum Vergleich: Die Top Ten ähnlicher Apps, die im Google Play Store erhältlich sind, benötigt durchschnittlich 6,1 Berechtigungen (Stand: November 2017). Hierzu zählen der Zugriff auf Netzwerke, das Internet oder Standortdaten.
+
+2. Keine störende Werbung
+Viele andere kostenlose Apps im Google Play Store blenden störende Werbung ein, die unter anderem auch die Akkulaufzeit verkürzt und Datenvolumen verbrauchen kann.
+
+Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO der Technischen Universität Darmstadt entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
+
+
+Feel free to contact us via:
 Twitter - @SECUSOResearch https://twitter.com/secusoresearch
-Mastodon - @SECUSO_Research@baw  .social https://xn--baw-joa.social/@SECUSO_Research/
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
 Job opening - https://secuso.aifb.kit.edu/english/Job_Offers_1557.php
