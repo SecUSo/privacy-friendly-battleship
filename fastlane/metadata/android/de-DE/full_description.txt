@@ -1,4 +1,8 @@
+Mit der App Privacy Friendly Schiffe versenken kann man das beliebte Spiel "Schiffe versenken" bequem auf dem Smartphone spielen. Ziel des Spiels ist es, alle Schiffe des Gegners zu versenken, indem beide Spieler abwechselnd auf das Spielfeld des Gegners "schießen".
 
+Das Spiel bietet zwei Spielmodi:
+- Spieler vs Computer
+- Spieler vs Spieler
 
 Der Spieler kann dabei zwischen den Spielfeldgrößen 5x5 und 10x10 wählen und seine Schiffe frei platzieren. Die Anzahl der Schiffe kann vor dem Spiel selbst gewählt werden. Dabei sind Schiffe der Größen 2 (U-Boote), 3 (Zerstörer), 4 (Kreuzer) und 5 (Schlachtschiffe) möglich.
 
