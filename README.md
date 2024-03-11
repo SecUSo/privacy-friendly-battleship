@@ -13,7 +13,7 @@
 ## Privacy Friendly Battleship
 
 This application contains the functionality of the Battleship board game. It includes a mode for playing against a computer opponent as well as a mode for playing against another player. 
-Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps developed by the Technische Universität Darmstadt. 
+Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps developed by the Karlsruhe Institute of Technology. 
 
 ## Motivation
 
@@ -46,7 +46,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-The icons used in the nagivation drawer are licensed under the [CC BY 2.5] (http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright [Technische Universtität Darmstadt] (www.tu-darmstadt.de) (2017).
+The icons used in the nagivation drawer are licensed under the [CC BY 2.5] (http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright [SECUSO](www.secuso.org) (2019).
 
 ## Contributors
 
