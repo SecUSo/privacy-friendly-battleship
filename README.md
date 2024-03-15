@@ -19,7 +19,18 @@ Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps develo
 
 This application has been developed to provide a Privacy Friendly App as alternative to permission demanding Android-Apps. Privacy Friendly Apps are a group of Android applications which are optimized regarding privacy. Further information can be found on secuso.org/pfa
 
-## Download and more Information
+## Download
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/org.secuso.privacyfriendlybattleship/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlybattleship)
+
+Or download the latest APK from the [Releases Section](https://github.com/SecUSo/privacy-friendly-battleship/releases/latest).
+
+## Development
 
 Further development requires Android Studio, we recommend to use at least version 2.2.3
  
