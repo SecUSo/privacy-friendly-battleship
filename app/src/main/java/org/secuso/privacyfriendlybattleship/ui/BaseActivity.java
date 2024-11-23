@@ -156,26 +156,20 @@ public class BaseActivity extends AppCompatActivity implements OnNavigationItemS
 
         Intent intent;
 
-        switch(itemId) {
-            case R.id.nav_main:
-                intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-            case R.id.nav_tutorial:
-                intent = new Intent(this, TutorialActivity.class);
-                intent.setAction(ACTION_SHOW_ANYWAYS);
-                startActivity(intent);
-                break;
-            case R.id.nav_about:
-                intent = new Intent(this, AboutActivity.class);
-                createBackStack(intent);
-                break;
-            case R.id.nav_help:
-                intent = new Intent(this, HelpActivity.class);
-                createBackStack(intent);
-                break;
-            default:
+        if (itemId == R.id.nav_main) {
+            intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else if (itemId == R.id.nav_tutorial) {
+            intent = new Intent(this, TutorialActivity.class);
+            intent.setAction(ACTION_SHOW_ANYWAYS);
+            startActivity(intent);
+        } else if (itemId == R.id.nav_about) {
+            intent = new Intent(this, AboutActivity.class);
+            createBackStack(intent);
+        } else if (itemId == R.id.nav_help) {
+            intent = new Intent(this, HelpActivity.class);
+            createBackStack(intent);
         }
     }
 

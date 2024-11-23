@@ -227,25 +227,19 @@ public class PlaceShipActivity extends BaseActivity {
             return;
 
         GameCell[] oldCells = this.selectedShip.getShipsCells();
-        switch (view.getId()) {
-            case R.id.arrow_right:
-                this.selectedShip.moveShip(Direction.EAST);
-                break;
-            case R.id.arrow_left:
-                this.selectedShip.moveShip(Direction.WEST);
-                break;
-            case R.id.arrow_up:
-                this.selectedShip.moveShip(Direction.NORTH);
-                break;
-            case R.id.arrow_down:
-                this.selectedShip.moveShip(Direction.SOUTH);
-                break;
-            case R.id.rotate_right:
-                this.selectedShip.turnShipRight();
-                break;
-            case R.id.rotate_left:
-                this.selectedShip.turnShipLeft();
-                break;
+
+        if (view.getId() == R.id.arrow_left) {
+            this.selectedShip.moveShip(Direction.WEST);
+        } else if (view.getId() == R.id.arrow_right) {
+            this.selectedShip.moveShip(Direction.EAST);
+        } else if (view.getId() == R.id.arrow_up) {
+            this.selectedShip.moveShip(Direction.NORTH);
+        } else if (view.getId() == R.id.arrow_down) {
+            this.selectedShip.moveShip(Direction.SOUTH);
+        } else if (view.getId() == R.id.rotate_left) {
+            this.selectedShip.turnShipLeft();
+        } else if (view.getId() == R.id.rotate_right) {
+            this.selectedShip.turnShipRight();
         }
         unhighlightCells(oldCells);
         highlightCells(this.selectedShip.getShipsCells());
