@@ -6,10 +6,20 @@ android {
     defaultConfig {
         applicationId "org.secuso.privacyfriendlybattleship"
         minSdkVersion 17
-        targetSdkVersion 33
-        versionCode 6
-        versionName "1.2.1"
+        targetSdkVersion 34
+        compileSdk 34
+        versionCode 7
+        versionName "1.2.2"
         vectorDrawables.useSupportLibrary = true
+    }
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
+            def appName = "pfa-battleship"
+            outputFileName = appName + "-${variant.name}-v${variant.versionName}.apk"
+        }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     buildTypes {
         release {
