@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 33
+    namespace "org.secuso.privacyfriendlybattleship"
 
     defaultConfig {
         applicationId "org.secuso.privacyfriendlybattleship"
