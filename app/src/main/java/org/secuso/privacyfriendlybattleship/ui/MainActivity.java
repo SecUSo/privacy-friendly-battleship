@@ -255,50 +255,41 @@ public class MainActivity extends BaseActivity {
         GameMode gameMode;
         GameController game;
 
-        switch(view.getId()) {
-            case R.id.mode_arrow_left:
-                viewPagerMode.arrowScroll(View.FOCUS_LEFT);
-                break;
-            case R.id.mode_arrow_right:
-                viewPagerMode.arrowScroll(View.FOCUS_RIGHT);
-                break;
-            case R.id.size_arrow_left:
-                viewPagerSize.arrowScroll(View.FOCUS_LEFT);
-                break;
-            case R.id.size_arrow_right:
-                viewPagerSize.arrowScroll(View.FOCUS_RIGHT);
-                break;
-            case R.id.quick_start_button:
-                // Get the selected game mode and the grid size
-                modeIndex = viewPagerMode.getCurrentItem();
-                gameMode = GameMode.getValidTypes().get(modeIndex);
-                sizeIndex = viewPagerSize.getCurrentItem();
-                gridSize = GameGrid.getValidSizes().get(sizeIndex);
+        if (view.getId() == R.id.mode_arrow_left) {
+            viewPagerMode.arrowScroll(View.FOCUS_LEFT);
+        } else if (view.getId() == R.id.mode_arrow_right) {
+            viewPagerMode.arrowScroll(View.FOCUS_RIGHT);
+        } else if (view.getId() == R.id.size_arrow_left) {
+            viewPagerSize.arrowScroll(View.FOCUS_LEFT);
+        } else if (view.getId() == R.id.size_arrow_right) {
+            viewPagerSize.arrowScroll(View.FOCUS_RIGHT);
+        } else if (view.getId() == R.id.quick_start_button) {
+            // Get the selected game mode and the grid size
+            modeIndex = viewPagerMode.getCurrentItem();
+            gameMode = GameMode.getValidTypes().get(modeIndex);
+            sizeIndex = viewPagerSize.getCurrentItem();
+            gridSize = GameGrid.getValidSizes().get(sizeIndex);
 
-                game = new GameController(gridSize, gameMode);
-                game.placeAllShips();//place all ships randomly for both players
+            game = new GameController(gridSize, gameMode);
+            game.placeAllShips();//place all ships randomly for both players
 
-                // send game information to GameActivity
-                intent = new Intent(this, GameActivity.class);
-                intent.putExtra("controller", game);
-                startActivity(intent);
-                break;
-            case R.id.action_settings:
-                // Get the selected game mode and the grid size
-                modeIndex = viewPagerMode.getCurrentItem();
-                gameMode = GameMode.getValidTypes().get(modeIndex);
-                sizeIndex = viewPagerSize.getCurrentItem();
-                gridSize = GameGrid.getValidSizes().get(sizeIndex);
+            // send game information to GameActivity
+            intent = new Intent(this, GameActivity.class);
+            intent.putExtra("controller", game);
+            startActivity(intent);
+        } else if (view.getId() == R.id.action_settings) {
+            // Get the selected game mode and the grid size
+            modeIndex = viewPagerMode.getCurrentItem();
+            gameMode = GameMode.getValidTypes().get(modeIndex);
+            sizeIndex = viewPagerSize.getCurrentItem();
+            gridSize = GameGrid.getValidSizes().get(sizeIndex);
 
-                game = new GameController(gridSize, gameMode);//place all ships randomly for both players
+            game = new GameController(gridSize, gameMode);//place all ships randomly for both players
 
-                // send game information to ShipSetActivity
-                intent = new Intent(this, ShipSetActivity.class);
-                intent.putExtra("controller", game);
-                startActivity(intent);
-                break;
-            default:
-                break;
+            // send game information to ShipSetActivity
+            intent = new Intent(this, ShipSetActivity.class);
+            intent.putExtra("controller", game);
+            startActivity(intent);
         }
     }
 }
