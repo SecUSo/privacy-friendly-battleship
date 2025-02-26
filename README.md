@@ -10,7 +10,11 @@
      width="120px"
      align="right"
      style="float: right; margin-right: 10px;" />
+
 ## Privacy Friendly Battleship
+
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdid=org.secuso.privacyfriendlybattleship)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60">](https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlybattleship)
 
 This application contains the functionality of the Battleship board game. It includes a mode for playing against a computer opponent as well as a mode for playing against another player. 
 Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps developed by the Technische Universität Darmstadt. 
@@ -19,18 +23,7 @@ Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps develo
 
 This application has been developed to provide a Privacy Friendly App as alternative to permission demanding Android-Apps. Privacy Friendly Apps are a group of Android applications which are optimized regarding privacy. Further information can be found on secuso.org/pfa
 
-## Download
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/org.secuso.privacyfriendlybattleship/)
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="80">](https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlybattleship)
-
-Or download the latest APK from the [Releases Section](https://github.com/SecUSo/privacy-friendly-battleship/releases/latest).
-
-## Development
+## Building
 
 Further development requires Android Studio, we recommend to use at least version 2.2.3
  
