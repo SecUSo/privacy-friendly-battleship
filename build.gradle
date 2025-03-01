@@ -2,15 +2,12 @@
 
 buildscript {
     repositories {
-        jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        mavenCentral()
+        google()
     }
     ext.kotlin_version = "2.0.21"
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.android.tools.build:gradle:8.7.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -22,12 +19,12 @@ allprojects {
     repositories {
         mavenCentral()
         maven {
-            url 'https://maven.google.com/'
-            name 'Google'
+            url "https://maven.google.com"
         }
+        google()
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete) {
+    delete rootProject.getLayout().getBuildDirectory()
 }

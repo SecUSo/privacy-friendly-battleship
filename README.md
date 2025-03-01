@@ -17,7 +17,7 @@ Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps develo
 
 ## Motivation
 
-This application has been developed to provide a Privacy Friendly App as alternative to permission demanding Android-Apps. Privacy Friendly Apps are a group of Android applications which are optimized regarding privacy. Further information can be found on secuso.org/pfa
+This application has been developed to provide a Privacy Friendly App as alternative to permission demanding Android-Apps. Privacy Friendly Apps are a group of Android applications which are optimized regarding privacy. Further information can be found on [secuso.org/pfa](https://www.secuso.org/pfa)
 
 ## Download and more Information
 
@@ -25,8 +25,8 @@ Further development requires Android Studio, we recommend to use at least versio
  
 ### API Reference
 
-Mininum SDK: 17
-Target SDK: 33 
+Minimum SDK: 17<br />
+Target SDK: 35 
 
 ## License
 
@@ -46,16 +46,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-The icons used in the nagivation drawer are licensed under the [CC BY 2.5] (http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright [SECUSO](www.secuso.org) (2019).
+The icons used in the navigation drawer are licensed under the [CC BY 2.5] (http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright [SECUSO](https://www.secuso.org) (2019-2025).
 
 ## Contributors
 
-Icons: <br />
+Icons:<br />
 Markus Hau<br />
 Tatjana Albrandt<br />
 
 <a href="https://github.com/SecUSo/privacy-friendly-battleship/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=SecUSo/privacy-friendly-battleship&max=100&columns=20" />
+  <img src="https://contrib.rocks/image?repo=SecUSo/privacy-friendly-battleship&max=100&columns=20" alt="The contributors"/>
 </a>
 
 
