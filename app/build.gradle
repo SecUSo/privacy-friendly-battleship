@@ -1,5 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+}
 
 android {
     namespace "org.secuso.privacyfriendlybattleship"
@@ -7,38 +9,42 @@ android {
     defaultConfig {
         applicationId "org.secuso.privacyfriendlybattleship"
         minSdkVersion 17
-        targetSdkVersion 34
-        compileSdk 34
-        versionCode 8
-        versionName "1.2.3"
+        targetSdkVersion 35
+        compileSdk 35
+        versionCode 9
+        versionName "1.2.4"
         vectorDrawables.useSupportLibrary = true
     }
+
     applicationVariants.configureEach { variant ->
         variant.outputs.configureEach {
             def appName = "pfa-battleship"
             outputFileName = appName + "-${variant.name}-v${variant.versionName}.apk"
         }
     }
+
     buildFeatures {
         buildConfig = true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(21)
     }
 
     lint {
