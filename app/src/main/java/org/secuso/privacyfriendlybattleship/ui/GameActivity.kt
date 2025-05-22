@@ -19,6 +19,7 @@
  */
 package org.secuso.privacyfriendlybattleship.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -243,6 +244,7 @@ class GameActivity : BaseActivity() {
         newSwitchDialog.show(fragmentManager, SwitchDialog::class.java.simpleName)
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         // Check if the menu drawer is open
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)

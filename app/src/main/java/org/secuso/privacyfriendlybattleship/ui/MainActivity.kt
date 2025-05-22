@@ -108,7 +108,7 @@ class MainActivity : BaseActivity() {
             val rootView = inflater.inflate(R.layout.fragment_mode_main, container, false)
 
             // Generate the image for the gameMode
-            val gameMode = GameMode.getValidTypes()[arguments!!.getInt(ARG_SECTION_MODE_NUMBER)]
+            val gameMode = GameMode.getValidTypes()[requireArguments().getInt(ARG_SECTION_MODE_NUMBER)]
             val imageView = rootView.findViewById<ImageView>(R.id.gameModeImage)
             imageView.setImageResource(gameMode.imageResID)
 
@@ -146,7 +146,7 @@ class MainActivity : BaseActivity() {
             val rootView = inflater.inflate(R.layout.fragment_size_main, container, false)
 
             // Get the gridSize
-            val gridSize = GameGrid.getValidSizes()[arguments!!.getInt(ARG_SECTION_SIZE_NUMBER)]
+            val gridSize = GameGrid.getValidSizes()[requireArguments().getInt(ARG_SECTION_SIZE_NUMBER)]
 
             // Generate the text for the gridSize, which is either 5x5 or 10x10
             val textView = rootView.findViewById<TextView>(R.id.select_size)
