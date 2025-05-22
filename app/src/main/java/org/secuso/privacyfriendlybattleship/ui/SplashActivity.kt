@@ -15,30 +15,24 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Privacy Friendly Battleship.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Privacy Friendly Battleship.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
+package org.secuso.privacyfriendlybattleship.ui
 
-package org.secuso.privacyfriendlybattleship.ui;
-
-import android.content.Intent;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity;
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity
 
 /**
  * This activity is called when the app starts. It displays the logo of the app.
  */
+class SplashActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-public class SplashActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
-        SplashActivity.this.startActivity(mainIntent);
-        SplashActivity.this.finish();
-
+        val mainIntent = Intent(this@SplashActivity, TutorialActivity::class.java)
+        this@SplashActivity.startActivity(mainIntent)
+        this@SplashActivity.finish()
     }
 }

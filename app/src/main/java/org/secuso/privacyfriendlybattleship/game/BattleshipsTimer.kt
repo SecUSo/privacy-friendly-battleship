@@ -15,52 +15,45 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Privacy Friendly Battleship. If not, see <http://www.gnu.org/licenses/>.
+ * along with Privacy Friendly Battleship. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
+package org.secuso.privacyfriendlybattleship.game
 
-package org.secuso.privacyfriendlybattleship.game;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Timer
+import java.util.TimerTask
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * This class creates a timer, which only counts full seconds, if it is running. Created on 27.01.2017.
  *
  * @author Ali Kalsen
  */
+class BattleshipsTimer {
+    private var internalTimer: Timer? = null
+    private val timerRunning = AtomicBoolean(false)
+    var time: Int = 0
+        private set
+    private val WAIT_TIME = 1000
 
-public class BattleshipsTimer {
-
-    private Timer internalTimer;
-    private AtomicBoolean timerRunning = new AtomicBoolean(false);
-    private int time = 0;
-    private final int WAIT_TIME = 1000;
-
-    private void init() {
-        internalTimer = new Timer();
-        internalTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if ( timerRunning.get()) {
-                    time++;
+    private fun init() {
+        internalTimer = Timer()
+        internalTimer!!.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                if (timerRunning.get()) {
+                    time++
                 }
             }
-        },0 ,WAIT_TIME);
+        }, 0, WAIT_TIME.toLong())
     }
 
-    public void stop(){
-        timerRunning.set(false);
+    fun stop() {
+        timerRunning.set(false)
     }
 
-    public void start(){
-        timerRunning.set(true);
-        if(internalTimer == null){
-            init();
+    fun start() {
+        timerRunning.set(true)
+        if (internalTimer == null) {
+            init()
         }
-    }
-
-    public int getTime(){
-        return time;
     }
 }

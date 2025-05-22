@@ -15,44 +15,35 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Privacy Friendly Battleship. If not, see <http://www.gnu.org/licenses/>.
+ * along with Privacy Friendly Battleship. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
+package org.secuso.privacyfriendlybattleship.ui
 
-package org.secuso.privacyfriendlybattleship.ui;
-
-import android.os.Bundle;
-import android.preference.PreferenceFragment;
-
-import org.secuso.privacyfriendlybattleship.R;
+import android.os.Bundle
+import android.preference.PreferenceFragment
+import org.secuso.privacyfriendlybattleship.R
 
 /**
  * Created by yonjuni on 17.06.16.
  */
-public class HelpActivity extends BaseActivity {
+class HelpActivity : BaseActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_help)
 
-        setContentView(R.layout.activity_help);
         //getFragmentManager().beginTransaction().replace(android.R.id.content, new HelpFragment()).commit();
-
-        overridePendingTransition(0, 0);
+        overridePendingTransition(0, 0)
     }
 
-    @Override
-    protected int getNavigationDrawerID() {
-        return R.id.nav_help;
-    }
+    override val navigationDrawerID: Int
+        get() = R.id.nav_help
 
-    public static class HelpFragment extends PreferenceFragment {
+    class HelpFragment : PreferenceFragment() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            addPreferencesFromResource(R.xml.help);
+            addPreferencesFromResource(R.xml.help)
         }
     }
-
 }

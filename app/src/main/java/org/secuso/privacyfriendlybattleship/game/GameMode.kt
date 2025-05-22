@@ -15,18 +15,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Privacy Friendly Battleship. If not, see <http://www.gnu.org/licenses/>.
+ * along with Privacy Friendly Battleship. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
+package org.secuso.privacyfriendlybattleship.game
 
-package org.secuso.privacyfriendlybattleship.game;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
-
-import org.secuso.privacyfriendlybattleship.R;
-
-import java.util.LinkedList;
-import java.util.List;
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import org.secuso.privacyfriendlybattleship.R
+import java.util.LinkedList
 
 /**
  * This file represents the mode for a battleships game. It is used to
@@ -35,39 +31,25 @@ import java.util.List;
  *
  * @author Alexander Müller, Ali Kalsen
  */
-
-public enum GameMode {
+enum class GameMode(@param:StringRes val stringResID: Int, @param:DrawableRes val imageResID: Int) {
     VS_PLAYER(R.string.mode_two_player, R.drawable.ic_people_black_24px),
     VS_AI_EASY(R.string.mode_vs_cpu_easy, R.drawable.ic_cpu_easy),
     VS_AI_HARD(R.string.mode_vs_cpu_hard, R.drawable.ic_cpu_hard),
     CUSTOM(R.string.mode_custom, R.drawable.ic_people_black_24px);
 
-    private final int resIDString;
-    private final int resIDImage;
-    private static List<GameMode> validTypes = new LinkedList<>();
+    companion object {
+        private val validTypes: MutableList<GameMode> = LinkedList()
 
 
-    static{
-        validTypes.add(VS_PLAYER);
-        validTypes.add(VS_AI_EASY);
-        validTypes.add(VS_AI_HARD);
-    }
+        init {
+            validTypes.add(VS_PLAYER)
+            validTypes.add(VS_AI_EASY)
+            validTypes.add(VS_AI_HARD)
+        }
 
 
-    GameMode(@StringRes int resIDString, @DrawableRes int resIDImage){
-        this.resIDString = resIDString;
-        this.resIDImage = resIDImage;
-    }
-
-    public int getStringResID() {
-        return resIDString;
-    }
-
-    public int getImageResID(){
-        return resIDImage;
-    }
-
-    public static List<GameMode> getValidTypes(){
-        return validTypes;
+        fun getValidTypes(): List<GameMode> {
+            return validTypes
+        }
     }
 }
