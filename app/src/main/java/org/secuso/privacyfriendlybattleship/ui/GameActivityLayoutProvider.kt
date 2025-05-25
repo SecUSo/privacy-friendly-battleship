@@ -23,7 +23,6 @@ import android.app.Activity
 import android.content.res.Configuration
 import android.view.View
 import org.secuso.privacyfriendlybattleship.R
-import org.secuso.privacyfriendlybattleship.ui.GameActivityLayoutProvider
 
 /**
  * This class computes the size of a grid cell for the big and the small grid view in pixel.
@@ -69,21 +68,19 @@ class GameActivityLayoutProvider {
     val miniGridCellSizeInPixel: Int
         get() {
             val cellSize: Int
-            val orientation =
-                context.resources.configuration.orientation
+            val orientation = context.resources.configuration.orientation
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                val layoutHeight =
-                    context.findViewById<View>(R.id.game_linear_layout)
-                        .height
-                cellSize =
-                    (layoutHeight - margin * 2 - (gridSize - 1)) / this.gridSize
+                val gridLayout = context.findViewById<View>(R.id.game_linear_layout)
+                val w = gridLayout.width - context.findViewById<View>(R.id.linear_layout_button).width
+                val h = gridLayout.height
+                val edgeLength = w.coerceAtMost(h)
+                cellSize = if (edgeLength <= 0) 0
+                    else (edgeLength - margin * 2 - (gridSize - 1)) / this.gridSize
             } else {
                 // TODO: Think about the layout of the grid when the orientation is landscape
-                var displayHeight =
-                    context.resources.displayMetrics.heightPixels * 2 / 3
+                var displayHeight = context.resources.displayMetrics.heightPixels * 2 / 3
                 displayHeight = displayHeight - actionBarHeight - statusBarHeight
-                cellSize =
-                    (displayHeight - 2 * margin - (this.gridSize - 1)) / this.gridSize
+                cellSize = (displayHeight - 2 * margin - (this.gridSize - 1)) / this.gridSize
             }
 
             return cellSize
