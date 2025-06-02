@@ -6,12 +6,17 @@
 [PFA]: https://secuso.org/pfa
 [Mastodon]: https://xn--baw-joa.social/@SECUSO_Research
 [Bluesky]: https://bsky.app/profile/secusoresearch.bsky.social
+
 <img src="https://github.com/SecUSo/privacy-friendly-battleship/raw/master/fastlane/metadata/android/en-US/images/icon.png"
-     alt="Privacy Friendly Battleship Icon"
-     width="120px"
-     align="right"
-     style="float: right; margin-right: 10px;" />
-## Privacy Friendly Battleship
+  alt="Privacy Friendly Battleship Icon"
+  width="120px"
+  align="right"
+  style="float: right; margin-right: 10px;" />
+
+# Privacy Friendly Battleship
+
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="60">](https://f-droid.org/repository/browse/?fdid=org.secuso.privacyfriendlybattleship)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60">](https://play.google.com/store/apps/details?id=org.secuso.privacyfriendlybattleship)
 
 This application contains the functionality of the Battleship board game. It includes a mode for playing against a computer opponent as well as a mode for playing against another player. 
 Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps developed by the Karlsruhe Institute of Technology. 
@@ -20,9 +25,9 @@ Privacy Friendly Battleship belongs to the group of Privacy Friendly Apps develo
 
 This application has been developed to provide a Privacy Friendly App as alternative to permission demanding Android-Apps. Privacy Friendly Apps are a group of Android applications which are optimized regarding privacy. Further information can be found on [secuso.org/pfa](https://www.secuso.org/pfa)
 
-## Download and more Information
+## Building
 
-Further development requires Android Studio, we recommend to use at least version 2.2.3
+Further development requires Android Studio, we recommend to use the latest version.
  
 ### API Reference
 
