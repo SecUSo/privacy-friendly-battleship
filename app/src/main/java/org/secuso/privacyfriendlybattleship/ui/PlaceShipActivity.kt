@@ -38,6 +38,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import org.secuso.privacyfriendlybattleship.Constants
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.Direction
@@ -117,7 +118,7 @@ class PlaceShipActivity : BaseActivity() {
 
     protected fun setupGridView(size: Int) {
         // Get the grid views of the respective XML-files
-        gridView = findViewById<GridView>(R.id.placement_gridview)
+        gridView = findViewById<GridView>(R.id.game_gridview_big)
 
         // Set the background color of the grid
         gridView!!.setBackgroundColor(Color.GRAY)
@@ -125,35 +126,9 @@ class PlaceShipActivity : BaseActivity() {
         // Set the columns of the grid
         gridView!!.numColumns = gridSize
 
-        // Set the layout of the grid
-        val marginLayoutParams =
-            gridView!!.layoutParams as MarginLayoutParams
-
-        val orientation = resources.configuration.orientation
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            marginLayoutParams.setMargins(
-                layoutProvider.marginLeft,
-                layoutProvider.margin,
-                layoutProvider.marginRight,
-                0
-            )
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            marginLayoutParams.setMargins(
-                layoutProvider.marginLeft,
-                layoutProvider.margin,
-                layoutProvider.marginRight,
-                layoutProvider.margin
-            )
-        }
-
-        gridView!!.layoutParams = marginLayoutParams
-        gridView!!.horizontalSpacing = 1
-        gridView!!.verticalSpacing = 1
-
         // Initialize the grid for player one
         gridAdapter = GameGridAdapter(this, this.layoutProvider, this.controller, true, true)
         gridView!!.adapter = gridAdapter
-
 
         // Define the listener for the big grid view, such that it is possible to click on it. When
         // clicking on that grid, the corresponding cell should be yellow.
@@ -187,9 +162,9 @@ class PlaceShipActivity : BaseActivity() {
 
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
             if (shipsOnCell == 1) {
-                cellView.setBackgroundColor(gridAdapter!!.context.resources.getColor(R.color.yellow))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow))
             } else {
-                cellView.setBackgroundColor(gridAdapter!!.context.resources.getColor(R.color.red))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
             }
         }
     }

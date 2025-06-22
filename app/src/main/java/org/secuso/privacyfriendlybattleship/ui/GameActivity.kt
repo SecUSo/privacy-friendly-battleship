@@ -25,31 +25,25 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.DialogFragment
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
+import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.GridView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import org.secuso.privacyfriendlybattleship.Constants
 import org.secuso.privacyfriendlybattleship.R
-import org.secuso.privacyfriendlybattleship.game.GameCell
 import org.secuso.privacyfriendlybattleship.game.GameController
-import org.secuso.privacyfriendlybattleship.game.GameGrid
 import org.secuso.privacyfriendlybattleship.game.GameMode
-import org.secuso.privacyfriendlybattleship.ui.GameActivity.GameDialog
-import org.secuso.privacyfriendlybattleship.ui.GameActivity.LoseDialog
-import org.secuso.privacyfriendlybattleship.ui.GameActivity.SwitchDialog
-import org.secuso.privacyfriendlybattleship.ui.GameActivity.WinDialog
 import java.util.Timer
 import java.util.TimerTask
 
@@ -74,6 +68,8 @@ class GameActivity : BaseActivity() {
     private var gridViewBig: GridView? = null
     private var gridViewSmall: GridView? = null
     private var layoutProvider: GameActivityLayoutProvider? = null
+    private lateinit var mainGameLayout: ViewGroup
+    private lateinit var fireButton: Button
 
     private var isCellClicked = false
     private var hasStarted = false
@@ -123,8 +119,19 @@ class GameActivity : BaseActivity() {
             controller!!.switchPlayers()
         }
 
-        this.playerName = findViewById<TextView>(R.id.player_name)
-        this.attempts = findViewById<TextView>(R.id.game_attempts)
+        mainGameLayout = findViewById(R.id.game_main_layout)
+        fireButton = findViewById(R.id.game_button_fire)
+        playerName = findViewById(R.id.player_name)
+        attempts = findViewById(R.id.game_attempts)
+
+        findViewById<Button>(R.id.game_button_help).setOnClickListener { buttonView ->
+            onClickHelpButton(buttonView)
+        }
+
+        fireButton.setText(R.string.game_button_fire)
+        fireButton.setOnClickListener { buttonView ->
+            onClickFireButton(buttonView)
+        }
 
         // Update the toolbar
         updateToolbar()
@@ -134,18 +141,6 @@ class GameActivity : BaseActivity() {
 
         // Set up the time
         setUpTimer()
-
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            //set correct size for small grid
-            gridViewSmall!!.post {
-                val layoutParams = gridViewSmall!!.layoutParams
-                layoutParams.width =
-                    layoutProvider!!.miniGridCellSizeInPixel * gridSize + gridSize - 1
-                layoutParams.height =
-                    layoutProvider!!.miniGridCellSizeInPixel * gridSize + gridSize - 1
-                gridViewSmall!!.layoutParams = layoutParams
-            }
-        }
 
         if (controller!!.mode == GameMode.VS_PLAYER || controller!!.mode == GameMode.CUSTOM) {
             // Check if the configuration has changed
@@ -170,12 +165,9 @@ class GameActivity : BaseActivity() {
                         be finished after the button has been clicked.
                         */
                         gridViewBig!!.isEnabled = false
-                        val doneButton = findViewById<Button>(R.id.game_button_fire)
-                        doneButton.setText(R.string.game_button_done)
-                        doneButton.setOnClickListener { view ->
-                            onClickDoneButton(
-                                view
-                            )
+                        fireButton.setText(R.string.game_button_done)
+                        fireButton.setOnClickListener { view ->
+                            onClickDoneButton(view)
                         }
                     } else {
                         if (this.isSwitchDialogDisplayed || !this.hasStarted) {
@@ -187,11 +179,10 @@ class GameActivity : BaseActivity() {
             }
         } else {
             //setup GridViews again after layout is finished to avoid wrong icon rendering
-            val layout = findViewById<LinearLayout>(R.id.game_linear_layout)
-            val vto = layout.viewTreeObserver
+            val vto = mainGameLayout.viewTreeObserver
             vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    layout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    mainGameLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     setupGridViews()
                 }
             })
@@ -337,12 +328,9 @@ class GameActivity : BaseActivity() {
         Change the listener and the text of the "Done" button, such that the grids fade out
         after the button has been clicked.
         */
-        val fireButton = findViewById<Button>(R.id.game_button_fire)
         fireButton.setText(R.string.game_button_fire)
-        fireButton.setOnClickListener { view ->
-            onClickFireButton(
-                view
-            )
+        fireButton.setOnClickListener { buttonView ->
+            onClickFireButton(buttonView)
         }
     }
 
@@ -428,20 +416,19 @@ class GameActivity : BaseActivity() {
             after the button has been clicked.
             */
             gridViewBig!!.isEnabled = false
-            val doneButton = findViewById<Button>(R.id.game_button_fire)
-            doneButton.setText(R.string.game_button_done)
-            doneButton.setOnClickListener { view ->
-                onClickDoneButton(
-                    view
-                )
+
+            fireButton.setText(R.string.game_button_done)
+            fireButton.setOnClickListener { view ->
+                onClickDoneButton(view)
             }
         }
     }
 
     fun onClickFinishButton(view: View?) {
-        val finishButton = findViewById<Button>(R.id.game_button_fire)
-        finishButton.setText(R.string.finish)
-        finishButton.setOnClickListener { goToMainActivity() }
+        fireButton.setText(R.string.finish)
+        fireButton.setOnClickListener {
+            goToMainActivity()
+        }
     }
 
     fun onClickShowMainGridButton(view: View?) {
@@ -479,49 +466,6 @@ class GameActivity : BaseActivity() {
         gridViewBig!!.numColumns = gridSize
         gridViewSmall!!.numColumns = gridSize
 
-        // Set the layout of the grids
-        val marginLayoutParamsBig =
-            gridViewBig!!.layoutParams as MarginLayoutParams
-        val marginLayoutParamsSmall =
-            gridViewSmall!!.layoutParams as MarginLayoutParams
-
-        val orientation = resources.configuration.orientation
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            marginLayoutParamsBig.setMargins(
-                layoutProvider!!.marginLeft,
-                layoutProvider!!.margin,
-                layoutProvider!!.marginRight,
-                0
-            )
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            marginLayoutParamsBig.setMargins(
-                layoutProvider!!.marginLeft,
-                layoutProvider!!.margin,
-                layoutProvider!!.marginRight,
-                layoutProvider!!.margin
-            )
-        }
-
-        marginLayoutParamsSmall.setMargins(
-            layoutProvider!!.marginLeft,
-            layoutProvider!!.margin,
-            layoutProvider!!.marginRight,
-            layoutProvider!!.margin
-        )
-        gridViewBig!!.layoutParams = marginLayoutParamsBig
-        gridViewSmall!!.layoutParams = marginLayoutParamsSmall
-
-        val layoutParams = gridViewSmall!!.layoutParams
-        layoutParams.width = layoutProvider!!.miniGridCellSizeInPixel * gridSize + gridSize - 1
-        layoutParams.height = layoutProvider!!.miniGridCellSizeInPixel * gridSize + gridSize - 1
-        gridViewSmall!!.layoutParams = layoutParams
-
-        gridViewBig!!.horizontalSpacing = 1
-        gridViewBig!!.verticalSpacing = 1
-
-        gridViewSmall!!.horizontalSpacing = 1
-        gridViewSmall!!.verticalSpacing = 1
-
         adapterMainGrid = GameGridAdapter(
             this,
             layoutProvider!!, controller!!, true
@@ -541,9 +485,7 @@ class GameActivity : BaseActivity() {
                     prevCell!!.setBackgroundColor(Color.WHITE)
                 }
                 positionGridCell = i
-                view.setBackgroundColor(
-                    adapterMainGrid!!.context.resources.getColor(R.color.yellow)
-                )
+                view.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow))
                 prevCell = view
                 // Display the grid cell, which was clicked.
                 adapterMainGrid!!.notifyDataSetChanged()

@@ -26,9 +26,9 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
-import org.secuso.privacyfriendlybattleship.ui.GameGridAdapter
 
 /**
  * This class implements an adapter for the grid view in the GameActivity, which changes the color
@@ -40,9 +40,9 @@ class GameGridAdapter : BaseAdapter {
     @JvmField
     var context: Activity
     var game: GameController
-    var layoutProvider: GameActivityLayoutProvider
-    var gridSize: Int
-    var isMainGrid: Boolean // Denotes whether the big or the small grid view is chosen
+    private var layoutProvider: GameActivityLayoutProvider
+    private var gridSize: Int
+    private var isMainGrid: Boolean // Denotes whether the big or the small grid view is chosen
     private var showShips: Boolean
 
     constructor(
@@ -96,55 +96,45 @@ class GameGridAdapter : BaseAdapter {
         */
         val cellColumn = cellIndex % this.gridSize
         val cellRow = cellIndex / this.gridSize
-        val currentCell = if (showShips) {
-            game.currentGrid.getCell(cellColumn, cellRow)
-        } else {
-            if ((isMainGrid xor game.currentPlayer)) game.gridSecondPlayer.getCell(
-                cellColumn,
-                cellRow
-            ) else game.gridFirstPlayer.getCell(cellColumn, cellRow)
-        }
-
-
-        /*
- If the grid cell was not initialized, set the color of the current grid to black or white
- in case that the grid cell is a part of a ship or not.
-  */
-        if (view == null) {
-            gridCell = ImageView(this.context)
-
-            // Scale the grid cells by using the GameActivityLayoutProvider
-            val cellSize = if (!isMainGrid) {
-                layoutProvider.miniGridCellSizeInPixel
-            } else { //is main grid
-                layoutProvider.mainGridCellSizeInPixel
+        val currentCell =
+            if (showShips) {
+                game.currentGrid.getCell(cellColumn, cellRow)
+            } else if ((isMainGrid xor game.currentPlayer)) {
+                game.gridSecondPlayer.getCell(cellColumn, cellRow)
+            } else {
+                game.gridFirstPlayer.getCell(cellColumn, cellRow)
             }
 
-            gridCell.layoutParams = AbsListView.LayoutParams(cellSize, cellSize)
+        if (view is ImageView) {
+            gridCell = view
+        } else {
+            gridCell = ImageView(this.context)
             gridCell.scaleType = ImageView.ScaleType.CENTER_CROP
             gridCell.setBackgroundColor(Color.WHITE)
-
             // Set the grid cell of the current player
             if (currentCell.isShip && !isMainGrid || currentCell.isShip && showShips) {
                 gridCell.setImageResource(currentCell.resourceId)
             }
+        }
+
+        // Scale the grid cells by using the GameActivityLayoutProvider
+        // Note: If grid gets set-up, its size is not available which results in cell size 0.
+        val cellSize = if (isMainGrid) {
+            layoutProvider.mainGridCellSizeInPixel
         } else {
-            gridCell = view as ImageView
+            layoutProvider.miniGridCellSizeInPixel
+        }
+        if (null == gridCell.layoutParams || gridCell.layoutParams.width != cellSize) {
+            gridCell.layoutParams = AbsListView.LayoutParams(cellSize, cellSize)
         }
 
         if (currentCell.isHit) {
             if (currentCell.isShip) {
-                gridCell.setBackgroundColor(context.resources.getColor(R.color.red))
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
             } else {
-                gridCell.setBackgroundColor(context.resources.getColor(R.color.lightblue))
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.lightblue))
             }
         }
         return gridCell
-    }
-
-    companion object {
-        const val SMALL_GRID: String = "SMALL"
-
-        private val TAG: String = GameGridAdapter::class.java.simpleName
     }
 }
