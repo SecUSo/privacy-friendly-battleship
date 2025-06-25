@@ -22,7 +22,6 @@ package org.secuso.privacyfriendlybattleship.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity
 
 /**
  * This activity is called when the app starts. It displays the logo of the app.

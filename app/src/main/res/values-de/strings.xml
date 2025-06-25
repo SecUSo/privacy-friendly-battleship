@@ -49,8 +49,8 @@
     <string name="help_menu_game_mode_dual_player">Spielen Sie zu zweit gegeneinander.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfacher Schwierigkeit.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwerer Schwierigkeit.</string>
-    <string name="help_menu_game_size">Größe des Spielfeldes.</string>
-    <string name="help_menu_game_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
+    <string name="help_menu_grid_size">Größe des Spielfeldes.</string>
+    <string name="help_menu_grid_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
     <string name="help_menu_quick_start">Wählen Sie auf \"Schiffe zufällig\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
     <string name="help_menu_settings">Wählen Sie auf \"Schiffe manuell\", um die Schiffe selbst zu platzieren.</string>
     <string name="help_menu_start">Starten des Spiels</string>
@@ -104,6 +104,6 @@
     <string name="ship_set_alert_title">Achtung!</string>
     <string name="ship_set_alert_message">Bitte fügen Sie mindestens ein Schiff ein.</string>
     <string name="game_mode">Spielmodus</string>
-    <string name="game_size">Spielfeldgröße</string>
+    <string name="grid_size">Spielfeldgröße</string>
 
 </resources>

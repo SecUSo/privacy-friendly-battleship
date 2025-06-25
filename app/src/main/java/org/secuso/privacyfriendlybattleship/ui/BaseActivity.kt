@@ -20,11 +20,9 @@
 package org.secuso.privacyfriendlybattleship.ui
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -35,7 +33,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import org.secuso.privacyfriendlybattleship.R
-import org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity
+import org.secuso.privacyfriendlybattleship.util.PrefManager
 
 /**
  * Created by Chris on 04.07.2016. Edited by Ali Kalsen on 08.03.2017
@@ -47,13 +45,13 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     // Helper
     private var mHandler: Handler? = null
-    protected lateinit var mSharedPreferences: SharedPreferences
+    protected lateinit var mSharedPreferences: PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //setContentView(R.layout.activity_main);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        mSharedPreferences = PrefManager(this.baseContext)
         mHandler = Handler()
 
         //ActionBar ab = getSupportActionBar();

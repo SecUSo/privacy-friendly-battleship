@@ -36,11 +36,9 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
-import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import org.secuso.privacyfriendlybattleship.Constants
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 import org.secuso.privacyfriendlybattleship.game.GameMode
@@ -196,21 +194,11 @@ class GameActivity : BaseActivity() {
         }
     }
 
-    private val isFirstActivityStart: Boolean
-        get() = mSharedPreferences.getBoolean(
-            Constants.FIRST_GAME_START,
-            true
-        )
-
-    private fun setActivityStarted() {
-        mSharedPreferences.edit().putBoolean(Constants.FIRST_GAME_START, false).commit()
-    }
-
     /**
      * Shows the help dialog when the app has started for the first time.
      */
     fun showHelpDialog() {
-        if (isFirstActivityStart) {
+        if (mSharedPreferences.isFirstGameStart) {
             val helpDialog = HelpDialog()
             helpDialog.isCancelable = false
             helpDialog.show(fragmentManager, HelpDialog::class.java.simpleName)
@@ -792,13 +780,12 @@ class GameActivity : BaseActivity() {
             builder.setTitle(activity.getString(R.string.help_dialog_title))
             builder.setIcon(R.mipmap.icon_drawer)
 
-            builder.setPositiveButton(
-                activity.getString(R.string.okay)
-            ) { dialogInterface, i ->
-                if (!(activity as GameActivity).isFirstActivityStart && !(activity as GameActivity).moveMade) {
+            builder.setPositiveButton(activity.getString(R.string.okay)) { dialogInterface, i ->
+                if (   !(activity as GameActivity).mSharedPreferences.isFirstGameStart
+                    && !(activity as GameActivity).moveMade) {
                     (activity as GameActivity).controller!!.startTimer()
                 } else {
-                    (activity as GameActivity).setActivityStarted()
+                    (activity as GameActivity).mSharedPreferences.isFirstGameStart = false
                 }
             }
             return builder.create()

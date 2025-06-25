@@ -39,7 +39,6 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import org.secuso.privacyfriendlybattleship.Constants
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.Direction
 import org.secuso.privacyfriendlybattleship.game.GameCell
@@ -79,9 +78,9 @@ class PlaceShipActivity : BaseActivity() {
         setupGridView(this.gridSize)
 
         // Show the tutorial dialog if first time in activity
-        if (isFirstActivityStart) {
+        if (mSharedPreferences.isFirstPlacementStart) {
             showTutorialDialog()
-            setActivityStarted()
+            mSharedPreferences.isFirstPlacementStart = false
         }
     }
 
@@ -89,18 +88,8 @@ class PlaceShipActivity : BaseActivity() {
         super.onBackPressed()
     }
 
-    private val isFirstActivityStart: Boolean
-        get() = preferences!!.getBoolean(
-            Constants.FIRST_PLACEMENT_START,
-            true
-        )
-
     private fun showTutorialDialog() {
         TutorialDialog().show(fragmentManager, TutorialDialog::class.java.simpleName)
-    }
-
-    private fun setActivityStarted() {
-        preferences!!.edit().putBoolean(Constants.FIRST_PLACEMENT_START, false).commit()
     }
 
     private fun showInvalidPlacementDialog() {

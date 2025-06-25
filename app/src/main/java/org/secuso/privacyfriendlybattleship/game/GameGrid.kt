@@ -21,7 +21,6 @@ package org.secuso.privacyfriendlybattleship.game
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
-import java.util.LinkedList
 import java.util.Random
 
 /**
@@ -103,23 +102,6 @@ class GameGrid : Parcelable {
     }
 
     companion object {
-        // GameGrids needed for the main activity and quick start
-        private const val SIZE_5x5 = 5
-        private const val SIZE_10x10 = 10
-
-
-        //private final int resIDString;
-        private val validSizes: MutableList<Int> = LinkedList()
-
-        init {
-            validSizes.add(SIZE_5x5)
-            validSizes.add(SIZE_10x10)
-        }
-
-        fun getValidSizes(): List<Int> {
-            return validSizes
-        }
-
         @JvmField
         val CREATOR: Creator<GameGrid> = object : Creator<GameGrid> {
             override fun createFromParcel(parcel: Parcel): GameGrid {

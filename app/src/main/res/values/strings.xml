@@ -15,7 +15,7 @@
     <string name="main_button_place_ships">Place ships</string>
     <string name="custom_game">Manual Order</string>
     <string name="game_mode">Game Mode</string>
-    <string name="game_size">Board Size</string>
+    <string name="grid_size">Board Size</string>
 
     <string name="mode_two_player">2 players</string>
     <string name="mode_vs_cpu_easy">CPU easy</string>
@@ -45,8 +45,8 @@
     <string name="help_menu_game_mode_dual_player">Play against another player.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Play against the computer in easy mode.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Play against the computer in hard mode.</string>
-    <string name="help_menu_game_size">Size of the game board</string>
-    <string name="help_menu_game_size_description">Select the size of the game board. The possible sizes for the game field are 5x5 or 10x10.</string>
+    <string name="help_menu_grid_size">Size of the game board</string>
+    <string name="help_menu_grid_size_description">Select the size of the game board. The possible sizes for the game field are 5x5 or 10x10.</string>
     <string name="help_menu_start">Start the game</string>
     <string name="help_menu_quick_start">Press the \"RANDOM ORDER\" to start the game with the selected mode and size. The ships will be placed randomly for you and your opponent.</string>
     <string name="help_menu_settings">Press the \"MANUAL ORDER\" button if you want to customize your ship set and place them manually.</string>

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Privacy Friendly Password Generator. If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package org.secuso.privacyfriendlybattleship.tutorial
+package org.secuso.privacyfriendlybattleship.ui
 
 import android.content.Intent
 import android.graphics.Color
@@ -31,26 +31,26 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.secuso.privacyfriendlybattleship.R
-import org.secuso.privacyfriendlybattleship.ui.MainActivity
+import org.secuso.privacyfriendlybattleship.util.PrefManager
 
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
  */
 class TutorialActivity : AppCompatActivity() {
-    private var viewPager: ViewPager? = null
-    private var myViewPagerAdapter: MyViewPagerAdapter? = null
-    private var dotsLayout: LinearLayout? = null
     private var layouts = intArrayOf(R.layout.tutorial_slide1, R.layout.tutorial_slide2)
-    private var btnSkip: Button? = null
-    private var btnNext: Button? = null
-    private var prefManager: PrefManager? = null
+    private lateinit var viewPager: ViewPager
+    private lateinit var myViewPagerAdapter: MyViewPagerAdapter
+    private lateinit var dotsLayout: LinearLayout
+    private lateinit var btnSkip: Button
+    private lateinit var btnNext: Button
+    private lateinit var mSharedPreferences: PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Checking for first time launch - before calling setContentView()
-        prefManager = PrefManager(this)
-        if (!prefManager!!.isTutorialLaunch && (intent == null || ACTION_SHOW_ANYWAYS != intent.action)) {
+        mSharedPreferences = PrefManager(this)
+        if (!mSharedPreferences.isFirstTutorialStart && (intent == null || ACTION_SHOW_ANYWAYS != intent.action)) {
             launchHomeScreen()
             finish()
         }
@@ -73,15 +73,15 @@ class TutorialActivity : AppCompatActivity() {
         changeStatusBarColor()
 
         myViewPagerAdapter = MyViewPagerAdapter()
-        viewPager!!.adapter = myViewPagerAdapter
-        viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
+        viewPager.adapter = myViewPagerAdapter
+        viewPager.addOnPageChangeListener(viewPagerPageChangeListener)
 
-        btnSkip!!.setOnClickListener { launchHomeScreen() }
+        btnSkip.setOnClickListener { launchHomeScreen() }
 
-        btnNext!!.setOnClickListener {
+        btnNext.setOnClickListener {
             val current = getItem(+1)
             if (current < layouts.size) {
-                viewPager!!.currentItem = current
+                viewPager.currentItem = current
             } else {
                 launchHomeScreen()
             }
@@ -94,24 +94,24 @@ class TutorialActivity : AppCompatActivity() {
         val colorsActive = resources.getIntArray(R.array.array_dot_active)
         val colorsInactive = resources.getIntArray(R.array.array_dot_inactive)
 
-        dotsLayout!!.removeAllViews()
+        dotsLayout.removeAllViews()
         for (i in dots.indices) {
             dots[i] = TextView(this)
             dots[i]!!.text = Html.fromHtml("&#8226;")
             dots[i]!!.textSize = 35f
             dots[i]!!.setTextColor(colorsInactive[currentPage])
-            dotsLayout!!.addView(dots[i])
+            dotsLayout.addView(dots[i])
         }
 
         if (dots.size > 0) dots[currentPage]!!.setTextColor(colorsActive[currentPage])
     }
 
     private fun getItem(i: Int): Int {
-        return viewPager!!.currentItem + i
+        return viewPager.currentItem + i
     }
 
     private fun launchHomeScreen() {
-        prefManager!!.isTutorialLaunch = false
+        mSharedPreferences.isFirstTutorialStart = false
         val intent = Intent(this, MainActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
@@ -129,11 +129,11 @@ class TutorialActivity : AppCompatActivity() {
             addBottomDots(position)
 
             if (position == layouts.size - 1) {
-                btnNext!!.text = getString(R.string.start)
-                btnSkip!!.visibility = View.GONE
+                btnNext.text = getString(R.string.start)
+                btnSkip.visibility = View.GONE
             } else {
-                btnNext!!.text = getString(R.string.next)
-                btnSkip!!.visibility = View.VISIBLE
+                btnNext.text = getString(R.string.next)
+                btnSkip.visibility = View.VISIBLE
             }
         }
 

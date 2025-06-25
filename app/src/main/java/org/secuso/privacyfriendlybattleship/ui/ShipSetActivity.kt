@@ -27,7 +27,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import org.secuso.privacyfriendlybattleship.Constants
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 import org.secuso.privacyfriendlybattleship.game.GameMode
@@ -104,24 +103,14 @@ class ShipSetActivity : BaseActivity() {
         this.boundShipSet5 = bound / 5
 
         // Show the tutorial dialog if first time in activity
-        if (isFirstActivityStart) {
+        if (mSharedPreferences.isFirstShipSetStart) {
             showTutorialDialog()
-            setActivityStarted()
+            mSharedPreferences.isFirstShipSetStart = false
         }
     }
 
-    private val isFirstActivityStart: Boolean
-        get() = mSharedPreferences.getBoolean(
-            Constants.FIRST_SHIP_SET_START,
-            true
-        )
-
     private fun showTutorialDialog() {
         TutorialShipSetDialog().show(fragmentManager, TutorialDialog::class.java.simpleName)
-    }
-
-    private fun setActivityStarted() {
-        mSharedPreferences.edit().putBoolean(Constants.FIRST_SHIP_SET_START, false).commit()
     }
 
     fun addShipOfSize2(view: View?) {

@@ -23,7 +23,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlybattleship.tutorial.TutorialActivity"
+            android:name="org.secuso.privacyfriendlybattleship.ui.TutorialActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

@@ -70,7 +70,7 @@
             android:id="@+id/title_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/game_size"
+            android:text="@string/grid_size"
             android:textStyle="bold"
             android:textSize="22sp"
             android:textColor="@color/colorPrimaryDark"

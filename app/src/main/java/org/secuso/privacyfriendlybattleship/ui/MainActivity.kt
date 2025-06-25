@@ -31,11 +31,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import org.secuso.privacyfriendlybattleship.Constants
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
-import org.secuso.privacyfriendlybattleship.game.GameGrid
 import org.secuso.privacyfriendlybattleship.game.GameMode
+import org.secuso.privacyfriendlybattleship.game.GridSize
 
 /**
  * This activity implements the main menu of the app. Here the player can
@@ -55,16 +54,6 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setupViewPagerMode()
         setupViewPagerSize()
-    }
-
-    private val isFirstAppStart: Boolean
-        get() = mSharedPreferences.getBoolean(
-            Constants.FIRST_APP_START,
-            true
-        )
-
-    private fun setAppStarted() {
-        mSharedPreferences.edit().putBoolean(Constants.FIRST_APP_START, false).commit()
     }
 
     override val navigationDrawerID: Int
@@ -89,7 +78,7 @@ class MainActivity : BaseActivity() {
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
-            return GameSizeFragment.newInstance(position)
+            return GridSizeFragment.newInstance(position)
         }
 
         override fun getCount(): Int {
@@ -108,7 +97,8 @@ class MainActivity : BaseActivity() {
             val rootView = inflater.inflate(R.layout.fragment_mode_main, container, false)
 
             // Generate the image for the gameMode
-            val gameMode = GameMode.getValidTypes()[requireArguments().getInt(ARG_SECTION_MODE_NUMBER)]
+            val modeIndex = requireArguments().getInt(ARG_SECTION_MODE_NUMBER)
+            val gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
             val imageView = rootView.findViewById<ImageView>(R.id.gameModeImage)
             imageView.setImageResource(gameMode.imageResID)
 
@@ -136,7 +126,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    class GameSizeFragment  // Constructor
+    class GridSizeFragment  // Constructor
         : Fragment() {
         override fun onCreateView(
             inflater: LayoutInflater,
@@ -146,11 +136,12 @@ class MainActivity : BaseActivity() {
             val rootView = inflater.inflate(R.layout.fragment_size_main, container, false)
 
             // Get the gridSize
-            val gridSize = GameGrid.getValidSizes()[requireArguments().getInt(ARG_SECTION_SIZE_NUMBER)]
+            val sizeIndex = requireArguments().getInt(ARG_SECTION_SIZE_NUMBER)
+            val gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5).width
 
             // Generate the text for the gridSize, which is either 5x5 or 10x10
             val textView = rootView.findViewById<TextView>(R.id.select_size)
-            textView.text = gridSize.toString() + "x" + gridSize.toString()
+            textView.text = gridSize.toString() + " x " + gridSize.toString()
 
             return rootView
         }
@@ -158,8 +149,8 @@ class MainActivity : BaseActivity() {
         companion object {
             const val ARG_SECTION_SIZE_NUMBER: String = "section_size_number"
 
-            fun newInstance(sectionNumber: Int): GameSizeFragment {
-                val sizeFragment = GameSizeFragment()
+            fun newInstance(sectionNumber: Int): GridSizeFragment {
+                val sizeFragment = GridSizeFragment()
                 val args = Bundle()
                 args.putInt(ARG_SECTION_SIZE_NUMBER, sectionNumber)
                 sizeFragment.arguments = args
@@ -176,13 +167,9 @@ class MainActivity : BaseActivity() {
         arrowLeft.visibility = View.INVISIBLE
         arrowRight.visibility = View.VISIBLE
 
-        val sectionPagerModeAdapter = SectionsPagerModeAdapter(
-            supportFragmentManager
-        )
+        val sectionPagerModeAdapter = SectionsPagerModeAdapter(supportFragmentManager)
         viewPagerMode = findViewById<ViewPager>(R.id.modeScroller)
         viewPagerMode!!.adapter = sectionPagerModeAdapter
-        viewPagerMode!!.currentItem = 0
-
         viewPagerMode!!.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
@@ -193,16 +180,15 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                arrowLeft.visibility =
-                    if (position == 0) View.INVISIBLE else View.VISIBLE
-                arrowRight.visibility =
-                    if (position == 2) View.INVISIBLE else View.VISIBLE
+                arrowLeft.visibility  = if (position == 0) View.INVISIBLE else View.VISIBLE
+                arrowRight.visibility = if (position == 2) View.INVISIBLE else View.VISIBLE
             }
 
             override fun onPageScrollStateChanged(state: Int) {
                 // not used
             }
         })
+        viewPagerMode!!.currentItem = mSharedPreferences.lastGameMode.ordinal
     }
 
     // Setup the ViewPager for the Game size
@@ -212,13 +198,9 @@ class MainActivity : BaseActivity() {
         arrowLeft.visibility = View.INVISIBLE
         arrowRight.visibility = View.VISIBLE
 
-        val sectionPagerSizeAdapter = SectionsPagerSizeAdapter(
-            supportFragmentManager
-        )
+        val sectionPagerSizeAdapter = SectionsPagerSizeAdapter(supportFragmentManager)
         viewPagerSize = findViewById<ViewPager>(R.id.sizeScroller)
         viewPagerSize!!.adapter = sectionPagerSizeAdapter
-        viewPagerSize!!.currentItem = 0
-
         viewPagerSize!!.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
@@ -229,22 +211,21 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                arrowLeft.visibility =
-                    if (position == 0) View.INVISIBLE else View.VISIBLE
-                arrowRight.visibility =
-                    if (position == 1) View.INVISIBLE else View.VISIBLE
+                arrowLeft.visibility  = if (position == 0) View.INVISIBLE else View.VISIBLE
+                arrowRight.visibility = if (position == 1) View.INVISIBLE else View.VISIBLE
             }
 
             override fun onPageScrollStateChanged(state: Int) {
                 // not used
             }
         })
+        viewPagerSize!!.currentItem = mSharedPreferences.lastGridSize.ordinal
     }
 
 
     fun onClick(view: View) {
         val sizeIndex: Int
-        val gridSize: Int
+        val gridSize: GridSize
         val modeIndex: Int
         val intent: Intent
         val gameMode: GameMode
@@ -261,11 +242,14 @@ class MainActivity : BaseActivity() {
         } else if (view.id == R.id.quick_start_button) {
             // Get the selected game mode and the grid size
             modeIndex = viewPagerMode!!.currentItem
-            gameMode = GameMode.getValidTypes()[modeIndex]
+            gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
             sizeIndex = viewPagerSize!!.currentItem
-            gridSize = GameGrid.getValidSizes()[sizeIndex]
+            gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
 
-            game = GameController(gridSize, gameMode)
+            mSharedPreferences.lastGameMode = gameMode
+            mSharedPreferences.lastGridSize = gridSize
+
+            game = GameController(gridSize.width, gameMode)
             game.placeAllShips() //place all ships randomly for both players
 
             // send game information to GameActivity
@@ -275,11 +259,14 @@ class MainActivity : BaseActivity() {
         } else if (view.id == R.id.action_settings) {
             // Get the selected game mode and the grid size
             modeIndex = viewPagerMode!!.currentItem
-            gameMode = GameMode.getValidTypes()[modeIndex]
+            gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
             sizeIndex = viewPagerSize!!.currentItem
-            gridSize = GameGrid.getValidSizes()[sizeIndex]
+            gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
 
-            game = GameController(gridSize, gameMode) //place all ships randomly for both players
+            mSharedPreferences.lastGameMode = gameMode
+            mSharedPreferences.lastGridSize = gridSize
+
+            game = GameController(gridSize.width, gameMode) //place all ships randomly for both players
 
             // send game information to ShipSetActivity
             intent = Intent(this, ShipSetActivity::class.java)
