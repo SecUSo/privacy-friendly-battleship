@@ -28,10 +28,10 @@
     <string name="game_time">Time:</string>
     <string name="game_attempts">Attempts:</string>
     <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
-    <string name="game_dialog_hit_suffix">!</string>
+    <string name="game_dialog_hit_suffix">" was hit!"</string>
     <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
     <string name="game_dialog_loss">Too bad! You lost.</string>
-    <string name="game_dialog_win">And the winner is... </string>
+    <string name="game_dialog_win">And the winner is…</string>
     <string name="game_dialog_show_game_board">Show game board</string>
     <string name="game_dialog_quit">Do you want to quit the game?</string>
     <!--###HELP###-->
@@ -79,7 +79,7 @@
     <string name="okay">Okay</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="finish">Finish</string>
+    <string name="finish">Finish!</string>
     <!-- ### SHIP PLACEMENT ### -->
     <string name="title_activity_place_ships">Placement</string>
     <string name="place_ships_ready">Ready</string>

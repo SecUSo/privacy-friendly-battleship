@@ -1,22 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Schiffe versenken</string>
     <string name="app_name_long">Privacy Friendly Schiffe Versenken</string>
-
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
     <string name="action_main">Hauptmenü</string>
-
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Schiffe zufällig</string>
     <string name="main_button_place_ships">Schiffe manuell</string>
     <string name="custom_game">Schiffe wählen</string>
-
     <string name="mode_two_player">2 Spieler</string>
     <string name="mode_vs_cpu_easy">CPU leicht</string>
     <string name="mode_vs_cpu_hard">CPU schwer</string>
     <string name="mode_custom">Eigenes Spiel</string>
-
     <!-- ###GAME###-->
     <string name="title_activity_game">Spiel</string>
     <string name="game_button_fire">Feuern</string>
@@ -30,9 +27,8 @@
     <string name="game_dialog_hit_suffix">" zerstört!"</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
-    <string name="game_dialog_win">Und der Gewinner ist… </string>
+    <string name="game_dialog_win">Und der Gewinner ist…</string>
     <string name="game_dialog_quit">Möchten Sie das Spiel abbrechen?</string>
-
     <!--###HELP###-->
     <string name="help">Hilfe</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
@@ -49,12 +45,11 @@
     <string name="help_menu_game_mode_dual_player">Spielen Sie zu zweit gegeneinander.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfacher Schwierigkeit.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwerer Schwierigkeit.</string>
-    <string name="help_menu_game_size">Größe des Spielfeldes.</string>
+    <string name="help_menu_game_size">Größe des Spielfeldes</string>
     <string name="help_menu_game_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
     <string name="help_menu_quick_start">Wählen Sie auf \"Schiffe zufällig\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
     <string name="help_menu_settings">Wählen Sie auf \"Schiffe manuell\", um die Schiffe selbst zu platzieren.</string>
     <string name="help_menu_start">Starten des Spiels</string>
-
     <!--###ABOUT###-->
     <string name="about">Über</string>
     <string name="version_number">Version</string>
@@ -63,25 +58,20 @@
     <string name="about_affiliation">In Zusammenarbeit mit</string>
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt vom Karlsruher Institut für Technologie. Quelltext lizenziert unter GPLv3. Bilder copyright KIT und Google Inc.</string>
     <string name="more_info">Weitere Infos unter:</string>
-
     <!-- ###TUTORIAL### -->
     <string name="tutorial">Tutorial</string>
     <string name="skip">Überspringen</string>
     <string name="next">Weter</string>
     <string name="start">Start</string>
-
     <string name="slide_1_title">Willkommen</string>
     <string name="slide_1_desc">Willkommen zu Privacy Friendly Schiffe Versenken. </string>
-
     <string name="slide_2_title">Spiel wählen</string>
     <string name="slide_2_desc">Sie können zwischen drei Spielmodi und zwei Spielfeldgrößen wählen.</string>
     <string name="slide_2_desc2">Wählen Sie \"Schiffe zufällig\" so werden die Schiffe automatisch gesetzt. Um den Platz Ihrer Schiffe manuel zu setzen, wählen Sie bitte \"Schiffe manuell\".</string>
-
     <string name="okay">Okay</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="finish">Fertig!</string>
-
     <!-- ### SHIP PLACEMENT ### -->
     <string name="place_ships_ready">Bereit</string>
     <string name="title_activity_place_ships">Platzieren der Schiffe</string>
@@ -91,7 +81,6 @@
     <string name="placement_next_player_text">Platziere deine Schiffe.</string>
     <string name="player">Spieler</string>
     <string name="game_dialog_show_game_board">Spielfeld anzeigen</string>
-
     <!-- #### SHIP SET ### -->
     <string name="title_activity_ship_set">Anzahl der Schiffe</string>
     <string name="ship_set_size_five_ships">Schiffe der Größe 5</string>
@@ -105,5 +94,4 @@
     <string name="ship_set_alert_message">Bitte fügen Sie mindestens ein Schiff ein.</string>
     <string name="game_mode">Spielmodus</string>
     <string name="game_size">Spielfeldgröße</string>
-
 </resources>
