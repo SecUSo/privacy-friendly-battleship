@@ -1,22 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Schiffe versenken</string>
     <string name="app_name_long">Privacy Friendly Schiffe Versenken</string>
-
     <!-- ###DRAWER###-->
     <string name="action_help">Hilfe</string>
     <string name="action_about">Über</string>
     <string name="action_main">Hauptmenü</string>
-
     <!-- ###MAIN### -->
-    <string name="main_button_quick_start">Schiffe zufällig</string>
+    <string name="main_button_quick_start">Zufällige Reihenfolge</string>
     <string name="main_button_place_ships">Schiffe manuell</string>
-    <string name="custom_game">Schiffe wählen</string>
-
+    <string name="custom_game">Manuelle Reihenfolge</string>
     <string name="mode_two_player">2 Spieler</string>
     <string name="mode_vs_cpu_easy">CPU leicht</string>
     <string name="mode_vs_cpu_hard">CPU schwer</string>
     <string name="mode_custom">Eigenes Spiel</string>
-
     <!-- ###GAME###-->
     <string name="title_activity_game">Spiel</string>
     <string name="game_button_fire">Feuern</string>
@@ -27,19 +24,18 @@
     <string name="game_time">Zeit:</string>
     <string name="game_attempts">Züge:</string>
     <string name="game_dialog_hit_prefix">Sie haben ein Schiff der Größe </string>
-    <string name="game_dialog_hit_suffix">" zerstört!"</string>
+    <string name="game_dialog_hit_suffix">" wurde getroffen!"</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
-    <string name="game_dialog_win">Und der Gewinner ist… </string>
+    <string name="game_dialog_win">Und der Gewinner ist…</string>
     <string name="game_dialog_quit">Möchten Sie das Spiel abbrechen?</string>
-
     <!--###HELP###-->
     <string name="help">Hilfe</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
     <string name="help_permissions_heading">Berechtigungen</string>
     <string name="help_permissions_description">Privacy Friendly Schiffe versenken benötigt keine Berechtigungen.</string>
     <string name="help_dialog_title">Spielanleitung</string>
-    <string name="help_game_intro">Das obere Raster zeigt das Spielfeld Ihres Gegners, das untere Ihr eigenes. Um zu spielen, befolgen Sie bitte die folgenden Schritte:</string>
+    <string name="help_game_intro">Das obere Raster zeigt das Spielfeld Ihres Gegners, das untere Ihr eigenes. Um das Spiel zu spielen, gehen Sie folgendermaßen vor.</string>
     <string name="help_game_step_four">4. Falls Sie gegen einen anderen Spieler spielen, können Sie Ihren Zug durch Klicken auf \"FERTIG\" beenden und das Gerät an Ihren Gegenspieler weiter reichen. Spielen Sie gegen den Computergegner, greift dieser automatisch an.</string>
     <string name="help_game_step_one">1. Wählen Sie das anzugreifende Feld durch tippen darauf aus.</string>
     <string name="help_game_step_two">2. Bestätigen Sie durch drücken des \"FEUER\" Buttons. Das Feld färbt sich bei einem Treffer rot, beim Verfehlen blau.</string>
@@ -49,12 +45,11 @@
     <string name="help_menu_game_mode_dual_player">Spielen Sie zu zweit gegeneinander.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfacher Schwierigkeit.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwerer Schwierigkeit.</string>
-    <string name="help_menu_game_size">Größe des Spielfeldes.</string>
+    <string name="help_menu_game_size">Größe des Spielfeldes</string>
     <string name="help_menu_game_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
-    <string name="help_menu_quick_start">Wählen Sie auf \"Schiffe zufällig\", um das Spiel mit ausgewähltem Modus und Spielfeldgröße zu starten. Die Schiffe werden dabei für beide Spieler automatisch platziert.</string>
-    <string name="help_menu_settings">Wählen Sie auf \"Schiffe manuell\", um die Schiffe selbst zu platzieren.</string>
+    <string name="help_menu_quick_start">Drücken Sie die Taste \"Zufällige Reihenfolge\", um das Spiel mit dem gewählten Modus und der gewählten Größe zu starten. Die Schiffe werden nach dem Zufallsprinzip für Sie und Ihren Gegner platziert.</string>
+    <string name="help_menu_settings">Drücken Sie die Schaltfläche \"MANUELLE Reihenfolge\", wenn Sie Ihr Schiffsset anpassen und manuell platzieren möchten.</string>
     <string name="help_menu_start">Starten des Spiels</string>
-
     <!--###ABOUT###-->
     <string name="about">Über</string>
     <string name="version_number">Version</string>
@@ -63,35 +58,29 @@
     <string name="about_affiliation">In Zusammenarbeit mit</string>
     <string name="privacy_friendly">Diese App gehört zur Gruppe der Privacy Friendly Apps entwickelt vom Karlsruher Institut für Technologie. Quelltext lizenziert unter GPLv3. Bilder copyright KIT und Google Inc.</string>
     <string name="more_info">Weitere Infos unter:</string>
-
     <!-- ###TUTORIAL### -->
     <string name="tutorial">Tutorial</string>
     <string name="skip">Überspringen</string>
-    <string name="next">Weter</string>
+    <string name="next">Weiter</string>
     <string name="start">Start</string>
-
     <string name="slide_1_title">Willkommen</string>
     <string name="slide_1_desc">Willkommen zu Privacy Friendly Schiffe Versenken. </string>
-
     <string name="slide_2_title">Spiel wählen</string>
     <string name="slide_2_desc">Sie können zwischen drei Spielmodi und zwei Spielfeldgrößen wählen.</string>
-    <string name="slide_2_desc2">Wählen Sie \"Schiffe zufällig\" so werden die Schiffe automatisch gesetzt. Um den Platz Ihrer Schiffe manuel zu setzen, wählen Sie bitte \"Schiffe manuell\".</string>
-
+    <string name="slide_2_desc2">Tippen Sie auf \"Zufällige Reihenfolge\", um das Spiel direkt zu starten, oder auf \"Manuelle Reihenfolge\", um Ihre Schlachtschiffe zu platzieren. Viel Spaß mit dem Spiel!</string>
     <string name="okay">Okay</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="finish">Fertig!</string>
-
     <!-- ### SHIP PLACEMENT ### -->
     <string name="place_ships_ready">Bereit</string>
-    <string name="title_activity_place_ships">Platzieren der Schiffe</string>
+    <string name="title_activity_place_ships">Platzieren</string>
     <string name="placement_tutorial_text">Durch tippen auf ein Schiff wird dieses ausgewählt. Das ausgewählte Schiff kann dann mittels der Pfeile gedreht und verschoben werden. Wenn Du mit der Platzierung der Schiffe zufrieden bist, kann diese durch tippen auf \"BEREIT\" bestätigt werden. Zum korrekten platzieren der Schiffe dürfen diese nicht miteinander kollidieren.</string>
     <string name="placement_tutorial_title">Platzieren der Schiffe</string>
     <string name="placement_invalid_text">Die Schiffe dürfen sich nicht überlappen.</string>
     <string name="placement_next_player_text">Platziere deine Schiffe.</string>
     <string name="player">Spieler</string>
     <string name="game_dialog_show_game_board">Spielfeld anzeigen</string>
-
     <!-- #### SHIP SET ### -->
     <string name="title_activity_ship_set">Anzahl der Schiffe</string>
     <string name="ship_set_size_five_ships">Schiffe der Größe 5</string>
@@ -105,5 +94,4 @@
     <string name="ship_set_alert_message">Bitte fügen Sie mindestens ein Schiff ein.</string>
     <string name="game_mode">Spielmodus</string>
     <string name="game_size">Spielfeldgröße</string>
-
 </resources>
