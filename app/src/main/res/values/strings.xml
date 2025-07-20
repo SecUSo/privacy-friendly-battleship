@@ -1,27 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Battleships</string>
     <string name="app_name_long">Privacy Friendly Battleships</string>
-
     <!-- ###DRAWER###-->
     <string name="action_help">Help</string>
     <string name="action_about">About</string>
     <string name="action_main">Main</string>
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Random Order</string>
     <string name="main_button_place_ships">Place ships</string>
     <string name="custom_game">Manual Order</string>
     <string name="game_mode">Game Mode</string>
     <string name="game_size">Board Size</string>
-
     <string name="mode_two_player">2 players</string>
     <string name="mode_vs_cpu_easy">CPU easy</string>
     <string name="mode_vs_cpu_hard">CPU hard</string>
     <string name="mode_custom">Custom</string>
-
     <!-- ###GAME###-->
     <string name="title_activity_game">Game</string>
     <string name="game_button_fire">Fire</string>
@@ -38,7 +34,6 @@
     <string name="game_dialog_win">And the winner is... </string>
     <string name="game_dialog_show_game_board">Show game board</string>
     <string name="game_dialog_quit">Do you want to quit the game?</string>
-
     <!--###HELP###-->
     <string name="help">Help</string>
     <string name="help_menu_game_mode">Game Mode</string>
@@ -60,7 +55,6 @@
     <string name="help_privacy_heading">Privacy Info</string>
     <string name="help_permissions_heading">Permissions</string>
     <string name="help_permissions_description">Privacy Friendly Battleship does not use any permissions.</string>
-
     <!--###ABOUT###-->
     <string name="about">About</string>
     <string name="version_number">Version</string>
@@ -72,26 +66,20 @@
     <string name="more_info">More information can be found on:</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-battleship">Github-Repo</a></string>
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
-
     <!-- ###TUTORIAL### -->
     <string name="tutorial">Tutorial</string>
-
-    <string name="skip">Skip</string>
-    <string name="next">Next</string>
+    <string name="skip">Passer</string>
+    <string name="next">Suivant</string>
     <string name="start">Start</string>
-
     <string name="slide_1_title">Welcome</string>
     <string name="slide_1_desc">Welcome to Privacy Friendly Battleship. Let\'s get ready for playing.</string>
-
     <string name="slide_2_title">Choose Game</string>
     <string name="slide_2_desc">You can choose between three game modes and two sizes of the game board.</string>
     <string name="slide_2_desc2">Tap on \"Random order\" to directly start the game or on \"manual order\" to place your battleships. Enjoy the game!</string>
-
-    <string name="okay">Okay</string>
+    <string name="okay">Ok</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="finish">Finish</string>
-
     <!-- ### SHIP PLACEMENT ### -->
     <string name="title_activity_place_ships">Placement</string>
     <string name="place_ships_ready">Ready</string>
@@ -100,7 +88,6 @@
     <string name="placement_invalid_text">The ships must not overlap each other.</string>
     <string name="player">Player</string>
     <string name="placement_next_player_text">Place your ships.</string>
-
     <!-- ### SHIP SET ### -->
     <string name="title_activity_ship_set">Customize the ship set</string>
     <string name="ship_set_size_five_ships">Ships of size 5</string>
@@ -112,5 +99,4 @@
     <string name="ship_set_message">You can add or remove a ship of a certain size by pressing on the respective + or - button. Note that the number of ships is bounded.</string>
     <string name="ship_set_alert_title">Caution!</string>
     <string name="ship_set_alert_message">Please add at least one ship to the ship set.</string>
-
 </resources>
