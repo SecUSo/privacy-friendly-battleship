@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_main">Başlıca</string>
+    <string name="game_button_done">Bitti</string>
+    <string name="mode_two_player">2. oyuncu</string>
+    <string name="title_activity_game">Oyun</string>
+    <string name="game_button_fire">Ateş</string>
+    <string name="mode_vs_cpu_easy">Kolay bilgisayar</string>
+    <string name="mode_vs_cpu_hard">Zor bilgisayar</string>
+    <string name="game_time">Süre:</string>
+    <string name="game_dialog_loss">Çok kötü! Kaybettin.</string>
+    <string name="game_dialog_next_player">Senin sıran! Hazır mısın?</string>
+    <string name="help">Yardım</string>
+    <string name="help_permissions_heading">İzinler</string>
+    <string name="about">Hakkında</string>
+    <string name="version_number">Sürüm</string>
+    <string name="about_author">Yazarlar:</string>
+    <string name="help_dialog_title">Nasıl oynanır</string>
+    <string name="tutorial">Öğretici</string>
+    <string name="about_affiliation">ile bağlantılı olarak</string>
+    <string name="about_author_contributors">ve katkıda bulunanlar.</string>
+    <string name="okay">Tamam</string>
+    <string name="place_ships_ready">Hazır</string>
+    <string name="help_privacy_heading">Gizlilik Bilgisi</string>
+    <string name="help_menu_game_mode">Oyun Modu</string>
+    <string name="game_mode">Oyun Modu</string>
+    <string name="game_button_show_ships">Tüm gemileri göster</string>
+    <string name="action_about">Hakkında</string>
+    <string name="skip">Atla</string>
+    <string name="no">Hayır</string>
+    <string name="game_player_one">Oyuncu 1</string>
+    <string name="game_player_two">Oyuncu 2</string>
+    <string name="next">İleri</string>
+    <string name="start">Başla</string>
+    <string name="yes">Evet</string>
+    <string name="slide_1_title">Hoş geldiniz</string>
+    <string name="slide_2_title">Oyunu seçin</string>
+</resources>
