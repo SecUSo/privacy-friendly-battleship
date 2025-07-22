@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.secuso.privacyfriendlybattleship.R
+import org.secuso.privacyfriendlybattleship.checkGoodbyeGoogle
 import org.secuso.privacyfriendlybattleship.game.GameController
 import org.secuso.privacyfriendlybattleship.game.GameMode
 import org.secuso.privacyfriendlybattleship.game.GridSize
@@ -54,6 +55,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setupViewPagerMode()
         setupViewPagerSize()
+        checkGoodbyeGoogle(this, layoutInflater)
     }
 
     override val navigationDrawerID: Int
