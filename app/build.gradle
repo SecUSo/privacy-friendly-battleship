@@ -12,8 +12,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 35
         compileSdk 35
-        versionCode 9
-        versionName "1.2.4"
+        versionCode 10
+        versionName "1.2.5"
         vectorDrawables.useSupportLibrary = true
 
         ksp {
