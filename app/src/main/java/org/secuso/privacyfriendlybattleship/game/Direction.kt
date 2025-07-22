@@ -16,26 +16,28 @@
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see http://www.gnu.org/licenses/.
  */
+package org.secuso.privacyfriendlybattleship.game
 
-package org.secuso.privacyfriendlybattleship.game;
-
-import java.util.Random;
+import java.util.Random
 
 /**
  * This file represents the direction, used for ship placement.
  *
  * @author Alexander Müller, Ali Kalsen
  */
-
-public enum Direction {
+enum class Direction {
     NORTH, EAST, SOUTH, WEST;
 
-    public static Direction getRandomDirection() {
-        Random ranGen = new Random();
-        int direction = ranGen.nextInt(4);
-        if (direction == 0) return NORTH;
-        else if (direction == 1) return EAST;
-        else if (direction == 2) return SOUTH;
-        return WEST;
+    companion object {
+        fun getRandomDirection(): Direction {
+            val ranGen = Random()
+            val direction = ranGen.nextInt(4)
+            return when (direction) {
+                0 -> NORTH
+                1 -> EAST
+                2 -> SOUTH
+                else -> WEST
+            }
+        }
     }
 }
