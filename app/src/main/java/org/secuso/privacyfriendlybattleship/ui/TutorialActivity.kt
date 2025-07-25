@@ -15,18 +15,16 @@
 package org.secuso.privacyfriendlybattleship.ui
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -37,12 +35,16 @@ import org.secuso.privacyfriendlybattleship.util.PrefManager
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
  */
 class TutorialActivity : AppCompatActivity() {
-    private var layouts = intArrayOf(R.layout.tutorial_slide1, R.layout.tutorial_slide2)
     private lateinit var viewPager: ViewPager
-    private lateinit var myViewPagerAdapter: MyViewPagerAdapter
+    private val slides = arrayOf(R.layout.tutorial_slide1, R.layout.tutorial_slide2)
+
+    private var colorActive = 0
+    private var colorInactive = 0
+    private val dots = mutableListOf<TextView>()
     private lateinit var dotsLayout: LinearLayout
-    private lateinit var btnSkip: Button
+
     private lateinit var btnNext: Button
+    private lateinit var btnSkip: Button
     private lateinit var mSharedPreferences: PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,59 +57,36 @@ class TutorialActivity : AppCompatActivity() {
             finish()
         }
 
-        // Making notification bar transparent
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-
+        // Make notification bar transparent
         setContentView(R.layout.activity_tutorial)
-
         viewPager = findViewById(R.id.view_pager)
+        colorActive = ContextCompat.getColor(this, R.color.dotActive)
+        colorInactive = ContextCompat.getColor(this, R.color.dotInactive)
         dotsLayout = findViewById(R.id.layoutDots)
-        btnSkip = findViewById(R.id.btn_skip)
         btnNext = findViewById(R.id.btn_next)
+        btnSkip = findViewById(R.id.btn_skip)
 
-        addBottomDots(0)
+        addBottomDots()
 
-        changeStatusBarColor()
-
-        myViewPagerAdapter = MyViewPagerAdapter()
-        viewPager.adapter = myViewPagerAdapter
+        viewPager.setAdapter(TutorialViewPageAdapter())
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener)
-
-        btnSkip.setOnClickListener { launchHomeScreen() }
-
+        btnSkip.setOnClickListener {
+            launchHomeScreen()
+        }
         btnNext.setOnClickListener {
-            val current = getItem(+1)
-            if (current < layouts.size) {
-                viewPager.currentItem = current
+            // checking for last page
+            // if last page home screen will be launched
+            val nextItem = viewPager.currentItem + 1
+            if (nextItem < slides.size) {
+                // move to next screen
+                viewPager.setCurrentItem(nextItem)
             } else {
                 launchHomeScreen()
             }
         }
-    }
-
-    private fun addBottomDots(currentPage: Int) {
-        val dots = arrayOfNulls<TextView>(layouts.size)
-
-        val colorsActive = resources.getIntArray(R.array.array_dot_active)
-        val colorsInactive = resources.getIntArray(R.array.array_dot_inactive)
-
-        dotsLayout.removeAllViews()
-        for (i in dots.indices) {
-            dots[i] = TextView(this)
-            dots[i]!!.text = Html.fromHtml("&#8226;")
-            dots[i]!!.textSize = 35f
-            dots[i]!!.setTextColor(colorsInactive[currentPage])
-            dotsLayout.addView(dots[i])
+        onBackPressedDispatcher.addCallback(this) {
+            launchHomeScreen()
         }
-
-        if (dots.size > 0) dots[currentPage]!!.setTextColor(colorsActive[currentPage])
-    }
-
-    private fun getItem(i: Int): Int {
-        return viewPager.currentItem + i
     }
 
     private fun launchHomeScreen() {
@@ -118,74 +97,71 @@ class TutorialActivity : AppCompatActivity() {
         finish()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        launchHomeScreen()
-    }
+    private var viewPagerPageChangeListener: OnPageChangeListener = object : OnPageChangeListener {
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        }
 
-    //  viewpager change listener
-    var viewPagerPageChangeListener: OnPageChangeListener = object : OnPageChangeListener {
         override fun onPageSelected(position: Int) {
-            addBottomDots(position)
+            highlightDot(position)
 
-            if (position == layouts.size - 1) {
-                btnNext.text = getString(R.string.start)
+            // change button text 'NEXT' on last slide to 'GOT IT'
+            if (position == slides.size - 1) {
+                // last slide
+                btnNext.setText(R.string.okay)
                 btnSkip.visibility = View.GONE
             } else {
-                btnNext.text = getString(R.string.next)
+                // not last slide reached yet
+                btnNext.setText(R.string.next)
                 btnSkip.visibility = View.VISIBLE
             }
         }
 
-        override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-        }
+        override fun onPageScrollStateChanged(state: Int) {}
+    }
 
-        override fun onPageScrollStateChanged(arg0: Int) {
+    private fun addBottomDots() {
+        for (i in slides.indices) {
+            val dot = TextView(this)
+            dot.text = DOT
+            dot.textSize = 35f
+            dot.setTextColor(if (i == 0) colorActive else colorInactive)
+            dots.add(dot)
+            dotsLayout.addView(dot)
         }
     }
 
-    /**
-     * Making notification bar transparent
-     */
-    private fun changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
+    private fun highlightDot(currentPage: Int) {
+        for (i in slides.indices) {
+            dots[i].setTextColor(if (i == currentPage) colorActive else colorInactive)
         }
     }
 
-    /**
-     * View pager adapter
-     */
-    inner class MyViewPagerAdapter : PagerAdapter() {
-        private var layoutInflater: LayoutInflater? = null
-
+    private inner class TutorialViewPageAdapter : PagerAdapter() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            layoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-            val view = layoutInflater!!.inflate(layouts[position], container, false)
+            val layoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = layoutInflater.inflate(slides[position], container, false)
             container.addView(view)
-
             return view
         }
 
         override fun getCount(): Int {
-            return layouts.size
+            return slides.size
         }
 
-        override fun isViewFromObject(view: View, obj: Any): Boolean {
-            return view === obj
+        override fun isViewFromObject(view: View, anObject: Any): Boolean {
+            return view === anObject
         }
 
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            val view = `object` as View
+        override fun destroyItem(container: ViewGroup, position: Int, anObject: Any) {
+            val view = anObject as View
             container.removeView(view)
         }
     }
 
     companion object {
+        // Use Unicode character "Bullet" (decimal code 8226) as text.
+        private const val DOT = 8226.toChar().toString()
         private val TAG: String = TutorialActivity::class.java.simpleName
-        val ACTION_SHOW_ANYWAYS: String = TAG + ".ACTION_SHOW_ANYWAYS"
+        val ACTION_SHOW_ANYWAYS: String = "$TAG.ACTION_SHOW_ANYWAYS"
     }
 }

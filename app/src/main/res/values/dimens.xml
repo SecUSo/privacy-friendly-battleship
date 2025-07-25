@@ -12,4 +12,7 @@
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
 
+    <dimen name="button_width_min">120dp</dimen>
+    <dimen name="button_height_min">48dp</dimen>
+
 </resources>

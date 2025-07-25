@@ -129,16 +129,7 @@ class GameShipSet : Parcelable {
             orientation = Direction.getRandomDirection()
         } while (!GameShip.argumentsValid(cell, size, orientation, grid!!.size))
 
-        return GameShip(grid!!, this, cell!!, size, orientation!!)
-    }
-
-    fun allShipsPlaced(): Boolean {
-        for (shipsSizeN in this.ships) {
-            for (ship in shipsSizeN) {
-                if (ship == null) return false
-            }
-        }
-        return true
+        return GameShip(grid!!, this, cell, size, orientation)
     }
 
     /**
@@ -230,7 +221,6 @@ class GameShipSet : Parcelable {
      * @return The ship containing gameCell.
      */
     fun findShipContainingCell(gameCell: GameCell): GameShip? {
-        val shiptoFind: GameShip? = null
         if (gameCell.isShip) {
             for (shipSizeN in this.ships) {
                 for (ship in shipSizeN) {

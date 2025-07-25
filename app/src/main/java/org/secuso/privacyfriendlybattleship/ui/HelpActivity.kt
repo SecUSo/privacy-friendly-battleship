@@ -20,29 +20,33 @@
 package org.secuso.privacyfriendlybattleship.ui
 
 import android.os.Bundle
-import android.preference.PreferenceFragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.preference.PreferenceFragmentCompat
+
 import org.secuso.privacyfriendlybattleship.R
 
 /**
  * Created by yonjuni on 17.06.16.
  */
-class HelpActivity : BaseActivity() {
+class HelpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_help)
 
-        //getFragmentManager().beginTransaction().replace(android.R.id.content, new HelpFragment()).commit();
+        val toolbar: Toolbar = findViewById(R.id.toolbar_help)
+        setSupportActionBar(toolbar)
+        val supportActionBarRef = supportActionBar
+        if (supportActionBarRef != null) {
+            supportActionBarRef.setDisplayHomeAsUpEnabled(true)
+            supportActionBarRef.setDisplayShowHomeEnabled(true)
+        }
+
         overridePendingTransition(0, 0)
     }
 
-    override val navigationDrawerID: Int
-        get() = R.id.nav_help
-
-    class HelpFragment : PreferenceFragment() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-
+    class HelpFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.help)
         }
     }

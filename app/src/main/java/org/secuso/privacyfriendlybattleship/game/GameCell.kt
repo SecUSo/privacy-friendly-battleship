@@ -61,8 +61,7 @@ class GameCell : Parcelable {
             abs((this.col - other.col).toDouble()),
             abs((this.row - other.row).toDouble())
         ).toInt()
-        if (distance > 1) return false
-        return true
+        return distance <= 1
     }
 
     val resourceId: Int

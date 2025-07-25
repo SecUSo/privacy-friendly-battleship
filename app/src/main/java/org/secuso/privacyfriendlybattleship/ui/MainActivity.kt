@@ -141,7 +141,7 @@ class MainActivity : BaseActivity() {
 
             // Generate the text for the gridSize, which is either 5x5 or 10x10
             val textView = rootView.findViewById<TextView>(R.id.select_size)
-            textView.text = gridSize.toString() + " x " + gridSize.toString()
+            textView.text = getString(R.string.n_x_m, gridSize, gridSize)
 
             return rootView
         }

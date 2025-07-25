@@ -91,7 +91,7 @@ class GameAI : Parcelable {
         if (isHit) {
             gridUnderAttack[col]!![row] = Cell.SHIP.`val`
             // Check if the AI has won set hasAIWon to true in that case.
-            if (controller!!.gridUnderAttack()!!.shipSet.allShipsDestroyed()) {
+            if (controller!!.gridUnderAttack().shipSet.allShipsDestroyed()) {
                 this.isAIWinner = true
                 return false
             }
@@ -133,7 +133,7 @@ class GameAI : Parcelable {
             if (isValidTarget(col, row + 1)) shipCandidates.add(intArrayOf(col, row + 1))
 
             // Check if the AI has won
-            if (controller!!.gridUnderAttack()!!.shipSet.allShipsDestroyed()) {
+            if (controller!!.gridUnderAttack().shipSet.allShipsDestroyed()) {
                 this.isAIWinner = true
                 return false
             }
@@ -146,8 +146,8 @@ class GameAI : Parcelable {
 
     private fun makeCandidateMove(): Boolean {
         val index = ranGen.nextInt(shipCandidates.size)
-        val col = shipCandidates[index]!![0]
-        val row = shipCandidates[index]!![1]
+        val col = shipCandidates[index][0]
+        val row = shipCandidates[index][1]
         shipCandidates.removeAt(index)
 
         //attack opponent and update local grid
@@ -166,7 +166,7 @@ class GameAI : Parcelable {
             if (isValidTarget(col, row + 1)) shipCandidates.add(intArrayOf(col, row + 1))
 
             // Check if the AI has won set hasAIWon to true in that case.
-            if (controller!!.gridUnderAttack()!!.shipSet.allShipsDestroyed()) {
+            if (controller!!.gridUnderAttack().shipSet.allShipsDestroyed()) {
                 this.isAIWinner = true
                 return false
             }

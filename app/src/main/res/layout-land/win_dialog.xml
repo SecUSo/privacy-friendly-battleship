@@ -32,7 +32,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="10dp"
-                android:background="@color/middleblue"
+                android:background="@color/middleBlue"
                 android:layout_gravity="bottom"
                 android:foregroundGravity="bottom"/>
         </LinearLayout>
@@ -103,7 +103,7 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="20dp"
-                    android:background="@color/middleblue"
+                    android:background="@color/middleBlue"
                     android:layout_gravity="bottom"
                     android:foregroundGravity="bottom"/>
             </LinearLayout>
@@ -124,7 +124,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="10dp"
-                android:background="@color/middleblue"
+                android:background="@color/middleBlue"
                 android:layout_gravity="bottom"
                 android:foregroundGravity="bottom"/>
         </LinearLayout>

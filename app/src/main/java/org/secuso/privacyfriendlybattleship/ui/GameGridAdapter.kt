@@ -132,7 +132,7 @@ class GameGridAdapter : BaseAdapter {
             if (currentCell.isShip) {
                 gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
             } else {
-                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.lightblue))
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.lightBlue))
             }
         }
         return gridCell

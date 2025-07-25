@@ -115,14 +115,9 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
      * @param intent
      */
     private fun createBackStack(intent: Intent) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            val builder = TaskStackBuilder.create(this)
-            builder.addNextIntentWithParentStack(intent)
-            builder.startActivities()
-        } else {
-            startActivity(intent)
-            finish()
-        }
+        val builder = TaskStackBuilder.create(this)
+        builder.addNextIntentWithParentStack(intent)
+        builder.startActivities()
     }
 
     private fun callDrawerItem(itemId: Int) {

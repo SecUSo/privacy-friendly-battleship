@@ -84,10 +84,10 @@ class ShipSetActivity : BaseActivity() {
 
         this.newShipCount = intArrayOf(shipsSize2, shipsSize3, shipsSize4, shipsSize5)
 
-        updateShipsofSize2()
-        updateShipsofSize3()
-        updateShipsofSize4()
-        updateShipsofSize5()
+        updateShipsOfSize2()
+        updateShipsOfSize3()
+        updateShipsOfSize4()
+        updateShipsOfSize5()
 
         /*
          Set the bounds for the ship sizes. A bound is determined by the number of grid cells
@@ -119,7 +119,7 @@ class ShipSetActivity : BaseActivity() {
             if (controller.isShipCountLegit(temporaryShipCount)) {
                 this.shipsSize2 += 1
                 newShipCount[0] = this.shipsSize2
-                updateShipsofSize2()
+                updateShipsOfSize2()
             }
         }
     }
@@ -130,7 +130,7 @@ class ShipSetActivity : BaseActivity() {
             if (controller.isShipCountLegit(temporaryShipCount)) {
                 this.shipsSize3 += 1
                 newShipCount[1] = this.shipsSize3
-                updateShipsofSize3()
+                updateShipsOfSize3()
             }
         }
     }
@@ -141,7 +141,7 @@ class ShipSetActivity : BaseActivity() {
             if (controller.isShipCountLegit(temporaryShipCount)) {
                 this.shipsSize4 += 1
                 newShipCount[2] = this.shipsSize4
-                updateShipsofSize4()
+                updateShipsOfSize4()
             }
         }
     }
@@ -152,7 +152,7 @@ class ShipSetActivity : BaseActivity() {
             if (controller.isShipCountLegit(temporaryShipCount)) {
                 this.shipsSize5 += 1
                 newShipCount[3] = this.shipsSize5
-                updateShipsofSize5()
+                updateShipsOfSize5()
             }
         }
     }
@@ -161,7 +161,7 @@ class ShipSetActivity : BaseActivity() {
         if (this.shipsSize2 > 0) {
             this.shipsSize2 -= 1
             newShipCount[0] = this.shipsSize2
-            updateShipsofSize2()
+            updateShipsOfSize2()
         }
     }
 
@@ -169,7 +169,7 @@ class ShipSetActivity : BaseActivity() {
         if (this.shipsSize3 > 0) {
             this.shipsSize3 -= 1
             newShipCount[1] = this.shipsSize3
-            updateShipsofSize3()
+            updateShipsOfSize3()
         }
     }
 
@@ -177,7 +177,7 @@ class ShipSetActivity : BaseActivity() {
         if (this.shipsSize4 > 0) {
             this.shipsSize4 -= 1
             newShipCount[2] = this.shipsSize4
-            updateShipsofSize4()
+            updateShipsOfSize4()
         }
     }
 
@@ -185,29 +185,29 @@ class ShipSetActivity : BaseActivity() {
         if (this.shipsSize5 > 0) {
             this.shipsSize5 -= 1
             newShipCount[3] = this.shipsSize5
-            updateShipsofSize5()
+            updateShipsOfSize5()
         }
     }
 
-    fun updateShipsofSize2() {
+    fun updateShipsOfSize2() {
         val shipSet2 = if (shipsSize2 < 10) "0$shipsSize2" else shipsSize2.toString()
         val ships2 = findViewById<TextView>(R.id.ship_set_size_two_number)
         ships2.text = shipSet2
     }
 
-    fun updateShipsofSize3() {
+    fun updateShipsOfSize3() {
         val shipSet3 = if (shipsSize3 < 10) "0$shipsSize3" else shipsSize3.toString()
         val ships3 = findViewById<TextView>(R.id.ship_set_size_three_number)
         ships3.text = shipSet3
     }
 
-    fun updateShipsofSize4() {
+    fun updateShipsOfSize4() {
         val shipSet4 = if (shipsSize4 < 10) "0$shipsSize4" else shipsSize4.toString()
         val ships4 = findViewById<TextView>(R.id.ship_set_size_four_number)
         ships4.text = shipSet4
     }
 
-    fun updateShipsofSize5() {
+    fun updateShipsOfSize5() {
         val shipSet5 = if (shipsSize5 < 10) "0$shipsSize5" else shipsSize5.toString()
         val ships5 = findViewById<TextView>(R.id.ship_set_size_five_number)
         ships5.text = shipSet5

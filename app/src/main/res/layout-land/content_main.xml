@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:background="@drawable/button_fullwidth"
+            android:background="@drawable/button_full_width"
             android:text="@string/custom_game"
             android:id="@+id/action_settings"
             android:onClick="onClick" />

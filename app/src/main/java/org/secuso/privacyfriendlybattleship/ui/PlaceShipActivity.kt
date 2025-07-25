@@ -25,12 +25,10 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -105,7 +103,7 @@ class PlaceShipActivity : BaseActivity() {
         switchDialog.show(fragmentManager, SwitchPlayerDialog::class.java.simpleName)
     }
 
-    protected fun setupGridView(size: Int) {
+    private fun setupGridView(size: Int) {
         // Get the grid views of the respective XML-files
         gridView = findViewById<GridView>(R.id.game_gridview_big)
 
@@ -126,7 +124,6 @@ class PlaceShipActivity : BaseActivity() {
                 val column = i % gridSize
                 val row = i / gridSize
 
-                var shipsCells: Array<GameCell?>
                 if (selectedShip != null) {
                     //mark ships cells not highlighted
                     unhighlightCells(selectedShip!!.shipsCells)

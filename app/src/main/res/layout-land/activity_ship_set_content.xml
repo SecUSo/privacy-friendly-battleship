@@ -229,7 +229,7 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/button_fullwidth"
+            android:background="@drawable/button_full_width"
             android:onClick="onClickShipSetReady"/>
 
         <Button
@@ -241,7 +241,7 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/button_fullwidth"
+            android:background="@drawable/button_full_width"
             android:onClick="onClickPlaceShips"/>
 
     </LinearLayout>

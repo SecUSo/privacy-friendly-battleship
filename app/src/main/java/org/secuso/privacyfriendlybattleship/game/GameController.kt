@@ -92,8 +92,8 @@ class GameController : Parcelable {
      * Places all ships for both players randomly, resulting in a legit placement to start the game.
      */
     fun placeAllShips() {
-        gridFirstPlayer!!.shipSet.placeShipsRandomly()
-        gridSecondPlayer!!.shipSet.placeShipsRandomly()
+        gridFirstPlayer.shipSet.placeShipsRandomly()
+        gridSecondPlayer.shipSet.placeShipsRandomly()
     }
 
     /**
@@ -106,7 +106,7 @@ class GameController : Parcelable {
     fun makeMove(player: Boolean, col: Int, row: Int): Boolean {
         require(this.currentPlayer == player) { "It is the other players turn." }
 
-        val cellUnderAttack = gridUnderAttack()!!.getCell(col, row)
+        val cellUnderAttack = gridUnderAttack().getCell(col, row)
         require(!cellUnderAttack.isHit) { "This cell has already been attacked" }
 
         //mark cell hit
@@ -114,8 +114,7 @@ class GameController : Parcelable {
         increaseAttempts()
 
         //return if move was a hit
-        if (cellUnderAttack.isShip) return true
-        return false
+        return cellUnderAttack.isShip
     }
 
     fun switchPlayers() {
@@ -150,11 +149,7 @@ class GameController : Parcelable {
         val bound = floor((gridSize * gridSize * 2 / 5).toDouble()).toInt()
         val coveredGridCells =
             2 * shipCount[0] + 3 * shipCount[1] + 4 * shipCount[2] + 5 * shipCount[3]
-        return if (coveredGridCells > bound) {
-            false
-        } else {
-            true
-        }
+        return coveredGridCells <= bound
     }
 
     override fun describeContents(): Int {
