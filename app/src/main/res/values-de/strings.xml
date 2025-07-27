@@ -3,9 +3,11 @@
     <string name="app_name_long">Privacy Friendly Schiffe Versenken</string>
 
     <!-- ###DRAWER###-->
-    <string name="action_help">Hilfe</string>
-    <string name="action_about">Über</string>
     <string name="action_main">Hauptmenü</string>
+    <string name="action_tutorial">@string/tutorial</string>
+    <string name="action_settings">@string/settings</string>
+    <string name="action_help">@string/help</string>
+    <string name="action_about">@string/about</string>
 
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Schiffe zufällig</string>
@@ -32,6 +34,16 @@
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
     <string name="game_dialog_win">Und der Gewinner ist …</string>
     <string name="game_dialog_quit">Möchten Sie das Spiel abbrechen?</string>
+
+    <!-- ### SETTINGS ### -->
+    <string name="system_default">Systemstandard</string>
+    <string name="settings">Einstellungen</string>
+    <string name="pref_app_theme_title">Design</string>
+    <string-array name="pref_app_theme_entries">
+        <item>Hell</item>
+        <item>Dunkel</item>
+        <item>@string/system_default</item>
+    </string-array>
 
     <!--###HELP###-->
     <string name="help">Hilfe</string>

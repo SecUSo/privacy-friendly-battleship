@@ -29,6 +29,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.secuso.privacyfriendlybattleship.R
+import org.secuso.privacyfriendlybattleship.util.LogTag
 import org.secuso.privacyfriendlybattleship.util.PrefManager
 
 /**
@@ -159,9 +160,9 @@ class TutorialActivity : AppCompatActivity() {
     }
 
     companion object {
+        private val TAG = LogTag.create(this::class.java.declaringClass)
         // Use Unicode character "Bullet" (decimal code 8226) as text.
         private const val DOT = 8226.toChar().toString()
-        private val TAG: String = TutorialActivity::class.java.simpleName
         val ACTION_SHOW_ANYWAYS: String = "$TAG.ACTION_SHOW_ANYWAYS"
     }
 }

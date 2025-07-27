@@ -4,8 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:name=".PFAApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -26,8 +27,8 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlybattleship.ui.AboutActivity"
-            android:label="@string/about"
+            android:name="org.secuso.privacyfriendlybattleship.ui.SettingsActivity"
+            android:label="@string/settings"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,6 +39,14 @@
             android:label="@string/help"
             android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlybattleship.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name="org.secuso.privacyfriendlybattleship.ui.AboutActivity"
+            android:label="@string/about"
+            android:parentActivityName="org.secuso.privacyfriendlybattleship.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.secuso.privacyfriendlybattleship.ui.MainActivity" />

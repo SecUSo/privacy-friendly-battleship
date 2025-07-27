@@ -23,6 +23,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -33,6 +34,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import org.secuso.privacyfriendlybattleship.R
+import org.secuso.privacyfriendlybattleship.util.LogTag
 import org.secuso.privacyfriendlybattleship.util.PrefManager
 
 /**
@@ -123,20 +125,30 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun callDrawerItem(itemId: Int) {
         val intent: Intent
 
-        if (itemId == R.id.nav_main) {
-            intent = Intent(this, MainActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-        } else if (itemId == R.id.nav_tutorial) {
-            intent = Intent(this, TutorialActivity::class.java)
-            intent.setAction(TutorialActivity.ACTION_SHOW_ANYWAYS)
-            startActivity(intent)
-        } else if (itemId == R.id.nav_about) {
-            intent = Intent(this, AboutActivity::class.java)
-            createBackStack(intent)
-        } else if (itemId == R.id.nav_help) {
-            intent = Intent(this, HelpActivity::class.java)
-            createBackStack(intent)
+        when (itemId) {
+            R.id.nav_main -> {
+                intent = Intent(this, MainActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
+            R.id.nav_tutorial -> {
+                intent = Intent(this, TutorialActivity::class.java)
+                intent.setAction(TutorialActivity.ACTION_SHOW_ANYWAYS)
+                startActivity(intent)
+            }
+            R.id.nav_settings -> {
+                intent = Intent(this, SettingsActivity::class.java)
+                createBackStack(intent)
+            }
+            R.id.nav_help -> {
+                intent = Intent(this, HelpActivity::class.java)
+                createBackStack(intent)
+            }
+            R.id.nav_about -> {
+                intent = Intent(this, AboutActivity::class.java)
+                createBackStack(intent)
+            }
+            else -> Log.w(TAG, "Unhandled navigation drawer item ID: $itemId.")
         }
     }
 
@@ -173,6 +185,7 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
     companion object {
+        private val TAG = LogTag.create(this::class.java.declaringClass)
         // delay to launch nav drawer item, to allow close animation to play
         const val NAVDRAWER_LAUNCH_DELAY: Int = 250
 
