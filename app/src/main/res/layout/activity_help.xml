@@ -38,7 +38,9 @@
             android:orientation="vertical"
             tools:context=".ui.HelpActivity"
             android:weightSum="1">
-            <fragment android:name="org.secuso.privacyfriendlybattleship.ui.HelpActivity$HelpFragment"
+
+            <androidx.fragment.app.FragmentContainerView
+                android:name="org.secuso.privacyfriendlybattleship.ui.HelpActivity$HelpFragment"
                 android:id="@+id/help_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

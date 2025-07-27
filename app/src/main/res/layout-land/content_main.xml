@@ -26,7 +26,6 @@
             android:text="@string/game_mode"
             android:textStyle="bold"
             android:textSize="22sp"
-            android:textColor="@color/colorPrimaryDark"
             android:layout_centerHorizontal="true" />
 
         <androidx.viewpager.widget.ViewPager
@@ -46,7 +45,10 @@
             android:padding="@dimen/activity_vertical_margin"
             android:layout_centerHorizontal="true"
             android:onClick="onClick"
-            android:rotation="90" />
+            android:rotation="90"
+            android:scaleX="2"
+            android:scaleY="2"
+            style="@style/AppMonochromeImageStyle" />
 
         <ImageView
             android:id="@+id/mode_arrow_right"
@@ -58,7 +60,11 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_centerHorizontal="true"
             android:onClick="onClick"
-            android:rotation="90" />
+            android:rotation="90"
+            android:scaleX="2"
+            android:scaleY="2"
+            style="@style/AppMonochromeImageStyle" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -73,7 +79,6 @@
             android:text="@string/grid_size"
             android:textStyle="bold"
             android:textSize="22sp"
-            android:textColor="@color/colorPrimaryDark"
             android:layout_centerHorizontal="true" />
 
         <androidx.viewpager.widget.ViewPager
@@ -93,7 +98,10 @@
             android:padding="@dimen/activity_vertical_margin"
             android:layout_centerHorizontal="true"
             android:onClick="onClick"
-            android:rotation="90" />
+            android:rotation="90"
+            android:scaleX="2"
+            android:scaleY="2"
+            style="@style/AppMonochromeImageStyle" />
 
         <ImageView
             android:id="@+id/size_arrow_right"
@@ -105,7 +113,10 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_centerHorizontal="true"
             android:onClick="onClick"
-            android:rotation="90" />
+            android:rotation="90"
+            android:scaleX="2"
+            android:scaleY="2"
+            style="@style/AppMonochromeImageStyle" />
     </RelativeLayout>
 
     <LinearLayout
@@ -119,21 +130,19 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:background="@drawable/button_normal"
             android:text="@string/main_button_quick_start"
             android:id="@+id/quick_start_button"
-            android:onClick="onClick" />
+            android:onClick="onClick"
+            style="@style/AppBorderlessButtonStyle" />
 
         <Button
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:background="@drawable/button_full_width"
             android:text="@string/custom_game"
             android:id="@+id/action_settings"
-            android:onClick="onClick" />
+            android:onClick="onClick"
+            style="@style/AppBorderlessButtonStyle" />
 
     </LinearLayout>
 

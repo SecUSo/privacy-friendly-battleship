@@ -30,7 +30,7 @@
     <string name="game_dialog_hit_suffix">" zerstört!"</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
-    <string name="game_dialog_win">Und der Gewinner ist… </string>
+    <string name="game_dialog_win">Und der Gewinner ist …</string>
     <string name="game_dialog_quit">Möchten Sie das Spiel abbrechen?</string>
 
     <!--###HELP###-->

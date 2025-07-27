@@ -29,6 +29,7 @@
         android:adjustViewBounds="true"
         android:layout_centerInParent="true"
         app:srcCompat="@drawable/ic_person_black_24px"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        style="@style/AppMonochromeImageStyle" />
 
 </LinearLayout>

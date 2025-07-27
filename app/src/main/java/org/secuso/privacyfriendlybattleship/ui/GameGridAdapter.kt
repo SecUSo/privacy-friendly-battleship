@@ -110,7 +110,7 @@ class GameGridAdapter : BaseAdapter {
         } else {
             gridCell = ImageView(this.context)
             gridCell.scaleType = ImageView.ScaleType.CENTER_CROP
-            gridCell.setBackgroundColor(Color.WHITE)
+            gridCell.setBackgroundColor(ContextCompat.getColor(this.context, R.color.water))
             // Set the grid cell of the current player
             if (currentCell.isShip && !isMainGrid || currentCell.isShip && showShips) {
                 gridCell.setImageResource(currentCell.resourceId)
@@ -130,9 +130,9 @@ class GameGridAdapter : BaseAdapter {
 
         if (currentCell.isHit) {
             if (currentCell.isShip) {
-                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.shipHit))
             } else {
-                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.lightBlue))
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.waterHit))
             }
         }
         return gridCell

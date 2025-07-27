@@ -12,15 +12,23 @@
     <color name="lightGrey">#FFD1D1D1</color>
     <color name="middleGrey">#A8A8A8</color>
     <color name="darkGrey">#121212</color>
-    <color name="red">#B71C1C</color>
     <color name="yellow">#F6D126</color>
     <color name="green">#68E504</color>
+    <color name="silver">#F8F8F8</color>
+    <color name="gold">#FDB515</color>
 
     <!-- Dots for tutorial-slides -->
     <color name="dotInactive">#026499</color>
     <color name="dotActive">#448BB2</color>
 
+    <color name="water">#89D2E9</color>
+    <color name="waterHit">#0274B2</color>
+    <color name="shipHit">#B71C1C</color>
+    <color name="selection">#F6D126</color>
+    <color name="shipConflict">#B71C1C</color>
+
     <color name="splashScreenBackground">#0274B2</color>
 
     <color name="launcherBackground">#3680BB</color>
+
 </resources>

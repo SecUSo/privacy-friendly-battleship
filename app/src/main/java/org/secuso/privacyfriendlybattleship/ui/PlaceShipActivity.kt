@@ -148,9 +148,9 @@ class PlaceShipActivity : BaseActivity() {
 
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
             if (shipsOnCell == 1) {
-                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.selection))
             } else {
-                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.shipConflict))
             }
         }
     }
@@ -162,14 +162,14 @@ class PlaceShipActivity : BaseActivity() {
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
             val cellView = gridView!!.getChildAt(row * this.gridSize + col) as ImageView
             if (shipsOnCell == 0) {
-                cellView.setBackgroundColor(Color.WHITE)
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
                 cellView.setImageResource(0)
             } else if (shipsOnCell == 1) {
-                cellView.setBackgroundColor(Color.WHITE)
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
                 cellView.setImageResource(cell.resourceId)
                 cellView.imageAlpha = 255
             } else if (shipsOnCell >= 2) {
-                cellView.setBackgroundColor(gridAdapter!!.context.resources.getColor(R.color.red))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.shipConflict))
                 cellView.setImageResource(cell.resourceId)
                 cellView.imageAlpha = 255
             }

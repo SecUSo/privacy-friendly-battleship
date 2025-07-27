@@ -14,6 +14,7 @@
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="1px"
+        android:background="@color/water"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,7 @@
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="1px"
+        android:background="@color/water"
         app:layout_constraintBottom_toTopOf="@id/game_button_help"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,13 +41,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:background="@drawable/button_normal"
         android:text="@string/help"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/game_button_fire"
         app:layout_constraintStart_toEndOf="@id/game_gridview_big"
-        app:layout_constraintTop_toBottomOf="@id/game_gridview_small" />
+        app:layout_constraintTop_toBottomOf="@id/game_gridview_small"
+        style="@style/AppBorderlessButtonStyle" />
 
     <Button
         android:id="@+id/game_button_fire"
@@ -53,12 +54,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:background="@drawable/button_normal"
         android:text="@string/game_button_fire"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/game_button_help"
-        app:layout_constraintTop_toBottomOf="@id/game_gridview_small" />
+        app:layout_constraintTop_toBottomOf="@id/game_gridview_small"
+        style="@style/AppBorderlessButtonStyle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

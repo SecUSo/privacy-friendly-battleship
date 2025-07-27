@@ -13,6 +13,7 @@
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="1px"
+        android:background="@color/water"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/game_main_layout"
@@ -44,7 +45,8 @@
                 android:layout_gravity="center_vertical"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                app:srcCompat="@drawable/arrow_left_black" />
+                app:srcCompat="@drawable/arrow_left_black"
+                style="@style/AppMonochromeImageStyle" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -59,7 +61,8 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:onClick="onClickButton"
-                    app:srcCompat="@drawable/arrow_up_black" />
+                    app:srcCompat="@drawable/arrow_up_black"
+                    style="@style/AppMonochromeImageStyle" />
 
                 <ImageView
                     android:id="@+id/arrow_down"
@@ -68,7 +71,8 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:onClick="onClickButton"
-                    app:srcCompat="@drawable/arrow_down_black" />
+                    app:srcCompat="@drawable/arrow_down_black"
+                    style="@style/AppMonochromeImageStyle" />
 
             </LinearLayout>
 
@@ -79,7 +83,8 @@
                 android:layout_gravity="center_vertical"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                app:srcCompat="@drawable/arrow_right_black" />
+                app:srcCompat="@drawable/arrow_right_black"
+                style="@style/AppMonochromeImageStyle" />
 
         </LinearLayout>
 
@@ -97,7 +102,8 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                app:srcCompat="@drawable/arrow_rotate_right_black" />
+                app:srcCompat="@drawable/arrow_rotate_right_black"
+                style="@style/AppMonochromeImageStyle" />
 
             <androidx.legacy.widget.Space
                 android:layout_width="50dp"
@@ -111,7 +117,8 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                app:srcCompat="@drawable/arrow_rotate_left_black" />
+                app:srcCompat="@drawable/arrow_rotate_left_black"
+                style="@style/AppMonochromeImageStyle" />
 
         </LinearLayout>
 
@@ -122,10 +129,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/button_full_width"
             android:onClick="onClickReady"
             android:text="@string/place_ships_ready"
-            android:textColor="@color/white" />
+            style="@style/AppBorderlessButtonStyle" />
 
     </LinearLayout>
 

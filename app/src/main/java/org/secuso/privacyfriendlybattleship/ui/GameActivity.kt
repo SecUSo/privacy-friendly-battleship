@@ -465,15 +465,15 @@ class GameActivity : BaseActivity() {
         gridViewBig!!.adapter = adapterMainGrid
         gridViewSmall!!.adapter = adapterMiniGrid
 
-        // Define the listener for the big grid view, such that it is possible to click on it. When
-        // clicking on that grid, the corresponding cell should be yellow.
+        // Define the listener for the big grid view, such that it is possible to click on it.
+        // When clicking on that grid, the corresponding cell should be yellow.
         gridViewBig!!.onItemClickListener =
             OnItemClickListener { adapterView, view, i, l ->
                 if (prevCell != null) {
-                    prevCell!!.setBackgroundColor(Color.WHITE)
+                    prevCell!!.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
                 }
                 positionGridCell = i
-                view.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow))
+                view.setBackgroundColor(ContextCompat.getColor(this, R.color.selection))
                 prevCell = view
                 // Display the grid cell, which was clicked.
                 adapterMainGrid!!.notifyDataSetChanged()

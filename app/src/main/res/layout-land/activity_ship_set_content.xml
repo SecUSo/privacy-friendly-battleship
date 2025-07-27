@@ -25,7 +25,6 @@
                 android:text="@string/ship_set_size_five_ships"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <LinearLayout
@@ -38,10 +37,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="-"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="subtractShipOfSize5"/>
-
+                    android:onClick="subtractShipOfSize5"
+                    style="@style/AppBorderlessButtonStyle" />
 
                 <TextView
                     android:id="@+id/ship_set_size_five_number"
@@ -50,7 +47,6 @@
                     android:text="00"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
 
@@ -58,9 +54,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="+"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="addShipOfSize5"/>
+                    android:onClick="addShipOfSize5"
+                    style="@style/AppBorderlessButtonStyle" />
 
             </LinearLayout>
 
@@ -71,7 +66,6 @@
                 android:text="@string/ship_set_size_four_ships"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <LinearLayout
@@ -83,10 +77,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="-"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="subtractShipOfSize4"/>
-
+                    android:onClick="subtractShipOfSize4"
+                    style="@style/AppBorderlessButtonStyle" />
 
                 <TextView
                     android:id="@+id/ship_set_size_four_number"
@@ -95,7 +87,6 @@
                     android:text="00"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
 
@@ -103,9 +94,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="+"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="addShipOfSize4"/>
+                    android:onClick="addShipOfSize4"
+                    style="@style/AppBorderlessButtonStyle" />
 
             </LinearLayout>
 
@@ -125,7 +115,6 @@
                 android:text="@string/ship_set_size_three_ships"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <LinearLayout
@@ -138,10 +127,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="-"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="subtractShipOfSize3"/>
-
+                    android:onClick="subtractShipOfSize3"
+                    style="@style/AppBorderlessButtonStyle" />
 
                 <TextView
                     android:id="@+id/ship_set_size_three_number"
@@ -150,7 +137,6 @@
                     android:text="00"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
 
@@ -158,9 +144,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="+"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="addShipOfSize3"/>
+                    android:onClick="addShipOfSize3"
+                    style="@style/AppBorderlessButtonStyle" />
 
             </LinearLayout>
 
@@ -171,7 +156,6 @@
                 android:text="@string/ship_set_size_two_ships"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
             <LinearLayout
@@ -183,10 +167,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="-"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="subtractShipOfSize2"/>
-
+                    android:onClick="subtractShipOfSize2"
+                    style="@style/AppBorderlessButtonStyle" />
 
                 <TextView
                     android:id="@+id/ship_set_size_two_number"
@@ -195,7 +177,6 @@
                     android:text="00"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"/>
 
@@ -203,9 +184,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:text="+"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_normal"
-                    android:onClick="addShipOfSize2"/>
+                    android:onClick="addShipOfSize2"
+                    style="@style/AppBorderlessButtonStyle" />
 
             </LinearLayout>
 
@@ -223,26 +203,25 @@
         <Button
             android:id="@+id/ship_set_button"
             android:text="@string/ship_set_start_game"
-            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/button_full_width"
-            android:onClick="onClickShipSetReady"/>
+            android:onClick="onClickShipSetReady"
+            style="@style/AppBorderlessButtonStyle" />
 
         <Button
             android:id="@+id/ship_set_place_ships_button"
             android:text="@string/main_button_place_ships"
-            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/button_full_width"
-            android:onClick="onClickPlaceShips"/>
+            android:onClick="onClickPlaceShips"
+            style="@style/AppBorderlessButtonStyle" />
 
     </LinearLayout>
+
 </LinearLayout>

@@ -5,13 +5,13 @@
     android:gravity="center">
 
     <TextView
+        android:id="@+id/select_size"
         android:text="Select Size"
         android:textStyle="bold"
         android:textSize="50sp"
-        android:textColor="@color/darkBlue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/select_size"
         android:layout_weight="1"
         android:gravity="center" />
+
 </LinearLayout>
