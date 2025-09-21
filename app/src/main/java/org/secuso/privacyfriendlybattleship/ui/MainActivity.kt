@@ -27,10 +27,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 import org.secuso.privacyfriendlybattleship.game.GameMode
@@ -44,14 +43,18 @@ import org.secuso.privacyfriendlybattleship.game.GridSize
  * @author Alexander Müller, Ali Kalsen
  */
 class MainActivity : BaseActivity() {
-    private var viewPagerMode: ViewPager? = null //ViewPager for selection of game mode
-    private var viewPagerSize: ViewPager? = null //ViewPager for selection of grid size
+    private lateinit var viewPagerMode: ViewPager2 //ViewPager2 for selection of game mode
+    private lateinit var viewPagerSize: ViewPager2 //ViewPager2 for selection of grid size
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Initialize the main page
         setContentView(R.layout.activity_main)
+
+        viewPagerMode = findViewById<ViewPager2>(R.id.modeScroller)
+        viewPagerSize = findViewById<ViewPager2>(R.id.sizeScroller)
+
         setupViewPagerMode()
         setupViewPagerSize()
     }
@@ -59,29 +62,27 @@ class MainActivity : BaseActivity() {
     override val navigationDrawerID: Int
         get() = R.id.nav_main
 
-    inner class SectionsPagerModeAdapter(fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment {
+    inner class SectionsPagerModeAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+        override fun createFragment(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
             return GameModeFragment.newInstance(position)
         }
 
-        override fun getCount(): Int {
+        override fun getItemCount(): Int {
             // Show 3 total pages.
             return 3
         }
     }
 
-    inner class SectionsPagerSizeAdapter(fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment {
+    inner class SectionsPagerSizeAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+        override fun createFragment(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
             return GridSizeFragment.newInstance(position)
         }
 
-        override fun getCount(): Int {
+        override fun getItemCount(): Int {
             // Show 2 total pages.
             return 2
         }
@@ -160,17 +161,16 @@ class MainActivity : BaseActivity() {
     }
 
 
-    // Setup the ViewPager for the Game mode
+    // Setup the ViewPager2 for the Game mode
     fun setupViewPagerMode() {
         val arrowLeft = findViewById<ImageView>(R.id.mode_arrow_left)
         val arrowRight = findViewById<ImageView>(R.id.mode_arrow_right)
         arrowLeft.visibility = View.INVISIBLE
         arrowRight.visibility = View.VISIBLE
 
-        val sectionPagerModeAdapter = SectionsPagerModeAdapter(supportFragmentManager)
-        viewPagerMode = findViewById<ViewPager>(R.id.modeScroller)
-        viewPagerMode!!.adapter = sectionPagerModeAdapter
-        viewPagerMode!!.addOnPageChangeListener(object : OnPageChangeListener {
+        val sectionPagerModeAdapter = SectionsPagerModeAdapter(this)
+        viewPagerMode.adapter = sectionPagerModeAdapter
+        viewPagerMode.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -188,20 +188,19 @@ class MainActivity : BaseActivity() {
                 // not used
             }
         })
-        viewPagerMode!!.currentItem = mSharedPreferences.lastGameMode.ordinal
+        viewPagerMode.currentItem = mSharedPreferences.lastGameMode.ordinal
     }
 
-    // Setup the ViewPager for the Game size
+    // Setup the ViewPager2 for the Game size
     fun setupViewPagerSize() {
         val arrowLeft = findViewById<ImageView>(R.id.size_arrow_left)
         val arrowRight = findViewById<ImageView>(R.id.size_arrow_right)
         arrowLeft.visibility = View.INVISIBLE
         arrowRight.visibility = View.VISIBLE
 
-        val sectionPagerSizeAdapter = SectionsPagerSizeAdapter(supportFragmentManager)
-        viewPagerSize = findViewById<ViewPager>(R.id.sizeScroller)
-        viewPagerSize!!.adapter = sectionPagerSizeAdapter
-        viewPagerSize!!.addOnPageChangeListener(object : OnPageChangeListener {
+        val sectionPagerSizeAdapter = SectionsPagerSizeAdapter(this)
+        viewPagerSize.adapter = sectionPagerSizeAdapter
+        viewPagerSize.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -219,7 +218,7 @@ class MainActivity : BaseActivity() {
                 // not used
             }
         })
-        viewPagerSize!!.currentItem = mSharedPreferences.lastGridSize.ordinal
+        viewPagerSize.currentItem = mSharedPreferences.lastGridSize.ordinal
     }
 
 
@@ -232,18 +231,18 @@ class MainActivity : BaseActivity() {
         val game: GameController
 
         if (view.id == R.id.mode_arrow_left) {
-            viewPagerMode!!.arrowScroll(View.FOCUS_LEFT)
+            viewPagerMode.currentItem -= 1
         } else if (view.id == R.id.mode_arrow_right) {
-            viewPagerMode!!.arrowScroll(View.FOCUS_RIGHT)
+            viewPagerMode.currentItem += 1
         } else if (view.id == R.id.size_arrow_left) {
-            viewPagerSize!!.arrowScroll(View.FOCUS_LEFT)
+            viewPagerSize.currentItem -= 1
         } else if (view.id == R.id.size_arrow_right) {
-            viewPagerSize!!.arrowScroll(View.FOCUS_RIGHT)
+            viewPagerSize.currentItem += 1
         } else if (view.id == R.id.quick_start_button) {
             // Get the selected game mode and the grid size
-            modeIndex = viewPagerMode!!.currentItem
+            modeIndex = viewPagerMode.currentItem
             gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
-            sizeIndex = viewPagerSize!!.currentItem
+            sizeIndex = viewPagerSize.currentItem
             gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
 
             mSharedPreferences.lastGameMode = gameMode
@@ -258,9 +257,9 @@ class MainActivity : BaseActivity() {
             startActivity(intent)
         } else if (view.id == R.id.action_settings) {
             // Get the selected game mode and the grid size
-            modeIndex = viewPagerMode!!.currentItem
+            modeIndex = viewPagerMode.currentItem
             gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
-            sizeIndex = viewPagerSize!!.currentItem
+            sizeIndex = viewPagerSize.currentItem
             gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
 
             mSharedPreferences.lastGameMode = gameMode

@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
-import kotlin.jvm.java
 
 /**
  * The system preference manager does not currently store a strong reference to the listener.

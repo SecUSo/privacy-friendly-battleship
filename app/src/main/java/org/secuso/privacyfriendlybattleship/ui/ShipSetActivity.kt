@@ -19,14 +19,13 @@
  */
 package org.secuso.privacyfriendlybattleship.ui
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 import org.secuso.privacyfriendlybattleship.game.GameMode
@@ -110,10 +109,10 @@ class ShipSetActivity : BaseActivity() {
     }
 
     private fun showTutorialDialog() {
-        TutorialShipSetDialog().show(fragmentManager, TutorialDialog::class.java.simpleName)
+        TutorialShipSetDialog().show(supportFragmentManager, TutorialDialog::class.java.simpleName)
     }
 
-    fun addShipOfSize2(view: View?) {
+    fun addShipOfSize2(@Suppress("unused") view :View?) {
         if (this.shipsSize2 <= boundShipSet2) {
             val temporaryShipCount = intArrayOf(shipsSize2 + 1, shipsSize3, shipsSize4, shipsSize5)
             if (controller.isShipCountLegit(temporaryShipCount)) {
@@ -124,7 +123,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun addShipOfSize3(view: View?) {
+    fun addShipOfSize3(@Suppress("unused") view: View?) {
         if (this.shipsSize3 <= boundShipSet3) {
             val temporaryShipCount = intArrayOf(shipsSize2, shipsSize3 + 1, shipsSize4, shipsSize5)
             if (controller.isShipCountLegit(temporaryShipCount)) {
@@ -135,7 +134,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun addShipOfSize4(view: View?) {
+    fun addShipOfSize4(@Suppress("unused") view: View?) {
         if (this.shipsSize4 <= boundShipSet4) {
             val temporaryShipCount = intArrayOf(shipsSize2, shipsSize3, shipsSize4 + 1, shipsSize5)
             if (controller.isShipCountLegit(temporaryShipCount)) {
@@ -146,7 +145,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun addShipOfSize5(view: View?) {
+    fun addShipOfSize5(@Suppress("unused") view: View?) {
         if (this.shipsSize5 <= boundShipSet5) {
             val temporaryShipCount = intArrayOf(shipsSize2, shipsSize3, shipsSize4, shipsSize5 + 1)
             if (controller.isShipCountLegit(temporaryShipCount)) {
@@ -157,7 +156,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun subtractShipOfSize2(view: View?) {
+    fun subtractShipOfSize2(@Suppress("unused") view: View?) {
         if (this.shipsSize2 > 0) {
             this.shipsSize2 -= 1
             newShipCount[0] = this.shipsSize2
@@ -165,7 +164,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun subtractShipOfSize3(view: View?) {
+    fun subtractShipOfSize3(@Suppress("unused") view: View?) {
         if (this.shipsSize3 > 0) {
             this.shipsSize3 -= 1
             newShipCount[1] = this.shipsSize3
@@ -173,7 +172,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun subtractShipOfSize4(view: View?) {
+    fun subtractShipOfSize4(@Suppress("unused") view: View?) {
         if (this.shipsSize4 > 0) {
             this.shipsSize4 -= 1
             newShipCount[2] = this.shipsSize4
@@ -181,7 +180,7 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun subtractShipOfSize5(view: View?) {
+    fun subtractShipOfSize5(@Suppress("unused") view: View?) {
         if (this.shipsSize5 > 0) {
             this.shipsSize5 -= 1
             newShipCount[3] = this.shipsSize5
@@ -213,9 +212,9 @@ class ShipSetActivity : BaseActivity() {
         ships5.text = shipSet5
     }
 
-    fun onClickShipSetReady(view: View?) {
+    fun onClickShipSetReady(@Suppress("unused") view: View?) {
         if (newShipCount[0] == 0 && newShipCount[1] == 0 && newShipCount[2] == 0 && newShipCount[3] == 0) {
-            ShipSetAlertDialog().show(fragmentManager, ShipSetAlertDialog::class.java.simpleName)
+            ShipSetAlertDialog().show(supportFragmentManager, ShipSetAlertDialog::class.java.simpleName)
         } else {
             this.controller = GameController(
                 this.gameMode,
@@ -230,9 +229,9 @@ class ShipSetActivity : BaseActivity() {
         }
     }
 
-    fun onClickPlaceShips(view: View?) {
+    fun onClickPlaceShips(@Suppress("unused") view: View?) {
         if (newShipCount[0] == 0 && newShipCount[1] == 0 && newShipCount[2] == 0 && newShipCount[3] == 0) {
-            ShipSetAlertDialog().show(fragmentManager, ShipSetAlertDialog::class.java.simpleName)
+            ShipSetAlertDialog().show(supportFragmentManager, ShipSetAlertDialog::class.java.simpleName)
         } else {
             this.controller = GameController(
                 this.gameMode,
@@ -256,9 +255,6 @@ class ShipSetActivity : BaseActivity() {
     }
 
     class TutorialShipSetDialog : DialogFragment() {
-        override fun onAttach(activity: Activity) {
-            super.onAttach(activity)
-        }
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(activity)
@@ -266,16 +262,13 @@ class ShipSetActivity : BaseActivity() {
             builder.setIcon(R.mipmap.icon_drawer)
             builder.setTitle(R.string.ship_set_title)
             builder.setMessage(R.string.ship_set_message)
-            builder.setPositiveButton(activity.getString(R.string.okay), null)
+            builder.setPositiveButton(R.string.okay) { _, _ -> }
 
             return builder.create()
         }
     }
 
     class ShipSetAlertDialog : DialogFragment() {
-        override fun onAttach(activity: Activity) {
-            super.onAttach(activity)
-        }
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(activity)
@@ -283,7 +276,7 @@ class ShipSetActivity : BaseActivity() {
             builder.setIcon(R.mipmap.icon_drawer)
             builder.setTitle(R.string.ship_set_alert_title)
             builder.setMessage(R.string.ship_set_alert_message)
-            builder.setPositiveButton(activity.getString(R.string.okay), null)
+            builder.setPositiveButton(R.string.okay) { _, _ -> }
 
             return builder.create()
         }

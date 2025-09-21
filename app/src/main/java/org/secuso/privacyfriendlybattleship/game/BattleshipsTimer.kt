@@ -44,7 +44,7 @@ class BattleshipsTimer {
                     time++
                 }
             }
-        }, 0, WAIT_TIME.toLong())
+        }, 0, WAIT_TIME)
     }
 
     fun stop() {
@@ -59,6 +59,6 @@ class BattleshipsTimer {
     }
 
     companion object {
-        private const val WAIT_TIME = 1000
+        private const val WAIT_TIME: Long = 1000
     }
 }

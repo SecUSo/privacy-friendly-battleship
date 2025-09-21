@@ -65,15 +65,15 @@ class GameController : Parcelable {
 
         when (gridSize) {
             5 -> {
-                this.shipCount = SHIPCOUNTFIVE
-                this.gridFirstPlayer = GameGrid(gridSize, SHIPCOUNTFIVE)
-                this.gridSecondPlayer = GameGrid(gridSize, SHIPCOUNTFIVE)
+                this.shipCount = SHIP_COUNT_FIVE
+                this.gridFirstPlayer = GameGrid(gridSize, SHIP_COUNT_FIVE)
+                this.gridSecondPlayer = GameGrid(gridSize, SHIP_COUNT_FIVE)
             }
 
             else -> {
-                this.shipCount = SHIPCOUNTTEN
-                this.gridFirstPlayer = GameGrid(gridSize, SHIPCOUNTTEN)
-                this.gridSecondPlayer = GameGrid(gridSize, SHIPCOUNTTEN)
+                this.shipCount = SHIP_COUNT_TEN
+                this.gridFirstPlayer = GameGrid(gridSize, SHIP_COUNT_TEN)
+                this.gridSecondPlayer = GameGrid(gridSize, SHIP_COUNT_TEN)
             }
         }
 
@@ -224,8 +224,8 @@ class GameController : Parcelable {
 
     companion object {
         // Amount of ships for standard grid sizes.
-        private val SHIPCOUNTFIVE = intArrayOf(2, 1, 0, 0)
-        private val SHIPCOUNTTEN = intArrayOf(1, 2, 1, 1)
+        private val SHIP_COUNT_FIVE = intArrayOf(2, 1, 0, 0)
+        private val SHIP_COUNT_TEN = intArrayOf(1, 2, 1, 1)
 
         @JvmField
         val CREATOR: Creator<GameController> = object : Creator<GameController> {
