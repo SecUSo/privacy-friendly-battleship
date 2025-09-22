@@ -4,12 +4,12 @@
     <string name="main_button_place_ships">Расставить корабли</string>
     <string name="custom_game">Порядок вручную</string>
     <string name="main_button_quick_start">Случайный порядок</string>
-    <string name="help_menu_game_size_description">Выберите размер игрового поля. Возможные размеры для игрового поля - 5x5 или 10x10.</string>
+    <string name="help_menu_grid_size_description">Выберите размер игрового поля. Возможные размеры для игрового поля - 5x5 или 10x10.</string>
     <string name="title_activity_game">Игра</string>
     <string name="action_help">Справка</string>
     <string name="action_about">О приложении</string>
     <string name="game_mode">Режим игры</string>
-    <string name="game_size">Размер игрового поля</string>
+    <string name="grid_size">Размер игрового поля</string>
     <string name="mode_two_player">2 игрока</string>
     <string name="mode_vs_cpu_easy">CPU простой</string>
     <string name="mode_custom">Собственный</string>
@@ -43,7 +43,7 @@
     <string name="game_dialog_quit">Вы хотите бросить игру?</string>
     <string name="help_menu_game_mode_dual_player">Играйте против другого игрока.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Играть против компьютера в сложном режиме.</string>
-    <string name="help_menu_game_size">Размер игрового поля</string>
+    <string name="help_menu_grid_size">Размер игрового поля</string>
     <string name="help_menu_settings">Нажмите кнопку «РУЧНОЙ ПОРЯДОК», если вы хотите настроить свой набор кораблей и разместить их вручную.</string>
     <string name="help_how_to_play">Как играть в игру</string>
     <string name="help_dialog_title">Как играть</string>
