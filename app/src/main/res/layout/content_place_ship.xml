@@ -1,61 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="@dimen/activity_vertical_margin">
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/placement_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="80dp"
+    <GridView
+        android:id="@+id/game_gridview_big"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:horizontalSpacing="1px"
         android:numColumns="auto_fit"
-        android:verticalSpacing="1dp"
-        android:horizontalSpacing="1dp"
         android:stretchMode="columnWidth"
-        android:gravity="center" />
+        android:verticalSpacing="1px"
+        android:background="@color/water"
+        app:layout_constraintBottom_toTopOf="@id/game_main_layout"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/game_linear_layout"
-        android:layout_below="@id/placement_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/game_main_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/game_gridview_big">
 
         <ImageView
             android:id="@+id/arrow_left"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/arrow_left_black"
+            android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:onClick="onClickButton"
-            android:layout_gravity="center_vertical" />
+            app:srcCompat="@drawable/arrow_left_black"
+            style="@style/AppMonochromeImageStyle" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/arrow_up"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/arrow_up_black"
+                android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                android:layout_weight="1" />
+                app:srcCompat="@drawable/arrow_up_black"
+                style="@style/AppMonochromeImageStyle" />
 
             <ImageView
                 android:id="@+id/arrow_down"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/arrow_down_black"
+                android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                android:layout_weight="1" />
+                app:srcCompat="@drawable/arrow_down_black"
+                style="@style/AppMonochromeImageStyle" />
 
         </LinearLayout>
 
@@ -63,51 +72,53 @@
             android:id="@+id/arrow_right"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/arrow_right_black"
+            android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:onClick="onClickButton"
-            android:layout_gravity="center_vertical" />
+            app:srcCompat="@drawable/arrow_right_black"
+            style="@style/AppMonochromeImageStyle" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/rotate_right"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/arrow_rotate_right_black"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical" />
+                app:srcCompat="@drawable/arrow_rotate_right_black"
+                style="@style/AppMonochromeImageStyle" />
 
             <ImageView
                 android:id="@+id/rotate_left"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/arrow_rotate_left_black"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:onClick="onClickButton"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical" />
+                app:srcCompat="@drawable/arrow_rotate_left_black"
+                style="@style/AppMonochromeImageStyle" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/placement_ready"
-            android:text="@string/place_ships_ready"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/button_fullwidth"
-            android:textColor="@color/white"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
             android:onClick="onClickReady"
-            android:layout_weight="1" />
+            android:text="@string/place_ships_ready"
+            style="@style/AppBorderlessButtonStyle" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

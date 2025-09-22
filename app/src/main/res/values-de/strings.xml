@@ -3,9 +3,11 @@
     <string name="app_name">Schiffe versenken</string>
     <string name="app_name_long">Privacy Friendly Schiffe Versenken</string>
     <!-- ###DRAWER###-->
-    <string name="action_help">Hilfe</string>
-    <string name="action_about">Über</string>
     <string name="action_main">Hauptmenü</string>
+    <string name="action_tutorial">@string/tutorial</string>
+    <string name="action_settings">@string/settings</string>
+    <string name="action_help">@string/help</string>
+    <string name="action_about">@string/about</string>
     <!-- ###MAIN### -->
     <string name="main_button_quick_start">Zufällige Reihenfolge</string>
     <string name="main_button_place_ships">Schiffe manuell</string>
@@ -27,8 +29,17 @@
     <string name="game_dialog_hit_suffix">" wurde getroffen!"</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
-    <string name="game_dialog_win">Und der Gewinner ist…</string>
+    <string name="game_dialog_win">Und der Gewinner ist …</string>
     <string name="game_dialog_quit">Möchten Sie das Spiel abbrechen?</string>
+    <!-- ### SETTINGS ### -->
+    <string name="system_default">Systemstandard</string>
+    <string name="settings">Einstellungen</string>
+    <string name="pref_app_theme_title">Design</string>
+    <string-array name="pref_app_theme_entries">
+        <item>Hell</item>
+        <item>Dunkel</item>
+        <item>@string/system_default</item>
+    </string-array>
     <!--###HELP###-->
     <string name="help">Hilfe</string>
     <string name="help_privacy_heading">Datenschutzinfo</string>
@@ -45,10 +56,10 @@
     <string name="help_menu_game_mode_dual_player">Spielen Sie zu zweit gegeneinander.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Spiel gegen den Computer auf einfacher Schwierigkeit.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwerer Schwierigkeit.</string>
-    <string name="help_menu_game_size">Größe des Spielfeldes</string>
-    <string name="help_menu_game_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
-    <string name="help_menu_quick_start">Drücken Sie die Taste \"Zufällige Reihenfolge\", um das Spiel mit dem gewählten Modus und der gewählten Größe zu starten. Die Schiffe werden nach dem Zufallsprinzip für Sie und Ihren Gegner platziert.</string>
-    <string name="help_menu_settings">Drücken Sie die Schaltfläche \"MANUELLE Reihenfolge\", wenn Sie Ihr Schiffsset anpassen und manuell platzieren möchten.</string>
+    <string name="help_menu_grid_size">Größe des Spielfeldes</string>
+    <string name="help_menu_grid_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
+    <string name="help_menu_quick_start">Wählen Sie \"Zufällige Reihenfolge\", um das Spiel mit dem gewählten Modus und der gewählten Größe zu starten. Die Schiffe werden nach dem Zufallsprinzip für Sie und Ihren Gegner platziert.</string>
+    <string name="help_menu_settings">Wählen Sie \"Manuelle Reihenfolge\", wenn Sie Ihr Schiff-Set anpassen und manuell platzieren möchten.</string>
     <string name="help_menu_start">Starten des Spiels</string>
     <!--###ABOUT###-->
     <string name="about">Über</string>
@@ -93,5 +104,5 @@
     <string name="ship_set_alert_title">Achtung!</string>
     <string name="ship_set_alert_message">Bitte fügen Sie mindestens ein Schiff ein.</string>
     <string name="game_mode">Spielmodus</string>
-    <string name="game_size">Spielfeldgröße</string>
+    <string name="grid_size">Spielfeldgröße</string>
 </resources>
