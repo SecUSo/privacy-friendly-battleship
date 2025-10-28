@@ -225,7 +225,7 @@ class GameActivity : BaseActivity() {
         // Create a bundle for transferring data to the SwitchDialog
         val bundle = Bundle()
         val currentPlayerName =
-            if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
+            if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
         bundle.putInt("Name", currentPlayerName)
 
         // Ask if player one is ready
@@ -298,7 +298,7 @@ class GameActivity : BaseActivity() {
             SwitchDialog is executed.
             */
             val playerName =
-                if (controller!!.currentPlayer) R.string.game_player_one else R.string.game_player_two
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_one else R.string.game_player_two
 
             // Create a bundle for transferring data to the SwitchDialog
             val bundle = Bundle()
@@ -338,7 +338,7 @@ class GameActivity : BaseActivity() {
         }
 
         // Attack the cell and update the main grid.
-        controller!!.makeMove(controller!!.currentPlayer, column, row)
+        controller!!.makeMove(controller!!.secondPlayerIsCurrent, column, row)
         this.moveMade = true
         // Denote that the cells are not clicked anymore such that fire button can only be executed if a cell has been clicked
         fireButton.isEnabled = false
@@ -350,7 +350,7 @@ class GameActivity : BaseActivity() {
         // Check if the current hit has destroyed a ship
         if (ship != null && ship.isDestroyed) {
             val playerName =
-                if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
             val bundle = Bundle()
             bundle.putInt("Name", playerName)
             bundle.putInt("Size", ship.size)
@@ -486,14 +486,14 @@ class GameActivity : BaseActivity() {
     fun updateToolbar() {
         if (this.gameMode == GameMode.VS_PLAYER || this.gameMode == GameMode.CUSTOM) {
             val currentPlayerName =
-                if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
             playerName!!.setText(currentPlayerName)
         } else {
             playerName!!.text = ""
         }
 
         val attemptsCurrentPlayer =
-            if (controller!!.currentPlayer) controller!!.attemptsPlayerTwo else controller!!.attemptsPlayerOne
+            if (controller!!.secondPlayerIsCurrent) controller!!.attemptsPlayerTwo else controller!!.attemptsPlayerOne
         attempts!!.text =
             controller!!.attemptsToString(attemptsCurrentPlayer)
     }
@@ -532,8 +532,8 @@ class GameActivity : BaseActivity() {
             current game to the dialog.
             */
             val nameWinner =
-                if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
-            val attemptsWinner = if (controller!!.currentPlayer)
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
+            val attemptsWinner = if (controller!!.secondPlayerIsCurrent)
                 controller!!.attemptsPlayerTwo
             else
                 controller!!.attemptsPlayerOne
@@ -567,10 +567,7 @@ class GameActivity : BaseActivity() {
     }
 
     fun showShipsOnMainGrid() {
-        val newAdapter = GameGridAdapter(
-            this,
-            layoutProvider!!, controller!!, true, true
-        )
+        val newAdapter = GameGridAdapter(this, layoutProvider!!, controller!!, true, true)
         gridViewBig!!.adapter = newAdapter
         gridViewBig!!.isEnabled = false
     }

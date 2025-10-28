@@ -147,7 +147,7 @@ class PlaceShipActivity : BaseActivity() {
             val col = cell.col
             val row = cell.row
             val cellView = gridView.getChildAt(row * this.gridSize + col) as ImageView
-            cellView.setImageResource(cell.resourceId)
+            cellView.setImageResource(cell.getDrawableResourceId())
             cellView.imageAlpha = 128
 
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
@@ -170,11 +170,11 @@ class PlaceShipActivity : BaseActivity() {
                 cellView.setImageResource(0)
             } else if (shipsOnCell == 1) {
                 cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
-                cellView.setImageResource(cell.resourceId)
+                cellView.setImageResource(cell.getDrawableResourceId())
                 cellView.imageAlpha = 255
             } else if (shipsOnCell >= 2) {
                 cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.shipConflict))
-                cellView.setImageResource(cell.resourceId)
+                cellView.setImageResource(cell.getDrawableResourceId())
                 cellView.imageAlpha = 255
             }
         }
@@ -222,7 +222,7 @@ class PlaceShipActivity : BaseActivity() {
             intent.putExtra("controller", this.controller)
             startActivity(intent)
         } else if (controller.mode == GameMode.VS_PLAYER) {
-            if (controller.currentPlayer) {
+            if (controller.secondPlayerIsCurrent) {
                 this.fadeOutGridView()
 
                 // Re-switch the current player, such that player one starts
@@ -301,7 +301,7 @@ class PlaceShipActivity : BaseActivity() {
 
             builder.setView(i.inflate(R.layout.placement_switch_player_dialog, rootView, false))
             builder.setIcon(R.mipmap.icon_drawer)
-            if (!(activity as PlaceShipActivity).controller.currentPlayer) {
+            if (!(activity as PlaceShipActivity).controller.secondPlayerIsCurrent) {
                 builder.setTitle(requireActivity().getString(R.string.player) + " 2") //player will be switched now
             } else {
                 builder.setTitle(requireActivity().getString(R.string.player) + " 1") //player will be switched now

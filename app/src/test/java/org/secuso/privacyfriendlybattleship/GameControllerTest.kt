@@ -50,7 +50,7 @@ class GameControllerTest {
 
     @Test
     fun testFindShipContainingCell() {
-        val grid = if (!controller.currentPlayer) {
+        val grid = if (!controller.secondPlayerIsCurrent) {
             controller.gridFirstPlayer
         } else {
             controller.gridSecondPlayer
