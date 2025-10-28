@@ -9,9 +9,9 @@
     <string name="action_help">@string/help</string>
     <string name="action_about">@string/about</string>
     <!-- ###MAIN### -->
-    <string name="main_button_quick_start">Zufällige Reihenfolge</string>
+    <string name="main_button_quick_start">Zufällige Platzierung</string>
     <string name="main_button_place_ships">Schiffe manuell</string>
-    <string name="custom_game">Manuelle Reihenfolge</string>
+    <string name="custom_game">Manuelle Platzierung</string>
     <string name="mode_two_player">2 Spieler</string>
     <string name="mode_vs_cpu_easy">CPU leicht</string>
     <string name="mode_vs_cpu_hard">CPU schwer</string>
@@ -58,8 +58,8 @@
     <string name="help_menu_game_mode_vs_ai_hard">Spiel gegen den Computer auf schwerer Schwierigkeit.</string>
     <string name="help_menu_grid_size">Größe des Spielfeldes</string>
     <string name="help_menu_grid_size_description">Wählen Sie die Größe des Spielfeldes. Möglich sind 5x5 und 10x10.</string>
-    <string name="help_menu_quick_start">Wählen Sie \"Zufällige Reihenfolge\", um das Spiel mit dem gewählten Modus und der gewählten Größe zu starten. Die Schiffe werden nach dem Zufallsprinzip für Sie und Ihren Gegner platziert.</string>
-    <string name="help_menu_settings">Wählen Sie \"Manuelle Reihenfolge\", wenn Sie Ihr Schiff-Set anpassen und manuell platzieren möchten.</string>
+    <string name="help_menu_quick_start">Wählen Sie \"Zufällige Platzierung\", um das Spiel mit dem gewählten Modus und der gewählten Größe zu starten. Die Schiffe werden nach dem Zufallsprinzip für Sie und Ihren Gegner platziert.</string>
+    <string name="help_menu_settings">Wählen Sie \"Manuelle Platzierung\", wenn Sie Ihr Schiff-Set anpassen und manuell platzieren möchten.</string>
     <string name="help_menu_start">Starten des Spiels</string>
     <!--###ABOUT###-->
     <string name="about">Über</string>
@@ -78,7 +78,7 @@
     <string name="slide_1_desc">Willkommen zu Privacy Friendly Schiffe Versenken. </string>
     <string name="slide_2_title">Spiel wählen</string>
     <string name="slide_2_desc">Sie können zwischen drei Spielmodi und zwei Spielfeldgrößen wählen.</string>
-    <string name="slide_2_desc2">Tippen Sie auf \"Zufällige Reihenfolge\", um das Spiel direkt zu starten, oder auf \"Manuelle Reihenfolge\", um Ihre Schlachtschiffe zu platzieren. Viel Spaß mit dem Spiel!</string>
+    <string name="slide_2_desc2">Tippen Sie auf \"Zufällige Platzierung\", um das Spiel direkt zu starten, oder auf \"Manuelle Platzierung\", um Ihre Schlachtschiffe zu platzieren. Viel Spaß mit dem Spiel!</string>
     <string name="okay">Okay</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>

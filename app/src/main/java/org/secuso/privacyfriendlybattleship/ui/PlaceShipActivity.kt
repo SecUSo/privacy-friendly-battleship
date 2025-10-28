@@ -32,9 +32,11 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
 import org.secuso.privacyfriendlybattleship.R
@@ -60,6 +62,8 @@ class PlaceShipActivity : BaseActivity() {
     private lateinit var layoutProvider: GameActivityLayoutProvider
     private lateinit var rootView: ViewGroup
     private lateinit var gridView: GridView
+    private lateinit var readyButton: Button
+
     private var gridAdapter: GameGridAdapter? = null
     private var mSelectedShip: GameShip? = null
 
@@ -71,6 +75,7 @@ class PlaceShipActivity : BaseActivity() {
         // Get the grid views of the respective XML-files
         gridView = findViewById<GridView>(R.id.game_gridview_big)
         rootView = gridView.rootView as ViewGroup
+        readyButton = findViewById<Button>(R.id.placement_ready)
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         val intentIn = intent
@@ -195,6 +200,11 @@ class PlaceShipActivity : BaseActivity() {
         }
         unhighlightCells(oldCells)
         highlightCells(selectedShip.shipsCells)
+        readyButton.background = if (controller.currentGrid.shipSet.placementLegit()) {
+            ResourcesCompat.getDrawable(resources, R.drawable.button_enabled, null)
+        } else {
+            ResourcesCompat.getDrawable(resources, R.drawable.button_disabled, null)
+        }
     }
 
     fun onClickReady(@Suppress("unused") view: View?) {
