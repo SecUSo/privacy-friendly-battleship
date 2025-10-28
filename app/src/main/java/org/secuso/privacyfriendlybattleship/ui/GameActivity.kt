@@ -34,7 +34,6 @@ import android.widget.GridView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
@@ -68,7 +67,6 @@ class GameActivity : BaseActivity() {
     private lateinit var mainGameLayout: ViewGroup
     private lateinit var fireButton: Button
 
-    private var isCellClicked = false
     private var hasStarted = false
     private var moveMade =
         false // Necessary for the help and the back button in order to control the timer and the configuration changes
@@ -123,6 +121,7 @@ class GameActivity : BaseActivity() {
             onClickHelpButton(buttonView)
         }
 
+        fireButton.isEnabled = false
         fireButton.setText(R.string.game_button_fire)
         fireButton.setOnClickListener { buttonView ->
             onClickFireButton(buttonView)
@@ -174,6 +173,7 @@ class GameActivity : BaseActivity() {
                         be finished after the button has been clicked.
                         */
                         gridViewBig!!.isEnabled = false
+                        fireButton.isEnabled = true
                         fireButton.setText(R.string.game_button_done)
                         fireButton.setOnClickListener { view ->
                             onClickDoneButton(view)
@@ -313,6 +313,7 @@ class GameActivity : BaseActivity() {
         Change the listener and the text of the "Done" button, such that the grids fade out
         after the button has been clicked.
         */
+        fireButton.isEnabled = false
         fireButton.setText(R.string.game_button_fire)
         fireButton.setOnClickListener { buttonView ->
             onClickFireButton(buttonView)
@@ -320,15 +321,19 @@ class GameActivity : BaseActivity() {
     }
 
     fun onClickFireButton(@Suppress("unused") view: View?) {
-        val gridUnderAttack = controller!!.gridUnderAttack()
+        // Do not click the fire button without clicking on a cell.
+        if (this.prevCell == null) {
+            return
+        }
 
         // Get the cell, which shall be attacked
+        val gridUnderAttack = controller!!.gridUnderAttack()
         val column = this.positionGridCell % this.gridSize
         val row = this.positionGridCell / this.gridSize
         val attackedCell = gridUnderAttack.getCell(column, row)
 
-        //Do not attack the same cell twice and do not click the fire button without clicking on a cell.
-        if (attackedCell.isHit || this.prevCell == null || !isCellClicked) {
+        // Do not attack the same cell twice.
+        if (attackedCell.isHit) {
             return
         }
 
@@ -336,7 +341,7 @@ class GameActivity : BaseActivity() {
         controller!!.makeMove(controller!!.currentPlayer, column, row)
         this.moveMade = true
         // Denote that the cells are not clicked anymore such that fire button can only be executed if a cell has been clicked
-        this.isCellClicked = false
+        fireButton.isEnabled = false
         updateToolbar()
         adapterMainGrid!!.notifyDataSetChanged()
 
@@ -367,7 +372,7 @@ class GameActivity : BaseActivity() {
         // If the attacked cell does not contain a ship, then stop the timer and switch the player
         if (this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) {
             controller!!.switchPlayers()
-            //make move for AI
+            // Make move for AI
             controller!!.opponentAI?.makeMove()
             mainGameLayout.handler!!.postDelayed({
                 adapterMiniGrid!!.notifyDataSetChanged()
@@ -375,9 +380,9 @@ class GameActivity : BaseActivity() {
                     timerUpdate!!.cancel()
 
                     /*
-                                Create a dialog. Therefore, instantiate a bundle which transfers the data from the
-                                current game to the dialog.
-                                */
+                    Create a dialog. Therefore, instantiate a bundle which transfers
+                    the data from the current game to the dialog.
+                    */
                     val bundle = Bundle()
                     bundle.putString("Time", controller!!.timeToString(controller!!.time))
                     bundle.putString(
@@ -402,6 +407,7 @@ class GameActivity : BaseActivity() {
             */
             gridViewBig!!.isEnabled = false
 
+            fireButton.isEnabled = true
             fireButton.setText(R.string.game_button_done)
             fireButton.setOnClickListener { view ->
                 onClickDoneButton(view)
@@ -410,6 +416,7 @@ class GameActivity : BaseActivity() {
     }
 
     fun onClickFinishButton(@Suppress("unused") view: View?) {
+        fireButton.isEnabled = true
         fireButton.setText(R.string.finish)
         fireButton.setOnClickListener {
             goToMainActivity()
@@ -431,7 +438,6 @@ class GameActivity : BaseActivity() {
         showAllShipsButton.setOnClickListener {
             controller!!.switchPlayers()
             isShowAllShipsButtonClicked = true
-            showAllShipsButton.background = ResourcesCompat.getDrawable(resources, R.drawable.button_disabled, null)
             showAllShipsButton.isEnabled = false
             showShipsOnMainGrid()
         }
@@ -439,7 +445,6 @@ class GameActivity : BaseActivity() {
 
     private fun setupGridViews() {
         // Get the grid views of the respective XML-files
-
         gridViewBig = findViewById<GridView>(R.id.game_gridview_big)
         gridViewSmall = findViewById<GridView>(R.id.game_gridview_small)
 
@@ -451,14 +456,8 @@ class GameActivity : BaseActivity() {
         gridViewBig!!.numColumns = gridSize
         gridViewSmall!!.numColumns = gridSize
 
-        adapterMainGrid = GameGridAdapter(
-            this,
-            layoutProvider!!, controller!!, true
-        )
-        adapterMiniGrid = GameGridAdapter(
-            this,
-            layoutProvider!!, controller!!, false
-        )
+        adapterMainGrid = GameGridAdapter(this, layoutProvider!!, controller!!, true)
+        adapterMiniGrid = GameGridAdapter(this, layoutProvider!!, controller!!, false)
         gridViewBig!!.adapter = adapterMainGrid
         gridViewSmall!!.adapter = adapterMiniGrid
 
@@ -474,7 +473,13 @@ class GameActivity : BaseActivity() {
                 prevCell = view
                 // Display the grid cell, which was clicked.
                 adapterMainGrid!!.notifyDataSetChanged()
-                isCellClicked = true
+                // Get the cell, which shall be attacked
+                val gridUnderAttack = controller!!.gridUnderAttack()
+                val column = this.positionGridCell % this.gridSize
+                val row = this.positionGridCell / this.gridSize
+                val attackedCell = gridUnderAttack.getCell(column, row)
+                // Do not attack the same cell twice.
+                fireButton.isEnabled = !attackedCell.isHit
             }
     }
 

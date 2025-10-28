@@ -39,7 +39,7 @@
     </style>
 
     <style name="AppBorderlessButtonStyle">
-        <item name="android:background">@drawable/button_normal</item>
+        <item name="android:background">@drawable/button</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
