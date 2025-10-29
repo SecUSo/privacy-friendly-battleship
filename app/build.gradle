@@ -21,6 +21,13 @@ android {
         }
     }
 
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
     applicationVariants.configureEach { variant ->
         variant.outputs.configureEach {
             def appName = "pfa-battleship"
@@ -61,7 +68,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.preference:preference-ktx:1.2.1'
     testImplementation 'junit:junit:4.13.2'
+    // Stuck because of min SDK version 17:
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    // Stuck because of min SDK version 17:
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
