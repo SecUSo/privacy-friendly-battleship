@@ -16,6 +16,8 @@
     <string name="mode_vs_cpu_easy">CPU leicht</string>
     <string name="mode_vs_cpu_hard">CPU schwer</string>
     <string name="mode_custom">Eigenes Spiel</string>
+    <string name="scroll_previous">Zurück scrollen</string>
+    <string name="scroll_next">Vor scrollen</string>
     <!-- ###GAME###-->
     <string name="title_activity_game">Spiel</string>
     <string name="game_button_fire">Feuern</string>
@@ -25,8 +27,7 @@
     <string name="game_player_two">Spieler 2</string>
     <string name="game_time">Zeit:</string>
     <string name="game_attempts">Züge:</string>
-    <string name="game_dialog_hit_prefix">Sie haben ein Schiff der Größe </string>
-    <string name="game_dialog_hit_suffix">" wurde getroffen!"</string>
+    <string name="game_dialog_ship_destroyed">Sie haben ein Schiff der Größe %1$d versenkt!</string>
     <string name="game_dialog_next_player">… ist an der Reihe! Sind Sie bereit?</string>
     <string name="game_dialog_loss">Schade! Sie haben leider verloren.</string>
     <string name="game_dialog_win">Und der Gewinner ist …</string>
@@ -62,6 +63,8 @@
     <string name="help_menu_settings">Wählen Sie \"Manuelle Platzierung\", wenn Sie Ihr Schiff-Set anpassen und manuell platzieren möchten.</string>
     <string name="help_menu_start">Starten des Spiels</string>
     <!--###ABOUT###-->
+    <string name="about_privacy_heading">Privacy Friendly Apps</string>
+    <string name="about_secuso">SECUSO - Security, Usability, Society</string>
     <string name="about">Über</string>
     <string name="version_number">Version</string>
     <string name="about_author">Autoren: </string>
@@ -90,8 +93,14 @@
     <string name="placement_tutorial_title">Platzieren der Schiffe</string>
     <string name="placement_invalid_text">Die Schiffe dürfen sich nicht überlappen.</string>
     <string name="placement_next_player_text">Platziere deine Schiffe.</string>
-    <string name="player">Spieler</string>
+    <string name="player_n">Spieler %1$d</string>
     <string name="game_dialog_show_game_board">Spielfeld anzeigen</string>
+    <string name="move_ship_upwards">Schiff nach oben bewegen</string>
+    <string name="move_ship_downwards">Schiff nach unten bewegen</string>
+    <string name="move_ship_left">Schiff nach links bewegen</string>
+    <string name="move_ship_right">Schiff nach rechts bewegen</string>
+    <string name="turn_ship_left">Schiff nach links drehen</string>
+    <string name="turn_ship_right">Schiff nach rechts drehen</string>
     <!-- #### SHIP SET ### -->
     <string name="title_activity_ship_set">Anzahl der Schiffe</string>
     <string name="ship_set_size_five_ships">Schiffe der Größe 5</string>

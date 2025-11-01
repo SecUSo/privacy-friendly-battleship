@@ -584,9 +584,8 @@ class GameActivity : BaseActivity() {
             val gameDialogView = requireActivity().layoutInflater.inflate(R.layout.game_dialog, null)
 
             // Set the size of the ship destroyed
-            val textShipSize =
-                gameDialogView.findViewById<TextView>(R.id.game_dialog_ship_size)
-            textShipSize.text = size.toString()
+            val gameDialogText = gameDialogView.findViewById<TextView>(R.id.game_dialog_text)
+            gameDialogText.text = getString(R.string.game_dialog_ship_destroyed, size)
 
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(activity)

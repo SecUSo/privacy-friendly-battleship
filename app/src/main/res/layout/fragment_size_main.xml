@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/select_size"
-        android:text="Select Size"
+        android:text="@string/grid_size"
         android:textStyle="bold"
         android:textSize="50sp"
         android:layout_width="0dp"

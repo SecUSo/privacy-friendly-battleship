@@ -10,6 +10,7 @@
 
         <ImageView
             style="@style/AppTrophyStyle"
+            android:importantForAccessibility="no"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_trophy_black_48dp"
@@ -41,6 +42,7 @@
 
                 <ImageView
                     style="@style/AppTrophyStyle"
+                    android:importantForAccessibility="no"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
@@ -145,6 +147,7 @@
 
                 <ImageView
                     style="@style/AppTrophyStyle"
+                    android:importantForAccessibility="no"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"

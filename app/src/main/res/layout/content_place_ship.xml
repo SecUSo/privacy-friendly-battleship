@@ -32,6 +32,7 @@
 
         <ImageView
             android:id="@+id/arrow_left"
+            android:contentDescription="@string/move_ship_left"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -48,6 +49,7 @@
 
             <ImageView
                 android:id="@+id/arrow_up"
+                android:contentDescription="@string/move_ship_upwards"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,6 +60,7 @@
 
             <ImageView
                 android:id="@+id/arrow_down"
+                android:contentDescription="@string/move_ship_downwards"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,6 +73,7 @@
 
         <ImageView
             android:id="@+id/arrow_right"
+            android:contentDescription="@string/move_ship_right"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -86,6 +90,7 @@
 
             <ImageView
                 android:id="@+id/rotate_right"
+                android:contentDescription="@string/turn_ship_right"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -97,6 +102,7 @@
 
             <ImageView
                 android:id="@+id/rotate_left"
+                android:contentDescription="@string/turn_ship_left"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -113,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_weight="1"
             android:onClick="onClickReady"
             android:text="@string/place_ships_ready"

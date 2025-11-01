@@ -21,6 +21,8 @@
     <string name="mode_vs_cpu_easy">CPU easy</string>
     <string name="mode_vs_cpu_hard">CPU hard</string>
     <string name="mode_custom">Custom</string>
+    <string name="scroll_previous">Scroll to previous</string>
+    <string name="scroll_next">Scroll to next</string>
     <!-- ###GAME###-->
     <string name="title_activity_game">Game</string>
     <string name="game_button_fire">Fire</string>
@@ -30,8 +32,7 @@
     <string name="game_player_two">Player 2</string>
     <string name="game_time">Time:</string>
     <string name="game_attempts">Attempts:</string>
-    <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
-    <string name="game_dialog_hit_suffix">" was hit!"</string>
+    <string name="game_dialog_ship_destroyed">You have destroyed a ship of size %1$d!</string>
     <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
     <string name="game_dialog_loss">Too bad! You lost.</string>
     <string name="game_dialog_win">And the winner is…</string>
@@ -74,13 +75,15 @@
     <string name="help_permissions_heading">Permissions</string>
     <string name="help_permissions_description">Privacy Friendly Battleship does not use any permissions.</string>
     <!--###ABOUT###-->
+    <string name="about_privacy_heading">Privacy Friendly Apps</string>
+    <string name="about_secuso">SECUSO - Security, Usability, Society</string>
     <string name="about">About</string>
     <string name="version_number">Version</string>
     <string name="about_author">Authors: </string>
     <string name="about_author_names" translatable="false">Alexander Müller, Ali Kalsen</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
-    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Karlsruhe Institute of Technology. Sourcecode licensed under GPLv3. Images copyright KIT and Google Inc.</string>
+    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Karlsruhe Institute of Technology. Source code licensed under GPLv3. Images copyright KIT and Google Inc.</string>
     <string name="more_info">More information can be found on:</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-battleship">Github-Repo</a></string>
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
@@ -104,8 +107,14 @@
     <string name="placement_tutorial_title">Placement of ships</string>
     <string name="placement_tutorial_text">Select a ship by tapping on it and move it with the arrow buttons. When you are satisfied with the placement of the ships, press the \"READY\" button to confirm. For a valid placement, the ships must not overlap each other.</string>
     <string name="placement_invalid_text">The ships must not overlap each other.</string>
-    <string name="player">Player</string>
+    <string name="player_n">Player %1$d</string>
     <string name="placement_next_player_text">Place your ships.</string>
+    <string name="move_ship_upwards">Move ship upwards</string>
+    <string name="move_ship_downwards">Move ship downwards</string>
+    <string name="move_ship_left">Move ship to the left</string>
+    <string name="move_ship_right">Move ship to the right</string>
+    <string name="turn_ship_left">Turn ship to the left</string>
+    <string name="turn_ship_right">Turn ship to the right</string>
     <!-- ### SHIP SET ### -->
     <string name="title_activity_ship_set">Customize the ship set</string>
     <string name="ship_set_size_five_ships">Ships of size 5</string>

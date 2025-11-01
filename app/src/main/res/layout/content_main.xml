@@ -38,13 +38,12 @@
 
         <ImageView
             android:id="@+id/mode_arrow_left"
+            android:contentDescription="@string/scroll_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
             android:scaleX="2"
@@ -54,13 +53,12 @@
 
         <ImageView
             android:id="@+id/mode_arrow_right"
+            android:contentDescription="@string/scroll_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
             android:scaleX="2"
@@ -94,13 +92,12 @@
 
         <ImageView
             android:id="@+id/size_arrow_left"
+            android:contentDescription="@string/scroll_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
             android:scaleX="2"
@@ -110,13 +107,12 @@
 
         <ImageView
             android:id="@+id/size_arrow_right"
+            android:contentDescription="@string/scroll_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
             android:scaleX="2"

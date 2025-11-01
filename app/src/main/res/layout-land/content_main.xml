@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -37,6 +38,7 @@
 
         <ImageView
             android:id="@+id/mode_arrow_left"
+            android:contentDescription="@string/scroll_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -52,6 +54,7 @@
 
         <ImageView
             android:id="@+id/mode_arrow_right"
+            android:contentDescription="@string/scroll_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
@@ -90,6 +93,7 @@
 
         <ImageView
             android:id="@+id/size_arrow_left"
+            android:contentDescription="@string/scroll_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -105,6 +109,7 @@
 
         <ImageView
             android:id="@+id/size_arrow_right"
+            android:contentDescription="@string/scroll_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"

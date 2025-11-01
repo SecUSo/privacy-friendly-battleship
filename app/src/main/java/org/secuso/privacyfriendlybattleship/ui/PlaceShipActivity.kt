@@ -302,9 +302,9 @@ class PlaceShipActivity : BaseActivity() {
             builder.setView(i.inflate(R.layout.placement_switch_player_dialog, rootView, false))
             builder.setIcon(R.mipmap.icon_drawer)
             if (!(activity as PlaceShipActivity).controller.secondPlayerIsCurrent) {
-                builder.setTitle(requireActivity().getString(R.string.player) + " 2") //player will be switched now
+                builder.setTitle(requireActivity().getString(R.string.player_n, 2)) //player will be switched now
             } else {
-                builder.setTitle(requireActivity().getString(R.string.player) + " 1") //player will be switched now
+                builder.setTitle(requireActivity().getString(R.string.player_n, 1)) //player will be switched now
             }
 
             builder.setPositiveButton(R.string.okay) { dialog, id ->

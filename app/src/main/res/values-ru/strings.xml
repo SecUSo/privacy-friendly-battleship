@@ -36,7 +36,7 @@
     <string name="app_name_long">Морской бой (PFA)</string>
     <string name="game_time">Время:</string>
     <string name="game_attempts">Попыток:</string>
-    <string name="game_dialog_hit_prefix">Вы уничтожили корабль размера</string>
+    <string name="game_dialog_ship_destroyed">Вы уничтожили корабль размером в %1$d!</string>
     <string name="game_dialog_next_player">Ваша очередь! Вы готовы?</string>
     <string name="game_dialog_win">И победитель…</string>
     <string name="game_dialog_show_game_board">Показать игровую доску</string>
@@ -59,7 +59,7 @@
     <string name="title_activity_place_ships">Размещение</string>
     <string name="place_ships_ready">Готово</string>
     <string name="finish">Закончить!</string>
-    <string name="player">Игрок</string>
+    <string name="player_n">Игрок %1$d</string>
     <string name="placement_next_player_text">Разместите свои корабли.</string>
     <string name="title_activity_ship_set">Настройка кораблей</string>
     <string name="ship_set_size_five_ships">Корабли размера 5</string>
@@ -70,7 +70,6 @@
     <string name="ship_set_alert_message">Пожалуйста, добавьте по крайней мере один корабль.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Играть против компьютера в простом режиме.</string>
     <string name="help_game_step_four">4. Если вы играете против другого противника, нажмите кнопку «ГОТОВО», чтобы завершить свой ход и передать телефон противнику, который будет атаковать ваши корабли.</string>
-    <string name="game_dialog_hit_suffix">" попал!"</string>
     <string name="help_menu_game_mode">Режим игры</string>
     <string name="placement_tutorial_title">Размещение кораблей</string>
     <string name="placement_invalid_text">Корабли не должны перекрывать друг друга.</string>
