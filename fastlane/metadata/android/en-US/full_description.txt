@@ -1,21 +1,21 @@
-Mit der App Privacy Friendly Schiffe versenken kann man das beliebte Spiel "Schiffe versenken" bequem auf dem Smartphone spielen. Ziel des Spiels ist es, alle Schiffe des Gegners zu versenken, indem beide Spieler abwechselnd auf das Spielfeld des Gegners "schießen".
+With the Privacy Friendly Battleship app, you can play the popular game “Battleship” conveniently on your smartphone. The aim of the game is to sink all of your opponent's ships by taking turns “shooting” at your opponent's playing field.
 
-Das Spiel bietet zwei Spielmodi:
-- Spieler vs Computer
-- Spieler vs Spieler
+The game offers two game modes:
+- Player vs. computer
+- Player vs. player
 
-Der Spieler kann dabei zwischen den Spielfeldgrößen 5x5 und 10x10 wählen und seine Schiffe frei platzieren. Die Anzahl der Schiffe kann vor dem Spiel selbst gewählt werden. Dabei sind Schiffe der Größen 2 (U-Boote), 3 (Zerstörer), 4 (Kreuzer) und 5 (Schlachtschiffe) möglich.
+Players can choose between 5x5 and 10x10 playing fields and place their ships freely. The number of ships can be selected before the game. Ships of sizes 2 (submarines), 3 (destroyers), 4 (cruisers), and 5 (battleships) are available.
 
-Was unterscheidet Privacy Friendly Schiffe Versenken von anderen, ähnlichen Apps?
+What distinguishes Privacy Friendly Battleship from other similar apps?
 
-1. Keine Berechtigungen
-Privacy Friendly Schiffe versenken verwendet keine Berechtigungen.
-Zum Vergleich: Die Top Ten ähnlicher Apps, die im Google Play Store erhältlich sind, benötigt durchschnittlich 6,1 Berechtigungen (Stand: November 2017). Hierzu zählen der Zugriff auf Netzwerke, das Internet oder Standortdaten.
+1. No permissions
+Privacy Friendly Battleship does not use any permissions.
+By comparison, the top ten similar apps available in the Google Play Store require an average of 6.1 permissions (as of November 2017). These include access to networks, the internet, or location data.
 
-2. Keine störende Werbung
-Viele andere kostenlose Apps im Google Play Store blenden störende Werbung ein, die unter anderem auch die Akkulaufzeit verkürzt und Datenvolumen verbrauchen kann.
+2. No annoying ads
+Many other free apps in the Google Play Store display annoying ads, which can shorten battery life and consume data volume, among other things.
 
-Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO der Technischen Universität Darmstadt entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa
+The app belongs to the group of privacy-friendly apps developed by the SECUSO research group at the Technical University of Darmstadt. More information at: https://secuso.org/pfa
 
 
 Feel free to contact us via:
