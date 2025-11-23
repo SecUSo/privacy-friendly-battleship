@@ -14,7 +14,7 @@
     General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see http://www.gnu.org/licenses/.
+    along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 package org.secuso.privacyfriendlybattleship.game
 
@@ -117,11 +117,18 @@ class GameShip : Parcelable {
             return true
         }
 
-    fun containsCell(cell: GameCell): Boolean {
+    /**
+     * The cell index inside the ship cells identifies the part of the ship which is represented by
+     * the cell: Cell index 0 is the front of the ship. Cell index (size - 1) is the end of the ship.
+     *
+     * @return Returns the zero-based index of the cell in the ship-cells or -1 if the cell is not
+     * part of the ship.
+     */
+    fun getCellIndex(cell: GameCell): Int {
         for (i in shipsCells.indices) {
-            if (cell == shipsCells[i]) return true
+            if (cell == shipsCells[i]) return i
         }
-        return false
+        return -1
     }
 
     /**

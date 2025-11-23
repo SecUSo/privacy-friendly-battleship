@@ -56,7 +56,7 @@ class GameControllerTest {
             controller.gridSecondPlayer
         }
         val cell = grid.getCell(1, 1)
-        val ship = grid.shipSet.findShipContainingCell(cell)
+        val ship = grid.shipSet.findShipContainingCell(cell)?.first
         assertNotNull(ship)
         assertEquals(ship!!.size.toLong(), 3)
     }

@@ -28,6 +28,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toDrawable
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 
@@ -86,7 +87,7 @@ class GameGridAdapter(
             gridCell.setBackgroundColor(ContextCompat.getColor(this.context, R.color.water))
             // Set the grid cell of the current player
             if (currentCell.isShip && !isMainGrid || currentCell.isShip && showShips) {
-                gridCell.setImageResource(currentCell.getDrawableResourceId())
+                gridCell.setImageBitmap(currentCell.getImage())
             }
         }
 
@@ -107,8 +108,8 @@ class GameGridAdapter(
                 gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.waterHit))
             }
             else if (showShips || !isMainGrid) {
-                var layerDrawable = LayerDrawable(arrayOf(
-                    ResourcesCompat.getDrawable(context.resources, currentCell.getDrawableResourceId(), null),
+                val layerDrawable = LayerDrawable(arrayOf(
+                    currentCell.getImage().toDrawable(context.resources),
                     ResourcesCompat.getDrawable(context.resources, R.drawable.ship_hit, null)
                 ))
                 // Ship was hit and ship shall be shown.

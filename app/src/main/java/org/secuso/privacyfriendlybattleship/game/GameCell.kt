@@ -14,10 +14,11 @@
     General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see http://www.gnu.org/licenses/.
+    along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 package org.secuso.privacyfriendlybattleship.game
 
+import android.graphics.Bitmap
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
@@ -33,15 +34,18 @@ import kotlin.math.max
  * @author Alexander Müller, Ali Kalsen
  */
 class GameCell : Parcelable {
-    var col: Int //Column of the Cell
+    /** Column of the Cell */
+    var col: Int
         private set
-    var row: Int //Row of the Cell
+    /** Row of the Cell */
+    var row: Int
         private set
+    /** false if this cell contains water, true if it contains a ship */
     @JvmField
-    var isShip: Boolean = false //false if this cell contains water, true if it contains a ship
-    var isHit: Boolean = false //false if this cell was not hit yet, true if it was
+    var isShip: Boolean = false
+    /** false if this cell was not hit yet, true if it was */
+    var isHit: Boolean = false
     var grid: GameGrid?
-
 
     constructor(col: Int, row: Int, grid: GameGrid?) {
         this.col = col
@@ -64,62 +68,13 @@ class GameCell : Parcelable {
         return distance <= 1
     }
 
-    fun getDrawableResourceId(): Int {
-        if (!this.isShip) {
-            return 0
-        }
-
+    fun getImage(): Bitmap {
         val ship = grid!!.shipSet.findShipContainingCell(this)
-        when (ship!!.orientation) {
-            Direction.NORTH -> {
-                if (this == ship.firstCell) {
-                    //return North-start
-                    return R.drawable.ship_front_up
-                }
-                if (this == ship.lastCell) {
-                    //return North-end
-                    return R.drawable.ship_back_up
-                }
-                return R.drawable.ship_middle_up
-            }
-
-            Direction.EAST -> {
-                if (this == ship.firstCell) {
-                    //return East-start
-                    return R.drawable.ship_front_right
-                }
-                if (this == ship.lastCell) {
-                    //return East-end
-                    return R.drawable.ship_back_right
-                }
-                return R.drawable.ship_middle_right
-            }
-
-            Direction.SOUTH -> {
-                if (this == ship.firstCell) {
-                    //return South-start
-                    return R.drawable.ship_front_down
-                }
-                if (this == ship.lastCell) {
-                    //return South-end
-                    return R.drawable.ship_back_down
-                }
-                return R.drawable.ship_middle_down
-            }
-
-            Direction.WEST -> {
-                if (this == ship.firstCell) {
-                    //return West-start
-                    return R.drawable.ship_front_left
-                }
-                if (this == ship.lastCell) {
-                    //return West-end
-                    return R.drawable.ship_back_left
-                }
-                return R.drawable.ship_middle_left
-            }
+        return if (null != ship) {
+            GameResources.getShipBitmap(ship.first.orientation, ship.first.size, ship.second)
+        } else {
+            GameResources.DUMMY_BITMAP
         }
-        return R.drawable.ic_info_black_24dp
     }
 
     override fun describeContents(): Int {

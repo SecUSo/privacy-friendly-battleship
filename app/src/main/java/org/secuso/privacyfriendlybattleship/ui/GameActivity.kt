@@ -345,7 +345,7 @@ class GameActivity : BaseActivity() {
         updateToolbar()
         adapterMainGrid!!.notifyDataSetChanged()
 
-        val ship = gridUnderAttack.shipSet.findShipContainingCell(attackedCell)
+        val ship = gridUnderAttack.shipSet.findShipContainingCell(attackedCell)?.first
         controller!!.stopTimer()
         // Check if the current hit has destroyed a ship
         if (ship != null && ship.isDestroyed) {

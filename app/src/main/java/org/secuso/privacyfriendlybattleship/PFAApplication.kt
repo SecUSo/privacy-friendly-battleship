@@ -18,6 +18,7 @@ package org.secuso.privacyfriendlybattleship
 import android.app.Application
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import org.secuso.privacyfriendlybattleship.game.GameResources
 import org.secuso.privacyfriendlybattleship.util.LogTag
 import org.secuso.privacyfriendlybattleship.util.PrefManager
 import org.secuso.privacyfriendlybattleship.util.PreferenceObserver
@@ -33,16 +34,18 @@ class PFAApplication : Application() {
             }
         }
         applyAppTheme()
+        GameResources.loadGameResources(this)
     }
 
     private fun applyAppTheme() {
         val prefManager = PrefManager(this)
         when (val appTheme = prefManager.prefAppTheme) {
-            "LIGHT"  -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            "DARK"   -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "SYSTEM" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            APP_THEME_LIGHT  -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            APP_THEME_DARK   -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            APP_THEME_SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             else     -> {
-                Log.e(TAG, "Unknown value for preference ${PrefManager.PREF_APP_THEME}: $appTheme.")
+                Log.w(TAG, "Unknown value for preference ${PrefManager.PREF_APP_THEME}: $appTheme. Following system.")
+                prefManager.prefAppTheme = APP_THEME_SYSTEM
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         }
@@ -50,5 +53,8 @@ class PFAApplication : Application() {
 
     companion object {
         private val TAG = LogTag.create(this::class.java.declaringClass)
+        private const val APP_THEME_LIGHT = "LIGHT"
+        private const val APP_THEME_DARK = "DARK"
+        private const val APP_THEME_SYSTEM = "SYSTEM"
     }
 }

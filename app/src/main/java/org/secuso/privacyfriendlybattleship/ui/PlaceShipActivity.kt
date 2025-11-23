@@ -134,7 +134,7 @@ class PlaceShipActivity : BaseActivity() {
                 }
 
                 val selectedCell = controller.currentGrid.getCell(column, row)
-                mSelectedShip = controller.currentGrid.shipSet.findShipContainingCell(selectedCell)
+                mSelectedShip = controller.currentGrid.shipSet.findShipContainingCell(selectedCell)?.first
 
                 //highlight ships cells
                 if (mSelectedShip != null) highlightCells(mSelectedShip!!.shipsCells)
@@ -147,7 +147,7 @@ class PlaceShipActivity : BaseActivity() {
             val col = cell.col
             val row = cell.row
             val cellView = gridView.getChildAt(row * this.gridSize + col) as ImageView
-            cellView.setImageResource(cell.getDrawableResourceId())
+            cellView.setImageBitmap(cell.getImage())
             cellView.imageAlpha = 128
 
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
@@ -170,11 +170,11 @@ class PlaceShipActivity : BaseActivity() {
                 cellView.setImageResource(0)
             } else if (shipsOnCell == 1) {
                 cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
-                cellView.setImageResource(cell.getDrawableResourceId())
+                cellView.setImageBitmap(cell.getImage())
                 cellView.imageAlpha = 255
             } else if (shipsOnCell >= 2) {
                 cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.shipConflict))
-                cellView.setImageResource(cell.getDrawableResourceId())
+                cellView.setImageBitmap(cell.getImage())
                 cellView.imageAlpha = 255
             }
         }
