@@ -22,7 +22,6 @@ import android.graphics.Bitmap
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
-import org.secuso.privacyfriendlybattleship.R
 import kotlin.math.abs
 import kotlin.math.max
 

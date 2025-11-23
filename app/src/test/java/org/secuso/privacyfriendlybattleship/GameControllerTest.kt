@@ -20,6 +20,7 @@ class GameControllerTest {
     private lateinit var controllerSmall: GameController
     private lateinit var timer: Timer
 
+    @Suppress("unused")
     fun printGrid(grid: GameGrid) {
         for (i in 0..<grid.size) {
             for (j in 0..<grid.size) {

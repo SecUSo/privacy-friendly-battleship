@@ -89,7 +89,7 @@ class GameShipSet : Parcelable {
      * @param direction The direction the ship is facing
      */
     fun placeShip(startCol: Int, startRow: Int, size: Int, direction: Direction) {
-        require(!(size < 2 || size > 5)) { "Illegal ship-size." }
+        require(size in 2..5) { "Illegal ship-size." }
 
         //get free slot for ship
         var shipIndex = 0

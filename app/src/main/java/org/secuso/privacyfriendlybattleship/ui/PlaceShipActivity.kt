@@ -73,9 +73,9 @@ class PlaceShipActivity : BaseActivity() {
         setContentView(R.layout.activity_place_ship)
 
         // Get the grid views of the respective XML-files
-        gridView = findViewById<GridView>(R.id.game_gridview_big)
+        gridView = findViewById(R.id.game_gridview_big)
         rootView = gridView.rootView as ViewGroup
-        readyButton = findViewById<Button>(R.id.placement_ready)
+        readyButton = findViewById(R.id.placement_ready)
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         val intentIn = intent
@@ -118,13 +118,14 @@ class PlaceShipActivity : BaseActivity() {
         gridView.numColumns = size
 
         // Initialize the grid for player one
-        gridAdapter = GameGridAdapter(this, this.layoutProvider, this.controller, true, true)
+        gridAdapter = GameGridAdapter(
+            this, this.layoutProvider, this.controller, isMainGrid = true, showShips = true)
         gridView.adapter = gridAdapter
 
         // Define the listener for the big grid view, such that it is possible to click on it. When
         // clicking on that grid, the corresponding cell should be yellow.
         gridView.onItemClickListener =
-            OnItemClickListener { adapterView, view, i, l ->
+            OnItemClickListener { _, _, i, _ ->
                 val column = i % size
                 val row = i / size
 
@@ -185,18 +186,25 @@ class PlaceShipActivity : BaseActivity() {
 
         val oldCells = selectedShip.shipsCells
 
-        if (view.id == R.id.arrow_left) {
-            selectedShip.moveShip(Direction.WEST)
-        } else if (view.id == R.id.arrow_right) {
-            selectedShip.moveShip(Direction.EAST)
-        } else if (view.id == R.id.arrow_up) {
-            selectedShip.moveShip(Direction.NORTH)
-        } else if (view.id == R.id.arrow_down) {
-            selectedShip.moveShip(Direction.SOUTH)
-        } else if (view.id == R.id.rotate_left) {
-            selectedShip.turnShipLeft()
-        } else if (view.id == R.id.rotate_right) {
-            selectedShip.turnShipRight()
+        when (view.id) {
+            R.id.arrow_left -> {
+                selectedShip.moveShip(Direction.WEST)
+            }
+            R.id.arrow_right -> {
+                selectedShip.moveShip(Direction.EAST)
+            }
+            R.id.arrow_up -> {
+                selectedShip.moveShip(Direction.NORTH)
+            }
+            R.id.arrow_down -> {
+                selectedShip.moveShip(Direction.SOUTH)
+            }
+            R.id.rotate_left -> {
+                selectedShip.turnShipLeft()
+            }
+            R.id.rotate_right -> {
+                selectedShip.turnShipRight()
+            }
         }
         unhighlightCells(oldCells)
         highlightCells(selectedShip.shipsCells)
@@ -307,7 +315,7 @@ class PlaceShipActivity : BaseActivity() {
                 builder.setTitle(requireActivity().getString(R.string.player_n, 1)) //player will be switched now
             }
 
-            builder.setPositiveButton(R.string.okay) { dialog, id ->
+            builder.setPositiveButton(R.string.okay) { _, _ ->
                 (activity as PlaceShipActivity).switchPlayers()
                 (activity as PlaceShipActivity).fadeInGridView()
             }

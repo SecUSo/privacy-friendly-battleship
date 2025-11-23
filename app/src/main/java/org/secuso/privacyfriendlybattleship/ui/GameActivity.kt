@@ -282,8 +282,8 @@ class GameActivity : BaseActivity() {
     fun onClickDoneButton(@Suppress("unused") view: View?) {
         // Fade out the grids
 
-        gridViewBig!!.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADE_OUT_DURATION)
-        gridViewSmall!!.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADE_OUT_DURATION)
+        gridViewBig!!.animate().alpha(0.0f).duration = MAIN_CONTENT_FADE_OUT_DURATION
+        gridViewSmall!!.animate().alpha(0.0f).duration = MAIN_CONTENT_FADE_OUT_DURATION
 
         this.moveMade = false
         this.isSwitchDialogDisplayed = true
@@ -445,8 +445,8 @@ class GameActivity : BaseActivity() {
 
     private fun setupGridViews() {
         // Get the grid views of the respective XML-files
-        gridViewBig = findViewById<GridView>(R.id.game_gridview_big)
-        gridViewSmall = findViewById<GridView>(R.id.game_gridview_small)
+        gridViewBig = findViewById(R.id.game_gridview_big)
+        gridViewSmall = findViewById(R.id.game_gridview_small)
 
         // Set the background color of the grid
         gridViewBig!!.setBackgroundColor(Color.GRAY)
@@ -464,7 +464,7 @@ class GameActivity : BaseActivity() {
         // Define the listener for the big grid view, such that it is possible to click on it.
         // When clicking on that grid, the corresponding cell should be yellow.
         gridViewBig!!.onItemClickListener =
-            OnItemClickListener { adapterView, view, i, l ->
+            OnItemClickListener { _, view, i, _ ->
                 if (prevCell != null) {
                     prevCell!!.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
                 }
@@ -501,9 +501,9 @@ class GameActivity : BaseActivity() {
     fun fadeInGrids() {
         setupGridViews()
         // Fade in the grids
-        gridViewBig!!.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADE_IN_DURATION)
+        gridViewBig!!.animate().alpha(1.0f).duration = MAIN_CONTENT_FADE_IN_DURATION
         gridViewBig!!.isEnabled = true
-        gridViewSmall!!.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADE_IN_DURATION)
+        gridViewSmall!!.animate().alpha(1.0f).duration = MAIN_CONTENT_FADE_IN_DURATION
         if (!this.hasStarted) {
             this.hasStarted = true
         } else {
@@ -515,7 +515,7 @@ class GameActivity : BaseActivity() {
         // Go back to the (old) MainActivity.
 
         val intent = Intent(this, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
 
         // Exit the GameActivity
@@ -567,7 +567,8 @@ class GameActivity : BaseActivity() {
     }
 
     fun showShipsOnMainGrid() {
-        val newAdapter = GameGridAdapter(this, layoutProvider!!, controller!!, true, true)
+        val newAdapter = GameGridAdapter(
+            this, layoutProvider!!, controller!!, isMainGrid = true, showShips = true)
         gridViewBig!!.adapter = newAdapter
         gridViewBig!!.isEnabled = false
     }
@@ -592,9 +593,7 @@ class GameActivity : BaseActivity() {
             builder.setTitle(this.playerName)
                 .setIcon(R.mipmap.icon_drawer)
                 .setView(gameDialogView)
-                .setPositiveButton(
-                    R.string.okay
-                ) { dialogInterface, i -> // Check if the game has a winner and terminate it in that case.
+                .setPositiveButton(R.string.okay) { _, _ -> // Check if the game has a winner and terminate it in that case.
                     (activity as GameActivity).terminate()
                 }
             // Create the AlertDialog object and return it
@@ -621,9 +620,7 @@ class GameActivity : BaseActivity() {
             builder.setTitle(this.playerName)
                 .setIcon(R.mipmap.icon_drawer)
                 .setMessage(R.string.game_dialog_next_player)
-                .setPositiveButton(
-                    R.string.okay
-                ) { dialogInterface, i -> // Fade in the grids after the next player has clicked on the button
+                .setPositiveButton(R.string.okay) { _, _ -> // Fade in the grids after the next player has clicked on the button
                     if ((activity as GameActivity).hasStarted) {
                         (activity as GameActivity).controller!!.switchPlayers()
                     }
@@ -672,10 +669,10 @@ class GameActivity : BaseActivity() {
                 .setIcon(R.mipmap.icon_drawer)
                 .setPositiveButton(
                     R.string.okay
-                ) { dialogInterface, i -> (activity as GameActivity).goToMainActivity() }
+                ) { _, _ -> (activity as GameActivity).goToMainActivity() }
                 .setNegativeButton(
                     R.string.game_dialog_show_game_board
-                ) { dialogInterface, i ->
+                ) { _, _ ->
                     (activity as GameActivity).onClickShowMainGridButton(view)
                     (activity as GameActivity).onClickFinishButton(view)
                 }
@@ -724,10 +721,10 @@ class GameActivity : BaseActivity() {
                 .setView(winDialogView)
                 .setPositiveButton(
                     R.string.okay
-                ) { dialogInterface, i -> (activity as GameActivity).goToMainActivity() }
+                ) { _, _ -> (activity as GameActivity).goToMainActivity() }
                 .setNegativeButton(
                     R.string.game_dialog_show_game_board
-                ) { dialogInterface, i ->
+                ) { _, _ ->
                     (activity as GameActivity).onClickShowMainGridButton(view)
                     (activity as GameActivity).onClickFinishButton(view)
                 }
@@ -749,10 +746,10 @@ class GameActivity : BaseActivity() {
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(R.string.game_dialog_quit)
                 .setIcon(R.mipmap.icon_drawer)
-                .setPositiveButton(R.string.yes) { dialogInterface, i ->
+                .setPositiveButton(R.string.yes) { _, _ ->
                     (activity as GameActivity).goToMainActivity()
                 }
-                .setNegativeButton(R.string.no) { dialogInterface, i ->
+                .setNegativeButton(R.string.no) { _, _ ->
                     if (!(activity as GameActivity).moveMade) {
                         // Resume the timer
                         (activity as GameActivity).controller!!.startTimer()
@@ -772,7 +769,7 @@ class GameActivity : BaseActivity() {
             builder.setTitle(R.string.help_dialog_title)
             builder.setIcon(R.mipmap.icon_drawer)
 
-            builder.setPositiveButton(R.string.okay) { dialogInterface, i ->
+            builder.setPositiveButton(R.string.okay) { _, _ ->
                 if (   !(activity as GameActivity).mSharedPreferences.isFirstGameStart
                     && !(activity as GameActivity).moveMade) {
                     (activity as GameActivity).controller!!.startTimer()

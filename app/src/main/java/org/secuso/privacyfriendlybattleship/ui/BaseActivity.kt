@@ -69,8 +69,8 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        mDrawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        mNavigationView = findViewById<NavigationView>(R.id.nav_view)
+        mDrawerLayout = findViewById(R.id.drawer_layout)
+        mNavigationView = findViewById(R.id.nav_view)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         if (supportActionBar == null) {
@@ -94,7 +94,7 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val mainContent = findViewById<View>(R.id.main_content)
         if (mainContent != null) {
             mainContent.alpha = 0f
-            mainContent.animate().alpha(1f).setDuration(MAIN_CONTENT_FADE_IN_DURATION)
+            mainContent.animate().alpha(1f).duration = MAIN_CONTENT_FADE_IN_DURATION
         }
     }
 
@@ -123,8 +123,7 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         // fade out the active activity
         val mainContent = findViewById<View>(R.id.main_content)
-        mainContent?.animate()?.alpha(0f)
-            ?.setDuration(MAIN_CONTENT_FADE_OUT_DURATION)
+        mainContent?.animate()?.alpha(0f)?.duration = MAIN_CONTENT_FADE_OUT_DURATION
     }
 
     // set active navigation item
@@ -152,12 +151,12 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         when (itemId) {
             R.id.nav_main -> {
                 intent = Intent(this, MainActivity::class.java)
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
             }
             R.id.nav_tutorial -> {
                 intent = Intent(this, TutorialActivity::class.java)
-                intent.setAction(TutorialActivity.ACTION_SHOW_ANYWAYS)
+                intent.action = TutorialActivity.ACTION_SHOW_ANYWAYS
                 startActivity(intent)
             }
             R.id.nav_settings -> {

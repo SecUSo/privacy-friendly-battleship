@@ -47,7 +47,7 @@ class AboutActivity : AppCompatActivity() {
         val mainContent = findViewById<View>(R.id.main_content)
         if (mainContent != null) {
             mainContent.alpha = 0f
-            mainContent.animate().alpha(1f).setDuration(BaseActivity.MAIN_CONTENT_FADE_IN_DURATION)
+            mainContent.animate().alpha(1f).duration = BaseActivity.MAIN_CONTENT_FADE_IN_DURATION
         }
 
         findViewById<TextView>(R.id.secusoWebsite).movementMethod = LinkMovementMethod.getInstance()

@@ -52,8 +52,8 @@ class MainActivity : BaseActivity() {
         // Initialize the main page
         setContentView(R.layout.activity_main)
 
-        viewPagerMode = findViewById<ViewPager2>(R.id.modeScroller)
-        viewPagerSize = findViewById<ViewPager2>(R.id.sizeScroller)
+        viewPagerMode = findViewById(R.id.modeScroller)
+        viewPagerSize = findViewById(R.id.sizeScroller)
 
         setupViewPagerMode()
         setupViewPagerSize()
@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
     override val navigationDrawerID: Int
         get() = R.id.nav_main
 
-    inner class SectionsPagerModeAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+    class SectionsPagerModeAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
         override fun createFragment(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
@@ -75,7 +75,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    inner class SectionsPagerSizeAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+    class SectionsPagerSizeAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
         override fun createFragment(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PageFragment (defined as a static inner class below).
@@ -230,47 +230,54 @@ class MainActivity : BaseActivity() {
         val gameMode: GameMode
         val game: GameController
 
-        if (view.id == R.id.mode_arrow_left) {
-            viewPagerMode.currentItem -= 1
-        } else if (view.id == R.id.mode_arrow_right) {
-            viewPagerMode.currentItem += 1
-        } else if (view.id == R.id.size_arrow_left) {
-            viewPagerSize.currentItem -= 1
-        } else if (view.id == R.id.size_arrow_right) {
-            viewPagerSize.currentItem += 1
-        } else if (view.id == R.id.quick_start_button) {
-            // Get the selected game mode and the grid size
-            modeIndex = viewPagerMode.currentItem
-            gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
-            sizeIndex = viewPagerSize.currentItem
-            gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
+        when (view.id) {
+            R.id.mode_arrow_left -> {
+                viewPagerMode.currentItem -= 1
+            }
+            R.id.mode_arrow_right -> {
+                viewPagerMode.currentItem += 1
+            }
+            R.id.size_arrow_left -> {
+                viewPagerSize.currentItem -= 1
+            }
+            R.id.size_arrow_right -> {
+                viewPagerSize.currentItem += 1
+            }
+            R.id.quick_start_button -> {
+                // Get the selected game mode and the grid size
+                modeIndex = viewPagerMode.currentItem
+                gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
+                sizeIndex = viewPagerSize.currentItem
+                gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
 
-            mSharedPreferences.lastGameMode = gameMode
-            mSharedPreferences.lastGridSize = gridSize
+                mSharedPreferences.lastGameMode = gameMode
+                mSharedPreferences.lastGridSize = gridSize
 
-            game = GameController(gridSize.width, gameMode)
-            game.placeAllShips() //place all ships randomly for both players
+                game = GameController(gridSize.width, gameMode)
+                game.placeAllShips() //place all ships randomly for both players
 
-            // send game information to GameActivity
-            intent = Intent(this, GameActivity::class.java)
-            intent.putExtra("controller", game)
-            startActivity(intent)
-        } else if (view.id == R.id.action_settings) {
-            // Get the selected game mode and the grid size
-            modeIndex = viewPagerMode.currentItem
-            gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
-            sizeIndex = viewPagerSize.currentItem
-            gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
+                // send game information to GameActivity
+                intent = Intent(this, GameActivity::class.java)
+                intent.putExtra("controller", game)
+                startActivity(intent)
+            }
+            R.id.action_settings -> {
+                // Get the selected game mode and the grid size
+                modeIndex = viewPagerMode.currentItem
+                gameMode = GameMode.fromOrdinal(modeIndex, GameMode.VS_PLAYER)
+                sizeIndex = viewPagerSize.currentItem
+                gridSize = GridSize.fromOrdinal(sizeIndex, GridSize.SIZE_5X5)
 
-            mSharedPreferences.lastGameMode = gameMode
-            mSharedPreferences.lastGridSize = gridSize
+                mSharedPreferences.lastGameMode = gameMode
+                mSharedPreferences.lastGridSize = gridSize
 
-            game = GameController(gridSize.width, gameMode) //place all ships randomly for both players
+                game = GameController(gridSize.width, gameMode) //place all ships randomly for both players
 
-            // send game information to ShipSetActivity
-            intent = Intent(this, ShipSetActivity::class.java)
-            intent.putExtra("controller", game)
-            startActivity(intent)
+                // send game information to ShipSetActivity
+                intent = Intent(this, ShipSetActivity::class.java)
+                intent.putExtra("controller", game)
+                startActivity(intent)
+            }
         }
     }
 }

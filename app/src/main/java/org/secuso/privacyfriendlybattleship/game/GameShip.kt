@@ -101,12 +101,6 @@ class GameShip : Parcelable {
         }
     }
 
-    val firstCell: GameCell
-        get() = shipsCells[0]
-
-    val lastCell: GameCell
-        get() = shipsCells[size - 1]
-
     val isDestroyed: Boolean
         get() {
             for (i in shipsCells.indices) {
@@ -158,8 +152,8 @@ class GameShip : Parcelable {
     }
 
     fun moveShip(direction: Direction) {
-        var col = -1
-        var row = -1
+        var col: Int
+        var row: Int
         when (direction) {
             Direction.NORTH -> {
                 col = startCellCol
@@ -204,9 +198,9 @@ class GameShip : Parcelable {
 
     fun turnShipRight() {
         val middleCellIndex = this.size / 2
-        var newOrientation = Direction.NORTH
-        var newStartCol = startCellCol
-        var newStartRow = startCellRow
+        var newOrientation: Direction
+        var newStartCol: Int
+        var newStartRow: Int
         when (this.orientation) {
             Direction.NORTH -> {
                 newOrientation = Direction.EAST
@@ -254,9 +248,9 @@ class GameShip : Parcelable {
 
     fun turnShipLeft() {
         val middleCellIndex = this.size / 2
-        var newOrientation = Direction.NORTH
-        var newStartCol = startCellCol
-        var newStartRow = startCellRow
+        var newOrientation: Direction
+        var newStartCol: Int
+        var newStartRow: Int
         when (this.orientation) {
             Direction.NORTH -> {
                 newOrientation = Direction.WEST
