@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/game_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin">
+    android:padding="@dimen/activity_vertical_margin">
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    <GridView
         android:id="@+id/game_gridview_big"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="70dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:horizontalSpacing="1px"
         android:numColumns="auto_fit"
-        android:verticalSpacing="1dp"
-        android:horizontalSpacing="1dp"
         android:stretchMode="columnWidth"
-        android:gravity="center"/>
+        android:verticalSpacing="1px"
+        android:background="@color/water"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/game_linear_layout"
-        android:layout_below="@id/game_gridview_big"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+    <GridView
+        android:id="@+id/game_gridview_small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:horizontalSpacing="1px"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="1px"
+        android:background="@color/water"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/game_barrier_buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/game_gridview_big" />
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/game_gridview_small"
-            android:layout_height="match_parent"
-            android:layout_width="200dp"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="1px"
-            android:horizontalSpacing="1px"/>
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/game_barrier_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="game_button_help,game_button_fire" />
 
-        <LinearLayout
-            android:id="@+id/linear_layout_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:gravity="center"
-            android:orientation="vertical">
+    <Button
+        android:id="@+id/game_button_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:text="@string/help"
+        app:layout_constraintBottom_toTopOf="@id/game_button_fire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/game_barrier_buttons"
+        app:layout_constraintTop_toBottomOf="@id/game_gridview_big"
+        style="@style/AppBorderlessButtonStyle" />
 
-            <Button
-                android:id="@+id/game_button_help"
-                android:text="@string/help"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_normal"
-                android:onClick="onClickHelpButton"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_gravity="center_vertical"/>
+    <Button
+        android:id="@+id/game_button_fire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:text="@string/game_button_fire"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/game_barrier_buttons"
+        app:layout_constraintTop_toBottomOf="@id/game_button_help"
+        style="@style/AppBorderlessButtonStyle" />
 
-            <Button
-                android:id="@+id/game_button_fire"
-                android:text="@string/game_button_fire"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_normal"
-                android:onClick="onClickFireButton"
-                android:layout_gravity="center_vertical"/>
-
-        </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

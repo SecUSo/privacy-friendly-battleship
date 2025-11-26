@@ -19,11 +19,11 @@
             android:summary="@string/help_menu_game_mode_vs_ai_hard"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/help_menu_game_size">
+    <PreferenceCategory android:title="@string/help_menu_grid_size">
         <Preference
             android:selectable="false"
             android:persistent="false"
-            android:summary="@string/help_menu_game_size_description"/>
+            android:summary="@string/help_menu_grid_size_description"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/help_menu_start">

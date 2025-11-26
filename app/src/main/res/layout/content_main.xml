@@ -20,7 +20,7 @@
         android:layout_weight="4"
         android:layoutDirection="ltr">
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/modeScroller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,35 +33,39 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:text="@string/game_mode"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="22sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/mode_arrow_left"
+            android:contentDescription="@string/scroll_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+            android:scaleX="2"
+            android:scaleY="2"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"
+            style="@style/AppMonochromeImageStyle" />
 
         <ImageView
             android:id="@+id/mode_arrow_right"
+            android:contentDescription="@string/scroll_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            android:scaleX="2"
+            android:scaleY="2"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+            style="@style/AppMonochromeImageStyle" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -76,12 +80,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/game_size"
-            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/grid_size"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/sizeScroller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -89,29 +92,33 @@
 
         <ImageView
             android:id="@+id/size_arrow_left"
+            android:contentDescription="@string/scroll_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp" />
+            android:scaleX="2"
+            android:scaleY="2"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_black_24dp"
+            style="@style/AppMonochromeImageStyle" />
 
         <ImageView
             android:id="@+id/size_arrow_right"
+            android:contentDescription="@string/scroll_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:padding="@dimen/activity_horizontal_margin"
-            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            android:scaleX="2"
+            android:scaleY="2"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+            style="@style/AppMonochromeImageStyle" />
     </RelativeLayout>
 
     <Button
@@ -119,20 +126,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/button_fullwidth"
         android:onClick="onClick"
         android:text="@string/main_button_quick_start"
-        android:textColor="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp"
+        style="@style/AppBorderlessButtonStyle" />
 
     <Button
         android:id="@+id/action_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_fullwidth"
         android:onClick="onClick"
         android:text="@string/custom_game"
-        android:textColor="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp"
+        style="@style/AppBorderlessButtonStyle" />
 
 </LinearLayout>

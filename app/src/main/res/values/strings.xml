@@ -3,21 +3,26 @@
     <string name="app_name">Battleships</string>
     <string name="app_name_long">Privacy Friendly Battleships</string>
     <!-- ###DRAWER###-->
-    <string name="action_help">Help</string>
-    <string name="action_about">About</string>
     <string name="action_main">Main</string>
+    <string name="action_tutorial">@string/tutorial</string>
+    <string name="action_settings">@string/settings</string>
+    <string name="action_help">@string/help</string>
+    <string name="action_about">@string/about</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <!-- ###MAIN### -->
-    <string name="main_button_quick_start">Random Order</string>
+    <string name="main_button_quick_start">Random Placement</string>
     <string name="main_button_place_ships">Place ships</string>
-    <string name="custom_game">Manual Order</string>
+    <string name="custom_game">Manual Placement</string>
     <string name="game_mode">Game Mode</string>
-    <string name="game_size">Board Size</string>
+    <string name="grid_size">Board Size</string>
+    <string name="n_x_m" translatable="false">%1$d x %2$d</string>
     <string name="mode_two_player">2 players</string>
     <string name="mode_vs_cpu_easy">CPU easy</string>
     <string name="mode_vs_cpu_hard">CPU hard</string>
     <string name="mode_custom">Custom</string>
+    <string name="scroll_previous">Scroll to previous</string>
+    <string name="scroll_next">Scroll to next</string>
     <!-- ###GAME###-->
     <string name="title_activity_game">Game</string>
     <string name="game_button_fire">Fire</string>
@@ -27,24 +32,38 @@
     <string name="game_player_two">Player 2</string>
     <string name="game_time">Time:</string>
     <string name="game_attempts">Attempts:</string>
-    <string name="game_dialog_hit_prefix">You have destroyed a ship of size </string>
-    <string name="game_dialog_hit_suffix">" was hit!"</string>
+    <string name="game_dialog_ship_destroyed">You have destroyed a ship of size %1$d!</string>
     <string name="game_dialog_next_player">It\'s your turn! Are you ready?</string>
     <string name="game_dialog_loss">Too bad! You lost.</string>
     <string name="game_dialog_win">And the winner is…</string>
     <string name="game_dialog_show_game_board">Show game board</string>
     <string name="game_dialog_quit">Do you want to quit the game?</string>
+    <!-- ### SETTINGS ### -->
+    <string name="system_default">System default</string>
+    <string name="settings">Settings</string>
+    <string name="pref_app_theme_title">Theme</string>
+    <string-array name="pref_app_theme_entries">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>@string/system_default</item>
+    </string-array>
+    <string name="pref_app_theme_default" translatable="false">SYSTEM</string>
+    <string-array name="pref_app_theme_values" translatable="false">
+        <item>LIGHT</item>
+        <item>DARK</item>
+        <item>SYSTEM</item>
+    </string-array>
     <!--###HELP###-->
     <string name="help">Help</string>
     <string name="help_menu_game_mode">Game Mode</string>
     <string name="help_menu_game_mode_dual_player">Play against another player.</string>
     <string name="help_menu_game_mode_vs_ai_easy">Play against the computer in easy mode.</string>
     <string name="help_menu_game_mode_vs_ai_hard">Play against the computer in hard mode.</string>
-    <string name="help_menu_game_size">Size of the game board</string>
-    <string name="help_menu_game_size_description">Select the size of the game board. The possible sizes for the game field are 5x5 or 10x10.</string>
+    <string name="help_menu_grid_size">Size of the game board</string>
+    <string name="help_menu_grid_size_description">Select the size of the game board. The possible sizes for the game field are 5x5 or 10x10.</string>
     <string name="help_menu_start">Start the game</string>
-    <string name="help_menu_quick_start">Press the \"RANDOM ORDER\" to start the game with the selected mode and size. The ships will be placed randomly for you and your opponent.</string>
-    <string name="help_menu_settings">Press the \"MANUAL ORDER\" button if you want to customize your ship set and place them manually.</string>
+    <string name="help_menu_quick_start">Press the \"Random Placement\" to start the game with the selected mode and size. The ships will be placed randomly for you and your opponent.</string>
+    <string name="help_menu_settings">Press the \"Manual Placement\" button if you want to customize your ship set and place them manually.</string>
     <string name="help_how_to_play">How to play the game</string>
     <string name="help_game_intro">The upper grid displays the game field of your opponent, the lower grid displays your own game field. To play the game, proceed as follows.</string>
     <string name="help_dialog_title">How to play</string>
@@ -56,13 +75,15 @@
     <string name="help_permissions_heading">Permissions</string>
     <string name="help_permissions_description">Privacy Friendly Battleship does not use any permissions.</string>
     <!--###ABOUT###-->
+    <string name="about_privacy_heading">Privacy Friendly Apps</string>
+    <string name="about_secuso">SECUSO - Security, Usability, Society</string>
     <string name="about">About</string>
     <string name="version_number">Version</string>
     <string name="about_author">Authors: </string>
     <string name="about_author_names" translatable="false">Alexander Müller, Ali Kalsen</string>
     <string name="about_author_contributors">and contributors.</string>
     <string name="about_affiliation">In affiliation with</string>
-    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Karlsruhe Institute of Technology. Sourcecode licensed under GPLv3. Images copyright KIT and Google Inc.</string>
+    <string name="privacy_friendly">This application belongs to the group of Privacy Friendly Apps developed by Karlsruhe Institute of Technology. Source code licensed under GPLv3. Images copyright KIT and Google Inc.</string>
     <string name="more_info">More information can be found on:</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-battleship">Github-Repo</a></string>
     <string name="url" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
@@ -75,7 +96,7 @@
     <string name="slide_1_desc">Welcome to Privacy Friendly Battleship. Let\'s get ready for playing.</string>
     <string name="slide_2_title">Choose Game</string>
     <string name="slide_2_desc">You can choose between three game modes and two sizes of the game board.</string>
-    <string name="slide_2_desc2">Tap on \"Random order\" to directly start the game or on \"manual order\" to place your battleships. Enjoy the game!</string>
+    <string name="slide_2_desc2">Tap on \"Random Placement\" to directly start the game or on \"Manual Placement\" to place your battleships. Enjoy the game!</string>
     <string name="okay">Okay</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -86,8 +107,14 @@
     <string name="placement_tutorial_title">Placement of ships</string>
     <string name="placement_tutorial_text">Select a ship by tapping on it and move it with the arrow buttons. When you are satisfied with the placement of the ships, press the \"READY\" button to confirm. For a valid placement, the ships must not overlap each other.</string>
     <string name="placement_invalid_text">The ships must not overlap each other.</string>
-    <string name="player">Player</string>
+    <string name="player_n">Player %1$d</string>
     <string name="placement_next_player_text">Place your ships.</string>
+    <string name="move_ship_upwards">Move ship upwards</string>
+    <string name="move_ship_downwards">Move ship downwards</string>
+    <string name="move_ship_left">Move ship to the left</string>
+    <string name="move_ship_right">Move ship to the right</string>
+    <string name="turn_ship_left">Turn ship to the left</string>
+    <string name="turn_ship_right">Turn ship to the right</string>
     <!-- ### SHIP SET ### -->
     <string name="title_activity_ship_set">Customize the ship set</string>
     <string name="ship_set_size_five_ships">Ships of size 5</string>
