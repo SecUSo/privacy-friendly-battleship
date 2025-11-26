@@ -41,6 +41,8 @@
     <style name="AppBorderlessButtonStyle">
         <item name="android:background">@drawable/button</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
     </style>
 
     <style name="AppMonochromeImageStyle">

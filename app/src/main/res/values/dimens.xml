@@ -12,5 +12,7 @@
 
     <dimen name="button_width_min">120dp</dimen>
     <dimen name="button_height_min">48dp</dimen>
+    <dimen name="button_horizontal_padding">16dp</dimen>
+    <dimen name="button_vertical_padding">8dp</dimen>
 
 </resources>

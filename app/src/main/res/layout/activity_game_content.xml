@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/game_main_layout"
     android:layout_width="match_parent"
@@ -32,9 +33,16 @@
         android:background="@color/water"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@id/game_button_fire"
+        app:layout_constraintEnd_toStartOf="@id/game_barrier_buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/game_gridview_big" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/game_barrier_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="game_button_help,game_button_fire" />
 
     <Button
         android:id="@+id/game_button_help"
@@ -45,7 +53,7 @@
         android:text="@string/help"
         app:layout_constraintBottom_toTopOf="@id/game_button_fire"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/game_gridview_small"
+        app:layout_constraintStart_toEndOf="@id/game_barrier_buttons"
         app:layout_constraintTop_toBottomOf="@id/game_gridview_big"
         style="@style/AppBorderlessButtonStyle" />
 
@@ -58,7 +66,7 @@
         android:text="@string/game_button_fire"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/game_gridview_small"
+        app:layout_constraintStart_toEndOf="@id/game_barrier_buttons"
         app:layout_constraintTop_toBottomOf="@id/game_button_help"
         style="@style/AppBorderlessButtonStyle" />
 
