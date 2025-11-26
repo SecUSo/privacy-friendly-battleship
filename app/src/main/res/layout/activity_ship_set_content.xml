@@ -28,8 +28,8 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="-"
             android:onClick="subtractShipOfSize5"
             style="@style/AppBorderlessButtonStyle" />
@@ -45,8 +45,8 @@
             android:layout_marginEnd="5dp"/>
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="+"
             android:onClick="addShipOfSize5"
             style="@style/AppBorderlessButtonStyle" />
@@ -69,8 +69,8 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="-"
             android:onClick="subtractShipOfSize4"
             style="@style/AppBorderlessButtonStyle" />
@@ -86,8 +86,8 @@
             android:layout_marginEnd="5dp"/>
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="+"
             android:onClick="addShipOfSize4"
             style="@style/AppBorderlessButtonStyle" />
@@ -110,8 +110,8 @@
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="-"
             android:onClick="subtractShipOfSize3"
             style="@style/AppBorderlessButtonStyle" />
@@ -128,8 +128,8 @@
             android:layout_marginEnd="5dp"/>
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="+"
             android:onClick="addShipOfSize3"
             style="@style/AppBorderlessButtonStyle" />
@@ -151,8 +151,8 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="-"
             android:onClick="subtractShipOfSize2"
             style="@style/AppBorderlessButtonStyle" />
@@ -168,8 +168,8 @@
             android:layout_marginEnd="5dp"/>
 
         <Button
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:text="+"
             android:onClick="addShipOfSize2"
             style="@style/AppBorderlessButtonStyle" />
