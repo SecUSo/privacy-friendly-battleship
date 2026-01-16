@@ -20,13 +20,15 @@
 package org.secuso.privacyfriendlybattleship.ui
 
 import android.app.Activity
-import android.graphics.Color
+import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toDrawable
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 
@@ -36,47 +38,19 @@ import org.secuso.privacyfriendlybattleship.game.GameController
  *
  * @author Ali Kalsen
  */
-class GameGridAdapter : BaseAdapter {
+class GameGridAdapter(
     @JvmField
-    var context: Activity
-    var game: GameController
-    private var layoutProvider: GameActivityLayoutProvider
-    private var gridSize: Int
-    private var isMainGrid: Boolean // Denotes whether the big or the small grid view is chosen
-    private var showShips: Boolean
-
-    constructor(
-        context: Activity,
-        layout: GameActivityLayoutProvider,
-        game: GameController,
-        isMainGrid: Boolean
-    ) {
-        this.context = context
-        this.layoutProvider = layout
-        this.game = game
-        this.gridSize = game.gridSize
-        this.isMainGrid = isMainGrid
-        this.showShips = false
-    }
-
-    constructor(
-        context: Activity,
-        layout: GameActivityLayoutProvider,
-        game: GameController,
-        isMainGrid: Boolean,
-        showShips: Boolean
-    ) {
-        this.context = context
-        this.layoutProvider = layout
-        this.game = game
-        this.gridSize = game.gridSize
-        this.isMainGrid = isMainGrid
-        this.showShips = showShips
-    }
+    var context: Activity,
+    private var layoutProvider: GameActivityLayoutProvider,
+    var game: GameController,
+    /** Denotes whether the big or the small grid view is chosen */
+    private var isMainGrid: Boolean,
+    private var showShips: Boolean = false):
+    BaseAdapter() {
 
     // Return the number of all grid cells.
     override fun getCount(): Int {
-        return this.gridSize * this.gridSize
+        return game.gridSize * game.gridSize
     }
 
     override fun getItem(i: Int): Any? {
@@ -94,15 +68,15 @@ class GameGridAdapter : BaseAdapter {
         grid cell. Note that the GridView enumerates the grid cells from left to right and
         from the top to the bottom.
         */
-        val cellColumn = cellIndex % this.gridSize
-        val cellRow = cellIndex / this.gridSize
+        val cellColumn = cellIndex % game.gridSize
+        val cellRow = cellIndex / game.gridSize
         val currentCell =
             if (showShips) {
                 game.currentGrid.getCell(cellColumn, cellRow)
-            } else if ((isMainGrid xor game.currentPlayer)) {
-                game.gridSecondPlayer.getCell(cellColumn, cellRow)
-            } else {
+            } else if (isMainGrid == game.secondPlayerIsCurrent) {
                 game.gridFirstPlayer.getCell(cellColumn, cellRow)
+            } else {
+                game.gridSecondPlayer.getCell(cellColumn, cellRow)
             }
 
         if (view is ImageView) {
@@ -110,10 +84,10 @@ class GameGridAdapter : BaseAdapter {
         } else {
             gridCell = ImageView(this.context)
             gridCell.scaleType = ImageView.ScaleType.CENTER_CROP
-            gridCell.setBackgroundColor(Color.WHITE)
+            gridCell.setBackgroundColor(ContextCompat.getColor(this.context, R.color.water))
             // Set the grid cell of the current player
             if (currentCell.isShip && !isMainGrid || currentCell.isShip && showShips) {
-                gridCell.setImageResource(currentCell.resourceId)
+                gridCell.setImageBitmap(currentCell.getImage())
             }
         }
 
@@ -129,10 +103,21 @@ class GameGridAdapter : BaseAdapter {
         }
 
         if (currentCell.isHit) {
-            if (currentCell.isShip) {
-                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
+            if (!currentCell.isShip) {
+                // No ship
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.waterHit))
+            }
+            else if (showShips || !isMainGrid) {
+                val layerDrawable = LayerDrawable(arrayOf(
+                    currentCell.getImage().toDrawable(context.resources),
+                    ResourcesCompat.getDrawable(context.resources, R.drawable.ship_hit, null)
+                ))
+                // Ship was hit and ship shall be shown.
+                gridCell.setImageDrawable(layerDrawable)
             } else {
-                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.lightblue))
+                // Ship was hit and ship must not be shown.
+                gridCell.setBackgroundColor(ContextCompat.getColor(context, R.color.waterHit))
+                gridCell.setImageResource(R.drawable.ship_hit)
             }
         }
         return gridCell

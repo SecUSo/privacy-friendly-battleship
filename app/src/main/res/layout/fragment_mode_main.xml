@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -14,7 +14,6 @@
 
     <TextView
         android:id="@+id/section_label"
-        android:text="Label"
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_weight="1"
@@ -22,12 +21,13 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:layout_weight="5"
         android:id="@+id/gameModeImage"
+        android:contentDescription="@string/game_mode"
         android:layout_width="match_parent"
+        android:layout_weight="5"
         android:adjustViewBounds="true"
-        android:layout_centerInParent="true"
-        app:srcCompat="@drawable/ic_person_black_24px"
-        android:layout_height="0dp" />
+        app:srcCompat="@drawable/ic_people_black_24px"
+        android:layout_height="0dp"
+        style="@style/AppMonochromeImageStyle" />
 
 </LinearLayout>

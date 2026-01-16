@@ -24,7 +24,9 @@ import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * This class creates a timer, which only counts full seconds, if it is running. Created on 27.01.2017.
+ * This class creates a timer, which only counts full seconds, if it is running.
+ *
+ * Created on 27.01.2017.
  *
  * @author Ali Kalsen
  */
@@ -33,7 +35,6 @@ class BattleshipsTimer {
     private val timerRunning = AtomicBoolean(false)
     var time: Int = 0
         private set
-    private val WAIT_TIME = 1000
 
     private fun init() {
         internalTimer = Timer()
@@ -43,7 +44,7 @@ class BattleshipsTimer {
                     time++
                 }
             }
-        }, 0, WAIT_TIME.toLong())
+        }, 0, WAIT_TIME)
     }
 
     fun stop() {
@@ -55,5 +56,9 @@ class BattleshipsTimer {
         if (internalTimer == null) {
             init()
         }
+    }
+
+    companion object {
+        private const val WAIT_TIME: Long = 1000
     }
 }

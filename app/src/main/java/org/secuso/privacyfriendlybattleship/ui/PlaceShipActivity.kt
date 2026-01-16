@@ -19,26 +19,26 @@
  */
 package org.secuso.privacyfriendlybattleship.ui
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.DialogFragment
+import androidx.preference.PreferenceManager
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.Direction
 import org.secuso.privacyfriendlybattleship.game.GameCell
@@ -60,14 +60,22 @@ class PlaceShipActivity : BaseActivity() {
     private lateinit var controller: GameController
     private var gridSize = 0
     private lateinit var layoutProvider: GameActivityLayoutProvider
-    private var gridView: GridView? = null
+    private lateinit var rootView: ViewGroup
+    private lateinit var gridView: GridView
+    private lateinit var readyButton: Button
+
     private var gridAdapter: GameGridAdapter? = null
-    private var selectedShip: GameShip? = null
+    private var mSelectedShip: GameShip? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupPreferences()
         setContentView(R.layout.activity_place_ship)
+
+        // Get the grid views of the respective XML-files
+        gridView = findViewById(R.id.game_gridview_big)
+        rootView = gridView.rootView as ViewGroup
+        readyButton = findViewById(R.id.placement_ready)
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         val intentIn = intent
@@ -84,59 +92,53 @@ class PlaceShipActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
     private fun showTutorialDialog() {
-        TutorialDialog().show(fragmentManager, TutorialDialog::class.java.simpleName)
+        TutorialDialog(rootView).show(
+            supportFragmentManager,
+            TutorialDialog::class.java.simpleName)
     }
 
     private fun showInvalidPlacementDialog() {
-        InvalidPlacementDialog().show(
-            fragmentManager,
-            InvalidPlacementDialog::class.java.simpleName
-        )
+        InvalidPlacementDialog(rootView).show(
+            supportFragmentManager,
+            InvalidPlacementDialog::class.java.simpleName)
     }
 
     private fun showSwitchPlayerDialog() {
-        val switchDialog: DialogFragment = SwitchPlayerDialog()
+        val switchDialog: DialogFragment = SwitchPlayerDialog(rootView)
         switchDialog.isCancelable = false
-        switchDialog.show(fragmentManager, SwitchPlayerDialog::class.java.simpleName)
+        switchDialog.show(supportFragmentManager, SwitchPlayerDialog::class.java.simpleName)
     }
 
-    protected fun setupGridView(size: Int) {
-        // Get the grid views of the respective XML-files
-        gridView = findViewById<GridView>(R.id.game_gridview_big)
-
+    private fun setupGridView(size: Int) {
         // Set the background color of the grid
-        gridView!!.setBackgroundColor(Color.GRAY)
+        gridView.setBackgroundColor(Color.GRAY)
 
         // Set the columns of the grid
-        gridView!!.numColumns = gridSize
+        gridView.numColumns = size
 
         // Initialize the grid for player one
-        gridAdapter = GameGridAdapter(this, this.layoutProvider, this.controller, true, true)
-        gridView!!.adapter = gridAdapter
+        gridAdapter = GameGridAdapter(
+            this, this.layoutProvider, this.controller, isMainGrid = true, showShips = true)
+        gridView.adapter = gridAdapter
 
         // Define the listener for the big grid view, such that it is possible to click on it. When
         // clicking on that grid, the corresponding cell should be yellow.
-        gridView!!.onItemClickListener =
-            OnItemClickListener { adapterView, view, i, l ->
-                val column = i % gridSize
-                val row = i / gridSize
+        gridView.onItemClickListener =
+            OnItemClickListener { _, _, i, _ ->
+                val column = i % size
+                val row = i / size
 
-                var shipsCells: Array<GameCell?>
-                if (selectedShip != null) {
+                if (mSelectedShip != null) {
                     //mark ships cells not highlighted
-                    unhighlightCells(selectedShip!!.shipsCells)
+                    unhighlightCells(mSelectedShip!!.shipsCells)
                 }
 
                 val selectedCell = controller.currentGrid.getCell(column, row)
-                selectedShip = controller.currentGrid.shipSet.findShipContainingCell(selectedCell)
+                mSelectedShip = controller.currentGrid.shipSet.findShipContainingCell(selectedCell)?.first
 
                 //highlight ships cells
-                if (selectedShip != null) highlightCells(selectedShip!!.shipsCells)
+                if (mSelectedShip != null) highlightCells(mSelectedShip!!.shipsCells)
                 gridAdapter!!.notifyDataSetChanged()
             }
     }
@@ -145,15 +147,15 @@ class PlaceShipActivity : BaseActivity() {
         for (cell in cells) {
             val col = cell.col
             val row = cell.row
-            val cellView = gridView!!.getChildAt(row * this.gridSize + col) as ImageView
-            cellView.setImageResource(cell.resourceId)
+            val cellView = gridView.getChildAt(row * this.gridSize + col) as ImageView
+            cellView.setImageBitmap(cell.getImage())
             cellView.imageAlpha = 128
 
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
             if (shipsOnCell == 1) {
-                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.selection))
             } else {
-                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.shipConflict))
             }
         }
     }
@@ -163,45 +165,57 @@ class PlaceShipActivity : BaseActivity() {
             val col = cell.col
             val row = cell.row
             val shipsOnCell = controller.currentGrid.shipSet.shipsOnCell(cell)
-            val cellView = gridView!!.getChildAt(row * this.gridSize + col) as ImageView
+            val cellView = gridView.getChildAt(row * this.gridSize + col) as ImageView
             if (shipsOnCell == 0) {
-                cellView.setBackgroundColor(Color.WHITE)
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
                 cellView.setImageResource(0)
             } else if (shipsOnCell == 1) {
-                cellView.setBackgroundColor(Color.WHITE)
-                cellView.setImageResource(cell.resourceId)
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
+                cellView.setImageBitmap(cell.getImage())
                 cellView.imageAlpha = 255
             } else if (shipsOnCell >= 2) {
-                cellView.setBackgroundColor(gridAdapter!!.context.resources.getColor(R.color.red))
-                cellView.setImageResource(cell.resourceId)
+                cellView.setBackgroundColor(ContextCompat.getColor(this, R.color.shipConflict))
+                cellView.setImageBitmap(cell.getImage())
                 cellView.imageAlpha = 255
             }
         }
     }
 
     fun onClickButton(view: View) {
-        if (this.selectedShip == null) return
+        val selectedShip = mSelectedShip ?: return
 
-        val oldCells = selectedShip!!.shipsCells
+        val oldCells = selectedShip.shipsCells
 
-        if (view.id == R.id.arrow_left) {
-            selectedShip!!.moveShip(Direction.WEST)
-        } else if (view.id == R.id.arrow_right) {
-            selectedShip!!.moveShip(Direction.EAST)
-        } else if (view.id == R.id.arrow_up) {
-            selectedShip!!.moveShip(Direction.NORTH)
-        } else if (view.id == R.id.arrow_down) {
-            selectedShip!!.moveShip(Direction.SOUTH)
-        } else if (view.id == R.id.rotate_left) {
-            selectedShip!!.turnShipLeft()
-        } else if (view.id == R.id.rotate_right) {
-            selectedShip!!.turnShipRight()
+        when (view.id) {
+            R.id.arrow_left -> {
+                selectedShip.moveShip(Direction.WEST)
+            }
+            R.id.arrow_right -> {
+                selectedShip.moveShip(Direction.EAST)
+            }
+            R.id.arrow_up -> {
+                selectedShip.moveShip(Direction.NORTH)
+            }
+            R.id.arrow_down -> {
+                selectedShip.moveShip(Direction.SOUTH)
+            }
+            R.id.rotate_left -> {
+                selectedShip.turnShipLeft()
+            }
+            R.id.rotate_right -> {
+                selectedShip.turnShipRight()
+            }
         }
         unhighlightCells(oldCells)
-        highlightCells(selectedShip!!.shipsCells)
+        highlightCells(selectedShip.shipsCells)
+        readyButton.background = if (controller.currentGrid.shipSet.placementLegit()) {
+            ResourcesCompat.getDrawable(resources, R.drawable.button_enabled, null)
+        } else {
+            ResourcesCompat.getDrawable(resources, R.drawable.button_disabled, null)
+        }
     }
 
-    fun onClickReady(view: View?) {
+    fun onClickReady(@Suppress("unused") view: View?) {
         if (!controller.currentGrid.shipSet.placementLegit()) {
             showInvalidPlacementDialog()
             return
@@ -216,7 +230,7 @@ class PlaceShipActivity : BaseActivity() {
             intent.putExtra("controller", this.controller)
             startActivity(intent)
         } else if (controller.mode == GameMode.VS_PLAYER) {
-            if (controller.currentPlayer) {
+            if (controller.secondPlayerIsCurrent) {
                 this.fadeOutGridView()
 
                 // Re-switch the current player, such that player one starts
@@ -239,16 +253,16 @@ class PlaceShipActivity : BaseActivity() {
         val fadeOut: Animation = AlphaAnimation(1f, 0f)
         fadeOut.interpolator = AccelerateInterpolator()
         fadeOut.duration = 300
-        gridView!!.startAnimation(fadeOut)
-        gridView!!.visibility = View.INVISIBLE
+        gridView.startAnimation(fadeOut)
+        gridView.visibility = View.INVISIBLE
     }
 
     private fun fadeInGridView() {
         val fadeIn: Animation = AlphaAnimation(0f, 1f)
         fadeIn.interpolator = DecelerateInterpolator()
         fadeIn.duration = 500
-        gridView!!.startAnimation(fadeIn)
-        gridView!!.visibility = View.VISIBLE
+        gridView.startAnimation(fadeIn)
+        gridView.visibility = View.VISIBLE
     }
 
     private fun switchPlayers() {
@@ -260,62 +274,48 @@ class PlaceShipActivity : BaseActivity() {
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
     }
 
-    class TutorialDialog : DialogFragment() {
-        override fun onAttach(activity: Activity) {
-            super.onAttach(activity)
-        }
-
+    class TutorialDialog(val rootView: ViewGroup) : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val i = activity.layoutInflater
+            val i = requireActivity().layoutInflater
             val builder = AlertDialog.Builder(activity)
 
-            builder.setView(i.inflate(R.layout.placement_dialog, null))
+            builder.setView(i.inflate(R.layout.placement_dialog, rootView, false))
             builder.setIcon(R.mipmap.icon_drawer)
-            builder.setTitle(activity.getString(R.string.placement_tutorial_title))
-            builder.setPositiveButton(activity.getString(R.string.okay), null)
+            builder.setTitle(R.string.placement_tutorial_title)
+            builder.setPositiveButton(R.string.okay) { _, _ -> }
 
             return builder.create()
         }
     }
 
-    class InvalidPlacementDialog : DialogFragment() {
-        override fun onAttach(activity: Activity) {
-            super.onAttach(activity)
-        }
-
+    class InvalidPlacementDialog(val rootView: ViewGroup) : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val i = activity.layoutInflater
+            val i = requireActivity().layoutInflater
             val builder = AlertDialog.Builder(activity)
 
-            builder.setView(i.inflate(R.layout.placement_invalid_dialog, null))
+            builder.setView(i.inflate(R.layout.placement_invalid_dialog, rootView, false))
             builder.setIcon(R.mipmap.icon_drawer)
-            builder.setTitle(activity.getString(R.string.placement_tutorial_title))
-            builder.setPositiveButton(activity.getString(R.string.okay), null)
+            builder.setTitle(R.string.placement_tutorial_title)
+            builder.setPositiveButton(R.string.okay) { _, _ -> }
 
             return builder.create()
         }
     }
 
-    class SwitchPlayerDialog : DialogFragment() {
-        override fun onAttach(activity: Activity) {
-            super.onAttach(activity)
-        }
-
+    class SwitchPlayerDialog(val rootView: ViewGroup) : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val i = activity.layoutInflater
+            val i = requireActivity().layoutInflater
             val builder = AlertDialog.Builder(activity)
 
-            builder.setView(i.inflate(R.layout.placement_switch_player_dialog, null))
+            builder.setView(i.inflate(R.layout.placement_switch_player_dialog, rootView, false))
             builder.setIcon(R.mipmap.icon_drawer)
-            if (!(activity as PlaceShipActivity).controller.currentPlayer) builder.setTitle(
-                activity.getString(R.string.player) + " 2"
-            ) //player will be switched now
-            else builder.setTitle(activity.getString(R.string.player) + " 1") //player will be switched now
+            if (!(activity as PlaceShipActivity).controller.secondPlayerIsCurrent) {
+                builder.setTitle(requireActivity().getString(R.string.player_n, 2)) //player will be switched now
+            } else {
+                builder.setTitle(requireActivity().getString(R.string.player_n, 1)) //player will be switched now
+            }
 
-
-            builder.setPositiveButton(
-                activity.getString(R.string.okay)
-            ) { dialog, id ->
+            builder.setPositiveButton(R.string.okay) { _, _ ->
                 (activity as PlaceShipActivity).switchPlayers()
                 (activity as PlaceShipActivity).fadeInGridView()
             }

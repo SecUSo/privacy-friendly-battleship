@@ -24,7 +24,8 @@ class GameController : Parcelable {
         private set
     var mode: GameMode
         private set
-    var currentPlayer: Boolean //false if first players turn, true if second players turn
+    /** false if first players turn, true if second players turn */
+    var secondPlayerIsCurrent: Boolean
         private set
     var opponentAI: GameAI? = null
         private set
@@ -34,7 +35,7 @@ class GameController : Parcelable {
     constructor(gameMode: GameMode, gridSize: Int, shipCount: IntArray) {
         this.gridSize = gridSize
         this.mode = gameMode
-        this.currentPlayer = false
+        this.secondPlayerIsCurrent = false
         this.shipCount = shipCount
 
         this.gridFirstPlayer = GameGrid(gridSize, this.shipCount)
@@ -60,20 +61,20 @@ class GameController : Parcelable {
         require(mode != GameMode.CUSTOM) { "Provide ship-count for custom game-mode." }
         require(!(gridSize != 5 && gridSize != 10)) { "Provide ship-count for custom game-size." }
         this.gridSize = gridSize
-        this.currentPlayer = false
+        this.secondPlayerIsCurrent = false
         this.mode = mode
 
         when (gridSize) {
             5 -> {
-                this.shipCount = SHIPCOUNTFIVE
-                this.gridFirstPlayer = GameGrid(gridSize, SHIPCOUNTFIVE)
-                this.gridSecondPlayer = GameGrid(gridSize, SHIPCOUNTFIVE)
+                this.shipCount = SHIP_COUNT_FIVE
+                this.gridFirstPlayer = GameGrid(gridSize, SHIP_COUNT_FIVE)
+                this.gridSecondPlayer = GameGrid(gridSize, SHIP_COUNT_FIVE)
             }
 
             else -> {
-                this.shipCount = SHIPCOUNTTEN
-                this.gridFirstPlayer = GameGrid(gridSize, SHIPCOUNTTEN)
-                this.gridSecondPlayer = GameGrid(gridSize, SHIPCOUNTTEN)
+                this.shipCount = SHIP_COUNT_TEN
+                this.gridFirstPlayer = GameGrid(gridSize, SHIP_COUNT_TEN)
+                this.gridSecondPlayer = GameGrid(gridSize, SHIP_COUNT_TEN)
             }
         }
 
@@ -92,8 +93,8 @@ class GameController : Parcelable {
      * Places all ships for both players randomly, resulting in a legit placement to start the game.
      */
     fun placeAllShips() {
-        gridFirstPlayer!!.shipSet.placeShipsRandomly()
-        gridSecondPlayer!!.shipSet.placeShipsRandomly()
+        gridFirstPlayer.shipSet.placeShipsRandomly()
+        gridSecondPlayer.shipSet.placeShipsRandomly()
     }
 
     /**
@@ -104,9 +105,9 @@ class GameController : Parcelable {
      * @return True if move was a hit, false if not.
      */
     fun makeMove(player: Boolean, col: Int, row: Int): Boolean {
-        require(this.currentPlayer == player) { "It is the other players turn." }
+        require(this.secondPlayerIsCurrent == player) { "It is the other players turn." }
 
-        val cellUnderAttack = gridUnderAttack()!!.getCell(col, row)
+        val cellUnderAttack = gridUnderAttack().getCell(col, row)
         require(!cellUnderAttack.isHit) { "This cell has already been attacked" }
 
         //mark cell hit
@@ -114,22 +115,21 @@ class GameController : Parcelable {
         increaseAttempts()
 
         //return if move was a hit
-        if (cellUnderAttack.isShip) return true
-        return false
+        return cellUnderAttack.isShip
     }
 
     fun switchPlayers() {
         //prepare for next turn
-        this.currentPlayer = !this.currentPlayer
+        this.secondPlayerIsCurrent = !this.secondPlayerIsCurrent
     }
 
     /**
      * Returns the grid attacked by the current player. Note the difference between the methods
-     * gridUnderAttack() and getCurrentGrid(). The former is mainly used in the GameActvity and GameAI.
+     * gridUnderAttack() and getCurrentGrid(). The former is mainly used in the GameActivity and GameAI.
      * @return The grid attacked
      */
     fun gridUnderAttack(): GameGrid {
-        return if (this.currentPlayer) gridFirstPlayer else gridSecondPlayer
+        return if (this.secondPlayerIsCurrent) gridFirstPlayer else gridSecondPlayer
     }
 
     val currentGrid: GameGrid
@@ -138,23 +138,19 @@ class GameController : Parcelable {
          * @return grid of current player
          */
         get() {
-            if (!this.currentPlayer) {
+            if (!this.secondPlayerIsCurrent) {
                 return gridFirstPlayer
             }
             return gridSecondPlayer
         }
 
     fun isShipCountLegit(shipCount: IntArray): Boolean {
-        // The current bound for the numer of cells covered by the ships is set to the half of the
+        // The current bound for the number of cells covered by the ships is set to the half of the
         // total amount of grid cells, such that the probability of randomly hitting a ship is at most 1/2.
         val bound = floor((gridSize * gridSize * 2 / 5).toDouble()).toInt()
         val coveredGridCells =
             2 * shipCount[0] + 3 * shipCount[1] + 4 * shipCount[2] + 5 * shipCount[3]
-        return if (coveredGridCells > bound) {
-            false
-        } else {
-            true
-        }
+        return coveredGridCells <= bound
     }
 
     override fun describeContents(): Int {
@@ -164,7 +160,7 @@ class GameController : Parcelable {
     override fun writeToParcel(out: Parcel, flags: Int) {
         out.writeInt(this.gridSize)
         out.writeString(mode.name)
-        out.writeBooleanArray(booleanArrayOf(this.currentPlayer))
+        out.writeBooleanArray(booleanArrayOf(this.secondPlayerIsCurrent))
         out.writeTypedArray(arrayOf(this.gridFirstPlayer, this.gridSecondPlayer), 0)
         out.writeTypedArray(arrayOf(this.opponentAI), 0)
     }
@@ -172,7 +168,7 @@ class GameController : Parcelable {
     private constructor(parcel: Parcel) {
         this.gridSize = parcel.readInt()
         this.mode = GameMode.valueOf(parcel.readString()!!)
-        this.currentPlayer = parcel.createBooleanArray()!![0]
+        this.secondPlayerIsCurrent = parcel.createBooleanArray()!![0]
         val grids = parcel.createTypedArray(GameGrid.CREATOR)
         this.gridFirstPlayer = grids!![0]
         this.gridSecondPlayer = grids[1]
@@ -188,7 +184,7 @@ class GameController : Parcelable {
     }
 
     fun increaseAttempts() {
-        if (currentPlayer) {
+        if (secondPlayerIsCurrent) {
             this.attemptsPlayerTwo += 1
         } else {
             this.attemptsPlayerOne += 1
@@ -196,7 +192,7 @@ class GameController : Parcelable {
     }
 
     fun startTimer() {
-        if (currentPlayer) {
+        if (secondPlayerIsCurrent) {
             timePlayerTwo.start()
         } else {
             timePlayerOne.start()
@@ -212,7 +208,7 @@ class GameController : Parcelable {
         get() = if (mode == GameMode.VS_AI_EASY || mode == GameMode.VS_AI_HARD) {
             timePlayerOne.time
         } else {
-            if (currentPlayer) timePlayerTwo.time else timePlayerOne.time
+            if (secondPlayerIsCurrent) timePlayerTwo.time else timePlayerOne.time
         }
 
     fun timeToString(time: Int): String {
@@ -229,8 +225,8 @@ class GameController : Parcelable {
 
     companion object {
         // Amount of ships for standard grid sizes.
-        private val SHIPCOUNTFIVE = intArrayOf(2, 1, 0, 0)
-        private val SHIPCOUNTTEN = intArrayOf(1, 2, 1, 1)
+        private val SHIP_COUNT_FIVE = intArrayOf(2, 1, 0, 0)
+        private val SHIP_COUNT_TEN = intArrayOf(1, 2, 1, 1)
 
         @JvmField
         val CREATOR: Creator<GameController> = object : Creator<GameController> {

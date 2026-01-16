@@ -24,6 +24,7 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import org.secuso.privacyfriendlybattleship.BuildConfig
 import org.secuso.privacyfriendlybattleship.R
 
@@ -35,29 +36,24 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
 
-        val ab = supportActionBar
-        ab?.setDisplayHomeAsUpEnabled(true)
+        val toolbar: Toolbar = findViewById(R.id.toolbar_about)
+        setSupportActionBar(toolbar)
+        val supportActionBarRef = supportActionBar
+        if (supportActionBarRef != null) {
+            supportActionBarRef.setDisplayHomeAsUpEnabled(true)
+            supportActionBarRef.setDisplayShowHomeEnabled(true)
+        }
 
         val mainContent = findViewById<View>(R.id.main_content)
         if (mainContent != null) {
             mainContent.alpha = 0f
-            mainContent.animate().alpha(1f)
-                .setDuration(BaseActivity.MAIN_CONTENT_FADEIN_DURATION.toLong())
+            mainContent.animate().alpha(1f).duration = BaseActivity.MAIN_CONTENT_FADE_IN_DURATION
         }
 
-        findViewById<TextView>(R.id.secusoWebsite).movementMethod =
-            LinkMovementMethod.getInstance()
-        findViewById<TextView>(R.id.githubURL).movementMethod =
-            LinkMovementMethod.getInstance()
-        findViewById<TextView>(R.id.textFieldVersionName).text =
-            BuildConfig.VERSION_NAME
+        findViewById<TextView>(R.id.secusoWebsite).movementMethod = LinkMovementMethod.getInstance()
+        findViewById<TextView>(R.id.githubURL).movementMethod = LinkMovementMethod.getInstance()
+        findViewById<TextView>(R.id.textFieldVersionName).text = BuildConfig.VERSION_NAME
 
         overridePendingTransition(0, 0)
     }
-
-    //@Override
-    //protected int getNavigationDrawerID() {
-    //    return R.id.nav_about;
-    //}
 }
-

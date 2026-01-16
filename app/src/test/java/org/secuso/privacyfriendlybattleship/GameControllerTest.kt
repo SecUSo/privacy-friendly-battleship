@@ -20,6 +20,7 @@ class GameControllerTest {
     private lateinit var controllerSmall: GameController
     private lateinit var timer: Timer
 
+    @Suppress("unused")
     fun printGrid(grid: GameGrid) {
         for (i in 0..<grid.size) {
             for (j in 0..<grid.size) {
@@ -50,13 +51,13 @@ class GameControllerTest {
 
     @Test
     fun testFindShipContainingCell() {
-        val grid = if (!controller.currentPlayer) {
+        val grid = if (!controller.secondPlayerIsCurrent) {
             controller.gridFirstPlayer
         } else {
             controller.gridSecondPlayer
         }
         val cell = grid.getCell(1, 1)
-        val ship = grid.shipSet.findShipContainingCell(cell)
+        val ship = grid.shipSet.findShipContainingCell(cell)?.first
         assertNotNull(ship)
         assertEquals(ship!!.size.toLong(), 3)
     }

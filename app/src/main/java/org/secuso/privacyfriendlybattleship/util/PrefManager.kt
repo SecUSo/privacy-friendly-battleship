@@ -52,6 +52,10 @@ class PrefManager(context: Context) {
         get() = GridSize.fromOrdinal(pref.getInt(LAST_GRID_SIZE, GridSize.SIZE_5X5.ordinal), GridSize.SIZE_5X5)
         set(value) = pref.edit(commit = true) { putInt(LAST_GRID_SIZE, value.ordinal) }
 
+    var prefAppTheme: String?
+        get() = pref.getString(PREF_APP_THEME, null)
+        set(value) = pref.edit(commit = true) { putString(PREF_APP_THEME, value) }
+
     companion object {
         // Shared preference keys
         private const val FIRST_TUTORIAL_START: String = "FIRST_TUTORIAL_START"
@@ -60,5 +64,6 @@ class PrefManager(context: Context) {
         private const val FIRST_SHIP_SET_START: String = "FIRST_SHIP_SET_START"
         private const val LAST_GAME_MODE: String = "LAST_GAME_MODE"
         private const val LAST_GRID_SIZE: String = "LAST_GRID_SIZE"
+        const val PREF_APP_THEME: String = "PREF_APP_THEME"
     }
 }

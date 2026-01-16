@@ -14,7 +14,7 @@
     General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see http://www.gnu.org/licenses/.
+    along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 package org.secuso.privacyfriendlybattleship.game
 
@@ -101,12 +101,6 @@ class GameShip : Parcelable {
         }
     }
 
-    val firstCell: GameCell
-        get() = shipsCells[0]
-
-    val lastCell: GameCell
-        get() = shipsCells[size - 1]
-
     val isDestroyed: Boolean
         get() {
             for (i in shipsCells.indices) {
@@ -117,11 +111,18 @@ class GameShip : Parcelable {
             return true
         }
 
-    fun containsCell(cell: GameCell): Boolean {
+    /**
+     * The cell index inside the ship cells identifies the part of the ship which is represented by
+     * the cell: Cell index 0 is the front of the ship. Cell index (size - 1) is the end of the ship.
+     *
+     * @return Returns the zero-based index of the cell in the ship-cells or -1 if the cell is not
+     * part of the ship.
+     */
+    fun getCellIndex(cell: GameCell): Int {
         for (i in shipsCells.indices) {
-            if (cell == shipsCells[i]) return true
+            if (cell == shipsCells[i]) return i
         }
-        return false
+        return -1
     }
 
     /**
@@ -151,8 +152,8 @@ class GameShip : Parcelable {
     }
 
     fun moveShip(direction: Direction) {
-        var col = -1
-        var row = -1
+        var col: Int
+        var row: Int
         when (direction) {
             Direction.NORTH -> {
                 col = startCellCol
@@ -197,9 +198,9 @@ class GameShip : Parcelable {
 
     fun turnShipRight() {
         val middleCellIndex = this.size / 2
-        var newOrientation = Direction.NORTH
-        var newStartCol = startCellCol
-        var newStartRow = startCellRow
+        var newOrientation: Direction
+        var newStartCol: Int
+        var newStartRow: Int
         when (this.orientation) {
             Direction.NORTH -> {
                 newOrientation = Direction.EAST
@@ -247,9 +248,9 @@ class GameShip : Parcelable {
 
     fun turnShipLeft() {
         val middleCellIndex = this.size / 2
-        var newOrientation = Direction.NORTH
-        var newStartCol = startCellCol
-        var newStartRow = startCellRow
+        var newOrientation: Direction
+        var newStartCol: Int
+        var newStartRow: Int
         when (this.orientation) {
             Direction.NORTH -> {
                 newOrientation = Direction.WEST

@@ -14,7 +14,7 @@
     General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see http://www.gnu.org/licenses/.
+    along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 package org.secuso.privacyfriendlybattleship.game
 
@@ -89,7 +89,7 @@ class GameShipSet : Parcelable {
      * @param direction The direction the ship is facing
      */
     fun placeShip(startCol: Int, startRow: Int, size: Int, direction: Direction) {
-        require(!(size < 2 || size > 5)) { "Illegal ship-size." }
+        require(size in 2..5) { "Illegal ship-size." }
 
         //get free slot for ship
         var shipIndex = 0
@@ -129,16 +129,7 @@ class GameShipSet : Parcelable {
             orientation = Direction.getRandomDirection()
         } while (!GameShip.argumentsValid(cell, size, orientation, grid!!.size))
 
-        return GameShip(grid!!, this, cell!!, size, orientation!!)
-    }
-
-    fun allShipsPlaced(): Boolean {
-        for (shipsSizeN in this.ships) {
-            for (ship in shipsSizeN) {
-                if (ship == null) return false
-            }
-        }
-        return true
+        return GameShip(grid!!, this, cell, size, orientation)
     }
 
     /**
@@ -187,7 +178,7 @@ class GameShipSet : Parcelable {
         for (shipsSizeN in this.ships) {
             for (ship in shipsSizeN) {
                 if (ship == null) continue
-                if (ship.containsCell(cell)) count++
+                if (ship.getCellIndex(cell) >= 0) count++
             }
         }
         return count
@@ -227,15 +218,18 @@ class GameShipSet : Parcelable {
     /**
      * Finds the ship, which contains the cell.
      * @param gameCell: The cell which is assigned to at most one ship.
-     * @return The ship containing gameCell.
+     * @return The ship containing gameCell and the index of the cell inside the ship.
      */
-    fun findShipContainingCell(gameCell: GameCell): GameShip? {
-        val shiptoFind: GameShip? = null
+    fun findShipContainingCell(gameCell: GameCell): Pair<GameShip, Int>? {
         if (gameCell.isShip) {
             for (shipSizeN in this.ships) {
                 for (ship in shipSizeN) {
-                    if (null != ship && ship.containsCell(gameCell)) {
-                        return ship
+                    if (null == ship) {
+                        continue
+                    }
+                    val shipCellIndex = ship.getCellIndex(gameCell)
+                    if (shipCellIndex >= 0) {
+                        return Pair(ship, shipCellIndex)
                     }
                 }
             }

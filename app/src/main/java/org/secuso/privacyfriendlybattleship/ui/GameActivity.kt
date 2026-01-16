@@ -19,15 +19,11 @@
  */
 package org.secuso.privacyfriendlybattleship.ui
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
@@ -36,9 +32,11 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.DialogFragment
 import org.secuso.privacyfriendlybattleship.R
 import org.secuso.privacyfriendlybattleship.game.GameController
 import org.secuso.privacyfriendlybattleship.game.GameMode
@@ -53,7 +51,6 @@ import java.util.TimerTask
  * @author Alexander Müller, Ali Kalsen
  */
 class GameActivity : BaseActivity() {
-    private var handler: Handler? = null
     private var timerUpdate: Timer? = null
 
     private var playerName: TextView? = null
@@ -66,10 +63,10 @@ class GameActivity : BaseActivity() {
     private var gridViewBig: GridView? = null
     private var gridViewSmall: GridView? = null
     private var layoutProvider: GameActivityLayoutProvider? = null
+    private lateinit var rootView: ViewGroup
     private lateinit var mainGameLayout: ViewGroup
     private lateinit var fireButton: Button
 
-    private var isCellClicked = false
     private var hasStarted = false
     private var moveMade =
         false // Necessary for the help and the back button in order to control the timer and the configuration changes
@@ -93,9 +90,6 @@ class GameActivity : BaseActivity() {
         this.controller = intentIn.getParcelableExtra("controller")
         this.gridSize = controller!!.gridSize
         this.gameMode = controller!!.mode
-
-        // Set up the handler, which will be needed later in the code.
-        this.handler = Handler()
 
         // Create a GameActivityLayoutProvider in order to scale the grids appropriately
         layoutProvider = GameActivityLayoutProvider(this, this.gridSize)
@@ -121,14 +115,30 @@ class GameActivity : BaseActivity() {
         fireButton = findViewById(R.id.game_button_fire)
         playerName = findViewById(R.id.player_name)
         attempts = findViewById(R.id.game_attempts)
+        rootView = mainGameLayout.rootView as ViewGroup
 
         findViewById<Button>(R.id.game_button_help).setOnClickListener { buttonView ->
             onClickHelpButton(buttonView)
         }
 
+        fireButton.isEnabled = false
         fireButton.setText(R.string.game_button_fire)
         fireButton.setOnClickListener { buttonView ->
             onClickFireButton(buttonView)
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            // Check if the menu drawer is open
+            val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START)
+            } else {
+                // Display a dialog which asks the current player, if he wants to quit the game
+                controller!!.stopTimer()
+                val goBackDialog = GoBackDialog()
+                goBackDialog.isCancelable = false
+                goBackDialog.show(supportFragmentManager, GoBackDialog::class.java.simpleName)
+            }
         }
 
         // Update the toolbar
@@ -163,6 +173,7 @@ class GameActivity : BaseActivity() {
                         be finished after the button has been clicked.
                         */
                         gridViewBig!!.isEnabled = false
+                        fireButton.isEnabled = true
                         fireButton.setText(R.string.game_button_done)
                         fireButton.setOnClickListener { view ->
                             onClickDoneButton(view)
@@ -199,9 +210,9 @@ class GameActivity : BaseActivity() {
      */
     fun showHelpDialog() {
         if (mSharedPreferences.isFirstGameStart) {
-            val helpDialog = HelpDialog()
+            val helpDialog = HelpDialog(rootView)
             helpDialog.isCancelable = false
-            helpDialog.show(fragmentManager, HelpDialog::class.java.simpleName)
+            helpDialog.show(supportFragmentManager, HelpDialog::class.java.simpleName)
         }
     }
 
@@ -214,28 +225,13 @@ class GameActivity : BaseActivity() {
         // Create a bundle for transferring data to the SwitchDialog
         val bundle = Bundle()
         val currentPlayerName =
-            if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
+            if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
         bundle.putInt("Name", currentPlayerName)
 
         // Ask if player one is ready
         val newSwitchDialog = SwitchDialog.newInstance(bundle)
         newSwitchDialog.isCancelable = false
-        newSwitchDialog.show(fragmentManager, SwitchDialog::class.java.simpleName)
-    }
-
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-        // Check if the menu drawer is open
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        } else {
-            // Display a dialog which asks the current player, if he wants to quit the game
-            controller!!.stopTimer()
-            val goBackDialog = GoBackDialog()
-            goBackDialog.isCancelable = false
-            goBackDialog.show(fragmentManager, GoBackDialog::class.java.simpleName)
-        }
+        newSwitchDialog.show(supportFragmentManager, SwitchDialog::class.java.simpleName)
     }
 
     public override fun onStart() {
@@ -275,19 +271,19 @@ class GameActivity : BaseActivity() {
         super.onSaveInstanceState(savedInstanceState)
     }
 
-    fun onClickHelpButton(view: View?) {
+    fun onClickHelpButton(@Suppress("unused") view: View?) {
         controller!!.stopTimer()
         // Show a help dialog
-        val helpDialog = HelpDialog()
+        val helpDialog = HelpDialog(rootView)
         helpDialog.isCancelable = false
-        helpDialog.show(fragmentManager, HelpDialog::class.java.simpleName)
+        helpDialog.show(supportFragmentManager, HelpDialog::class.java.simpleName)
     }
 
-    fun onClickDoneButton(view: View?) {
+    fun onClickDoneButton(@Suppress("unused") view: View?) {
         // Fade out the grids
 
-        gridViewBig!!.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION.toLong())
-        gridViewSmall!!.animate().alpha(0.0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION.toLong())
+        gridViewBig!!.animate().alpha(0.0f).duration = MAIN_CONTENT_FADE_OUT_DURATION
+        gridViewSmall!!.animate().alpha(0.0f).duration = MAIN_CONTENT_FADE_OUT_DURATION
 
         this.moveMade = false
         this.isSwitchDialogDisplayed = true
@@ -296,12 +292,13 @@ class GameActivity : BaseActivity() {
         Build a handler. Delay the switch of the players and the dialog after the grids have been
         faded out.
         */
-        handler!!.postDelayed({ /*
-                    Get the name of the next player. Note that the players are switched when the
-                    SwitchDialog is executed.
-                     */
+        mainGameLayout.handler.postDelayed( {
+            /*
+            Get the name of the next player. Note that the players are switched when the
+            SwitchDialog is executed.
+            */
             val playerName =
-                if (controller!!.currentPlayer) R.string.game_player_one else R.string.game_player_two
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_one else R.string.game_player_two
 
             // Create a bundle for transferring data to the SwitchDialog
             val bundle = Bundle()
@@ -309,46 +306,51 @@ class GameActivity : BaseActivity() {
 
             val switchDialog = SwitchDialog.newInstance(bundle)
             switchDialog.isCancelable = false
-            switchDialog.show(fragmentManager, SwitchDialog::class.java.simpleName)
-        }, MAIN_CONTENT_FADEOUT_DURATION.toLong())
+            switchDialog.show(supportFragmentManager, SwitchDialog::class.java.simpleName)
+        }, MAIN_CONTENT_FADE_OUT_DURATION)
 
         /*
         Change the listener and the text of the "Done" button, such that the grids fade out
         after the button has been clicked.
         */
+        fireButton.isEnabled = false
         fireButton.setText(R.string.game_button_fire)
         fireButton.setOnClickListener { buttonView ->
             onClickFireButton(buttonView)
         }
     }
 
-    fun onClickFireButton(view: View?) {
-        val gridUnderAttack = controller!!.gridUnderAttack()
+    fun onClickFireButton(@Suppress("unused") view: View?) {
+        // Do not click the fire button without clicking on a cell.
+        if (this.prevCell == null) {
+            return
+        }
 
         // Get the cell, which shall be attacked
+        val gridUnderAttack = controller!!.gridUnderAttack()
         val column = this.positionGridCell % this.gridSize
         val row = this.positionGridCell / this.gridSize
         val attackedCell = gridUnderAttack.getCell(column, row)
 
-        //Do not attack the same cell twice and do not click the fire button without clicking on a cell.
-        if (attackedCell.isHit || this.prevCell == null || !isCellClicked) {
+        // Do not attack the same cell twice.
+        if (attackedCell.isHit) {
             return
         }
 
         // Attack the cell and update the main grid.
-        controller!!.makeMove(controller!!.currentPlayer, column, row)
+        controller!!.makeMove(controller!!.secondPlayerIsCurrent, column, row)
         this.moveMade = true
         // Denote that the cells are not clicked anymore such that fire button can only be executed if a cell has been clicked
-        this.isCellClicked = false
+        fireButton.isEnabled = false
         updateToolbar()
         adapterMainGrid!!.notifyDataSetChanged()
 
-        val ship = gridUnderAttack.shipSet.findShipContainingCell(attackedCell)
+        val ship = gridUnderAttack.shipSet.findShipContainingCell(attackedCell)?.first
         controller!!.stopTimer()
         // Check if the current hit has destroyed a ship
         if (ship != null && ship.isDestroyed) {
             val playerName =
-                if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
             val bundle = Bundle()
             bundle.putInt("Name", playerName)
             bundle.putInt("Size", ship.size)
@@ -358,7 +360,7 @@ class GameActivity : BaseActivity() {
             */
             val gameDialog = GameDialog.newInstance(bundle)
             gameDialog.isCancelable = false
-            gameDialog.show(fragmentManager, GameDialog::class.java.simpleName)
+            gameDialog.show(supportFragmentManager, GameDialog::class.java.simpleName)
         } else {
             // Terminate the fire button
             terminateFireButton()
@@ -370,17 +372,17 @@ class GameActivity : BaseActivity() {
         // If the attacked cell does not contain a ship, then stop the timer and switch the player
         if (this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) {
             controller!!.switchPlayers()
-            //make move for AI
+            // Make move for AI
             controller!!.opponentAI?.makeMove()
-            handler!!.postDelayed({
+            mainGameLayout.handler!!.postDelayed({
                 adapterMiniGrid!!.notifyDataSetChanged()
                 if (controller!!.opponentAI?.isAIWinner == true) {
                     timerUpdate!!.cancel()
 
                     /*
-                                Create a dialog. Therefore, instantiate a bundle which transfers the data from the
-                                current game to the dialog.
-                                */
+                    Create a dialog. Therefore, instantiate a bundle which transfers
+                    the data from the current game to the dialog.
+                    */
                     val bundle = Bundle()
                     bundle.putString("Time", controller!!.timeToString(controller!!.time))
                     bundle.putString(
@@ -391,7 +393,7 @@ class GameActivity : BaseActivity() {
                     // Instantiate the lose dialog and show it
                     val loseDialog = LoseDialog.newInstance(bundle)
                     loseDialog.isCancelable = false
-                    loseDialog.show(fragmentManager, LoseDialog::class.java.simpleName)
+                    loseDialog.show(supportFragmentManager, LoseDialog::class.java.simpleName)
                 } else {
                     // Restart the timer for player one
                     controller!!.startTimer()
@@ -405,6 +407,7 @@ class GameActivity : BaseActivity() {
             */
             gridViewBig!!.isEnabled = false
 
+            fireButton.isEnabled = true
             fireButton.setText(R.string.game_button_done)
             fireButton.setOnClickListener { view ->
                 onClickDoneButton(view)
@@ -412,14 +415,15 @@ class GameActivity : BaseActivity() {
         }
     }
 
-    fun onClickFinishButton(view: View?) {
+    fun onClickFinishButton(@Suppress("unused") view: View?) {
+        fireButton.isEnabled = true
         fireButton.setText(R.string.finish)
         fireButton.setOnClickListener {
             goToMainActivity()
         }
     }
 
-    fun onClickShowMainGridButton(view: View?) {
+    fun onClickShowMainGridButton(@Suppress("unused") view: View?) {
         // Only switch the players once after the game has finished in order to display the ships on the grid
         if (!this.isGameFinished) {
             this.isGameFinished = true
@@ -434,17 +438,15 @@ class GameActivity : BaseActivity() {
         showAllShipsButton.setOnClickListener {
             controller!!.switchPlayers()
             isShowAllShipsButtonClicked = true
-            showAllShipsButton.background = resources.getDrawable(R.drawable.button_disabled)
             showAllShipsButton.isEnabled = false
             showShipsOnMainGrid()
         }
     }
 
-    protected fun setupGridViews() {
+    private fun setupGridViews() {
         // Get the grid views of the respective XML-files
-
-        gridViewBig = findViewById<GridView>(R.id.game_gridview_big)
-        gridViewSmall = findViewById<GridView>(R.id.game_gridview_small)
+        gridViewBig = findViewById(R.id.game_gridview_big)
+        gridViewSmall = findViewById(R.id.game_gridview_small)
 
         // Set the background color of the grid
         gridViewBig!!.setBackgroundColor(Color.GRAY)
@@ -454,44 +456,44 @@ class GameActivity : BaseActivity() {
         gridViewBig!!.numColumns = gridSize
         gridViewSmall!!.numColumns = gridSize
 
-        adapterMainGrid = GameGridAdapter(
-            this,
-            layoutProvider!!, controller!!, true
-        )
-        adapterMiniGrid = GameGridAdapter(
-            this,
-            layoutProvider!!, controller!!, false
-        )
+        adapterMainGrid = GameGridAdapter(this, layoutProvider!!, controller!!, true)
+        adapterMiniGrid = GameGridAdapter(this, layoutProvider!!, controller!!, false)
         gridViewBig!!.adapter = adapterMainGrid
         gridViewSmall!!.adapter = adapterMiniGrid
 
-        // Define the listener for the big grid view, such that it is possible to click on it. When
-        // clicking on that grid, the corresponding cell should be yellow.
+        // Define the listener for the big grid view, such that it is possible to click on it.
+        // When clicking on that grid, the corresponding cell should be yellow.
         gridViewBig!!.onItemClickListener =
-            OnItemClickListener { adapterView, view, i, l ->
+            OnItemClickListener { _, view, i, _ ->
                 if (prevCell != null) {
-                    prevCell!!.setBackgroundColor(Color.WHITE)
+                    prevCell!!.setBackgroundColor(ContextCompat.getColor(this, R.color.water))
                 }
                 positionGridCell = i
-                view.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow))
+                view.setBackgroundColor(ContextCompat.getColor(this, R.color.selection))
                 prevCell = view
                 // Display the grid cell, which was clicked.
                 adapterMainGrid!!.notifyDataSetChanged()
-                isCellClicked = true
+                // Get the cell, which shall be attacked
+                val gridUnderAttack = controller!!.gridUnderAttack()
+                val column = this.positionGridCell % this.gridSize
+                val row = this.positionGridCell / this.gridSize
+                val attackedCell = gridUnderAttack.getCell(column, row)
+                // Do not attack the same cell twice.
+                fireButton.isEnabled = !attackedCell.isHit
             }
     }
 
     fun updateToolbar() {
         if (this.gameMode == GameMode.VS_PLAYER || this.gameMode == GameMode.CUSTOM) {
             val currentPlayerName =
-                if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
             playerName!!.setText(currentPlayerName)
         } else {
             playerName!!.text = ""
         }
 
         val attemptsCurrentPlayer =
-            if (controller!!.currentPlayer) controller!!.attemptsPlayerTwo else controller!!.attemptsPlayerOne
+            if (controller!!.secondPlayerIsCurrent) controller!!.attemptsPlayerTwo else controller!!.attemptsPlayerOne
         attempts!!.text =
             controller!!.attemptsToString(attemptsCurrentPlayer)
     }
@@ -499,9 +501,9 @@ class GameActivity : BaseActivity() {
     fun fadeInGrids() {
         setupGridViews()
         // Fade in the grids
-        gridViewBig!!.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION.toLong())
+        gridViewBig!!.animate().alpha(1.0f).duration = MAIN_CONTENT_FADE_IN_DURATION
         gridViewBig!!.isEnabled = true
-        gridViewSmall!!.animate().alpha(1.0f).setDuration(MAIN_CONTENT_FADEIN_DURATION.toLong())
+        gridViewSmall!!.animate().alpha(1.0f).duration = MAIN_CONTENT_FADE_IN_DURATION
         if (!this.hasStarted) {
             this.hasStarted = true
         } else {
@@ -513,7 +515,7 @@ class GameActivity : BaseActivity() {
         // Go back to the (old) MainActivity.
 
         val intent = Intent(this, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
 
         // Exit the GameActivity
@@ -530,8 +532,8 @@ class GameActivity : BaseActivity() {
             current game to the dialog.
             */
             val nameWinner =
-                if (controller!!.currentPlayer) R.string.game_player_two else R.string.game_player_one
-            val attemptsWinner = if (controller!!.currentPlayer)
+                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
+            val attemptsWinner = if (controller!!.secondPlayerIsCurrent)
                 controller!!.attemptsPlayerTwo
             else
                 controller!!.attemptsPlayerOne
@@ -547,7 +549,7 @@ class GameActivity : BaseActivity() {
             // Instantiate the win dialog and show it
             val winDialog = WinDialog.newInstance(bundle)
             winDialog.isCancelable = false
-            winDialog.show(fragmentManager, WinDialog::class.java.simpleName)
+            winDialog.show(supportFragmentManager, WinDialog::class.java.simpleName)
         } else {
             terminateFireButton()
         }
@@ -566,9 +568,7 @@ class GameActivity : BaseActivity() {
 
     fun showShipsOnMainGrid() {
         val newAdapter = GameGridAdapter(
-            this,
-            layoutProvider!!, controller!!, true, true
-        )
+            this, layoutProvider!!, controller!!, isMainGrid = true, showShips = true)
         gridViewBig!!.adapter = newAdapter
         gridViewBig!!.isEnabled = false
     }
@@ -578,25 +578,22 @@ class GameActivity : BaseActivity() {
         private var playerName = 0
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            this.size = arguments.getInt("Size")
-            this.playerName = arguments.getInt("Name")
+            this.size = requireArguments().getInt("Size")
+            this.playerName = requireArguments().getInt("Name")
 
             // Get the layout for the lose dialog as a view
-            val gameDialogView = activity.layoutInflater.inflate(R.layout.game_dialog, null)
+            val gameDialogView = requireActivity().layoutInflater.inflate(R.layout.game_dialog, null)
 
             // Set the size of the ship destroyed
-            val textShipSize =
-                gameDialogView.findViewById<TextView>(R.id.game_dialog_ship_size)
-            textShipSize.text = size.toString()
+            val gameDialogText = gameDialogView.findViewById<TextView>(R.id.game_dialog_text)
+            gameDialogText.text = getString(R.string.game_dialog_ship_destroyed, size)
 
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(this.playerName)
                 .setIcon(R.mipmap.icon_drawer)
                 .setView(gameDialogView)
-                .setPositiveButton(
-                    R.string.okay
-                ) { dialogInterface, i -> // Check if the game has a winner and terminate it in that case.
+                .setPositiveButton(R.string.okay) { _, _ -> // Check if the game has a winner and terminate it in that case.
                     (activity as GameActivity).terminate()
                 }
             // Create the AlertDialog object and return it
@@ -616,16 +613,14 @@ class GameActivity : BaseActivity() {
         private var playerName = 0
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            this.playerName = arguments.getInt("Name")
+            this.playerName = requireArguments().getInt("Name")
 
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(this.playerName)
                 .setIcon(R.mipmap.icon_drawer)
                 .setMessage(R.string.game_dialog_next_player)
-                .setPositiveButton(
-                    R.string.okay
-                ) { dialogInterface, i -> // Fade in the grids after the next player has clicked on the button
+                .setPositiveButton(R.string.okay) { _, _ -> // Fade in the grids after the next player has clicked on the button
                     if ((activity as GameActivity).hasStarted) {
                         (activity as GameActivity).controller!!.switchPlayers()
                     }
@@ -653,11 +648,11 @@ class GameActivity : BaseActivity() {
         private var attempts: String? = null
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            this.time = arguments.getString("Time")
-            this.attempts = arguments.getString("Attempts")
+            this.time = requireArguments().getString("Time")
+            this.attempts = requireArguments().getString("Attempts")
 
             // Get the layout for the lose dialog as a view
-            val loseDialogView = activity.layoutInflater.inflate(R.layout.lose_dialog, null)
+            val loseDialogView = requireActivity().layoutInflater.inflate(R.layout.lose_dialog, null)
 
             // Set the current time and the number of attempts.
             val textTime = loseDialogView.findViewById<TextView>(R.id.lose_dialog_time)
@@ -674,10 +669,10 @@ class GameActivity : BaseActivity() {
                 .setIcon(R.mipmap.icon_drawer)
                 .setPositiveButton(
                     R.string.okay
-                ) { dialogInterface, i -> (activity as GameActivity).goToMainActivity() }
+                ) { _, _ -> (activity as GameActivity).goToMainActivity() }
                 .setNegativeButton(
                     R.string.game_dialog_show_game_board
-                ) { dialogInterface, i ->
+                ) { _, _ ->
                     (activity as GameActivity).onClickShowMainGridButton(view)
                     (activity as GameActivity).onClickFinishButton(view)
                 }
@@ -700,12 +695,12 @@ class GameActivity : BaseActivity() {
         private var playerName = 0
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            this.time = arguments.getString("Time")
-            this.attempts = arguments.getString("Attempts")
-            this.playerName = arguments.getInt("Player")
+            this.time = requireArguments().getString("Time")
+            this.attempts = requireArguments().getString("Attempts")
+            this.playerName = requireArguments().getInt("Player")
 
             // Get the layout for the lose dialog as a view
-            val winDialogView = activity.layoutInflater.inflate(R.layout.win_dialog, null)
+            val winDialogView = requireActivity().layoutInflater.inflate(R.layout.win_dialog, null)
 
             // Set the current time, the name of the player and the number of attempts.
             val textTime = winDialogView.findViewById<TextView>(R.id.win_dialog_time)
@@ -726,10 +721,10 @@ class GameActivity : BaseActivity() {
                 .setView(winDialogView)
                 .setPositiveButton(
                     R.string.okay
-                ) { dialogInterface, i -> (activity as GameActivity).goToMainActivity() }
+                ) { _, _ -> (activity as GameActivity).goToMainActivity() }
                 .setNegativeButton(
                     R.string.game_dialog_show_game_board
-                ) { dialogInterface, i ->
+                ) { _, _ ->
                     (activity as GameActivity).onClickShowMainGridButton(view)
                     (activity as GameActivity).onClickFinishButton(view)
                 }
@@ -751,12 +746,10 @@ class GameActivity : BaseActivity() {
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(R.string.game_dialog_quit)
                 .setIcon(R.mipmap.icon_drawer)
-                .setPositiveButton(
-                    R.string.yes
-                ) { dialogInterface, i -> (activity as GameActivity).goToMainActivity() }
-                .setNegativeButton(
-                    R.string.no
-                ) { dialogInterface, i ->
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    (activity as GameActivity).goToMainActivity()
+                }
+                .setNegativeButton(R.string.no) { _, _ ->
                     if (!(activity as GameActivity).moveMade) {
                         // Resume the timer
                         (activity as GameActivity).controller!!.startTimer()
@@ -767,20 +760,16 @@ class GameActivity : BaseActivity() {
         }
     }
 
-    class HelpDialog : DialogFragment() {
-        override fun onAttach(activity: Activity) {
-            super.onAttach(activity)
-        }
-
+    class HelpDialog(val rootView: ViewGroup) : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val i = activity.layoutInflater
+            val i = requireActivity().layoutInflater
             val builder = AlertDialog.Builder(activity)
 
-            builder.setView(i.inflate(R.layout.help_dialog, null))
-            builder.setTitle(activity.getString(R.string.help_dialog_title))
+            builder.setView(i.inflate(R.layout.help_dialog, rootView, false))
+            builder.setTitle(R.string.help_dialog_title)
             builder.setIcon(R.mipmap.icon_drawer)
 
-            builder.setPositiveButton(activity.getString(R.string.okay)) { dialogInterface, i ->
+            builder.setPositiveButton(R.string.okay) { _, _ ->
                 if (   !(activity as GameActivity).mSharedPreferences.isFirstGameStart
                     && !(activity as GameActivity).moveMade) {
                     (activity as GameActivity).controller!!.startTimer()
