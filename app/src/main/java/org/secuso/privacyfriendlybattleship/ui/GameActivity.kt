@@ -260,9 +260,6 @@ class GameActivity : BaseActivity() {
     recreated correctly once the configuration has changed.
      */
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        if (this.isGameFinished && !this.isShowAllShipsButtonClicked) {
-            controller!!.switchPlayers()
-        }
         savedInstanceState.putParcelable("controller", this.controller)
         savedInstanceState.putBoolean("move made", this.moveMade)
         savedInstanceState.putBoolean("has started", this.hasStarted)
