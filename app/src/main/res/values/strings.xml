@@ -16,7 +16,7 @@
     <string name="custom_game">Manual Placement</string>
     <string name="game_mode">Game Mode</string>
     <string name="grid_size">Board Size</string>
-    <string name="n_x_m" translatable="false">%1$d x %2$d</string>
+    <string name="n_x_m" translatable="false">%1$d \u00d7 %2$d</string>
     <string name="mode_two_player">2 players</string>
     <string name="mode_vs_cpu_easy">CPU easy</string>
     <string name="mode_vs_cpu_hard">CPU hard</string>
