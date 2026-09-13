@@ -57,7 +57,7 @@ class GameActivity : BaseActivity() {
     private var attempts: TextView? = null
     private var gameMode: GameMode? = null
     private var gridSize = 0
-    private var controller: GameController? = null
+    private lateinit var controller: GameController
     private var adapterMainGrid: GameGridAdapter? = null
     private var adapterMiniGrid: GameGridAdapter? = null
     private var gridViewBig: GridView? = null
@@ -87,9 +87,9 @@ class GameActivity : BaseActivity() {
 
         // Get the parameters from the MainActivity or the PlaceShipActivity and initialize the game
         val intentIn = intent
-        this.controller = intentIn.getParcelableExtra("controller")
-        this.gridSize = controller!!.gridSize
-        this.gameMode = controller!!.mode
+        this.controller = intentIn.getParcelableExtra("controller")!!
+        this.gridSize = controller.gridSize
+        this.gameMode = controller.mode
 
         // Create a GameActivityLayoutProvider in order to scale the grids appropriately
         layoutProvider = GameActivityLayoutProvider(this, this.gridSize)
@@ -108,7 +108,7 @@ class GameActivity : BaseActivity() {
             has finished and the configuration has changed. Note that the number of switches has to
             be even in order to get the correct player every time the GameActivity is recreated.
             */
-            controller!!.switchPlayers()
+            controller.switchPlayers()
         }
 
         mainGameLayout = findViewById(R.id.game_main_layout)
@@ -134,7 +134,7 @@ class GameActivity : BaseActivity() {
                 drawer.closeDrawer(GravityCompat.START)
             } else {
                 // Display a dialog which asks the current player, if he wants to quit the game
-                controller!!.stopTimer()
+                controller.stopTimer()
                 val goBackDialog = GoBackDialog()
                 goBackDialog.isCancelable = false
                 goBackDialog.show(supportFragmentManager, GoBackDialog::class.java.simpleName)
@@ -150,7 +150,7 @@ class GameActivity : BaseActivity() {
         // Set up the time
         setUpTimer()
 
-        if (controller!!.mode == GameMode.VS_PLAYER || controller!!.mode == GameMode.CUSTOM) {
+        if (controller.mode == GameMode.VS_PLAYER || controller.mode == GameMode.CUSTOM) {
             // Check if the configuration has changed
             if (savedInstanceState == null) {
                 showSwitchDialog()
@@ -225,7 +225,7 @@ class GameActivity : BaseActivity() {
         // Create a bundle for transferring data to the SwitchDialog
         val bundle = Bundle()
         val currentPlayerName =
-            if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
+            if (controller.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
         bundle.putInt("Name", currentPlayerName)
 
         // Ask if player one is ready
@@ -241,18 +241,18 @@ class GameActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (this.hasStarted || this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) {
-            controller!!.startTimer()
+            controller.startTimer()
             if (this.moveMade || this.isSwitchDialogDisplayed || this.isGameFinished ||
-                (controller!!.mode != GameMode.VS_PLAYER && controller!!.opponentAI?.isAIWinner == true)
+                (controller.mode != GameMode.VS_PLAYER && controller.opponentAI?.isAIWinner == true)
             ) {
-                controller!!.stopTimer()
+                controller.stopTimer()
             }
         }
     }
 
     override fun onPause() {
         super.onPause()
-        controller!!.stopTimer()
+        controller.stopTimer()
     }
 
     /*
@@ -269,7 +269,7 @@ class GameActivity : BaseActivity() {
     }
 
     fun onClickHelpButton(@Suppress("unused") view: View?) {
-        controller!!.stopTimer()
+        controller.stopTimer()
         // Show a help dialog
         val helpDialog = HelpDialog(rootView)
         helpDialog.isCancelable = false
@@ -295,7 +295,7 @@ class GameActivity : BaseActivity() {
             SwitchDialog is executed.
             */
             val playerName =
-                if (controller!!.secondPlayerIsCurrent) R.string.game_player_one else R.string.game_player_two
+                if (controller.secondPlayerIsCurrent) R.string.game_player_one else R.string.game_player_two
 
             // Create a bundle for transferring data to the SwitchDialog
             val bundle = Bundle()
@@ -324,7 +324,7 @@ class GameActivity : BaseActivity() {
         }
 
         // Get the cell, which shall be attacked
-        val gridUnderAttack = controller!!.gridUnderAttack()
+        val gridUnderAttack = controller.gridUnderAttack()
         val column = this.positionGridCell % this.gridSize
         val row = this.positionGridCell / this.gridSize
         val attackedCell = gridUnderAttack.getCell(column, row)
@@ -335,7 +335,7 @@ class GameActivity : BaseActivity() {
         }
 
         // Attack the cell and update the main grid.
-        controller!!.makeMove(controller!!.secondPlayerIsCurrent, column, row)
+        controller.makeMove(controller.secondPlayerIsCurrent, column, row)
         this.moveMade = true
         // Denote that the cells are not clicked anymore such that fire button can only be executed if a cell has been clicked
         fireButton.isEnabled = false
@@ -343,11 +343,11 @@ class GameActivity : BaseActivity() {
         adapterMainGrid!!.notifyDataSetChanged()
 
         val ship = gridUnderAttack.shipSet.findShipContainingCell(attackedCell)?.first
-        controller!!.stopTimer()
+        controller.stopTimer()
         // Check if the current hit has destroyed a ship
         if (ship != null && ship.isDestroyed) {
             val playerName =
-                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
+                if (controller.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
             val bundle = Bundle()
             bundle.putInt("Name", playerName)
             bundle.putInt("Size", ship.size)
@@ -368,12 +368,12 @@ class GameActivity : BaseActivity() {
     private fun terminateFireButton() {
         // If the attacked cell does not contain a ship, then stop the timer and switch the player
         if (this.gameMode == GameMode.VS_AI_EASY || this.gameMode == GameMode.VS_AI_HARD) {
-            controller!!.switchPlayers()
+            controller.switchPlayers()
             // Make move for AI
-            controller!!.opponentAI?.makeMove()
+            controller.opponentAI?.makeMove()
             mainGameLayout.handler!!.postDelayed({
                 adapterMiniGrid!!.notifyDataSetChanged()
-                if (controller!!.opponentAI?.isAIWinner == true) {
+                if (controller.opponentAI?.isAIWinner == true) {
                     timerUpdate!!.cancel()
 
                     /*
@@ -381,10 +381,10 @@ class GameActivity : BaseActivity() {
                     the data from the current game to the dialog.
                     */
                     val bundle = Bundle()
-                    bundle.putString("Time", controller!!.timeToString(controller!!.time))
+                    bundle.putString("Time", controller.timeToString(controller.time))
                     bundle.putString(
                         "Attempts",
-                        controller!!.attemptsToString(controller!!.attemptsPlayerOne)
+                        controller.attemptsToString(controller.attemptsPlayerOne)
                     )
 
                     // Instantiate the lose dialog and show it
@@ -393,7 +393,7 @@ class GameActivity : BaseActivity() {
                     loseDialog.show(supportFragmentManager, LoseDialog::class.java.simpleName)
                 } else {
                     // Restart the timer for player one
-                    controller!!.startTimer()
+                    controller.startTimer()
                 }
             }, 250)
             this.moveMade = false
@@ -433,7 +433,7 @@ class GameActivity : BaseActivity() {
         val showAllShipsButton = findViewById<Button>(R.id.game_button_help)
         showAllShipsButton.setText(R.string.game_button_show_ships)
         showAllShipsButton.setOnClickListener {
-            controller!!.switchPlayers()
+            controller.switchPlayers()
             isShowAllShipsButtonClicked = true
             showAllShipsButton.isEnabled = false
             showShipsOnMainGrid()
@@ -453,8 +453,8 @@ class GameActivity : BaseActivity() {
         gridViewBig!!.numColumns = gridSize
         gridViewSmall!!.numColumns = gridSize
 
-        adapterMainGrid = GameGridAdapter(this, layoutProvider!!, controller!!, true)
-        adapterMiniGrid = GameGridAdapter(this, layoutProvider!!, controller!!, false)
+        adapterMainGrid = GameGridAdapter(this, layoutProvider!!, controller, true)
+        adapterMiniGrid = GameGridAdapter(this, layoutProvider!!, controller, false)
         gridViewBig!!.adapter = adapterMainGrid
         gridViewSmall!!.adapter = adapterMiniGrid
 
@@ -471,7 +471,7 @@ class GameActivity : BaseActivity() {
                 // Display the grid cell, which was clicked.
                 adapterMainGrid!!.notifyDataSetChanged()
                 // Get the cell, which shall be attacked
-                val gridUnderAttack = controller!!.gridUnderAttack()
+                val gridUnderAttack = controller.gridUnderAttack()
                 val column = this.positionGridCell % this.gridSize
                 val row = this.positionGridCell / this.gridSize
                 val attackedCell = gridUnderAttack.getCell(column, row)
@@ -483,16 +483,16 @@ class GameActivity : BaseActivity() {
     fun updateToolbar() {
         if (this.gameMode == GameMode.VS_PLAYER || this.gameMode == GameMode.CUSTOM) {
             val currentPlayerName =
-                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
+                if (controller.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
             playerName!!.setText(currentPlayerName)
         } else {
             playerName!!.text = ""
         }
 
         val attemptsCurrentPlayer =
-            if (controller!!.secondPlayerIsCurrent) controller!!.attemptsPlayerTwo else controller!!.attemptsPlayerOne
+            if (controller.secondPlayerIsCurrent) controller.attemptsPlayerTwo else controller.attemptsPlayerOne
         attempts!!.text =
-            controller!!.attemptsToString(attemptsCurrentPlayer)
+            controller.attemptsToString(attemptsCurrentPlayer)
     }
 
     fun fadeInGrids() {
@@ -521,7 +521,7 @@ class GameActivity : BaseActivity() {
 
     fun terminate() {
         //check if player has won
-        if (controller!!.gridUnderAttack().shipSet.allShipsDestroyed()) {
+        if (controller.gridUnderAttack().shipSet.allShipsDestroyed()) {
             timerUpdate!!.cancel()
             gridViewBig!!.isEnabled = false
             /*
@@ -529,19 +529,19 @@ class GameActivity : BaseActivity() {
             current game to the dialog.
             */
             val nameWinner =
-                if (controller!!.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
-            val attemptsWinner = if (controller!!.secondPlayerIsCurrent)
-                controller!!.attemptsPlayerTwo
+                if (controller.secondPlayerIsCurrent) R.string.game_player_two else R.string.game_player_one
+            val attemptsWinner = if (controller.secondPlayerIsCurrent)
+                controller.attemptsPlayerTwo
             else
-                controller!!.attemptsPlayerOne
+                controller.attemptsPlayerOne
             val bundle = Bundle()
             bundle.putInt("Player", nameWinner)
             bundle.putString(
-                "Time", controller!!.timeToString(
-                    controller!!.time
+                "Time", controller.timeToString(
+                    controller.time
                 )
             )
-            bundle.putString("Attempts", controller!!.attemptsToString(attemptsWinner))
+            bundle.putString("Attempts", controller.attemptsToString(attemptsWinner))
 
             // Instantiate the win dialog and show it
             val winDialog = WinDialog.newInstance(bundle)
@@ -558,14 +558,14 @@ class GameActivity : BaseActivity() {
         timerUpdate = Timer()
         timerUpdate!!.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                runOnUiThread { timerView.text = controller!!.timeToString(controller!!.time) }
+                runOnUiThread { timerView.text = controller.timeToString(controller.time) }
             }
         }, 0, 1000)
     }
 
     fun showShipsOnMainGrid() {
         val newAdapter = GameGridAdapter(
-            this, layoutProvider!!, controller!!, isMainGrid = true, showShips = true)
+            this, layoutProvider!!, controller, isMainGrid = true, showShips = true)
         gridViewBig!!.adapter = newAdapter
         gridViewBig!!.isEnabled = false
     }
@@ -619,13 +619,13 @@ class GameActivity : BaseActivity() {
                 .setMessage(R.string.game_dialog_next_player)
                 .setPositiveButton(R.string.okay) { _, _ -> // Fade in the grids after the next player has clicked on the button
                     if ((activity as GameActivity).hasStarted) {
-                        (activity as GameActivity).controller!!.switchPlayers()
+                        (activity as GameActivity).controller.switchPlayers()
                     }
 
                     // Update the toolbar
                     (activity as GameActivity).updateToolbar()
                     (activity as GameActivity).fadeInGrids()
-                    (activity as GameActivity).controller!!.startTimer()
+                    (activity as GameActivity).controller.startTimer()
                 }
             // Create the AlertDialog object and return it
             return builder.create()
@@ -749,7 +749,7 @@ class GameActivity : BaseActivity() {
                 .setNegativeButton(R.string.no) { _, _ ->
                     if (!(activity as GameActivity).moveMade) {
                         // Resume the timer
-                        (activity as GameActivity).controller!!.startTimer()
+                        (activity as GameActivity).controller.startTimer()
                     }
                 }
 
@@ -769,7 +769,7 @@ class GameActivity : BaseActivity() {
             builder.setPositiveButton(R.string.okay) { _, _ ->
                 if (   !(activity as GameActivity).mSharedPreferences.isFirstGameStart
                     && !(activity as GameActivity).moveMade) {
-                    (activity as GameActivity).controller!!.startTimer()
+                    (activity as GameActivity).controller.startTimer()
                 } else {
                     (activity as GameActivity).mSharedPreferences.isFirstGameStart = false
                 }
