@@ -1,3 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="next">下个</string>
+    <string name="tutorial">教程</string>
+    <string name="about_affiliation">隶属于</string>
+    <string name="no">否</string>
+    <string name="version_number">版本</string>
+    <string name="about_author_contributors">及贡献者们.</string>
+    <string name="title_activity_game">游戏</string>
 </resources>
